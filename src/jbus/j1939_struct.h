@@ -12,8 +12,8 @@
 #ifndef INCLUDE_JBUS_J1939_STRUCT_H_
 #define INCLUDE_JBUS_J1939_STRUCT_H_
 
-#include "j1939_utils.h"
 #include <string>
+#include "j1939_utils.h"
 
 
 /** generic database variable type for storing information about Protocol Data

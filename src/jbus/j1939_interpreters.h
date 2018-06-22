@@ -24,6 +24,8 @@
 #include "j1939_utils.h"
 
 
+/** Base interpreter for processing pdu variables into their message-specific
+ * format. */
 class j1939_interpreter
 {
 public:
@@ -32,7 +34,7 @@ public:
 
 	// checks whether the incoming message is of the same pdu type as the
 	// one covered by this (child) class
-	bool is_type(j1939_pdu_typ*);
+	bool is_type(j1939_pdu_typ*);												// TODO(ak): delete?
 
 	// prints and logs the message-specific format of a data point to the
 	// file path located in FILE*. Furthermore, if the third element is set
@@ -41,23 +43,20 @@ public:
 
 	// publish the message to the QNX publish/subscribe server
 	virtual void publish(void*) = 0;
+//	virtual void ~publish();
 
 	// J1939 PGN number for the data-type
 	int pgn;
+
+//	~j1939_interpreter();
 };
-
-
-bool j1939_interpreter::is_type(j1939_pdu_typ *pdu) {
-	int target_pgn = (int)pow(2.0,8.0) * pdu->pdu_format + pdu->pdu_specific;
-    return (pdu -> pdu_specific == pgn);
-}
 
 
 /** PDU generic interpreter (in case the PGN number is not interpretable) */
 class PDU_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = 0;
+	int pgn = 0;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
     virtual void publish(void*);
@@ -68,7 +67,7 @@ public:
 class TSC1_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = TSC1;
+	int pgn = TSC1;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -81,7 +80,7 @@ class TC1_interpreter : public j1939_interpreter
 {
 public:
 	// char* name = "Transmission Control (TC1)";
-	int pdu_specific = 0;
+	int pgn = 0;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -92,7 +91,7 @@ public:
 class ERC1_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = ERC1;
+	int pgn = ERC1;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -103,7 +102,7 @@ public:
 class EBC1_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = EBC1;
+	int pgn = EBC1;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -114,7 +113,7 @@ public:
 class ETC1_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = ETC1;
+	int pgn = ETC1;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -125,7 +124,7 @@ public:
 class EEC1_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = EEC1;
+	int pgn = EEC1;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -136,7 +135,7 @@ public:
 class EEC2_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = EEC2;
+	int pgn = EEC2;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -147,7 +146,7 @@ public:
 class ETC2_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = ETC2;
+	int pgn = ETC2;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -158,7 +157,7 @@ public:
 class TURBO_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = TURBO;
+	int pgn = TURBO;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -169,7 +168,7 @@ public:
 class EEC3_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = EEC3;
+	int pgn = EEC3;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -180,7 +179,7 @@ public:
 class VD_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = VD;
+	int pgn = VD;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -191,7 +190,7 @@ public:
 class RCFG_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = RCFG;
+	int pgn = RCFG;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -200,22 +199,22 @@ public:
 
 // TODO(ak): do this
 /** PDU TCFG (Transmission Configuration) doc. in J1939 - 71, p155 */
-class TCFG_interpreter : public j1939_interpreter
-{
-public:
-	// char* name = "Transmission Configuration (TCFG)";
-	int pdu_specific = TCFG;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
+//class TCFG_interpreter : public j1939_interpreter
+//{
+//public:
+//	// char* name = "Transmission Configuration (TCFG)";
+//	int pgn = TCFG;
+//	virtual void *convert(j1939_pdu_typ*);
+//	virtual void print(void*, FILE*, bool);
+//	virtual void publish(void*);
+//};
 
 
 /** PDU ECFG (Engine Configuration) doc. in J1939 - 71, p156 */
 class ECFG_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = ECFG;
+	int pgn = ECFG;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -226,7 +225,7 @@ public:
 class ETEMP_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = ETEMP;
+	int pgn = ETEMP;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -237,7 +236,7 @@ public:
 class PTO_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = PTO;
+	int pgn = PTO;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -248,7 +247,7 @@ public:
 class CCVS_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = CCVS;
+	int pgn = CCVS;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -259,7 +258,7 @@ public:
 class LFE_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = LFE;
+	int pgn = LFE;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -270,7 +269,7 @@ public:
 class AMBC_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = AMBC;
+	int pgn = AMBC;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -281,7 +280,7 @@ public:
 class IEC_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = IEC;
+	int pgn = IEC;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -292,7 +291,7 @@ public:
 class VEP_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = VEP;
+	int pgn = VEP;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -303,7 +302,7 @@ public:
 class TF_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = TF;
+	int pgn = TF;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -314,7 +313,7 @@ public:
 class RF_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = RF;
+	int pgn = RF;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -325,7 +324,7 @@ public:
 class HRVD_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = HRVD;
+	int pgn = HRVD;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -336,7 +335,7 @@ public:
 class EBC2_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = EBC2;
+	int pgn = EBC2;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -347,7 +346,7 @@ public:
 class FD_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = FD;
+	int pgn = FD;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -355,32 +354,31 @@ public:
 
 
 // TODO(ak): find out if we need these
-/** PDU EXAC (External Acceleration Control), WABCO proprietary
-class EXAC_interpreter : public j1939_interpreter
-{
-public:
-	int pdu_specific = EXAC;
-	j1939_exac_typ *convert(j1939_pdu_typ*);
-	void print(j1939_exac_typ*, FILE*, bool);
-};
+/** PDU EXAC (External Acceleration Control), WABCO proprietary */
+//class EXAC_interpreter : public j1939_interpreter
+//{
+//public:
+//	int pgn = EXAC;
+//	j1939_exac_typ *convert(j1939_pdu_typ*);
+//	void print(j1939_exac_typ*, FILE*, bool);
+//};
 
 
-/** PDU EBC_ACC (Electronic Brake Control for ACC), WABCO proprietary
-class EBC_ACC_interpreter : public j1939_interpreter
-{
-public:
-	int pdu_specific = 0;
-	j1939_ebc_acc_typ *convert(j1939_pdu_typ*);
-	void print(j1939_ebc_acc_typ*, FILE*, bool);
-};
-*/
+/** PDU EBC_ACC (Electronic Brake Control for ACC), WABCO proprietary */
+//class EBC_ACC_interpreter : public j1939_interpreter
+//{
+//public:
+//	int pgn = 0;
+//	j1939_ebc_acc_typ *convert(j1939_pdu_typ*);
+//	void print(j1939_ebc_acc_typ*, FILE*, bool);
+//};
 
 
 /** PDU GFI2 (Gaseous Fuel Information 2), J1939-71, sec 5.3.123 */
 class GFI2_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = GFI2;
+	int pgn = GFI2;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);
@@ -391,7 +389,7 @@ public:
 class EI_interpreter : public j1939_interpreter
 {
 public:
-	int pdu_specific = EI;
+	int pgn = EI;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*);

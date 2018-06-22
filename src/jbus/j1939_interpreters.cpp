@@ -1,4 +1,4 @@
-/*
+/**
  * j1939_interpreters.cpp
  *
  *  Created on: May 31, 2018
@@ -6,6 +6,12 @@
  */
 
 #include "j1939_interpreters.h"
+
+
+bool j1939_interpreter::is_type(j1939_pdu_typ *pdu) {
+	int target_pgn = (int)pow(2.0,8.0) * pdu->pdu_format + pdu->pdu_specific;
+    return (target_pgn == pgn);
+}
 
 
 void *TSC1_interpreter::convert(j1939_pdu_typ *pdu) {
@@ -47,8 +53,10 @@ void TSC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, "\n");
 		fprintf(fp, " Destination %d \n", tsc1->destination_address);
 		fprintf(fp, " Source address %d\n", tsc1->src_address);
-		fprintf(fp, " Override Control Mode priority %d\n", tsc1->ovrd_ctrl_m_pr);
-		fprintf(fp, " Requested speed control conditions %d\n", tsc1->req_spd_ctrl);
+		fprintf(fp, " Override Control Mode priority %d\n",
+				tsc1->ovrd_ctrl_m_pr);
+		fprintf(fp, " Requested speed control conditions %d\n",
+				tsc1->req_spd_ctrl);
 		fprintf(fp, " Override control mode %d\n", tsc1->ovrd_ctrl_m);
 		fprintf(fp, " Requested speed/speed limit  %.3f\n", tsc1->req_spd_lim);
 		fprintf(fp, " Requested torque/torque limit %.3f\n", tsc1->req_trq_lim);
@@ -103,15 +111,23 @@ void ERC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
-		fprintf(fp, " Enable shift assist status %d\n", erc1->enable_shift_assist);
-		fprintf(fp, " Enable brake assist status %d\n", erc1->enable_brake_assist);
+		fprintf(fp, " Enable shift assist status %d\n",
+				erc1->enable_shift_assist);
+		fprintf(fp, " Enable brake assist status %d\n",
+				erc1->enable_brake_assist);
 		fprintf(fp, " Engine retarder torque mode %d\n", erc1->trq_mode);
-		fprintf(fp, " Actual retarder percent torque %.2f\n", erc1->actual_ret_pcnt_trq);
-		fprintf(fp, " Intended retarder percent torque %.2f\n", erc1->intended_ret_pcnt_trq);
-		fprintf(fp, " Retarder requesting brake light %d\n", erc1->rq_brake_light);
-		fprintf(fp, " Source address %d (0x%0x)\n", erc1->src_address_ctrl, erc1->src_address_ctrl);
-		fprintf(fp, " Drivers demand retarder percent torque %d\n", erc1->drvrs_demand_prcnt_trq);
-		fprintf(fp, " Retarder selection Non-eng %d\n", erc1->selection_nonengine);
+		fprintf(fp, " Actual retarder percent torque %.2f\n",
+				erc1->actual_ret_pcnt_trq);
+		fprintf(fp, " Intended retarder percent torque %.2f\n",
+				erc1->intended_ret_pcnt_trq);
+		fprintf(fp, " Retarder requesting brake light %d\n",
+				erc1->rq_brake_light);
+		fprintf(fp, " Source address %d (0x%0x)\n",
+				erc1->src_address_ctrl, erc1->src_address_ctrl);
+		fprintf(fp, " Drivers demand retarder percent torque %d\n",
+				erc1->drvrs_demand_prcnt_trq);
+		fprintf(fp, " Retarder selection Non-eng %d\n",
+				erc1->selection_nonengine);
 		fprintf(fp, " Actual maximum available retarder percent torque %d\n",
 				erc1->max_available_prcnt_trq);
 	}
@@ -191,21 +207,34 @@ void EBC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, "\n");
 		fprintf(fp, " EBS brake switch status %d \n", ebc1->ebs_brk_switch);
 		fprintf(fp, " ABS active status %d \n", ebc1->antilock_brk_active);
-		fprintf(fp, " ASR brake control status%d \n", ebc1->asr_brk_ctrl_active);
-		fprintf(fp, " ASR engine control active status %d \n", ebc1->asr_engine_ctrl_active);
+		fprintf(fp, " ASR brake control status%d \n",
+				ebc1->asr_brk_ctrl_active);
+		fprintf(fp, " ASR engine control active status %d \n",
+				ebc1->asr_engine_ctrl_active);
 		fprintf(fp, " Brake pedal position %.2f\n ", ebc1->brk_pedal_pos);
-		fprintf(fp, " Traction control override switch status %d \n", ebc1->trac_ctrl_override_switch);
-		fprintf(fp, " Hill holder switch status %d \n", ebc1->asr_hillholder_switch);
-		fprintf(fp, " ASR off road switch status %d \n", ebc1->asr_offroad_switch);
-		fprintf(fp, " Remote accelerator enable switch status %d \n", ebc1->accel_enable_switch);
-		fprintf(fp, " Auxiliary engine shutdown switch status %d \n", ebc1->aux_eng_shutdown_switch);
-		fprintf(fp, " Engine derate switch status %d \n", ebc1->eng_derate_switch);
-		fprintf(fp, " Accelerator interlock switch status %d \n", ebc1->accel_interlock_switch);
-		fprintf(fp, " Percent engine retarder torque selected %.2f \n", ebc1->eng_retarder_selection);
-		fprintf(fp, " ABS/EBS amber warning state %d \n", ebc1->abs_ebs_amber_warning);
+		fprintf(fp, " Traction control override switch status %d \n",
+				ebc1->trac_ctrl_override_switch);
+		fprintf(fp, " Hill holder switch status %d \n",
+				ebc1->asr_hillholder_switch);
+		fprintf(fp, " ASR off road switch status %d \n",
+				ebc1->asr_offroad_switch);
+		fprintf(fp, " Remote accelerator enable switch status %d \n",
+				ebc1->accel_enable_switch);
+		fprintf(fp, " Auxiliary engine shutdown switch status %d \n",
+				ebc1->aux_eng_shutdown_switch);
+		fprintf(fp, " Engine derate switch status %d \n",
+				ebc1->eng_derate_switch);
+		fprintf(fp, " Accelerator interlock switch status %d \n",
+				ebc1->accel_interlock_switch);
+		fprintf(fp, " Percent engine retarder torque selected %.2f \n",
+				ebc1->eng_retarder_selection);
+		fprintf(fp, " ABS/EBS amber warning state %d \n",
+				ebc1->abs_ebs_amber_warning);
 		fprintf(fp, " EBS red warning state %d \n", ebc1->ebs_red_warning);
-		fprintf(fp, " ABS fully operational %d \n", ebc1->abs_fully_operational);
-		fprintf(fp, " Source address %d (0x%0x)\n", ebc1->src_address_ctrl, ebc1->src_address_ctrl);
+		fprintf(fp, " ABS fully operational %d \n",
+				ebc1->abs_fully_operational);
+		fprintf(fp, " Source address %d (0x%0x)\n",
+				ebc1->src_address_ctrl, ebc1->src_address_ctrl);
 		fprintf(fp, " Total brake demand %.3f\n", ebc1->total_brk_demand);
 	}
 }
@@ -319,11 +348,15 @@ void EEC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	} else {
 		fprintf(fp, "\n");
 		fprintf(fp, " Engine retarder torque mode %d\n", eec1->eng_trq_mode);
-		fprintf(fp, " Driver's demand percent torque %.2f\n", eec1->drvr_demand_eng_trq);
-		fprintf(fp, " Actual engine percent torque %.2f\n", eec1->actual_eng_trq);
-		fprintf(fp, " Engine Demand - Percent Torque %.2f\n", eec1->eng_demand_trq);
+		fprintf(fp, " Driver's demand percent torque %.2f\n",
+				eec1->drvr_demand_eng_trq);
+		fprintf(fp, " Actual engine percent torque %.2f\n",
+				eec1->actual_eng_trq);
+		fprintf(fp, " Engine Demand - Percent Torque %.2f\n",
+				eec1->eng_demand_trq);
 		fprintf(fp, " Engine speed (rpm) %.3f\n", eec1->eng_spd);
-		fprintf(fp, " Source address engine control device %d\n", eec1->src_address);
+		fprintf(fp, " Source address engine control device %d\n",
+				eec1->src_address);
 	}
 }
 
@@ -792,11 +825,13 @@ void ETEMP_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
-		fprintf(fp, " Engine coolant temperature %.3f\n", etemp->eng_coolant_temp);
+		fprintf(fp, " Engine coolant temperature %.3f\n",
+				etemp->eng_coolant_temp);
 		fprintf(fp, " Fuel temperature %.3f\n", etemp->fuel_temp);
 		fprintf(fp, " Engine oil temperature %.3f\n", etemp->eng_oil_temp);
 		fprintf(fp, " Turbo oil temperature %.3f\n", etemp->turbo_oil_temp);
-		fprintf(fp, " Engine intercooler temperature %.3f\n", etemp->eng_intercooler_temp);
+		fprintf(fp, " Engine intercooler temperature %.3f\n",
+				etemp->eng_intercooler_temp);
 		fprintf(fp, " Engine intercooler thermostat opening %.3f\n",
 				etemp->eng_intercooler_thermostat_opening);
 	}
@@ -866,7 +901,8 @@ void PTO_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, " PTO enable switch %d\n", pto->enable_switch);
 		fprintf(fp, " PTO accelerate switch %d\n", pto->accel_switch);
 		fprintf(fp, " PTO resume switch %d\n", pto->resume_switch);
-		fprintf(fp, " PTO coast decelerate switch %d\n", pto->coast_decel_switch);
+		fprintf(fp, " PTO coast decelerate switch %d\n",
+				pto->coast_decel_switch);
 		fprintf(fp, " PTO set switch %d\n", pto->set_switch);
 	}
 }
@@ -965,7 +1001,8 @@ void CCVS_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, " Cruise control set speed %.3f\n", ccvs->cc_set_speed);
 		fprintf(fp, " Cruise control state %d\n", ccvs->cc_state);
 		fprintf(fp, " PTO state %d\n", ccvs->pto_state);
-		fprintf(fp, " Engine shutdown override %d\n", ccvs->eng_shutdown_override);
+		fprintf(fp, " Engine shutdown override %d\n",
+				ccvs->eng_shutdown_override);
 		fprintf(fp, " Engine test mode %d\n", ccvs->eng_test_mode_switch);
 		fprintf(fp, " Idle decrement %d\n", ccvs->eng_idle_decr_switch);
 		fprintf(fp, " Idle increment %d\n", ccvs->eng_idle_incr_switch);
@@ -1012,9 +1049,12 @@ void LFE_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	} else {
 		fprintf(fp, "\n");
 		fprintf(fp, " Fuel rate (cm3/sec) %.3f\n", lfe->eng_fuel_rate);
-		fprintf(fp, " Instantaneous fuel economy (m/cm3) %.3f\n", lfe->eng_inst_fuel_economy);
-		fprintf(fp, " Average fuel economy (m/cm3) %.3f\n", lfe->eng_avg_fuel_economy);
-		fprintf(fp, " Throttle position (percent) %.3f\n", lfe->eng_throttle_valve1_pos);
+		fprintf(fp, " Instantaneous fuel economy (m/cm3) %.3f\n",
+				lfe->eng_inst_fuel_economy);
+		fprintf(fp, " Average fuel economy (m/cm3) %.3f\n",
+				lfe->eng_avg_fuel_economy);
+		fprintf(fp, " Throttle position (percent) %.3f\n",
+				lfe->eng_throttle_valve1_pos);
 	}
 }
 
@@ -1330,12 +1370,18 @@ void EBC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	} else {
 		fprintf(fp, "\n");
 		fprintf(fp, " Front axle speed %.3f\n", ebc2->front_axle_spd);
-		fprintf(fp, " Front left wheel relative speed %.3f\n", ebc2->rel_spd_front_left);
-		fprintf(fp, " Front right wheel relative speed %.3f\n", ebc2->rel_spd_front_right);
-		fprintf(fp, " Rear 1 left wheel relative speed %.3f\n", ebc2->rel_spd_rear_left_1);
-		fprintf(fp, " Rear 1 left wheel relative speed %.3f\n", ebc2->rel_spd_rear_right_1);
-		fprintf(fp, " Rear 2 left wheel relative speed %.3f\n", ebc2->rel_spd_rear_left_2);
-		fprintf(fp, " Rear 2 left wheel relative speed %.3f\n", ebc2->rel_spd_rear_right_2);
+		fprintf(fp, " Front left wheel relative speed %.3f\n",
+				ebc2->rel_spd_front_left);
+		fprintf(fp, " Front right wheel relative speed %.3f\n",
+				ebc2->rel_spd_front_right);
+		fprintf(fp, " Rear 1 left wheel relative speed %.3f\n",
+				ebc2->rel_spd_rear_left_1);
+		fprintf(fp, " Rear 1 left wheel relative speed %.3f\n",
+				ebc2->rel_spd_rear_right_1);
+		fprintf(fp, " Rear 2 left wheel relative speed %.3f\n",
+				ebc2->rel_spd_rear_left_2);
+		fprintf(fp, " Rear 2 left wheel relative speed %.3f\n",
+				ebc2->rel_spd_rear_right_2);
 	}
 }
 
