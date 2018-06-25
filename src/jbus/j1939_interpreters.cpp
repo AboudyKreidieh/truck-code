@@ -6,18 +6,101 @@
  */
 
 #include "j1939_interpreters.h"
+#include "j1939_utils.h"  // for TWOBYTES
+#include <string>
+#include <sys/pps.h>
+
+using namespace std;
 
 
 bool j1939_interpreter::is_type(j1939_pdu_typ *pdu) {
-	int target_pgn = (int)pow(2.0,8.0) * pdu->pdu_format + pdu->pdu_specific;
+	int target_pgn = TWOBYTES(pdu->pdu_format, pdu->pdu_specific);
     return (target_pgn == pgn);
 }
+
+/* -------------------------------------------------------------------------- */
+/* ----------------------- In case not interpretable ------------------------ */
+/* -------------------------------------------------------------------------- */
+
+
+void *PDU_interpreter::convert(j1939_pdu_typ *pdu) {
+	return (void*) pdu;  // no changes are made
+}
+
+
+void PDU_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+	j1939_pdu_typ *pdu = (j1939_pdu_typ*) pdv;
+
+	fprintf(fp, "PDU");
+	print_timestamp(fp, &pdu->timestamp);
+	if (numeric) {
+		fprintf(fp, " %d", pdu->priority);
+		fprintf(fp, " %d", pdu->pdu_format);
+		fprintf(fp, " %d", pdu->pdu_specific);
+		fprintf(fp, " %d", pdu->src_address);
+		fprintf(fp, " %d", pdu->num_bytes);
+		for (int i=0; i<pdu->num_bytes; ++i)
+			fprintf(fp, " %d", pdu->data_field[i]);
+		fprintf(fp, "\n");
+	} else {
+		fprintf(fp, "\n");
+		fprintf(fp, " Priority %d \n", pdu->priority);
+		fprintf(fp, " Protocol Data Unit Format (PF) %d\n", pdu->pdu_format);
+		fprintf(fp, " PDU Specific (PS) %d\n", pdu->pdu_specific);
+		fprintf(fp, " Source Address %d\n", pdu->src_address);
+		fprintf(fp, " Number of bytes %d\n", pdu->num_bytes);
+		fprintf(fp, " Data Field ");
+		for (int i=0; i<pdu->num_bytes; ++i)
+			fprintf(fp, " %d", pdu->data_field[i]);
+		fprintf(fp, "\n");
+	}
+}
+
+
+void PDU_interpreter::publish(void *pdv, int fd) {
+	j1939_pdu_typ *pdu = (j1939_pdu_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@PDU");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", pdu->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", pdu->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", pdu->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", pdu->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "priority", pdu->priority);
+	pps_encoder_add_int(&encoder, "pdu_format", pdu->pdu_format);
+	pps_encoder_add_int(&encoder, "pdu_specific", pdu->pdu_specific);
+	pps_encoder_add_int(&encoder, "src_address", pdu->src_address);
+	pps_encoder_add_int(&encoder, "num_bytes", pdu->num_bytes);
+	pps_encoder_start_object(&encoder, "data_field");
+	for (int i=0; i<pdu->num_bytes; ++i)
+		pps_encoder_add_int(&encoder, to_string(i).c_str(), pdu->data_field[i]);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
+}
+
+
+/* -------------------------------------------------------------------------- */
+/* ------------------------ Received from the brake ------------------------- */
+/* -------------------------------------------------------------------------- */
 
 
 void *TSC1_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_tsc1_typ *tsc1 = new j1939_tsc1_typ();
 	tsc1->timestamp = pdu->timestamp;
-	short data;
 
 	tsc1->src_address = pdu->src_address;
 	tsc1->destination_address = pdu->pdu_specific;
@@ -26,7 +109,7 @@ void *TSC1_interpreter::convert(j1939_pdu_typ *pdu) {
 	tsc1->req_spd_ctrl = BITS43(pdu->data_field[0]);
 	tsc1->ovrd_ctrl_m_pr = BITS65(pdu->data_field[0]);
 
-	data = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
+	int data = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
 	tsc1->req_spd_lim = speed_in_rpm_2byte(data);
 
 	tsc1->req_trq_lim = percent_m125_to_p125(pdu->data_field[3]);
@@ -64,8 +147,532 @@ void TSC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void TSC1_interpreter::publish(void *pdv) {
-	// j1939_tsc1_typ *tsc1 = (j1939_tsc1_typ*) pdv;
+void TSC1_interpreter::publish(void *pdv, int fd) {
+	 j1939_tsc1_typ *tsc1 = (j1939_tsc1_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@TSC1");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", tsc1->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", tsc1->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", tsc1->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", tsc1->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "destination_address",
+			tsc1->destination_address);
+	pps_encoder_add_int(&encoder, "src_address", tsc1->src_address);
+	pps_encoder_add_int(&encoder, "ovrd_ctrl_m_pr", tsc1->ovrd_ctrl_m_pr);
+	pps_encoder_add_int(&encoder, "req_spd_ctrl", tsc1->req_spd_ctrl);
+	pps_encoder_add_int(&encoder, "ovrd_ctrl_m", tsc1->ovrd_ctrl_m);
+	pps_encoder_add_double(&encoder, "req_spd_lim", tsc1->req_spd_lim);
+	pps_encoder_add_double(&encoder, "req_trq_lim", tsc1->req_trq_lim);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EBC1_interpreter::convert(j1939_pdu_typ *pdu) {
+	j1939_ebc1_typ *ebc1 = new j1939_ebc1_typ();
+	ebc1->timestamp = pdu->timestamp;
+
+	ebc1->ebs_brk_switch = BITS87(pdu->data_field[0]);
+	ebc1->antilock_brk_active = BITS65(pdu->data_field[0]);
+	ebc1->asr_brk_ctrl_active = BITS43(pdu->data_field[0]);
+	ebc1->asr_engine_ctrl_active = BITS21(pdu->data_field[0]);
+
+	ebc1->brk_pedal_pos = percent_0_to_100(pdu->data_field[1]);
+
+	ebc1->trac_ctrl_override_switch = BITS87(pdu->data_field[2]);
+	ebc1->asr_hillholder_switch = BITS65(pdu->data_field[2]);
+	ebc1->asr_offroad_switch = BIT43(pdu->data_field[2]);
+	ebc1->abs_offroad_switch = BIT21(pdu->data_field[2]);
+
+	ebc1->accel_enable_switch = BITS87(pdu->data_field[3]);
+	ebc1->aux_eng_shutdown_switch = BITS65(pdu->data_field[3]);
+	ebc1->eng_derate_switch = BITS43(pdu->data_field[3]);
+	ebc1->accel_interlock_switch = BITS21(pdu->data_field[3]);
+
+	ebc1->eng_retarder_selection = percent_0_to_100(pdu->data_field[4]);
+
+	ebc1->abs_ebs_amber_warning = BITS65(pdu->data_field[5]);
+	ebc1->ebs_red_warning = BITS43(pdu->data_field[5]);
+	ebc1->abs_fully_operational = BITS21(pdu->data_field[5]);
+
+	ebc1->src_address_ctrl = pdu->data_field[6];
+
+	ebc1->total_brk_demand = brake_demand(pdu->data_field[7]);
+
+	return (void*) ebc1;
+}
+
+
+void EBC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+	j1939_ebc1_typ *ebc1 = (j1939_ebc1_typ*) pdv;
+
+	fprintf(fp, "EBC1");
+	print_timestamp(fp, &ebc1->timestamp);
+	if (numeric) {
+		fprintf(fp, " %d", ebc1->ebs_brk_switch);
+		fprintf(fp, " %d", ebc1->antilock_brk_active);
+		fprintf(fp, " %d", ebc1->asr_brk_ctrl_active);
+		fprintf(fp, " %d", ebc1->asr_engine_ctrl_active);
+		fprintf(fp, " %.2f", ebc1->brk_pedal_pos);
+		fprintf(fp, " %d", ebc1->trac_ctrl_override_switch);
+		fprintf(fp, " %d", ebc1->asr_hillholder_switch);
+		fprintf(fp, " %d", ebc1->abs_offroad_switch);
+		fprintf(fp, " %d", ebc1->asr_offroad_switch);
+		fprintf(fp, " %d", ebc1->accel_enable_switch);
+		fprintf(fp, " %d", ebc1->aux_eng_shutdown_switch);
+		fprintf(fp, " %d", ebc1->eng_derate_switch);
+		fprintf(fp, " %d", ebc1->accel_interlock_switch);
+		fprintf(fp, " %.2f", ebc1->eng_retarder_selection);
+		fprintf(fp, " %d", ebc1->abs_ebs_amber_warning);
+		fprintf(fp, " %d", ebc1->ebs_red_warning);
+		fprintf(fp, " %d", ebc1->abs_fully_operational);
+	 	fprintf(fp, " %d", ebc1->src_address_ctrl);
+	 	fprintf(fp, " %.3f", ebc1->total_brk_demand);
+		fprintf(fp, "\n");
+	} else {
+		fprintf(fp, "\n");
+		fprintf(fp, " EBS brake switch status %d \n", ebc1->ebs_brk_switch);
+		fprintf(fp, " ABS active status %d \n", ebc1->antilock_brk_active);
+		fprintf(fp, " ASR brake control status%d \n",
+				ebc1->asr_brk_ctrl_active);
+		fprintf(fp, " ASR engine control active status %d \n",
+				ebc1->asr_engine_ctrl_active);
+		fprintf(fp, " Brake pedal position %.2f\n ", ebc1->brk_pedal_pos);
+		fprintf(fp, " Traction control override switch status %d \n",
+				ebc1->trac_ctrl_override_switch);
+		fprintf(fp, " Hill holder switch status %d \n",
+				ebc1->asr_hillholder_switch);
+		fprintf(fp, " ABS off road switch status %d \n",
+				ebc1->abs_offroad_switch);
+		fprintf(fp, " ASR off road switch status %d \n",
+				ebc1->asr_offroad_switch);
+		fprintf(fp, " Remote accelerator enable switch status %d \n",
+				ebc1->accel_enable_switch);
+		fprintf(fp, " Auxiliary engine shutdown switch status %d \n",
+				ebc1->aux_eng_shutdown_switch);
+		fprintf(fp, " Engine derate switch status %d \n",
+				ebc1->eng_derate_switch);
+		fprintf(fp, " Accelerator interlock switch status %d \n",
+				ebc1->accel_interlock_switch);
+		fprintf(fp, " Percent engine retarder torque selected %.2f \n",
+				ebc1->eng_retarder_selection);
+		fprintf(fp, " ABS/EBS amber warning state %d \n",
+				ebc1->abs_ebs_amber_warning);
+		fprintf(fp, " EBS red warning state %d \n", ebc1->ebs_red_warning);
+		fprintf(fp, " ABS fully operational %d \n",
+				ebc1->abs_fully_operational);
+		fprintf(fp, " Source address %d (0x%0x)\n",
+				ebc1->src_address_ctrl, ebc1->src_address_ctrl);
+		fprintf(fp, " Total brake demand %.3f\n", ebc1->total_brk_demand);
+	}
+}
+
+
+void EBC1_interpreter::publish(void *pdv, int fd) {
+	j1939_ebc1_typ *ebc1 = (j1939_ebc1_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@EBC1");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", ebc1->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", ebc1->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", ebc1->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", ebc1->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "ebs_brk_switch", ebc1->ebs_brk_switch);
+	pps_encoder_add_int(&encoder, "antilock_brk_active",
+			ebc1->antilock_brk_active);
+	pps_encoder_add_int(&encoder, "asr_brk_ctrl_active",
+			ebc1->asr_brk_ctrl_active);
+	pps_encoder_add_int(&encoder, "asr_engine_ctrl_active",
+			ebc1->asr_engine_ctrl_active);
+	pps_encoder_add_double(&encoder, "brk_pedal_pos", ebc1->brk_pedal_pos);
+	pps_encoder_add_int(&encoder, "trac_ctrl_override_switch",
+			ebc1->trac_ctrl_override_switch);
+	pps_encoder_add_int(&encoder, "asr_hillholder_switch",
+			ebc1->asr_hillholder_switch);
+	pps_encoder_add_int(&encoder, "abs_offroad_switch",
+			ebc1->abs_offroad_switch);
+	pps_encoder_add_int(&encoder, "asr_offroad_switch",
+			ebc1->asr_offroad_switch);
+	pps_encoder_add_int(&encoder, "accel_enable_switch",
+			ebc1->accel_enable_switch);
+	pps_encoder_add_int(&encoder, "aux_eng_shutdown_switch",
+			ebc1->aux_eng_shutdown_switch);
+	pps_encoder_add_int(&encoder, "eng_derate_switch", ebc1->eng_derate_switch);
+	pps_encoder_add_int(&encoder, "accel_interlock_switch",
+			ebc1->accel_interlock_switch);
+	pps_encoder_add_double(&encoder, "eng_retarder_selection",
+			ebc1->eng_retarder_selection);
+	pps_encoder_add_int(&encoder, "abs_ebs_amber_warning",
+			ebc1->abs_ebs_amber_warning);
+	pps_encoder_add_int(&encoder, "ebs_red_warning", ebc1->ebs_red_warning);
+	pps_encoder_add_int(&encoder, "abs_fully_operational",
+			ebc1->abs_fully_operational);
+	pps_encoder_add_int(&encoder, "src_address_ctrl", ebc1->src_address_ctrl);
+	pps_encoder_add_double(&encoder, "total_brk_demand",
+			ebc1->total_brk_demand);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EBC2_interpreter::convert(j1939_pdu_typ *pdu) {
+	j1939_ebc2_typ *ebc2 = new j1939_ebc2_typ();
+	ebc2->timestamp = pdu->timestamp;
+
+	int two_bytes = TWOBYTES(pdu->data_field[1], pdu->data_field[0]);
+	ebc2->front_axle_spd = wheel_based_mps(two_bytes);
+	ebc2->rel_spd_front_left = wheel_based_mps_relative(pdu->data_field[2]);
+	ebc2->rel_spd_front_right = wheel_based_mps_relative(pdu->data_field[3]);
+	ebc2->rel_spd_rear_left_1 = wheel_based_mps_relative(pdu->data_field[4]);
+	ebc2->rel_spd_rear_right_1 = wheel_based_mps_relative(pdu->data_field[5]);
+	ebc2->rel_spd_rear_left_2 = wheel_based_mps_relative(pdu->data_field[6]);
+	ebc2->rel_spd_rear_right_2 = wheel_based_mps_relative(pdu->data_field[7]);
+
+	return (void*) ebc2;
+}
+
+
+void EBC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+	j1939_ebc2_typ *ebc2 = (j1939_ebc2_typ*) pdv;
+
+	fprintf(fp, "EBC2");
+	print_timestamp(fp, &ebc2->timestamp);
+	if (numeric) {
+		fprintf(fp, " %.3f", ebc2->front_axle_spd);
+		fprintf(fp, " %.3f", ebc2->rel_spd_front_left);
+		fprintf(fp, " %.3f", ebc2->rel_spd_front_right);
+		fprintf(fp, " %.3f", ebc2->rel_spd_rear_left_1);
+		fprintf(fp, " %.3f", ebc2->rel_spd_rear_right_1);
+		fprintf(fp, " %.3f", ebc2->rel_spd_rear_left_2);
+		fprintf(fp, " %.3f", ebc2->rel_spd_rear_right_2);
+		fprintf(fp, "\n");
+	} else {
+		fprintf(fp, "\n");
+		fprintf(fp, " Front axle speed %.3f\n", ebc2->front_axle_spd);
+		fprintf(fp, " Front left wheel relative speed %.3f\n",
+				ebc2->rel_spd_front_left);
+		fprintf(fp, " Front right wheel relative speed %.3f\n",
+				ebc2->rel_spd_front_right);
+		fprintf(fp, " Rear 1 left wheel relative speed %.3f\n",
+				ebc2->rel_spd_rear_left_1);
+		fprintf(fp, " Rear 1 left wheel relative speed %.3f\n",
+				ebc2->rel_spd_rear_right_1);
+		fprintf(fp, " Rear 2 left wheel relative speed %.3f\n",
+				ebc2->rel_spd_rear_left_2);
+		fprintf(fp, " Rear 2 left wheel relative speed %.3f\n",
+				ebc2->rel_spd_rear_right_2);
+	}
+}
+
+
+void EBC2_interpreter::publish(void *pdv, int fd) {
+	j1939_ebc2_typ *ebc2 = (j1939_ebc2_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@EBC2");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", ebc2->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", ebc2->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", ebc2->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", ebc2->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "front_axle_spd", ebc2->front_axle_spd);
+	pps_encoder_add_double(&encoder, "rel_spd_front_left",
+			ebc2->rel_spd_front_left);
+	pps_encoder_add_double(&encoder, "rel_spd_front_right",
+			ebc2->rel_spd_front_right);
+	pps_encoder_add_double(&encoder, "rel_spd_rear_left_1",
+			ebc2->rel_spd_rear_left_1);
+	pps_encoder_add_double(&encoder, "rel_spd_rear_right_1",
+			ebc2->rel_spd_rear_right_1);
+	pps_encoder_add_double(&encoder, "rel_spd_rear_left_2",
+			ebc2->rel_spd_rear_left_2);
+	pps_encoder_add_double(&encoder, "rel_spd_rear_right_2",
+			ebc2->rel_spd_rear_right_2);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EEC1_interpreter::convert(j1939_pdu_typ *pdu) {
+	j1939_eec1_typ *eec1 = new j1939_eec1_typ();
+	eec1->timestamp = pdu->timestamp;
+
+	eec1->eng_trq_mode = LONIBBLE(pdu->data_field[0]);
+	eec1->drvr_demand_eng_trq = percent_m125_to_p125(pdu->data_field[1]);
+	eec1->actual_eng_trq = percent_m125_to_p125(pdu->data_field[2]);
+	int two_bytes = TWOBYTES(pdu->data_field[4], pdu->data_field[3]);
+	eec1->eng_spd = speed_in_rpm_2byte(two_bytes);
+	eec1->src_address = pdu->data_field[5];
+	eec1->eng_demand_trq = percent_m125_to_p125(pdu->data_field[7]);
+
+	return (void*) eec1;
+}
+
+
+void EEC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+	j1939_eec1_typ *eec1 = (j1939_eec1_typ*) pdv;
+
+	fprintf(fp, "EEC1");
+	print_timestamp(fp, &eec1->timestamp);
+	if (numeric) {
+		fprintf(fp, " %d", eec1->eng_trq_mode);
+		fprintf(fp, " %.2f", eec1->drvr_demand_eng_trq);
+		fprintf(fp, " %.2f", eec1->actual_eng_trq);
+		fprintf(fp, " %.2f", eec1->eng_demand_trq);
+		fprintf(fp, " %.3f", eec1->eng_spd);
+		fprintf(fp, " %d", eec1->src_address);
+		fprintf(fp, "\n");
+	} else {
+		fprintf(fp, "\n");
+		fprintf(fp, " Engine retarder torque mode %d\n", eec1->eng_trq_mode);
+		fprintf(fp, " Driver's demand percent torque %.2f\n",
+				eec1->drvr_demand_eng_trq);
+		fprintf(fp, " Actual engine percent torque %.2f\n",
+				eec1->actual_eng_trq);
+		fprintf(fp, " Engine Demand - Percent Torque %.2f\n",
+				eec1->eng_demand_trq);
+		fprintf(fp, " Engine speed (rpm) %.3f\n", eec1->eng_spd);
+		fprintf(fp, " Source address engine control device %d\n",
+				eec1->src_address);
+	}
+}
+
+
+void EEC1_interpreter::publish(void *pdv, int fd) {
+	j1939_eec1_typ *eec1 = (j1939_eec1_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@EEC1");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", eec1->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", eec1->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", eec1->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", eec1->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "eng_trq_mode", eec1->eng_trq_mode);
+	pps_encoder_add_double(&encoder, "drvr_demand_eng_trq",
+			eec1->drvr_demand_eng_trq);
+	pps_encoder_add_double(&encoder, "actual_eng_trq", eec1->actual_eng_trq);
+	pps_encoder_add_double(&encoder, "eng_demand_trq", eec1->eng_demand_trq);
+	pps_encoder_add_double(&encoder, "eng_spd", eec1->eng_spd);
+	pps_encoder_add_int(&encoder, "src_address", eec1->src_address);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EEC2_interpreter::convert(j1939_pdu_typ *pdu) {
+	j1939_eec2_typ *eec2 = new j1939_eec2_typ();
+	eec2->timestamp = pdu->timestamp;
+
+	eec2->accel_pedal2_idle = BITS87(pdu->data_field[0]);
+	eec2->spd_limit_status = BITS65(pdu->data_field[0]);
+	eec2->accel_pedal_kickdown = BITS43(pdu->data_field[0]);
+	eec2->accel_pedal1_idle = BITS21(pdu->data_field[0]);
+
+	eec2->accel_pedal1_pos = percent_0_to_100(pdu->data_field[1]);
+	eec2->eng_prcnt_load_curr_spd = percent_0_to_250(pdu->data_field[2]);
+	eec2->accel_pedal2_pos = percent_0_to_100(pdu->data_field[4]);
+	eec2->act_max_avail_eng_trq = percent_0_to_100(pdu->data_field[6]);
+
+	return (void*) eec2;
+}
+
+
+void EEC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+	j1939_eec2_typ *eec2 = (j1939_eec2_typ*) pdv;
+
+	fprintf(fp, "EEC2");
+	print_timestamp(fp, &eec2->timestamp);
+	if (numeric) {
+		fprintf(fp, " %d", eec2->spd_limit_status);
+		fprintf(fp, " %d", eec2->accel_pedal_kickdown);
+		fprintf(fp, " %d", eec2->accel_pedal1_idle);
+		fprintf(fp, " %d", eec2->accel_pedal2_idle);
+		fprintf(fp, " %.2f", eec2->act_max_avail_eng_trq);
+		fprintf(fp, " %.2f", eec2->accel_pedal1_pos);
+		fprintf(fp, " %.2f", eec2->accel_pedal2_pos);
+		fprintf(fp, " %.2f", eec2->eng_prcnt_load_curr_spd);
+		fprintf(fp, "\n");
+	} else {
+		fprintf(fp, "\n");
+		fprintf(fp, " Road speed limit %d\n", eec2->spd_limit_status);
+		fprintf(fp, " Kickpedal active %d\n", eec2->accel_pedal_kickdown);
+		fprintf(fp, " Low idle 1 %d\n", eec2->accel_pedal1_idle);
+		fprintf(fp, " Low idle 2 %d\n", eec2->accel_pedal2_idle);
+		fprintf(fp, " AP1 position %.2f\n", eec2->accel_pedal1_pos);
+		fprintf(fp, " AP2 position %.2f\n", eec2->accel_pedal2_pos);
+		fprintf(fp, " Percent load %.2f\n", eec2->eng_prcnt_load_curr_spd);
+		fprintf(fp, " Percent torque %.2f\n", eec2->act_max_avail_eng_trq);
+	}
+}
+
+
+void EEC2_interpreter::publish(void *pdv, int fd) {
+	j1939_eec2_typ *eec2 = (j1939_eec2_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@EEC2");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", eec2->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", eec2->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", eec2->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", eec2->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "spd_limit_status", eec2->spd_limit_status);
+	pps_encoder_add_int(&encoder, "accel_pedal_kickdown",
+			eec2->accel_pedal_kickdown);
+	pps_encoder_add_int(&encoder, "accel_pedal1_idle", eec2->accel_pedal1_idle);
+	pps_encoder_add_int(&encoder, "accel_pedal2_idle", eec2->accel_pedal2_idle);
+	pps_encoder_add_double(&encoder, "act_max_avail_eng_trq",
+			eec2->act_max_avail_eng_trq);
+	pps_encoder_add_double(&encoder, "accel_pedal1_pos",
+			eec2->accel_pedal1_pos);
+	pps_encoder_add_double(&encoder, "accel_pedal2_pos",
+			eec2->accel_pedal2_pos);
+	pps_encoder_add_double(&encoder, "eng_prcnt_load_curr_spd",
+			eec2->eng_prcnt_load_curr_spd);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EEC3_interpreter::convert(j1939_pdu_typ *pdu) {
+	j1939_eec3_typ *eec3 = new j1939_eec3_typ();
+	eec3->timestamp = pdu->timestamp;
+
+	eec3->nominal_friction = percent_m125_to_p125(pdu->data_field[0]);
+
+	int two_bytes = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
+	eec3->desired_operating_spd = 0.125 * two_bytes;
+
+	eec3->operating_spd_adjust = percent_0_to_250(pdu->data_field[3]);
+
+	eec3->est_eng_prstic_loss = percent_m125_to_p125(pdu->data_field[4]);
+
+	return (void*) eec3;
+}
+
+
+void EEC3_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+	j1939_eec3_typ *eec3 = (j1939_eec3_typ*) pdv;
+
+	fprintf(fp, "EEC3");
+	print_timestamp(fp, &eec3->timestamp);
+	if (numeric) {
+		fprintf(fp," %.2f", eec3->nominal_friction);
+		fprintf(fp," %.2f", eec3->est_eng_prstic_loss);
+		fprintf(fp," %.2f", eec3->operating_spd_adjust);
+		fprintf(fp," %.2f", eec3->desired_operating_spd);
+		fprintf(fp, "\n");
+	} else {
+		fprintf(fp, "\n");
+		fprintf(fp," Nominal friction percent torque %.2f\n",
+			 eec3->nominal_friction);
+		fprintf(fp," Estimated engine power loss - percent torque %.3f\n",
+			 eec3->est_eng_prstic_loss);
+		fprintf(fp," Desired Operating Speed Asymmetry Adjustment %d\n",
+			 eec3->operating_spd_adjust);
+		fprintf(fp," Engine desired operating speed %.3f\n",
+			 eec3->desired_operating_spd);
+	}
+	// TODO(ak): add asymmetry adjustment
+}
+
+
+void EEC3_interpreter::publish(void *pdv, int fd) {
+	j1939_eec3_typ *eec3 = (j1939_eec3_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@EEC3");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", eec3->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", eec3->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", eec3->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", eec3->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "nominal_friction",
+			eec3->nominal_friction);
+	pps_encoder_add_double(&encoder, "est_eng_prstic_loss",
+			eec3->est_eng_prstic_loss);
+	pps_encoder_add_int(&encoder, "operating_spd_adjust",
+			eec3->operating_spd_adjust);
+	pps_encoder_add_double(&encoder, "desired_operating_spd",
+			eec3->desired_operating_spd);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
@@ -73,20 +680,17 @@ void *ERC1_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_erc1_typ *erc1 = new j1939_erc1_typ();
 	erc1->timestamp = pdu->timestamp;
 
-	// two-bit fields in data byte 0 indicate status of switch, enabled or
-	// disabled.
-	unsigned char byte = (unsigned int) pdu->data_field[0];
-	erc1->enable_shift_assist = BITS87(byte);
-	erc1->enable_brake_assist = BITS65(byte);
-	erc1->trq_mode = LONIBBLE(byte);
+	erc1->enable_shift_assist = BITS87(pdu->data_field[0]);
+	erc1->enable_brake_assist = BITS65(pdu->data_field[0]);
+	erc1->trq_mode = LONIBBLE(pdu->data_field[0]);
 
 	erc1->actual_ret_pcnt_trq = percent_m125_to_p125(pdu->data_field[1]);
 	erc1->intended_ret_pcnt_trq = percent_m125_to_p125(pdu->data_field[2]);
 	erc1->rq_brake_light = BITS43(pdu->data_field[3]);
 	erc1->src_address_ctrl = pdu->data_field[4];
-	erc1->drvrs_demand_prcnt_trq = pdu->data_field[5];
-	erc1->selection_nonengine = pdu->data_field[6];
-	erc1->max_available_prcnt_trq = pdu->data_field[7];
+	erc1->drvrs_demand_prcnt_trq = percent_m125_to_p125(pdu->data_field[5]);
+	erc1->selection_nonengine = percent_0_to_100(pdu->data_field[6]);
+	erc1->max_available_prcnt_trq = percent_m125_to_p125(pdu->data_field[7]);
 
 	return (void*) erc1;
 }
@@ -134,138 +738,66 @@ void ERC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ERC1_interpreter::publish(void *pdv) {
+void ERC1_interpreter::publish(void *pdv, int fd) {
 	j1939_erc1_typ *erc1 = (j1939_erc1_typ*) pdv;
-}
 
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
 
-// FIXME(ak): ASR offroad not covered here.
-void *EBC1_interpreter::convert(j1939_pdu_typ *pdu) {
-	j1939_ebc1_typ *ebc1 = new j1939_ebc1_typ();
-	ebc1->timestamp = pdu->timestamp;
-	unsigned char byte;
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@ERC1");
 
-	byte = (unsigned int) pdu->data_field[0];
-	ebc1->ebs_brk_switch = BITS87(byte);
-	ebc1->antilock_brk_active = BITS65(byte);
-	ebc1->asr_brk_ctrl_active = BITS43(byte);
-	ebc1->asr_engine_ctrl_active = BITS21(byte);
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", erc1->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", erc1->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", erc1->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", erc1->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
 
-	ebc1->brk_pedal_pos = percent_0_to_100(pdu->data_field[1]);
+	pps_encoder_add_int(&encoder, "enable_shift_assist",
+			erc1->enable_shift_assist);
+	pps_encoder_add_int(&encoder, "enable_brake_assist",
+			erc1->enable_brake_assist);
+	pps_encoder_add_int(&encoder, "trq_mode", erc1->trq_mode);
+	pps_encoder_add_double(&encoder, "actual_ret_pcnt_trq",
+			erc1->actual_ret_pcnt_trq);
+	pps_encoder_add_double(&encoder, "intended_ret_pcnt_trq",
+			erc1->intended_ret_pcnt_trq);
+	pps_encoder_add_int(&encoder, "rq_brake_light", erc1->rq_brake_light);
+	pps_encoder_add_int(&encoder, "src_address_ctrl", erc1->src_address_ctrl);
+	pps_encoder_add_int(&encoder, "drvrs_demand_prcnt_trq",
+			erc1->drvrs_demand_prcnt_trq);
+	pps_encoder_add_double(&encoder, "selection_nonengine",
+			erc1->selection_nonengine);
+	pps_encoder_add_int(&encoder, "max_available_prcnt_trq",
+			erc1->max_available_prcnt_trq);
 
-	byte = (unsigned int) pdu->data_field[2];
-	ebc1->trac_ctrl_override_switch = BITS87(byte);
-	ebc1->asr_hillholder_switch = BITS65(byte);
+	pps_encoder_end_object(&encoder);
 
-	byte = (unsigned int) pdu->data_field[3];
-	ebc1->accel_enable_switch = BITS87(byte);
-	ebc1->aux_eng_shutdown_switch = BITS65(byte);
-	ebc1->eng_derate_switch = BITS43(byte);
-	ebc1->accel_interlock_switch = BITS21(byte);
-
-	ebc1->eng_retarder_selection = percent_0_to_100(pdu->data_field[4]);
-
-	byte = (unsigned int) pdu->data_field[5];
-	ebc1->abs_ebs_amber_warning = BITS65(byte);
-	ebc1->ebs_red_warning = BITS43(byte);
-	ebc1->abs_fully_operational = BITS21(byte);
-
-	ebc1->abs_ebs_amber_warning = pdu->data_field[6];
-	// FIXME(ak): where is the command for this?
-	ebc1->total_brk_demand = brake_demand(pdu->data_field[7]);
-
-	return (void*) ebc1;
-}
-
-
-void EBC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
-	j1939_ebc1_typ *ebc1 = (j1939_ebc1_typ*) pdv;
-
-	fprintf(fp, "EBC1");
-	print_timestamp(fp, &ebc1->timestamp);
-	if (numeric) {
-		fprintf(fp, " %d", ebc1->ebs_brk_switch);
-		fprintf(fp, " %d", ebc1->antilock_brk_active);
-		fprintf(fp, " %d", ebc1->asr_brk_ctrl_active);
-		fprintf(fp, " %d", ebc1->asr_engine_ctrl_active);
-		fprintf(fp, " %.2f", ebc1->brk_pedal_pos);
-		fprintf(fp, " %d", ebc1->trac_ctrl_override_switch);
-		fprintf(fp, " %d", ebc1->asr_hillholder_switch);
-		fprintf(fp, " %d", ebc1->asr_offroad_switch);
-		fprintf(fp, " %d", ebc1->accel_enable_switch);
-		fprintf(fp, " %d", ebc1->aux_eng_shutdown_switch);
-		fprintf(fp, " %d", ebc1->eng_derate_switch);
-		fprintf(fp, " %d", ebc1->accel_interlock_switch);
-		fprintf(fp, " %.2f", ebc1->eng_retarder_selection);
-		fprintf(fp, " %d", ebc1->abs_ebs_amber_warning);
-		fprintf(fp, " %d", ebc1->ebs_red_warning);
-		fprintf(fp, " %d", ebc1->abs_fully_operational);
-	 	fprintf(fp, " %d", ebc1->src_address_ctrl);
-	 	fprintf(fp, " %.3f", ebc1->total_brk_demand);
-		fprintf(fp, "\n");
-	} else {
-		fprintf(fp, "\n");
-		fprintf(fp, " EBS brake switch status %d \n", ebc1->ebs_brk_switch);
-		fprintf(fp, " ABS active status %d \n", ebc1->antilock_brk_active);
-		fprintf(fp, " ASR brake control status%d \n",
-				ebc1->asr_brk_ctrl_active);
-		fprintf(fp, " ASR engine control active status %d \n",
-				ebc1->asr_engine_ctrl_active);
-		fprintf(fp, " Brake pedal position %.2f\n ", ebc1->brk_pedal_pos);
-		fprintf(fp, " Traction control override switch status %d \n",
-				ebc1->trac_ctrl_override_switch);
-		fprintf(fp, " Hill holder switch status %d \n",
-				ebc1->asr_hillholder_switch);
-		fprintf(fp, " ASR off road switch status %d \n",
-				ebc1->asr_offroad_switch);
-		fprintf(fp, " Remote accelerator enable switch status %d \n",
-				ebc1->accel_enable_switch);
-		fprintf(fp, " Auxiliary engine shutdown switch status %d \n",
-				ebc1->aux_eng_shutdown_switch);
-		fprintf(fp, " Engine derate switch status %d \n",
-				ebc1->eng_derate_switch);
-		fprintf(fp, " Accelerator interlock switch status %d \n",
-				ebc1->accel_interlock_switch);
-		fprintf(fp, " Percent engine retarder torque selected %.2f \n",
-				ebc1->eng_retarder_selection);
-		fprintf(fp, " ABS/EBS amber warning state %d \n",
-				ebc1->abs_ebs_amber_warning);
-		fprintf(fp, " EBS red warning state %d \n", ebc1->ebs_red_warning);
-		fprintf(fp, " ABS fully operational %d \n",
-				ebc1->abs_fully_operational);
-		fprintf(fp, " Source address %d (0x%0x)\n",
-				ebc1->src_address_ctrl, ebc1->src_address_ctrl);
-		fprintf(fp, " Total brake demand %.3f\n", ebc1->total_brk_demand);
-	}
-}
-
-
-void EBC1_interpreter::publish(void *pdv) {
-	j1939_ebc1_typ *ebc1 = (j1939_ebc1_typ*) pdv;
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
 void* ETC1_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_etc1_typ *etc1 = new j1939_etc1_typ();
 	etc1->timestamp = pdu->timestamp;
-	unsigned char byte;
-	unsigned short two_bytes;
+	int two_bytes;
 
-	// two-bit fields in data byte 0 indicate status of switch, enabled or
-	// disabled.
-	byte = (unsigned int) pdu->data_field[0];
-	etc1->trans_shift = BITS65(byte);
-	etc1->trq_conv_lockup = BITS43(byte);
-	etc1->trans_driveline = BITS21(byte);
+	etc1->trans_shift = BITS65(pdu->data_field[0]);
+	etc1->trq_conv_lockup = BITS43(pdu->data_field[0]);
+	etc1->trans_driveline = BITS21(pdu->data_field[0]);
 
 	two_bytes = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
 	etc1->tran_output_shaft_spd = speed_in_rpm_2byte(two_bytes);
 
 	etc1->prcnt_clutch_slip = percent_0_to_100(pdu->data_field[3]);
 
-	byte = pdu->data_field[4];
-	etc1->prog_shift_disable = BITS43(byte);
-	etc1->eng_overspd_enable = BITS21(byte);
+	etc1->prog_shift_disable = BITS43(pdu->data_field[4]);
+	etc1->eng_overspd_enable = BITS21(pdu->data_field[4]);
 
 	two_bytes = TWOBYTES(pdu->data_field[6], pdu->data_field[5]);
 	etc1->trans_input_shaft_spd = speed_in_rpm_2byte(two_bytes);
@@ -310,135 +842,57 @@ void ETC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ETC1_interpreter::publish(void *pdv) {
+void ETC1_interpreter::publish(void *pdv, int fd) {
 	j1939_etc1_typ *etc1 = (j1939_etc1_typ*) pdv;
-}
 
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
 
-void *EEC1_interpreter::convert(j1939_pdu_typ *pdu) {
-	j1939_eec1_typ *eec1 = new j1939_eec1_typ();
-	eec1->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@ETC1");
 
-	eec1->eng_trq_mode = LONIBBLE(pdu->data_field[0]);
-	eec1->drvr_demand_eng_trq = percent_m125_to_p125(pdu->data_field[1]);
-	eec1->actual_eng_trq = percent_m125_to_p125(pdu->data_field[2]);
-	eec1->eng_demand_trq = percent_m125_to_p125(pdu->data_field[7]);
-	two_bytes = TWOBYTES(pdu->data_field[4], pdu->data_field[3]);
-	eec1->eng_spd = speed_in_rpm_2byte(two_bytes);
-	eec1->src_address = pdu->data_field[5];
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", etc1->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", etc1->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", etc1->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", etc1->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
 
-	return (void*) eec1;
-}
+	pps_encoder_add_int(&encoder, "trans_shift", etc1->trans_shift);
+	pps_encoder_add_int(&encoder, "trq_conv_lockup", etc1->trq_conv_lockup);
+	pps_encoder_add_int(&encoder, "trans_driveline", etc1->trans_driveline);
+	pps_encoder_add_double(&encoder, "tran_output_shaft_spd",
+			etc1->tran_output_shaft_spd);
+	pps_encoder_add_double(&encoder, "prcnt_clutch_slip",
+			etc1->prcnt_clutch_slip);
+	pps_encoder_add_int(&encoder, "prog_shift_disable",
+			etc1->prog_shift_disable);
+	pps_encoder_add_int(&encoder, "eng_overspd_enable",
+			etc1->eng_overspd_enable);
+	pps_encoder_add_double(&encoder, "trans_input_shaft_spd",
+			etc1->trans_input_shaft_spd);
+	pps_encoder_add_int(&encoder, "src_address_ctrl", etc1->src_address_ctrl);
 
+	pps_encoder_end_object(&encoder);
 
-void EEC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
-	j1939_eec1_typ *eec1 = (j1939_eec1_typ*) pdv;
-
-	fprintf(fp, "EEC1");
-	print_timestamp(fp, &eec1->timestamp);
-	if (numeric) {
-		fprintf(fp, " %d", eec1->eng_trq_mode);
-		fprintf(fp, " %.2f", eec1->drvr_demand_eng_trq);
-		fprintf(fp, " %.2f", eec1->actual_eng_trq);
-		fprintf(fp, " %.2f", eec1->eng_demand_trq);
-		fprintf(fp, " %.3f", eec1->eng_spd);
-		fprintf(fp, " %d", eec1->src_address);
-		fprintf(fp, "\n");
-	} else {
-		fprintf(fp, "\n");
-		fprintf(fp, " Engine retarder torque mode %d\n", eec1->eng_trq_mode);
-		fprintf(fp, " Driver's demand percent torque %.2f\n",
-				eec1->drvr_demand_eng_trq);
-		fprintf(fp, " Actual engine percent torque %.2f\n",
-				eec1->actual_eng_trq);
-		fprintf(fp, " Engine Demand - Percent Torque %.2f\n",
-				eec1->eng_demand_trq);
-		fprintf(fp, " Engine speed (rpm) %.3f\n", eec1->eng_spd);
-		fprintf(fp, " Source address engine control device %d\n",
-				eec1->src_address);
-	}
-}
-
-
-void EEC1_interpreter::publish(void *pdv) {
-	j1939_eec1_typ *eec1 = (j1939_eec1_typ*) pdv;
-}
-
-
-void *EEC2_interpreter::convert(j1939_pdu_typ *pdu) {
-	j1939_eec2_typ *eec2 = new j1939_eec2_typ();
-	eec2->timestamp = pdu->timestamp;
-	unsigned char byte;
-
-	// two-bit fields in data byte 0 indicate active/inactive: 00 active,
-	// 01 not active for road speed limit, see p. 140
-	byte = (unsigned int) pdu->data_field[0];
-	eec2->accel_pedal2_idle = BITS87(byte);
-	eec2->spd_limit_status = BITS65(byte);
-	eec2->accel_pedal_kickdown = BITS43(byte);
-	eec2->accel_pedal1_idle = BITS21(byte);
-
-	eec2->accel_pedal1_pos = percent_0_to_100(pdu->data_field[1]);
-	eec2->accel_pedal2_pos = percent_0_to_100(pdu->data_field[4]);
-	eec2->act_max_avail_eng_trq = percent_0_to_100(pdu->data_field[6]);
-	eec2->eng_prcnt_load_curr_spd = percent_0_to_250(pdu->data_field[2]);
-
-	return (void*) eec2;
-}
-
-
-void EEC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
-	j1939_eec2_typ *eec2 = (j1939_eec2_typ*) pdv;
-
-	fprintf(fp, "EEC2");
-	print_timestamp(fp, &eec2->timestamp);
-	if (numeric) {
-		fprintf(fp, " %d", eec2->spd_limit_status);
-		fprintf(fp, " %d", eec2->accel_pedal_kickdown);
-		fprintf(fp, " %d", eec2->accel_pedal1_idle);
-		fprintf(fp, " %d", eec2->accel_pedal2_idle);
-		fprintf(fp, " %.2f", eec2->act_max_avail_eng_trq);
-		fprintf(fp, " %.2f", eec2->accel_pedal1_pos);
-		fprintf(fp, " %.2f", eec2->accel_pedal2_pos);
-		fprintf(fp, " %.2f", eec2->eng_prcnt_load_curr_spd);
-		fprintf(fp, "\n");
-	} else {
-		fprintf(fp, "\n");
-		fprintf(fp, " Road speed limit %d\n", eec2->spd_limit_status);
-		fprintf(fp, " Kickpedal active %d\n", eec2->accel_pedal_kickdown);
-		fprintf(fp, " Low idle 1 %d\n", eec2->accel_pedal1_idle);
-		fprintf(fp, " Low idle 2 %d\n", eec2->accel_pedal2_idle);
-		fprintf(fp, " AP1 position %.2f\n", eec2->accel_pedal1_pos);
-		fprintf(fp, " AP2 position %.2f\n", eec2->accel_pedal2_pos);
-		fprintf(fp, " Percent load %.2f\n", eec2->eng_prcnt_load_curr_spd);
-		fprintf(fp, " Percent torque %.2f\n", eec2->act_max_avail_eng_trq);
-	}
-}
-
-
-void EEC2_interpreter::publish(void *pdv) {
-	j1939_eec2_typ *eec2 = (j1939_eec2_typ*) pdv;
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
 void *ETC2_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_etc2_typ *etc2 = new j1939_etc2_typ();
 	etc2->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
 
 	etc2->trans_selected_gear = gear_m125_to_p125(pdu->data_field[0]);
-
-	two_bytes = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
+	int two_bytes = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
 	etc2->trans_act_gear_ratio = gear_ratio(two_bytes);
-
 	etc2->trans_current_gear = gear_m125_to_p125(pdu->data_field[3]);
-
-	two_bytes = TWOBYTES(pdu->data_field[5], pdu->data_field[4]);
-	etc2->range_selected = two_bytes;
-
-	two_bytes = TWOBYTES(pdu->data_field[7], pdu->data_field[6]);
-	etc2->range_attained = two_bytes;
+	etc2->range_selected = TWOBYTES(pdu->data_field[5], pdu->data_field[4]);
+	etc2->range_attained = TWOBYTES(pdu->data_field[7], pdu->data_field[6]);
 
 	return (void*) etc2;
 }
@@ -467,19 +921,47 @@ void ETC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ETC2_interpreter::publish(void *pdv) {
+void ETC2_interpreter::publish(void *pdv, int fd) {
 	j1939_etc2_typ *etc2 = (j1939_etc2_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@ETC2");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", etc2->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", etc2->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", etc2->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", etc2->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "trans_selected_gear",
+			etc2->trans_selected_gear);
+	pps_encoder_add_double(&encoder, "trans_act_gear_ratio",
+			etc2->trans_act_gear_ratio);
+	pps_encoder_add_int(&encoder, "trans_current_gear",
+			etc2->trans_current_gear);
+	pps_encoder_add_int(&encoder, "range_selected", etc2->range_selected);
+	pps_encoder_add_int(&encoder, "range_attained", etc2->range_attained);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
 void *TURBO_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_turbo_typ *turbo = new j1939_turbo_typ();
 	turbo->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
 
 	turbo->turbo_lube_oil_pressure = pressure_0_to_1000kpa(pdu->data_field[0]);
-
-	two_bytes = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
+	int two_bytes = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
 	turbo->turbo_speed = rotor_speed_in_rpm(two_bytes);
 
 	return (void*) turbo;
@@ -504,54 +986,33 @@ void TURBO_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void TURBO_interpreter::publish(void *pdv) {
+void TURBO_interpreter::publish(void *pdv, int fd) {
 	j1939_turbo_typ *turbo = (j1939_turbo_typ*) pdv;
-}
 
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
 
-void *EEC3_interpreter::convert(j1939_pdu_typ *pdu) {
-	j1939_eec3_typ *eec3 = new j1939_eec3_typ();
-	eec3->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@TURBO");
 
-	eec3->nominal_friction = percent_m125_to_p125(pdu->data_field[0]);
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", turbo->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", turbo->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", turbo->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", turbo->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
 
-	two_bytes = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
-	eec3->desired_operating_spd = 0.125 * two_bytes;
+	pps_encoder_add_double(&encoder, "turbo_lube_oil_pressure",
+			turbo->turbo_lube_oil_pressure);
+	pps_encoder_add_double(&encoder, "turbo_speed", turbo->turbo_speed);
 
-	eec3->est_eng_prstic_loss =
-		 percent_m125_to_p125(pdu->data_field[4]);
+	pps_encoder_end_object(&encoder);
 
-	// TODO(ak): add asymmetry adjustment
-	return (void*) eec3;
-}
-
-
-void EEC3_interpreter::print(void *pdv, FILE *fp, bool numeric) {
-	j1939_eec3_typ *eec3 = (j1939_eec3_typ*) pdv;
-
-	fprintf(fp, "EEC3");
-	print_timestamp(fp, &eec3->timestamp);
-	if (numeric) {
-		fprintf(fp," %.2f", eec3->nominal_friction);
-		fprintf(fp," %.2f", eec3->est_eng_prstic_loss);
-		fprintf(fp," %.2f", eec3->desired_operating_spd);
-		fprintf(fp, "\n");
-	} else {
-		fprintf(fp, "\n");
-		fprintf(fp," Nominal friction percent torque %.2f\n",
-			 eec3->nominal_friction);
-		fprintf(fp," Estimated engine power loss - percent torque %.3f\n",
-			 eec3->est_eng_prstic_loss);
-		fprintf(fp," Engine desired operating speed %.3f\n",
-			 eec3->desired_operating_spd);
-	}
-	// TODO(ak): add asymmetry adjustment
-}
-
-
-void EEC3_interpreter::publish(void *pdv) {
-	j1939_eec3_typ *eec3 = (j1939_eec3_typ*) pdv;
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
@@ -590,12 +1051,35 @@ void VD_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void VD_interpreter::publish(void *pdv) {
+void VD_interpreter::publish(void *pdv, int fd) {
 	j1939_vd_typ *vd = (j1939_vd_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@VD");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", vd->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", vd->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", vd->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", vd->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "trip_dist", vd->trip_dist);
+	pps_encoder_add_int(&encoder, "tot_vehicle_dist", vd->tot_vehicle_dist);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
-// TODO (ak): receive status is not covered here
 void *RCFG_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_rcfg_typ *rcfg = new j1939_rcfg_typ();
 	rcfg->timestamp = pdu->timestamp;
@@ -637,7 +1121,6 @@ void RCFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	print_timestamp(fp, &rcfg->timestamp);
 	if (numeric) {
 		fprintf(fp, "\n");
-		fprintf(fp, " %x", rcfg->receive_status);
 		fprintf(fp, " %d", rcfg->retarder_loc);
 		fprintf(fp, " %d", rcfg->retarder_type);
 		fprintf(fp, " %d", rcfg->retarder_ctrl_steps);
@@ -649,8 +1132,6 @@ void RCFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
-		fprintf(fp, " Retarder configuration received mask 0x%x \n",
-				rcfg->receive_status);
 		fprintf(fp, " Retarder location 0x%x, type 0x%x, control %d\n",
 				rcfg->retarder_loc, rcfg->retarder_type,
 				rcfg->retarder_ctrl_steps);
@@ -671,8 +1152,50 @@ void RCFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void RCFG_interpreter::publish(void *pdv) {
+void RCFG_interpreter::publish(void *pdv, int fd) {
 	j1939_rcfg_typ *rcfg = (j1939_rcfg_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@RCFG");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", rcfg->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", rcfg->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", rcfg->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", rcfg->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "retarder_loc", rcfg->retarder_loc);
+	pps_encoder_add_int(&encoder, "retarder_type", rcfg->retarder_type);
+	pps_encoder_add_int(&encoder, "retarder_ctrl_steps",
+			rcfg->retarder_ctrl_steps);
+	pps_encoder_add_double(&encoder, "reference_retarder_trq",
+			rcfg->reference_retarder_trq);
+
+	pps_encoder_start_object(&encoder, "retarder_speed");
+	for (i = 0; i < 5; i++) {
+		pps_encoder_add_int(&encoder, to_string(i).c_str(),
+				rcfg->retarder_speed[i]);
+	}
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_start_object(&encoder, "percent_torque");
+	for (i = 0; i < 5; i++) {
+		pps_encoder_add_int(&encoder, to_string(i).c_str(),
+				rcfg->percent_torque[i]);
+	}
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
@@ -694,8 +1217,8 @@ void RCFG_interpreter::publish(void *pdv) {
 void *ECFG_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ecfg_typ *ecfg = new j1939_ecfg_typ();
 	ecfg->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
-	unsigned char data[28];	 // to hold data bytes from 4 packets
+	int two_bytes;
+	int data[28];	 // to hold data bytes from 4 packets
 	int i, j;
 
 	for (i = 0; i < 4; i++) {
@@ -728,7 +1251,6 @@ void *ECFG_interpreter::convert(j1939_pdu_typ *pdu) {
 	ecfg->trq_ctrl_lower_lim = percent_m125_to_p125(data[26]);
 	ecfg->trq_ctrl_upper_lim = percent_m125_to_p125(data[27]);
 
-	// TODO(ak): receive_status not covered
 	return (void*) ecfg;
 }
 
@@ -781,8 +1303,56 @@ void ECFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ECFG_interpreter::publish(void *pdv) {
+void ECFG_interpreter::publish(void *pdv, int fd) {
 	j1939_ecfg_typ *ecfg = (j1939_ecfg_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@ECFG");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", ecfg->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", ecfg->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", ecfg->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", ecfg->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "receive_status", ecfg->receive_status);
+
+	pps_encoder_start_object(&encoder, "engine_spd");
+	for (i = 0; i < 7; i++)
+		pps_encoder_add_int(&encoder, to_string(i).c_str(), ecfg->engine_spd[i]);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_start_object(&encoder, "percent_trq");
+	for (i = 0; i < 5; i++)
+		pps_encoder_add_int(&encoder, to_string(i).c_str(), ecfg->percent_trq[i]);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "gain_endspeed_governor",
+			ecfg->gain_endspeed_governor);
+	pps_encoder_add_double(&encoder, "reference_eng_trq",
+			ecfg->reference_eng_trq);
+	pps_encoder_add_double(&encoder, "max_momentary_overide_time",
+			ecfg->max_momentary_overide_time);
+	pps_encoder_add_double(&encoder, "spd_ctrl_lower_lim",
+			ecfg->spd_ctrl_lower_lim);
+	pps_encoder_add_double(&encoder, "spd_ctrl_upper_lim",
+			ecfg->spd_ctrl_upper_lim);
+	pps_encoder_add_double(&encoder, "trq_ctrl_lower_lim",
+			ecfg->trq_ctrl_lower_lim);
+	pps_encoder_add_double(&encoder, "trq_ctrl_upper_lim",
+			ecfg->trq_ctrl_upper_lim);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
@@ -838,16 +1408,46 @@ void ETEMP_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ETEMP_interpreter::publish(void *pdv) {
+void ETEMP_interpreter::publish(void *pdv, int fd) {
 	j1939_etemp_typ *etemp = (j1939_etemp_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@ETEMP");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", etemp->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", etemp->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", etemp->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", etemp->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "eng_coolant_temp",
+			etemp->eng_coolant_temp);
+	pps_encoder_add_double(&encoder, "fuel_temp", etemp->fuel_temp);
+	pps_encoder_add_double(&encoder, "eng_oil_temp", etemp->eng_oil_temp);
+	pps_encoder_add_double(&encoder, "turbo_oil_temp", etemp->turbo_oil_temp);
+	pps_encoder_add_double(&encoder, "eng_intercooler_temp",
+			etemp->eng_intercooler_temp);
+	pps_encoder_add_double(&encoder, "eng_intercooler_thermostat_opening",
+			etemp->eng_intercooler_thermostat_opening);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
 void *PTO_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_pto_typ *pto = new j1939_pto_typ();
 	pto->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
-	unsigned char byte;
+	int two_bytes;
 
 	pto->oil_temp = temp_m40_to_p210(pdu->data_field[0]);
 
@@ -857,16 +1457,14 @@ void *PTO_interpreter::convert(j1939_pdu_typ *pdu) {
 	two_bytes = TWOBYTES(pdu->data_field[4], pdu->data_field[3]);
 	pto->set_speed = speed_in_rpm_2byte(two_bytes);
 
-	byte = pdu->data_field[5];
-	pto->remote_variable_spd_status = BITS65(byte);
-	pto->remote_preprogramm_status = BITS43(byte);
-	pto->enable_switch = BITS21(byte);
+	pto->remote_variable_spd_status = BITS65(pdu->data_field[5]);
+	pto->remote_preprogramm_status = BITS43(pdu->data_field[5]);
+	pto->enable_switch = BITS21(pdu->data_field[5]);
 
-	byte = pdu->data_field[6];
-	pto->accel_switch = BITS87(byte);
-	pto->resume_switch = BITS65(byte);
-	pto->coast_decel_switch = BITS43(byte);
-	pto->set_switch = BITS21(byte);
+	pto->accel_switch = BITS87(pdu->data_field[6]);
+	pto->resume_switch = BITS65(pdu->data_field[6]);
+	pto->coast_decel_switch = BITS43(pdu->data_field[6]);
+	pto->set_switch = BITS21(pdu->data_field[6]);
 
 	return (void*) pto;
 }
@@ -908,16 +1506,51 @@ void PTO_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void PTO_interpreter::publish(void *pdv) {
+void PTO_interpreter::publish(void *pdv, int fd) {
 	j1939_pto_typ *pto = (j1939_pto_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@PTO");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", pto->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", pto->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", pto->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", pto->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "oil_temp", pto->oil_temp);
+	pps_encoder_add_double(&encoder, "speed", pto->speed);
+	pps_encoder_add_double(&encoder, "set_speed", pto->set_speed);
+	pps_encoder_add_int(&encoder, "remote_variable_spd_status",
+			pto->remote_variable_spd_status);
+	pps_encoder_add_int(&encoder, "remote_preprogramm_status",
+			pto->remote_preprogramm_status);
+	pps_encoder_add_int(&encoder, "enable_switch", pto->enable_switch);
+	pps_encoder_add_int(&encoder, "accel_switch", pto->accel_switch);
+	pps_encoder_add_int(&encoder, "resume_switch", pto->resume_switch);
+	pps_encoder_add_int(&encoder, "coast_decel_switch",
+			pto->coast_decel_switch);
+	pps_encoder_add_int(&encoder, "set_switch", pto->set_switch);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
 void *CCVS_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ccvs_typ *ccvs = new j1939_ccvs_typ();
 	ccvs->timestamp = pdu->timestamp;
-	unsigned char byte;
-	unsigned short two_bytes;
+	int byte;
+	int two_bytes;
 
 	byte =  pdu->data_field[0];
 	ccvs->park_brk_release = BITS87(byte);
@@ -937,7 +1570,7 @@ void *CCVS_interpreter::convert(j1939_pdu_typ *pdu) {
 	byte = pdu->data_field[4];
 	ccvs->cc_accel_switch = BITS87(byte);
 	ccvs->cc_resume_switch = BITS65(byte);
-	ccvs->cc_coast_switch = BITS43(byte);
+	ccvs->cc_co	ast_switch = BITS43(byte);
 	ccvs->cc_set_switch = BITS21(byte);
 
 	ccvs->cc_set_speed = cruise_control_set_meters_per_sec(pdu->data_field[5]);
@@ -1010,15 +1643,63 @@ void CCVS_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void CCVS_interpreter::publish(void *pdv) {
+void CCVS_interpreter::publish(void *pdv, int fd) {
 	j1939_ccvs_typ *ccvs = (j1939_ccvs_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@CCVS");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", ccvs->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", ccvs->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", ccvs->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", ccvs->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_int(&encoder, "park_brk_release", ccvs->park_brk_release);
+	pps_encoder_add_int(&encoder, "parking_brk_switch",
+			ccvs->parking_brk_switch);
+	pps_encoder_add_int(&encoder, "two_spd_axle_switch",
+			ccvs->two_spd_axle_switch);
+	pps_encoder_add_double(&encoder, "vehicle_spd", ccvs->vehicle_spd);
+	pps_encoder_add_int(&encoder, "clutch_switch", ccvs->clutch_switch);
+	pps_encoder_add_int(&encoder, "brk_switch", ccvs->brk_switch);
+	pps_encoder_add_int(&encoder, "cc_pause_switch", ccvs->cc_pause_switch);
+	pps_encoder_add_int(&encoder, "cc_enable_switch", ccvs->cc_enable_switch);
+	pps_encoder_add_int(&encoder, "cc_active", ccvs->cc_active);
+	pps_encoder_add_int(&encoder, "cc_accel_switch", ccvs->cc_accel_switch);
+	pps_encoder_add_int(&encoder, "cc_resume_switch", ccvs->cc_resume_switch);
+	pps_encoder_add_int(&encoder, "cc_coast_switch", ccvs->cc_coast_switch);
+	pps_encoder_add_int(&encoder, "cc_set_switch", ccvs->cc_set_switch);
+	pps_encoder_add_double(&encoder, "cc_set_speed", ccvs->cc_set_speed);
+	pps_encoder_add_int(&encoder, "cc_state", ccvs->cc_state);
+	pps_encoder_add_int(&encoder, "pto_state", ccvs->pto_state);
+	pps_encoder_add_int(&encoder, "eng_shutdown_override",
+			ccvs->eng_shutdown_override);
+	pps_encoder_add_int(&encoder, "eng_test_mode_switch",
+			ccvs->eng_test_mode_switch);
+	pps_encoder_add_int(&encoder, "eng_idle_decr_switch",
+			ccvs->eng_idle_decr_switch);
+	pps_encoder_add_int(&encoder, "eng_idle_incr_switch",
+			ccvs->eng_idle_incr_switch);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
 void *LFE_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_lfe_typ *lfe = new j1939_lfe_typ();
 	lfe->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
+	int two_bytes;
 
 	two_bytes = TWOBYTES(pdu->data_field[1], pdu->data_field[0]);
 	lfe->eng_fuel_rate = fuel_rate_cm3_per_sec(two_bytes);
@@ -1029,7 +1710,8 @@ void *LFE_interpreter::convert(j1939_pdu_typ *pdu) {
 	two_bytes = TWOBYTES(pdu->data_field[5], pdu->data_field[4]);
 	lfe->eng_avg_fuel_economy = fuel_economy_meters_per_cm3(two_bytes);
 
-	lfe->eng_throttle_valve1_pos = percent_0_to_100(pdu->data_field[6]);
+	lfe->eng_throttle1_pos = percent_0_to_100(pdu->data_field[6]);
+	lfe->eng_throttle2_pos = percent_0_to_100(pdu->data_field[7]);
 
 	return (void*) lfe;
 }
@@ -1044,7 +1726,8 @@ void LFE_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, " %.3f", lfe->eng_fuel_rate);
 		fprintf(fp, " %.3f", lfe->eng_inst_fuel_economy);
 		fprintf(fp, " %.3f", lfe->eng_avg_fuel_economy);
-		fprintf(fp, " %.3f", lfe->eng_throttle_valve1_pos);
+		fprintf(fp, " %.3f", lfe->eng_throttle1_pos);
+		fprintf(fp, " %.3f", lfe->eng_throttle2_pos);
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
@@ -1053,21 +1736,54 @@ void LFE_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 				lfe->eng_inst_fuel_economy);
 		fprintf(fp, " Average fuel economy (m/cm3) %.3f\n",
 				lfe->eng_avg_fuel_economy);
-		fprintf(fp, " Throttle position (percent) %.3f\n",
-				lfe->eng_throttle_valve1_pos);
+		fprintf(fp, " Throttle 1 position (percent) %.3f\n",
+				lfe->eng_throttle1_pos);
+		fprintf(fp, " Throttle 2 position (percent) %.3f\n",
+				lfe->eng_throttle2_pos);
 	}
 }
 
 
-void LFE_interpreter::publish(void *pdv) {
+void LFE_interpreter::publish(void *pdv, int fd) {
 	j1939_lfe_typ *lfe = (j1939_lfe_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@LFE");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", lfe->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", lfe->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", lfe->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", lfe->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "eng_fuel_rate", lfe->eng_fuel_rate);
+	pps_encoder_add_double(&encoder, "eng_inst_fuel_economy",
+			lfe->eng_inst_fuel_economy);
+	pps_encoder_add_double(&encoder, "eng_avg_fuel_economy",
+			lfe->eng_avg_fuel_economy);
+	pps_encoder_add_double(&encoder, "eng_throttle1_pos",
+			lfe->eng_throttle1_pos);
+	pps_encoder_add_double(&encoder, "eng_throttle2_pos",
+			lfe->eng_throttle2_pos);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
 void *AMBC_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ambc_typ *ambc = new j1939_ambc_typ();
 	ambc->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
+	int two_bytes;
 
 	ambc->barometric_pressure = pressure_0_to_125kpa(pdu->data_field[0]);
 
@@ -1109,8 +1825,39 @@ void AMBC_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void AMBC_interpreter::publish(void *pdv) {
+void AMBC_interpreter::publish(void *pdv, int fd) {
 	j1939_ambc_typ *ambc = (j1939_ambc_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@AMBC");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", ambc->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", ambc->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", ambc->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", ambc->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "barometric_pressure",
+			ambc->barometric_pressure);
+	pps_encoder_add_double(&encoder, "cab_interior_temp",
+			ambc->cab_interior_temp);
+	pps_encoder_add_double(&encoder, "ambient_air_temp",
+			ambc->ambient_air_temp);
+	pps_encoder_add_double(&encoder, "air_inlet_temp", ambc->air_inlet_temp);
+	pps_encoder_add_double(&encoder, "road_surface_temp",
+			ambc->road_surface_temp);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
@@ -1128,8 +1875,7 @@ void *IEC_interpreter::convert(j1939_pdu_typ *pdu) {
 	two_bytes = TWOBYTES(pdu->data_field[6], pdu->data_field[5]);
 	iec->exhaust_gas_temp = temp_m273_to_p1735(two_bytes);
 
-	iec->coolant_filter_diff_pressure =
-		pressure_0_to_125kpa(pdu->data_field[7]);
+	iec->coolant_filter_diff_pressure = pressure_0_to_125kpa(pdu->data_field[7]);
 
 	return (void*) iec;
 }
@@ -1166,15 +1912,49 @@ void IEC_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void IEC_interpreter::publish(void *pdv) {
+void IEC_interpreter::publish(void *pdv, int fd) {
 	j1939_iec_typ *iec = (j1939_iec_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@IEC");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", iec->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", iec->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", iec->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", iec->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "particulate_inlet_pressure",
+			iec->particulate_inlet_pressure);
+	pps_encoder_add_double(&encoder, "boost_pressure", iec->boost_pressure);
+	pps_encoder_add_double(&encoder, "intake_manifold_temp",
+			iec->intake_manifold_temp);
+	pps_encoder_add_double(&encoder, "air_inlet_pressure",
+			iec->air_inlet_pressure);
+	pps_encoder_add_double(&encoder, "air_filter_diff_pressure",
+			iec->air_filter_diff_pressure);
+	pps_encoder_add_double(&encoder, "exhaust_gas_temp", iec->exhaust_gas_temp);
+	pps_encoder_add_double(&encoder, "coolant_filter_diff_pressure",
+			iec->coolant_filter_diff_pressure);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
 void *VEP_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_vep_typ *vep = new j1939_vep_typ();
 	vep->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
+	int two_bytes;
 
 	vep->net_battery_current = current_m125_to_p125amp(pdu->data_field[0]);
 	vep->alternator_current = current_0_to_250amp(pdu->data_field[1]);
@@ -1215,8 +1995,40 @@ void VEP_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void VEP_interpreter::publish(void *pdv) {
+void VEP_interpreter::publish(void *pdv, int fd) {
 	j1939_vep_typ *vep = (j1939_vep_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@VEP");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", vep->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", vep->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", vep->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", vep->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "net_battery_current",
+			vep->net_battery_current);
+	pps_encoder_add_double(&encoder, "alternator_current",
+			vep->alternator_current);
+	pps_encoder_add_double(&encoder, "alternator_potential",
+			vep->alternator_potential);
+	pps_encoder_add_double(&encoder, "electrical_potential",
+			vep->electrical_potential);
+	pps_encoder_add_double(&encoder, "battery_potential",
+			vep->battery_potential);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
@@ -1260,8 +2072,35 @@ void TF_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void TF_interpreter::publish(void *pdv) {
+void TF_interpreter::publish(void *pdv, int fd) {
 	j1939_tf_typ *tf = (j1939_tf_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@TF");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", tf->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", tf->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", tf->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", tf->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "clutch_pressure", tf->clutch_pressure);
+	pps_encoder_add_double(&encoder, "oil_level", tf->oil_level);
+	pps_encoder_add_double(&encoder, "diff_pressure", tf->diff_pressure);
+	pps_encoder_add_double(&encoder, "oil_pressure", tf->oil_pressure);
+	pps_encoder_add_double(&encoder, "oil_temp", tf->oil_temp);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
@@ -1291,8 +2130,32 @@ void RF_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void RF_interpreter::publish(void *pdv) {
+void RF_interpreter::publish(void *pdv, int fd) {
 	j1939_rf_typ *rf = (j1939_rf_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@RF");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", rf->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", rf->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", rf->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", rf->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "pressure", rf->pressure);
+	pps_encoder_add_double(&encoder, "oil_temp", rf->oil_temp);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
@@ -1330,64 +2193,32 @@ void HRVD_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void HRVD_interpreter::publish(void *pdv) {
+void HRVD_interpreter::publish(void *pdv, int fd) {
 	j1939_hrvd_typ *hrvd = (j1939_hrvd_typ*) pdv;
-}
 
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
 
-void *EBC2_interpreter::convert(j1939_pdu_typ *pdu) {
-	j1939_ebc2_typ *ebc2 = new j1939_ebc2_typ();
-	ebc2->timestamp = pdu->timestamp;
-	unsigned short two_bytes;
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@HRVD");
 
-	two_bytes = TWOBYTES(pdu->data_field[1], pdu->data_field[0]);
-	ebc2->front_axle_spd = wheel_based_mps(two_bytes);
-	ebc2->rel_spd_front_left = wheel_based_mps_relative(pdu->data_field[2]);
-	ebc2->rel_spd_front_right = wheel_based_mps_relative(pdu->data_field[3]);
-	ebc2->rel_spd_rear_left_1 = wheel_based_mps_relative(pdu->data_field[4]);
-	ebc2->rel_spd_rear_right_1 = wheel_based_mps_relative(pdu->data_field[5]);
-	ebc2->rel_spd_rear_left_2 = wheel_based_mps_relative(pdu->data_field[6]);
-	ebc2->rel_spd_rear_right_2 = wheel_based_mps_relative(pdu->data_field[7]);
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", hrvd->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", hrvd->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", hrvd->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", hrvd->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
 
-	return (void*) ebc2;
-}
+	pps_encoder_add_double(&encoder, "vehicle_distance", hrvd->vehicle_distance);
+	pps_encoder_add_double(&encoder, "trip_distance", hrvd->trip_distance);
 
+	pps_encoder_end_object(&encoder);
 
-void EBC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
-	j1939_ebc2_typ *ebc2 = (j1939_ebc2_typ*) pdv;
-
-	fprintf(fp, "EBC2");
-	print_timestamp(fp, &ebc2->timestamp);
-	if (numeric) {
-		fprintf(fp, " %.3f", ebc2->front_axle_spd);
-		fprintf(fp, " %.3f", ebc2->rel_spd_front_left);
-		fprintf(fp, " %.3f", ebc2->rel_spd_front_right);
-		fprintf(fp, " %.3f", ebc2->rel_spd_rear_left_1);
-		fprintf(fp, " %.3f", ebc2->rel_spd_rear_right_1);
-		fprintf(fp, " %.3f", ebc2->rel_spd_rear_left_2);
-		fprintf(fp, " %.3f", ebc2->rel_spd_rear_right_2);
-		fprintf(fp, "\n");
-	} else {
-		fprintf(fp, "\n");
-		fprintf(fp, " Front axle speed %.3f\n", ebc2->front_axle_spd);
-		fprintf(fp, " Front left wheel relative speed %.3f\n",
-				ebc2->rel_spd_front_left);
-		fprintf(fp, " Front right wheel relative speed %.3f\n",
-				ebc2->rel_spd_front_right);
-		fprintf(fp, " Rear 1 left wheel relative speed %.3f\n",
-				ebc2->rel_spd_rear_left_1);
-		fprintf(fp, " Rear 1 left wheel relative speed %.3f\n",
-				ebc2->rel_spd_rear_right_1);
-		fprintf(fp, " Rear 2 left wheel relative speed %.3f\n",
-				ebc2->rel_spd_rear_left_2);
-		fprintf(fp, " Rear 2 left wheel relative speed %.3f\n",
-				ebc2->rel_spd_rear_right_2);
-	}
-}
-
-
-void EBC2_interpreter::publish(void *pdv) {
-	j1939_ebc2_typ *ebc2 = (j1939_ebc2_typ*) pdv;
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
@@ -1417,16 +2248,49 @@ void FD_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void FD_interpreter::publish(void *pdv) {
-	j1939_fd_typ *fd = (j1939_fd_typ*) pdv;
+void FD_interpreter::publish(void *pdv, int fd) {
+	j1939_fd_typ *fdd = (j1939_fd_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@FD");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", fdd->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", fdd->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", fdd->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", fdd->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "prcnt_fan_spd", fdd->prcnt_fan_spd);
+	pps_encoder_add_int(&encoder, "fan_drive_state", fdd->fan_drive_state);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
-// TODO(ak): what about the rest?
 void *GFI2_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_gfi2_typ *gfi2 = new j1939_gfi2_typ();
 	gfi2->timestamp = pdu->timestamp;
-	gfi2->fuel_valve_pos1 = pdu->data_field[2];
+	int two_bytes;
+
+	two_bytes = TWOBYTES(pdu->data_field[1], pdu->data_field[0]);
+	gfi2->fuel_flow_rate1 = two_bytes * 0.1;
+
+	two_bytes = TWOBYTES(pdu->data_field[3], pdu->data_field[2]);
+	gfi2->fuel_flow_rate2 = two_bytes * 0.1;
+
+	gfi2->fuel_valve_pos1 = percent_0_to_100(pdu->data_field[4]);
+	gfi2->fuel_valve_pos2 = percent_0_to_100(pdu->data_field[5]);
+
 	return (void*) gfi2;
 }
 
@@ -1436,23 +2300,57 @@ void GFI2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 
 	fprintf(fp, "GFI2");
 	print_timestamp(fp, &gfi2->timestamp);
-	if (numeric)
-		fprintf(fp, " %.3f\n", gfi2->fuel_valve_pos1);
-	else
+	if (numeric) {
+		fprintf(fp, " %.3f", gfi2->fuel_flow_rate1);
+		fprintf(fp, " %.3f", gfi2->fuel_flow_rate2);
+		fprintf(fp, " %.3f", gfi2->fuel_valve_pos1);
+		fprintf(fp, " %.3f", gfi2->fuel_valve_pos2);
 		fprintf(fp, "\n");
+	} else {
+		fprintf(fp, "\n");
+		fprintf(fp, " Fuel flow rate 1 %.3f\n", gfi2->fuel_flow_rate1);
+		fprintf(fp, " Fuel flow rate 2 %.3f\n", gfi2->fuel_flow_rate2);
 		fprintf(fp, " Fuel valve 1 position %.3f\n", gfi2->fuel_valve_pos1);
+		fprintf(fp, " Fuel valve 2 position %.3f\n", gfi2->fuel_valve_pos2);
+	}
 }
 
 
-void GFI2_interpreter::publish(void *pdv) {
+void GFI2_interpreter::publish(void *pdv, int fd) {
 	j1939_gfi2_typ *gfi2 = (j1939_gfi2_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@GFI2");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", gfi2->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", gfi2->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", gfi2->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", gfi2->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "fuel_flow_rate1", gfi2->fuel_flow_rate1);
+	pps_encoder_add_double(&encoder, "fuel_flow_rate2", gfi2->fuel_flow_rate2);
+	pps_encoder_add_double(&encoder, "fuel_valve_pos1", gfi2->fuel_valve_pos1);
+	pps_encoder_add_double(&encoder, "fuel_valve_pos2", gfi2->fuel_valve_pos2);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 
 
 void *EI_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ei_typ *ei = new j1939_ei_typ();
 	ei->timestamp = pdu->timestamp;
-	short data;
+	int data;
 
 	ei->pre_filter_oil_pressure = pressure_0_to_1000kpa(pdu->data_field[0]);
 	data = TWOBYTES(pdu->data_field[2], pdu->data_field[1]);
@@ -1492,7 +2390,38 @@ void EI_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void EI_interpreter::publish(void *pdv) {
+void EI_interpreter::publish(void *pdv, int fd) {
 	j1939_ei_typ *ei = (j1939_ei_typ*) pdv;
+
+	// initialize the encoder object
+	pps_encoder_t encoder;
+	pps_encoder_initialize(&encoder, false);
+
+	// setup the object to be encoded
+	pps_encoder_start_object(&encoder, "@EI");
+
+	pps_encoder_start_object(&encoder, "time");
+	pps_encoder_add_int(&encoder, "hour", ei->timestamp.hour);
+	pps_encoder_add_int(&encoder, "minute", ei->timestamp.minute);
+	pps_encoder_add_int(&encoder, "second", ei->timestamp.second);
+	pps_encoder_add_int(&encoder, "millisecond", ei->timestamp.millisecond);
+	pps_encoder_end_object(&encoder);
+
+	pps_encoder_add_double(&encoder, "pre_filter_oil_pressure",
+			fdd->pre_filter_oil_pressure);
+	pps_encoder_add_double(&encoder, "exhaust_gas_pressure",
+			fdd->exhaust_gas_pressure);
+	pps_encoder_add_double(&encoder, "rack_position", fdd->rack_position);
+	pps_encoder_add_double(&encoder, "eng_gas_mass_flow",
+			fdd->eng_gas_mass_flow);
+	pps_encoder_add_double(&encoder, "inst_estimated_brake_power",
+			fdd->inst_estimated_brake_power);
+
+	pps_encoder_end_object(&encoder);
+
+	// perform the data encoding procedure
+	if (pps_encoder_buffer(&encoder) != NULL)
+		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+	pps_encoder_cleanup(&encoder);
 }
 

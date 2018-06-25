@@ -61,16 +61,16 @@
  * Bit number in these macros for bytes follows convention in J1939 docs */
 
 /** Macros for short (two bit) values */
-#define BITS87(x)	(((x) & 0xc0) >> 6)
-#define BITS65(x)	(((x) & 0x30) >> 4)
-#define BITS43(x)	(((x) & 0x0c) >> 2)
-#define BITS21(x)	 ((x) & 0x03)
-#define HINIBBLE(x)	(((x) & 0xf0) >> 4)     									// TODO(ak): ???
-#define LONIBBLE(x)	 ((x) & 0x0f)           									// TODO(ak): ???
+#define BITS87(x)		(((x) & 0xc0) >> 6)
+#define BITS65(x)		(((x) & 0x30) >> 4)
+#define BITS43(x)		(((x) & 0x0c) >> 2)
+#define BITS21(x)		((x) & 0x03)
+#define HINIBBLE(x)		(((x) & 0xf0) >> 4)
+#define LONIBBLE(x)		((x) & 0x0f)
 
 /** Macros for short (two byte) values */
-#define HIBYTE(x)	(((x) & 0xff00) >> 8)
-#define LOBYTE(x)	((x) & 0xff)
+#define HIBYTE(x)		(((x) & 0xff00) >> 8)
+#define LOBYTE(x)		((x) & 0xff)
 #define TWOBYTES(x, y)	((((x) & 0xff) << 8) | (y & 0xff))
 
 /** Macros for int (four byte) values */
@@ -131,11 +131,11 @@ extern float scale_to_sec(unsigned int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 100% range of return values */
-extern float percent_0_to_100(unsigned char);
+extern float percent_0_to_100(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 250% range of return values */
-extern float percent_0_to_250(unsigned char);
+extern float percent_0_to_250(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to -125 to 125% range of return values */
@@ -143,7 +143,7 @@ extern float percent_m25_to_p25(unsigned char);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to -125 to 125% range of return values */
-extern float percent_m125_to_p125(unsigned char);
+extern float percent_m125_to_p125(int);
 
 /** Reverse routine used when coding up a percent to send */
 extern unsigned char code_percent_m125_to_p125(float);
@@ -151,35 +151,35 @@ extern unsigned char code_percent_m125_to_p125(float);
 /** Values of 251 indicates park. Values 252 to 255 indicate errors, returned
  * as negative.  Range from 0 to 250 corresponds to -125 to 125 range of return
  * values */
-int gear_m125_to_p125(unsigned char);
+int gear_m125_to_p125(int);
 
 /** Hibyte values from 251 to 255 indicate errors, stored as negative. Range
  * from 0 to 64255 corresponds to 0 to 64.255 range of return values */
-extern float gear_ratio(unsigned short);
+extern float gear_ratio(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 4000 kilopascals pressure */
-extern float pressure_0_to_4000kpa(unsigned char);
+extern float pressure_0_to_4000kpa(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 1000 kilopascals pressure */
-extern float pressure_0_to_1000kpa(unsigned char);
+extern float pressure_0_to_1000kpa(int );
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 500 kilopascals pressure */
-extern float pressure_0_to_500kpa(unsigned char);
+extern float pressure_0_to_500kpa(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 125 kilopascals pressure */
-extern float pressure_0_to_125kpa(unsigned char);
+extern float pressure_0_to_125kpa(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 12.5 kilopascals pressure */
-extern float pressure_0_to_12kpa(unsigned char);
+extern float pressure_0_to_12kpa(int);
 
 /** Hibyte values from 251 to 255 indicate errors, stored as negative. Range
  * from 0 to 64255 corresponds to -250 to 251.96 kilopascals pressure */
-extern float pressure_m250_to_p252kpa(unsigned short);
+extern float pressure_m250_to_p252kpa(int);
 
 /** Hibyte values from 251 to 255 indicate errors, stored as negative. Range
  * from 0 to 64255 corresponds to 0 to 257,020 range of return values */
@@ -195,11 +195,11 @@ extern float hr_distance_in_km(unsigned int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 2500 range of return values */
-extern float speed_in_rpm_1byte(unsigned char);
+extern float speed_in_rpm_1byte(int);
 
 /** Values of upper byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64255 corresponds to 0 to 8031.875 range of return values */
-extern float speed_in_rpm_2byte(unsigned short);
+extern float speed_in_rpm_2byte(int);
 
 /** Reverse routine used to code a float into a 2-byte engine speed for
  * transmission. */
@@ -209,25 +209,25 @@ extern unsigned short code_engine_speed(float);
  * Scaled by 1/256 to give fraction of km/h. Converted to m/sec to agree with
  * units used by AVCS programs. Values of upper byte from 251 to 255 indicate
  * errors, returned as negative. Range from 0 to 69.721 meters/sec. */
-extern float wheel_based_mps(unsigned short);
+extern float wheel_based_mps(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to -2.170 to +2.170 meters/sec */
-extern float wheel_based_mps_relative(unsigned char);
+extern float wheel_based_mps_relative(int);
 
 /** Values of byte, 0 to 250, in km/h; donverted to m/sec to agree with units
  * used by AVCS programs. Values of byte from 251 to 255 indicate errors,
  * returned as negative. */
-extern float cruise_control_set_meters_per_sec(unsigned char);
+extern float cruise_control_set_meters_per_sec(int);
 
 /** Values of upper byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64255 corresponds to 0 to 3212.75 liters/hour or 0 to 892.430
  * cubic centimeters per second. */
-extern float fuel_rate_cm3_per_sec(unsigned short);
+extern float fuel_rate_cm3_per_sec(int);
 
 /** Values of upper byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64555 corresponds to 0 to 128.498 meters/cubic centimeter */
-extern float fuel_economy_meters_per_cm3(unsigned short);
+extern float fuel_economy_meters_per_cm3(int);
 
 /** Values of upper byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64255 Nm */
@@ -239,40 +239,40 @@ extern float time_0_to_25sec(unsigned char);
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative. Range
  * of 0 to 50.2% reference engine torque/RPM. */
-extern float gain_in_kp(unsigned short);
+extern float gain_in_kp(int);
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative. Range
  * from 0 to 250 scale to -40 to +210 degrees Celsius. */
-extern float temp_m40_to_p210(unsigned char);
+extern float temp_m40_to_p210(int);
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative. Range
  * of -273 to +1735 degrees Celsius. Since -251 to -255 in allowed range,
  * multiply error indicators by 10 before subtracting from 0. */
-extern float temp_m273_to_p1735(unsigned short);
+extern float temp_m273_to_p1735(int);
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 250 scale to -125 to +125 amperes. */
-extern float current_m125_to_p125amp(unsigned char);
+extern float current_m125_to_p125amp(int);
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 250 in amperes. */
-extern float current_0_to_250amp(unsigned char);
+extern float current_0_to_250amp(int);
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 250 scale to 0 to 3212.75 V. */
-extern float voltage(unsigned short);
+extern float voltage(int);
 
 /** Values of byte from 251 to 255 indicate errors, returned. Range from 0 to
  * 250 scale to -10 to 0 m/s^2. */
-extern float brake_demand(unsigned char);
+extern float brake_demand(int);
 
 /** Values of high byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64255 scale to 0 to 3212.75 kg/h. */
-extern float mass_flow(unsigned short);
+extern float mass_flow(int);
 
 /** Values of high byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64255 scale to 0 to 32127.5 kW. */
-extern float power_in_kw(unsigned short);
+extern float power_in_kw(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 100 metric tons */

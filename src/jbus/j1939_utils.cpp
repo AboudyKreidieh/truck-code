@@ -86,16 +86,16 @@ float scale_to_sec(unsigned int data) {
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 100% range of return values */
-float percent_0_to_100(unsigned char data) {
+float percent_0_to_100(int data) {
 	if (data <= 250)
-		return (data * 0.004 * 100.0);
+		return (data * 0.4);
 	else
 		return(0.0 - data);
 }
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 250% range of return values */
-float percent_0_to_250(unsigned char data) {
+float percent_0_to_250(int data) {
 	if (data <= 250)
 		return (data * 1.0);
 	else
@@ -113,7 +113,7 @@ float percent_m25_to_p25(unsigned char data) {
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to -125 to 125% range of return values */
-float percent_m125_to_p125(unsigned char data) {
+float percent_m125_to_p125(int data) {
 	if (data <= 250)
 		return (data - 125.0);
 	else
@@ -130,7 +130,7 @@ unsigned char code_percent_m125_to_p125(float percent) {
 /** Values of 251 indicates park. Values 252 to 255 indicate errors, returned
  * as negative.  Range from 0 to 250 corresponds to -125 to 125 range of return
  * values */
-int gear_m125_to_p125(unsigned char data) {
+int gear_m125_to_p125(int data) {
 	int val = data;
 
 	if (val <= 250)
@@ -143,7 +143,7 @@ int gear_m125_to_p125(unsigned char data) {
 
 /** Hibyte values from 251 to 255 indicate errors, stored as negative. Range
  * from 0 to 64255 corresponds to 0 to 64.255 range of return values */
-float gear_ratio(unsigned short data) {
+float gear_ratio(int data) {
 	if (HIBYTE(data) <= 250)
 		return (data * 0.001);
 	else
@@ -152,7 +152,7 @@ float gear_ratio(unsigned short data) {
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 4000 kilopascals pressure */
-float pressure_0_to_4000kpa(unsigned char data) {
+float pressure_0_to_4000kpa(int data) {
 	if (data <= 250)
 		return (data * 16.0);
 	else
@@ -161,7 +161,7 @@ float pressure_0_to_4000kpa(unsigned char data) {
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 1000 kilopascals pressure */
-float pressure_0_to_1000kpa(unsigned char data) {
+float pressure_0_to_1000kpa(int data) {
 	if (data <= 250)
 		return (data * 4.0);
 	else
@@ -170,7 +170,7 @@ float pressure_0_to_1000kpa(unsigned char data) {
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 500 kilopascals pressure */
-float pressure_0_to_500kpa(unsigned char data) {
+float pressure_0_to_500kpa(int data) {
 	if (data <= 250)
 		return (data * 2.0);
 	else
@@ -179,7 +179,7 @@ float pressure_0_to_500kpa(unsigned char data) {
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 125 kilopascals pressure */
-float pressure_0_to_125kpa(unsigned char data) {
+float pressure_0_to_125kpa(int data) {
 	if (data <= 250)
 		return (data * 0.5);
 	else
@@ -188,7 +188,7 @@ float pressure_0_to_125kpa(unsigned char data) {
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 12.5 kilopascals pressure */
-float pressure_0_to_12kpa(unsigned char data) {
+float pressure_0_to_12kpa(int data) {
 	if (data <= 250)
 		return (data * 0.05);
 	else
@@ -197,7 +197,7 @@ float pressure_0_to_12kpa(unsigned char data) {
 
 /** Hibyte values from 251 to 255 indicate errors, stored as negative. Range
  * from 0 to 64255 corresponds to -250 to 251.96 kilopascals pressure */
-float pressure_m250_to_p252kpa(unsigned short data) {
+float pressure_m250_to_p252kpa(int data) {
 	if (HIBYTE(data) <= 250)
 		return (data/128 - 250.0);
 	else
@@ -233,7 +233,7 @@ float hr_distance_in_km(unsigned int data) {
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 2500 range of return values */
-float speed_in_rpm_1byte(unsigned char data) {
+float speed_in_rpm_1byte(int data) {
 	if (data <= 250)
     	return (data * 10.0);
 	else
@@ -242,7 +242,7 @@ float speed_in_rpm_1byte(unsigned char data) {
 
 /** Values of upper byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64255 corresponds to 0 to 8031.875 range of return values */
-float speed_in_rpm_2byte(unsigned short data) {
+float speed_in_rpm_2byte(int data) {
 	if (HIBYTE(data) <= 250)
     	return (data * 0.125);
 	else
@@ -261,7 +261,7 @@ unsigned short code_engine_speed(float speed) {
  * Scaled by 1/256 to give fraction of km/h. Converted to m/sec to agree with
  * units used by AVCS programs. Values of upper byte from 251 to 255 indicate
  * errors, returned as negative. Range from 0 to 69.721 meters/sec. */
-float wheel_based_mps(unsigned short data) {
+float wheel_based_mps(int data) {
 	if (HIBYTE(data) <= 250)
 		return((HIBYTE(data) + LOBYTE(data)/256.0) * (1000.0/3600.0));
 	else
@@ -270,7 +270,7 @@ float wheel_based_mps(unsigned short data) {
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to -2.170 to +2.170 meters/sec */
-float wheel_based_mps_relative(unsigned char data) {
+float wheel_based_mps_relative(int data) {
 	if (data <= 250)
     	return ((data * 0.0625 - 7.8125) * (1000.0/3600.0));
 	else
@@ -280,7 +280,7 @@ float wheel_based_mps_relative(unsigned char data) {
 /** Values of byte, 0 to 250, in km/h; donverted to m/sec to agree with units
  * used by AVCS programs. Values of byte from 251 to 255 indicate errors,
  * returned as negative. */
-float cruise_control_set_meters_per_sec(unsigned char data) {
+float cruise_control_set_meters_per_sec(int data) {
 	if (data <= 250)
 		return(data * (1000.0/3600.0));
 	else
@@ -290,7 +290,7 @@ float cruise_control_set_meters_per_sec(unsigned char data) {
 /** Values of upper byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64255 corresponds to 0 to 3212.75 liters/hour or 0 to 892.430
  * cubic centimeters per second. */
-float fuel_rate_cm3_per_sec(unsigned short data) {
+float fuel_rate_cm3_per_sec(int data) {
 	if (HIBYTE(data) <= 250)
     	return (data * 0.05 * 1000.0/3600.0);
 	else
@@ -299,7 +299,7 @@ float fuel_rate_cm3_per_sec(unsigned short data) {
 
 /** Values of upper byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64555 corresponds to 0 to 128.498 meters/cubic centimeter */
-float fuel_economy_meters_per_cm3(unsigned short data) {
+float fuel_economy_meters_per_cm3(int data) {
 	if (HIBYTE(data) <= 250)
     	return (data * (1.0/512.0));
 	else
@@ -326,7 +326,7 @@ float time_0_to_25sec(unsigned char data) {
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative. Range
  * of 0 to 50.2% reference engine torque/RPM. */
-float gain_in_kp(unsigned short data) {
+float gain_in_kp(int data) {
 	if (HIBYTE(data) <= 250)
     	return (data * (1.0/1280.0));
 	else
@@ -335,7 +335,7 @@ float gain_in_kp(unsigned short data) {
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative. Range
  * from 0 to 250 scale to -40 to +210 degrees Celsius. */
-float temp_m40_to_p210(unsigned char data) {
+float temp_m40_to_p210(int data) {
 	if (data <= 250)
     	return (data - 40.0);
 	else
@@ -345,7 +345,7 @@ float temp_m40_to_p210(unsigned char data) {
 /** Values of byte from 251 to 255 indicate errors, returned as negative. Range
  * of -273 to +1735 degrees Celsius. Since -251 to -255 in allowed range,
  * multiply error indicators by 10 before subtracting from 0. */
-float temp_m273_to_p1735(unsigned short data) {
+float temp_m273_to_p1735(int data) {
 	if (HIBYTE(data) <= 250)
     	return (data * 0.03125 - 273.0);
 	else
@@ -354,7 +354,7 @@ float temp_m273_to_p1735(unsigned short data) {
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 250 scale to -125 to +125 amperes. */
-float current_m125_to_p125amp(unsigned char data) {
+float current_m125_to_p125amp(int data) {
 	if (data <= 250)
     	return (data - 125.0);
 	else
@@ -363,7 +363,7 @@ float current_m125_to_p125amp(unsigned char data) {
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 250 in amperes. */
-float current_0_to_250amp(unsigned char data) {
+float current_0_to_250amp(int data) {
 	if (data <= 250)
     	return (data - 0.0);
 	else
@@ -372,7 +372,7 @@ float current_0_to_250amp(unsigned char data) {
 
 /** Values of byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 250 scale to 0 to 3212.75 V. */
-float voltage(unsigned short data) {
+float voltage(int data) {
 	if (HIBYTE(data) <= 250)
     	return (data * 0.05);
 	else
@@ -381,7 +381,7 @@ float voltage(unsigned short data) {
 
 /** Values of byte from 251 to 255 indicate errors, returned. Range from 0 to
  * 250 scale to -10 to 0 m/s^2. */
-float brake_demand(unsigned char data) {
+float brake_demand(int data) {
 	if (data <= 250)
     	return (data * 0.04 - 10.0);
     else
@@ -390,7 +390,7 @@ float brake_demand(unsigned char data) {
 
 /** Values of high byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64255 scale to 0 to 3212.75 kg/h. */
-float mass_flow(unsigned short data) {
+float mass_flow(int data) {
 	if (HIBYTE(data) <= 250)
     	return (data * 0.05);
     else
@@ -399,7 +399,7 @@ float mass_flow(unsigned short data) {
 
 /** Values of high byte from 251 to 255 indicate errors, returned as negative.
  * Range from 0 to 64255 scale to 0 to 32127.5 kW. */
-float power_in_kw(unsigned short data) {
+float power_in_kw(int data) {
 	if (HIBYTE(data) <= 250)
     	return (data * 0.5);
 	else

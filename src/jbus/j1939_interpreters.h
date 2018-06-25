@@ -34,7 +34,7 @@ public:
 
 	// checks whether the incoming message is of the same pdu type as the
 	// one covered by this (child) class
-	bool is_type(j1939_pdu_typ*);												// TODO(ak): delete?
+	bool is_type(j1939_pdu_typ*);
 
 	// prints and logs the message-specific format of a data point to the
 	// file path located in FILE*. Furthermore, if the third element is set
@@ -42,14 +42,17 @@ public:
 	virtual void print(void*, FILE*, bool) = 0;
 
 	// publish the message to the QNX publish/subscribe server
-	virtual void publish(void*) = 0;
+	virtual void publish(void*, int) = 0;
 //	virtual void ~publish();
 
 	// J1939 PGN number for the data-type
 	int pgn;
-
-//	~j1939_interpreter();
 };
+
+
+/* -------------------------------------------------------------------------- */
+/* ----------------------- In case not interpretable ------------------------ */
+/* -------------------------------------------------------------------------- */
 
 
 /** PDU generic interpreter (in case the PGN number is not interpretable) */
@@ -59,8 +62,13 @@ public:
 	int pgn = 0;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-    virtual void publish(void*);
+    virtual void publish(void*, int);
 };
+
+
+/* -------------------------------------------------------------------------- */
+/* ------------------------ Received from the brake ------------------------- */
+/* -------------------------------------------------------------------------- */
 
 
 /** PDU TSC1 (Torque/Speed Control) doc. in J1939 - 71, p149 */
@@ -70,8 +78,155 @@ public:
 	int pgn = TSC1;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
+
+
+/** PDU EBC1 (Electronic Brake Controller #1) doc. in J1939 - 71, p151 */
+class EBC1_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = EBC1;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/** PDU EBC2 (Electronic Brake Controller 2) doc. in J1939 - 71, p170 */
+class EBC2_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = EBC2;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/* -------------------------------------------------------------------------- */
+/* ------------------------ Received from the engine ------------------------ */
+/* -------------------------------------------------------------------------- */
+
+
+/** PDU EEC1 (Electronic Engine Controller #1) doc. in J1939 - 71, p152 */
+class EEC1_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = EEC1;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/** PDU EEC2 (Electronic Engine Controller #2) doc. in J1939 - 71, p152 */
+class EEC2_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = EEC2;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/** PDU EEC3 (Electronic Engine Controller #3) doc. in J1939 - 71, p154 */
+class EEC3_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = EEC3;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/** PDU ETC1 (Elec. Transmission Controller #1) doc. in J1939 - 71, p151 */
+class ETC1_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = ETC1;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/** PDU ETC2 (Electronic Transmission Controller #2) doc. in J1939 - 71, p152 */
+class ETC2_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = ETC2;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/** PDU ERC1 (Electronic Retarder Controller #1) doc. in J1939 - 71, p150 */
+class ERC1_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = ERC1;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/** PDU TF (Transmission Fluids) doc. in J1939 - 71, p164 */
+class TF_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = TF;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/** PDU CCVS (Cruise Control/Vehicle Speed) doc. in J1939 - 71, p162 */
+class CCVS_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = CCVS;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/** PDU LFE (Fuel Economy) doc. in J1939 - 71, p162 */
+class LFE_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = LFE;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/* -------------------------------------------------------------------------- */
+/* ------------------ Received from both engine and brake ------------------- */
+/* -------------------------------------------------------------------------- */
+
+
+/** PDU RF (Retarder Fluids) doc. in J1939 - 71, p164 */
+class RF_interpreter : public j1939_interpreter
+{
+public:
+	int pgn = RF;
+	virtual void *convert(j1939_pdu_typ*);
+	virtual void print(void*, FILE*, bool);
+	virtual void publish(void*, int);
+};
+
+
+/* -------------------------------------------------------------------------- */
+/* ----------------------------- Miscellaneous ------------------------------ */
+/* -------------------------------------------------------------------------- */
 
 
 // FIXME(ak): is this not written anywhere?
@@ -83,73 +238,7 @@ public:
 	int pgn = 0;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU ERC1 (Electronic Retarder Controller #1) doc. in J1939 - 71, p150 */
-class ERC1_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = ERC1;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU EBC1 (Electronic Brake Controller #1) doc. in J1939 - 71, p151 */
-class EBC1_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = EBC1;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU ETC1 (Elec. Transmission Controller #1) doc. in J1939 - 71, p151 */
-class ETC1_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = ETC1;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU EEC1 (Electronic Engine Controller #1) doc. in J1939 - 71, p152 */
-class EEC1_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = EEC1;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU EEC2 (Electronic Engine Controller #2) doc. in J1939 - 71, p152 */
-class EEC2_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = EEC2;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU ETC2 (Electronic Transmission Controller #2) doc. in J1939 - 71, p152 */
-class ETC2_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = ETC2;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -160,18 +249,7 @@ public:
 	int pgn = TURBO;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU EEC3 (Electronic Engine Controller #3) doc. in J1939 - 71, p154 */
-class EEC3_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = EEC3;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -182,7 +260,7 @@ public:
 	int pgn = VD;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -193,7 +271,7 @@ public:
 	int pgn = RCFG;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -217,7 +295,7 @@ public:
 	int pgn = ECFG;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -228,7 +306,7 @@ public:
 	int pgn = ETEMP;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -239,29 +317,7 @@ public:
 	int pgn = PTO;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU CCVS (Cruise Control/Vehicle Speed) doc. in J1939 - 71, p162 */
-class CCVS_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = CCVS;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU LFE (Fuel Economy) doc. in J1939 - 71, p162 */
-class LFE_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = LFE;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -272,7 +328,7 @@ public:
 	int pgn = AMBC;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -283,7 +339,7 @@ public:
 	int pgn = IEC;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -294,29 +350,7 @@ public:
 	int pgn = VEP;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU TF (Transmission Fluids) doc. in J1939 - 71, p164 */
-class TF_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = TF;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU RF (Retarder Fluids) doc. in J1939 - 71, p164 */
-class RF_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = RF;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -327,18 +361,7 @@ public:
 	int pgn = HRVD;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
-};
-
-
-/** PDU EBC2 (Electronic Brake Controller 2) doc. in J1939 - 71, p170 */
-class EBC2_interpreter : public j1939_interpreter
-{
-public:
-	int pgn = EBC2;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -349,7 +372,7 @@ public:
 	int pgn = FD;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -381,7 +404,7 @@ public:
 	int pgn = GFI2;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
 
 
@@ -392,7 +415,8 @@ public:
 	int pgn = EI;
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*);
+	virtual void publish(void*, int);
 };
+
 
 #endif /* INCLUDE_JBUS_J1939_INTERPRETERS_H_ */
