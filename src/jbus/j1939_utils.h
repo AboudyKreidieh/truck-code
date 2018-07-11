@@ -13,8 +13,6 @@
 
 #include <math.h>
 #include <stdio.h>
-#include <string>
-#include <sys/pps.h>
 
 
 /** Parameter group numbers for supported messages (pdu_format, pdu_specific) */
@@ -287,30 +285,6 @@ extern short deceleration_to_short(float);
 /** for use in printing of EXAC message, decodes two byte value to float m/s^2
  */
 extern float short_to_deceleration(short);
-
-
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-
-
-/** timestamp used to identify when each datapoint was issued. All J1939
- * datasets contain a timestamp_t variable. */
-typedef struct {
-	int hour;
-	int minute;
-	int second;
-	int millisecond;
-} timestamp_t;
-
-/** method used to print data from a timestamp_t variable */
-extern void print_timestamp(FILE*, timestamp_t*);
-
-/** encodes a timestamp_t variable into a pps encoder object */
-extern void encode_timestamp(pps_encoder_t, timestamp_t*);
-
-/** imports a string timestamp into a timestamp object */
-extern void import_timestamp(timestamp_t*, std::string);
 
 
 #endif /* INCLUDE_JBUS_J1939_UTILS_H_ */

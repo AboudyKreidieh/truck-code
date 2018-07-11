@@ -5,9 +5,7 @@
  *      Author: Abdul Rahman Kreidieh
  */
 
-#include <string>
 #include "j1939_utils.h"
-#include <sys/pps.h>
 
 
 /** Values from 251 to 255 in high byte indicate errors, returned as increment
@@ -433,26 +431,3 @@ float short_to_deceleration(short data) {
 		return ( (data - 25000) * 0.0004);
 }
 
-/** method used to print data from a timestamp_t variable */
-void print_timestamp(FILE *fp, timestamp_t *t) {
-	fprintf(fp, " %02d:%02d:%02d.%03d",
-		t->hour, t->minute, t->second, t->millisecond);
-}
-
-/** encodes a timestamp_t variable into a pps encoder object */
-void encode_timestamp(pps_encoder_t encoder, timestamp_t* t) {
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", t->hour);
-	pps_encoder_add_int(&encoder, "minute", t->minute);
-	pps_encoder_add_int(&encoder, "second", t->second);
-	pps_encoder_add_int(&encoder, "millisecond", t->millisecond);
-	pps_encoder_end_object(&encoder);
-}
-
-/** imports a string timestamp into a timestamp object */
-extern void import_timestamp(timestamp_t* t, std::string s) {
-    t->hour = std::stoi(s.substr(0,2));
-    t->minute = std::stoi(s.substr(3,5));
-    t->second = std::stoi(s.substr(6,8));
-    t->millisecond = std::stoi(s.substr(9,12));
-}

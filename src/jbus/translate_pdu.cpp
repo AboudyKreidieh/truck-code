@@ -148,45 +148,6 @@ vector<string> get_message_names() {
 	return message_names;
 }
 
-
-///** Utility method to convert a string of representing PDU messages into a
-// * j1939_pdu_typ object */
-//j1939_pdu_typ *convert_text_to_pdu(char s[]) {
-//    j1939_pdu_typ *pdu = new j1939_pdu_typ();
-//
-//    // separate the string by its " " delimiter
-//    vector<string> tokens;
-//    char *pch = strtok(s, " ");
-//    while (pch != NULL) {
-//        tokens.push_back(string(pch));
-//        pch = strtok(NULL, " ");
-//    }
-//
-//    for (int i=0; i<tokens.size(); ++i) {
-//        cout << tokens[i] << " ";
-//    }
-//    cout << endl;
-//
-//    // compute the timestamp object
-//    timestamp_t t;
-//    t.hour = stoi(tokens[1].substr(0,2));
-//    t.minute = stoi(tokens[1].substr(3,5));
-//    t.second = stoi(tokens[1].substr(6,8));
-//    t.millisecond = stoi(tokens[1].substr(9,12));
-//    pdu->timestamp = t;
-//
-//    // rest of the pdu variables
-//    pdu->priority = stoi(tokens[2]);
-//	pdu->pdu_format = stoi(tokens[3]);
-//	pdu->pdu_specific = stoi(tokens[4]);
-//	pdu->src_address = stoi(tokens[5]);
-//	pdu->num_bytes = stoi(tokens[6]);
-//	for (int i=0; i<pdu->num_bytes; i++)
-//        pdu->data_field[i] = stoi(tokens[7+i]);
-//
-//    return pdu;
-//}
-
 //#include <cstdio>
 //#include <iostream>
 //#include <memory>
@@ -205,6 +166,7 @@ vector<string> get_message_names() {
 //    }
 //    return result;
 //}
+
 
 int main() {
     // process arguments that are inputed during execution

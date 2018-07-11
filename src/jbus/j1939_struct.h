@@ -14,6 +14,7 @@
 
 #include <string>
 #include "j1939_utils.h"
+#include "timestamp.h"
 
 
 /** generic database variable type for storing information about Protocol Data

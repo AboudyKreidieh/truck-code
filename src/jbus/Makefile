@@ -10,23 +10,22 @@ PLATFORM ?= x86_64
 BUILD_PROFILE ?= debug
 
 CONFIG_NAME ?= $(PLATFORM)-$(BUILD_PROFILE)
+# TODO(ak): fix hack
 OUTPUT_DIR = $(BASE_DIR)/build/$(CONFIG_NAME)/src/jbus
 TARGET = $(BASE_DIR)/build/$(CONFIG_NAME)/$(ARTIFACT)
 #TARGET = $(OUTPUT_DIR)/$(ARTIFACT)
 
 #Compiler definitions
-
 CC = qcc -Vgcc_nto$(PLATFORM)
 CXX = qcc -lang-c++ -Vgcc_nto$(PLATFORM)
 LD = $(CXX)
 
 #User defined include/preprocessor flags and libraries
-
-#INCLUDES += -I/path/to/my/lib/include
+INCLUDES += -I../utils
 #INCLUDES += -I../mylib/public
 
 #LIBS += -L/path/to/my/lib/$(PLATFORM)/usr/lib -lmylib
-#LIBS += -L../mylib/$(OUTPUT_DIR) -lmylib
+#LIBS += -L$(OUTPUT_DIR)/../utils -ltimestamp
 
 #Compiler flags for build profiles
 CCFLAGS_release += -O2
@@ -66,9 +65,10 @@ $(OUTPUT_DIR)/%.o: %.cpp
 	$(CXX) -c $(DEPS) -o $@ $(INCLUDES) $(CCFLAGS_all) $(CCFLAGS) $<
 
 #Linking rule
+# TODO(ak): see if I can fix this hack
 $(TARGET):$(OBJS)
 	@mkdir -p $(dir $@)
-	$(LD) -o $(TARGET) $(LDFLAGS_all) $(LDFLAGS) $(OBJS) $(LIBS_all) $(LIBS)
+	$(LD) -o $(TARGET) $(LDFLAGS_all) $(LDFLAGS) $(OBJS) $(LIBS_all) $(LIBS) $(OUTPUT_DIR)/../utils/timestamp.o
 
 #Rules section for default compilation and linking
 all: $(TARGET)

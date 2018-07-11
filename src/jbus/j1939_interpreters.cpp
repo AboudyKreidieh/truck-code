@@ -7,6 +7,7 @@
 
 #include "j1939_interpreters.h"
 #include "j1939_utils.h"
+#include "timestamp.h"
 #include <vector>
 #include <string>
 #include <sys/pps.h>
