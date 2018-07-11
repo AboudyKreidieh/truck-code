@@ -42,7 +42,7 @@ CCFLAGS_all += $(CCFLAGS_$(BUILD_PROFILE))
 #Shared library has to be compiled with -fPIC
 #CCFLAGS_all += -fPIC
 LDFLAGS_all += $(LDFLAGS_$(BUILD_PROFILE))
-LIBS_all += $(LIBS_$(BUILD_PROFILE))
+LIBS_all += $(LIBS_$(BUILD_PROFILE)) -lpps
 DEPS = -Wp,-MMD,$(@:%.o=%.d),-MT,$@
 
 #Macro to expand files recursively: parameters $1 -  directory, $2 - extension, i.e. cpp

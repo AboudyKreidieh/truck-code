@@ -13,6 +13,8 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <string>
+#include <sys/pps.h>
 
 
 /** Parameter group numbers for supported messages (pdu_format, pdu_specific) */
@@ -303,5 +305,12 @@ typedef struct {
 
 /** method used to print data from a timestamp_t variable */
 extern void print_timestamp(FILE*, timestamp_t*);
+
+/** encodes a timestamp_t variable into a pps encoder object */
+extern void encode_timestamp(pps_encoder_t, timestamp_t*);
+
+/** imports a string timestamp into a timestamp object */
+extern void import_timestamp(timestamp_t*, std::string);
+
 
 #endif /* INCLUDE_JBUS_J1939_UTILS_H_ */

@@ -6,7 +6,8 @@
  */
 
 #include "j1939_interpreters.h"
-#include "j1939_utils.h"  // for TWOBYTES
+#include "j1939_utils.h"
+#include <vector>
 #include <string>
 #include <sys/pps.h>
 
@@ -66,13 +67,7 @@ void PDU_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@PDU");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", pdu->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", pdu->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", pdu->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", pdu->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &pdu->timestamp);
 
 	pps_encoder_add_int(&encoder, "priority", pdu->priority);
 	pps_encoder_add_int(&encoder, "pdu_format", pdu->pdu_format);
@@ -90,6 +85,22 @@ void PDU_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *PDU_interpreter::import(vector<string> &tokens) {
+	j1939_pdu_typ *pdu = new j1939_pdu_typ();
+
+	import_timestamp(&pdu->timestamp, tokens[1]);
+    pdu->priority = stoi(tokens[2]);
+	pdu->pdu_format = stoi(tokens[3]);
+	pdu->pdu_specific = stoi(tokens[4]);
+	pdu->src_address = stoi(tokens[5]);
+	pdu->num_bytes = stoi(tokens[6]);
+	for (int i=0; i<pdu->num_bytes; i++)
+        pdu->data_field[i] = stoi(tokens[7+i]);
+
+    return (void*) pdu;
 }
 
 
@@ -156,13 +167,7 @@ void TSC1_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@TSC1");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", tsc1->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", tsc1->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", tsc1->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", tsc1->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &tsc1->timestamp);
 
 	pps_encoder_add_int(&encoder, "destination_address",
 			tsc1->destination_address);
@@ -182,6 +187,22 @@ void TSC1_interpreter::publish(void *pdv, int fd) {
 }
 
 
+void *TSC1_interpreter::import(vector<string> &tokens) {
+	j1939_tsc1_typ *tsc1 = new j1939_tsc1_typ();
+
+	import_timestamp(&tsc1->timestamp, tokens[1]);
+	tsc1->destination_address = stoi(tokens[2]);
+	tsc1->src_address = stoi(tokens[3]);
+	tsc1->ovrd_ctrl_m_pr = stoi(tokens[4]);
+	tsc1->req_spd_ctrl = stoi(tokens[5]);
+	tsc1->ovrd_ctrl_m = stoi(tokens[6]);
+	tsc1->req_spd_lim = stof(tokens[7]);
+	tsc1->req_trq_lim = stof(tokens[8]);
+
+	return (void*) tsc1;
+}
+
+
 void *EBC1_interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ebc1_typ *ebc1 = new j1939_ebc1_typ();
 	ebc1->timestamp = pdu->timestamp;
@@ -195,8 +216,8 @@ void *EBC1_interpreter::convert(j1939_pdu_typ *pdu) {
 
 	ebc1->trac_ctrl_override_switch = BITS87(pdu->data_field[2]);
 	ebc1->asr_hillholder_switch = BITS65(pdu->data_field[2]);
-	ebc1->asr_offroad_switch = BIT43(pdu->data_field[2]);
-	ebc1->abs_offroad_switch = BIT21(pdu->data_field[2]);
+	ebc1->asr_offroad_switch = BITS43(pdu->data_field[2]);
+	ebc1->abs_offroad_switch = BITS21(pdu->data_field[2]);
 
 	ebc1->accel_enable_switch = BITS87(pdu->data_field[3]);
 	ebc1->aux_eng_shutdown_switch = BITS65(pdu->data_field[3]);
@@ -247,11 +268,11 @@ void EBC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, "\n");
 		fprintf(fp, " EBS brake switch status %d \n", ebc1->ebs_brk_switch);
 		fprintf(fp, " ABS active status %d \n", ebc1->antilock_brk_active);
-		fprintf(fp, " ASR brake control status%d \n",
+		fprintf(fp, " ASR brake control status %d \n",
 				ebc1->asr_brk_ctrl_active);
 		fprintf(fp, " ASR engine control active status %d \n",
 				ebc1->asr_engine_ctrl_active);
-		fprintf(fp, " Brake pedal position %.2f\n ", ebc1->brk_pedal_pos);
+		fprintf(fp, " Brake pedal position %.2f\n", ebc1->brk_pedal_pos);
 		fprintf(fp, " Traction control override switch status %d \n",
 				ebc1->trac_ctrl_override_switch);
 		fprintf(fp, " Hill holder switch status %d \n",
@@ -291,13 +312,7 @@ void EBC1_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@EBC1");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", ebc1->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", ebc1->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", ebc1->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", ebc1->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &ebc1->timestamp);
 
 	pps_encoder_add_int(&encoder, "ebs_brk_switch", ebc1->ebs_brk_switch);
 	pps_encoder_add_int(&encoder, "antilock_brk_active",
@@ -339,6 +354,34 @@ void EBC1_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EBC1_interpreter::import(vector<string> &tokens) {
+	j1939_ebc1_typ *ebc1 = new j1939_ebc1_typ();
+
+	import_timestamp(&ebc1->timestamp, tokens[1]);
+	ebc1->ebs_brk_switch = stoi(tokens[2]);
+	ebc1->antilock_brk_active = stoi(tokens[3]);
+	ebc1->asr_brk_ctrl_active = stoi(tokens[4]);
+	ebc1->asr_engine_ctrl_active = stoi(tokens[5]);
+	ebc1->brk_pedal_pos = stof(tokens[6]);
+	ebc1->trac_ctrl_override_switch = stoi(tokens[7]);
+	ebc1->asr_hillholder_switch = stoi(tokens[8]);
+	ebc1->abs_offroad_switch = stoi(tokens[9]);
+	ebc1->asr_offroad_switch = stoi(tokens[10]);
+	ebc1->accel_enable_switch = stoi(tokens[11]);
+	ebc1->aux_eng_shutdown_switch = stoi(tokens[12]);
+	ebc1->eng_derate_switch = stoi(tokens[13]);
+	ebc1->accel_interlock_switch = stoi(tokens[14]);
+	ebc1->eng_retarder_selection = stof(tokens[15]);
+	ebc1->abs_ebs_amber_warning = stoi(tokens[16]);
+	ebc1->ebs_red_warning = stoi(tokens[17]);
+	ebc1->abs_fully_operational = stoi(tokens[18]);
+ 	ebc1->src_address_ctrl = stoi(tokens[19]);
+ 	ebc1->total_brk_demand = stof(tokens[20]);
+
+	return (void*) ebc1;
 }
 
 
@@ -401,13 +444,7 @@ void EBC2_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@EBC2");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", ebc2->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", ebc2->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", ebc2->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", ebc2->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &ebc2->timestamp);
 
 	pps_encoder_add_double(&encoder, "front_axle_spd", ebc2->front_axle_spd);
 	pps_encoder_add_double(&encoder, "rel_spd_front_left",
@@ -429,6 +466,22 @@ void EBC2_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EBC2_interpreter::import(vector<string> &tokens) {
+	j1939_ebc2_typ *ebc2 = new j1939_ebc2_typ();
+
+	import_timestamp(&ebc2->timestamp, tokens[1]);
+	ebc2->front_axle_spd = stof(tokens[2]);
+	ebc2->rel_spd_front_left = stof(tokens[3]);
+	ebc2->rel_spd_front_right = stof(tokens[4]);
+	ebc2->rel_spd_rear_left_1 = stof(tokens[5]);
+	ebc2->rel_spd_rear_right_1 = stof(tokens[6]);
+	ebc2->rel_spd_rear_left_2 = stof(tokens[7]);
+	ebc2->rel_spd_rear_right_2 = stof(tokens[8]);
+
+	return (void*) ebc2;
 }
 
 
@@ -486,13 +539,7 @@ void EEC1_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@EEC1");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", eec1->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", eec1->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", eec1->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", eec1->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &eec1->timestamp);
 
 	pps_encoder_add_int(&encoder, "eng_trq_mode", eec1->eng_trq_mode);
 	pps_encoder_add_double(&encoder, "drvr_demand_eng_trq",
@@ -508,6 +555,28 @@ void EEC1_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EEC1_interpreter::import(vector<string> &tokens) {
+	j1939_eec1_typ *eec1 = new j1939_eec1_typ();
+
+//	import_timestamp(&eec1->timestamp, tokens[1]);
+//	eec1->eng_trq_mode = stoi(tokens[2]);
+//	eec1->drvr_demand_eng_trq = stof(tokens[3]);
+//	eec1->actual_eng_trq = stof(tokens[4]);
+//	eec1->eng_demand_trq = stof(tokens[5]);
+//	eec1->eng_spd = stof(tokens[6]);
+//	eec1->src_address = stoi(tokens[7]);
+
+	import_timestamp(&eec1->timestamp, tokens[1]);
+	eec1->eng_trq_mode = stoi(tokens[2]);
+	eec1->drvr_demand_eng_trq = stof(tokens[3]);
+	eec1->actual_eng_trq = stof(tokens[4]);
+	eec1->eng_spd = stof(tokens[5]);
+	eec1->src_address = stoi(tokens[6]);
+
+	return (void*) eec1;
 }
 
 
@@ -567,13 +636,7 @@ void EEC2_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@EEC2");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", eec2->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", eec2->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", eec2->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", eec2->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &eec2->timestamp);
 
 	pps_encoder_add_int(&encoder, "spd_limit_status", eec2->spd_limit_status);
 	pps_encoder_add_int(&encoder, "accel_pedal_kickdown",
@@ -595,6 +658,31 @@ void EEC2_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EEC2_interpreter::import(vector<string> &tokens) {
+	j1939_eec2_typ *eec2 = new j1939_eec2_typ();
+
+//	import_timestamp(&eec2->timestamp, tokens[1]);
+//	eec2->spd_limit_status = stoi(tokens[2]);
+//	eec2->accel_pedal_kickdown = stoi(tokens[3]);
+//	eec2->accel_pedal1_idle = stoi(tokens[4]);
+//	eec2->accel_pedal2_idle = stoi(tokens[5]);
+//	eec2->act_max_avail_eng_trq = stof(tokens[6]);
+//	eec2->accel_pedal1_pos = stof(tokens[7]);
+//	eec2->accel_pedal2_pos = stof(tokens[8]);
+//	eec2->eng_prcnt_load_curr_spd = stof(tokens[9]);
+
+	import_timestamp(&eec2->timestamp, tokens[1]);
+	eec2->spd_limit_status = stoi(tokens[2]);
+	eec2->accel_pedal_kickdown = stoi(tokens[3]);
+	eec2->accel_pedal1_idle = stoi(tokens[4]);
+	eec2->accel_pedal1_pos = stof(tokens[5]);
+	eec2->eng_prcnt_load_curr_spd = stof(tokens[6]);
+	eec2->act_max_avail_eng_trq = stof(tokens[7]);
+
+	return (void*) eec2;
 }
 
 
@@ -650,13 +738,7 @@ void EEC3_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@EEC3");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", eec3->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", eec3->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", eec3->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", eec3->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &eec3->timestamp);
 
 	pps_encoder_add_double(&encoder, "nominal_friction",
 			eec3->nominal_friction);
@@ -673,6 +755,24 @@ void EEC3_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *EEC3_interpreter::import(vector<string> &tokens) {
+	j1939_eec3_typ *eec3 = new j1939_eec3_typ();
+
+//	import_timestamp(&eec3->timestamp, tokens[1]);
+//	eec3->nominal_friction = stof(tokens[2]);
+//	eec3->est_eng_prstic_loss = stof(tokens[3]);
+//	eec3->operating_spd_adjust = stof(tokens[4]);
+//	eec3->desired_operating_spd = stof(tokens[5]);
+
+	import_timestamp(&eec3->timestamp, tokens[1]);
+	eec3->nominal_friction = stof(tokens[2]);
+	eec3->desired_operating_spd = stof(tokens[3]);
+	eec3->operating_spd_adjust = stof(tokens[4]);
+
+	return (void*) eec3;
 }
 
 
@@ -747,13 +847,7 @@ void ERC1_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@ERC1");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", erc1->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", erc1->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", erc1->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", erc1->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &erc1->timestamp);
 
 	pps_encoder_add_int(&encoder, "enable_shift_assist",
 			erc1->enable_shift_assist);
@@ -779,6 +873,34 @@ void ERC1_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *ERC1_interpreter::import(vector<string> &tokens) {
+	j1939_erc1_typ *erc1 = new j1939_erc1_typ();
+
+//	import_timestamp(&erc1->timestamp, tokens[1]);
+//	erc1->enable_shift_assist = stoi(tokens[2]);
+//	erc1->enable_brake_assist = stoi(tokens[3]);
+//	erc1->trq_mode = stoi(tokens[4]);
+//	erc1->actual_ret_pcnt_trq = stof(tokens[5]);
+//	erc1->intended_ret_pcnt_trq = stof(tokens[6]);
+//	erc1->rq_brake_light = stoi(tokens[7]);
+// 	erc1->src_address_ctrl = stoi(tokens[8]);
+//	erc1->drvrs_demand_prcnt_trq = stoi(tokens[9]);
+//	erc1->selection_nonengine = stof(tokens[10]);
+//	erc1->max_available_prcnt_trq = stoi(tokens[11]);
+
+	import_timestamp(&erc1->timestamp, tokens[1]);
+	erc1->enable_shift_assist = stoi(tokens[2]);
+	erc1->enable_brake_assist = stoi(tokens[3]);
+	erc1->trq_mode = stoi(tokens[4]);
+	erc1->actual_ret_pcnt_trq = stof(tokens[5]);
+	erc1->intended_ret_pcnt_trq = stof(tokens[6]);
+	erc1->rq_brake_light = stoi(tokens[7]);
+ 	erc1->src_address_ctrl = stoi(tokens[8]);
+
+	return (void*) erc1;
 }
 
 
@@ -851,13 +973,7 @@ void ETC1_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@ETC1");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", etc1->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", etc1->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", etc1->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", etc1->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &etc1->timestamp);
 
 	pps_encoder_add_int(&encoder, "trans_shift", etc1->trans_shift);
 	pps_encoder_add_int(&encoder, "trq_conv_lockup", etc1->trq_conv_lockup);
@@ -880,6 +996,24 @@ void ETC1_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *ETC1_interpreter::import(vector<string> &tokens) {
+	j1939_etc1_typ *etc1 = new j1939_etc1_typ();
+
+	import_timestamp(&etc1->timestamp, tokens[1]);
+	etc1->trans_shift = stoi(tokens[2]);
+	etc1->trq_conv_lockup = stoi(tokens[3]);
+	etc1->trans_driveline = stoi(tokens[4]);
+	etc1->tran_output_shaft_spd = stof(tokens[5]);
+	etc1->prcnt_clutch_slip = stof(tokens[6]);
+	etc1->prog_shift_disable = stoi(tokens[7]);
+	etc1->eng_overspd_enable = stoi(tokens[8]);
+	etc1->trans_input_shaft_spd = stof(tokens[9]);
+	etc1->src_address_ctrl = stoi(tokens[10]);
+
+	return (void*) etc1;
 }
 
 
@@ -930,13 +1064,7 @@ void ETC2_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@ETC2");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", etc2->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", etc2->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", etc2->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", etc2->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &etc2->timestamp);
 
 	pps_encoder_add_int(&encoder, "trans_selected_gear",
 			etc2->trans_selected_gear);
@@ -953,6 +1081,20 @@ void ETC2_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *ETC2_interpreter::import(vector<string> &tokens) {
+	j1939_etc2_typ *etc2 = new j1939_etc2_typ();
+
+	import_timestamp(&etc2->timestamp, tokens[1]);
+	etc2->trans_selected_gear = stoi(tokens[2]);
+	etc2->trans_act_gear_ratio = stof(tokens[3]);
+	etc2->trans_current_gear = stoi(tokens[4]);
+	etc2->range_selected = stoi(tokens[5]);
+	etc2->range_attained = stoi(tokens[6]);
+
+	return (void*) etc2;
 }
 
 
@@ -995,13 +1137,7 @@ void TURBO_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@TURBO");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", turbo->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", turbo->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", turbo->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", turbo->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &turbo->timestamp);
 
 	pps_encoder_add_double(&encoder, "turbo_lube_oil_pressure",
 			turbo->turbo_lube_oil_pressure);
@@ -1013,6 +1149,17 @@ void TURBO_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *TURBO_interpreter::import(vector<string> &tokens) {
+	j1939_turbo_typ *turbo = new j1939_turbo_typ();
+
+	import_timestamp(&turbo->timestamp, tokens[1]);
+	turbo->turbo_lube_oil_pressure = stof(tokens[2]);
+	turbo->turbo_speed = stof(tokens[3]);
+
+	return (void*) turbo;
 }
 
 
@@ -1060,13 +1207,7 @@ void VD_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@VD");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", vd->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", vd->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", vd->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", vd->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &vd->timestamp);
 
 	pps_encoder_add_int(&encoder, "trip_dist", vd->trip_dist);
 	pps_encoder_add_int(&encoder, "tot_vehicle_dist", vd->tot_vehicle_dist);
@@ -1077,6 +1218,17 @@ void VD_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *VD_interpreter::import(vector<string> &tokens) {
+	j1939_vd_typ *vd = new j1939_vd_typ();
+
+	import_timestamp(&vd->timestamp, tokens[1]);
+	vd->trip_dist = stof(tokens[2]);
+	vd->tot_vehicle_dist = stof(tokens[3]);
+
+	return (void*) vd;
 }
 
 
@@ -1120,7 +1272,6 @@ void RCFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	fprintf(fp, "RCFG");
 	print_timestamp(fp, &rcfg->timestamp);
 	if (numeric) {
-		fprintf(fp, "\n");
 		fprintf(fp, " %d", rcfg->retarder_loc);
 		fprintf(fp, " %d", rcfg->retarder_type);
 		fprintf(fp, " %d", rcfg->retarder_ctrl_steps);
@@ -1154,6 +1305,7 @@ void RCFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 
 void RCFG_interpreter::publish(void *pdv, int fd) {
 	j1939_rcfg_typ *rcfg = (j1939_rcfg_typ*) pdv;
+	int i;
 
 	// initialize the encoder object
 	pps_encoder_t encoder;
@@ -1161,13 +1313,7 @@ void RCFG_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@RCFG");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", rcfg->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", rcfg->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", rcfg->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", rcfg->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &rcfg->timestamp);
 
 	pps_encoder_add_int(&encoder, "retarder_loc", rcfg->retarder_loc);
 	pps_encoder_add_int(&encoder, "retarder_type", rcfg->retarder_type);
@@ -1196,6 +1342,34 @@ void RCFG_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *RCFG_interpreter::import(vector<string> &tokens) {
+	j1939_rcfg_typ *rcfg = new j1939_rcfg_typ();
+	int i;
+
+//	import_timestamp(&rcfg->timestamp, tokens[1]);
+//	rcfg->retarder_loc = stoi(tokens[2]);
+//	rcfg->retarder_type = stoi(tokens[3]);
+//	rcfg->retarder_ctrl_steps = stoi(tokens[4]);
+//	for (i = 0; i < 5; i++)
+//		rcfg->retarder_speed[i] = stof(tokens[5+i]);
+//	for (i = 0; i < 5; i++)
+//		rcfg->percent_torque[i] = stof(tokens[10+i]);
+//	rcfg->reference_retarder_trq = stof(tokens[15]);
+
+//	import_timestamp(&rcfg->timestamp, tokens[1]);
+	rcfg->retarder_loc = stoi(tokens[3]);
+	rcfg->retarder_type = stoi(tokens[4]);
+	rcfg->retarder_ctrl_steps = stoi(tokens[5]);
+	for (i = 0; i < 5; i++)
+		rcfg->retarder_speed[i] = stof(tokens[6+i]);
+	for (i = 0; i < 5; i++)
+		rcfg->percent_torque[i] = stof(tokens[11+i]);
+	rcfg->reference_retarder_trq = stof(tokens[16]);
+
+	return (void*) rcfg;
 }
 
 
@@ -1305,6 +1479,7 @@ void ECFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 
 void ECFG_interpreter::publish(void *pdv, int fd) {
 	j1939_ecfg_typ *ecfg = (j1939_ecfg_typ*) pdv;
+	int i;
 
 	// initialize the encoder object
 	pps_encoder_t encoder;
@@ -1312,13 +1487,7 @@ void ECFG_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@ECFG");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", ecfg->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", ecfg->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", ecfg->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", ecfg->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &ecfg->timestamp);
 
 	pps_encoder_add_int(&encoder, "receive_status", ecfg->receive_status);
 
@@ -1353,6 +1522,41 @@ void ECFG_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *ECFG_interpreter::import(vector<string> &tokens) {
+	j1939_ecfg_typ *ecfg = new j1939_ecfg_typ();
+	int i;
+
+//	import_timestamp(&ecfg->timestamp, tokens[1]);
+//	ecfg->receive_status = stoi(tokens[2]);
+//	for (i = 0; i < 7; i++)
+//		ecfg->engine_spd[i] = stof(tokens[3+i]);
+//	for (i = 0; i < 5; i++)
+//		ecfg->percent_trq[i] = stof(tokens[10+i]);
+//	ecfg->gain_endspeed_governor = stof(tokens[15]);
+//	ecfg->reference_eng_trq = stof(tokens[16]);
+//	ecfg->max_momentary_overide_time = stof(tokens[17]);
+//	ecfg->spd_ctrl_lower_lim = stof(tokens[18]);
+//	ecfg->spd_ctrl_upper_lim = stof(tokens[19]);
+//	ecfg->trq_ctrl_lower_lim = stof(tokens[20]);
+//	ecfg->trq_ctrl_upper_lim = stof(tokens[21]);
+
+	import_timestamp(&ecfg->timestamp, tokens[1]);
+	for (i = 0; i < 7; i++)
+		ecfg->engine_spd[i] = stof(tokens[3+i]);
+	for (i = 0; i < 5; i++)
+		ecfg->percent_trq[i] = stof(tokens[10+i]);
+	ecfg->gain_endspeed_governor = stof(tokens[15]);
+	ecfg->reference_eng_trq = stof(tokens[16]);
+	ecfg->max_momentary_overide_time = stof(tokens[17]);
+	ecfg->spd_ctrl_lower_lim = stof(tokens[18]);
+	ecfg->spd_ctrl_upper_lim = stof(tokens[19]);
+	ecfg->trq_ctrl_lower_lim = stof(tokens[20]);
+	ecfg->trq_ctrl_upper_lim = stof(tokens[21]);
+
+	return (void*) ecfg;
 }
 
 
@@ -1417,13 +1621,7 @@ void ETEMP_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@ETEMP");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", etemp->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", etemp->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", etemp->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", etemp->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &etemp->timestamp);
 
 	pps_encoder_add_double(&encoder, "eng_coolant_temp",
 			etemp->eng_coolant_temp);
@@ -1441,6 +1639,21 @@ void ETEMP_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *ETEMP_interpreter::import(vector<string> &tokens) {
+	j1939_etemp_typ *etemp = new j1939_etemp_typ();
+
+	import_timestamp(&etemp->timestamp, tokens[1]);
+	etemp->eng_coolant_temp = stof(tokens[2]);
+	etemp->fuel_temp = stof(tokens[3]);
+	etemp->eng_oil_temp = stof(tokens[4]);
+	etemp->turbo_oil_temp = stof(tokens[5]);
+	etemp->eng_intercooler_temp = stof(tokens[6]);
+	etemp->eng_intercooler_thermostat_opening = stof(tokens[7]);
+
+	return (void*) etemp;
 }
 
 
@@ -1515,13 +1728,7 @@ void PTO_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@PTO");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", pto->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", pto->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", pto->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", pto->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &pto->timestamp);
 
 	pps_encoder_add_double(&encoder, "oil_temp", pto->oil_temp);
 	pps_encoder_add_double(&encoder, "speed", pto->speed);
@@ -1543,6 +1750,25 @@ void PTO_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *PTO_interpreter::import(vector<string> &tokens) {
+	j1939_pto_typ *pto = new j1939_pto_typ();
+
+	import_timestamp(&pto->timestamp, tokens[1]);
+	pto->oil_temp = stof(tokens[2]);
+	pto->speed = stof(tokens[3]);
+	pto->set_speed = stof(tokens[4]);
+	pto->remote_variable_spd_status = stoi(tokens[5]);
+	pto->remote_preprogramm_status = stoi(tokens[6]);
+	pto->enable_switch = stoi(tokens[7]);
+	pto->accel_switch = stoi(tokens[8]);
+	pto->resume_switch = stoi(tokens[9]);
+	pto->coast_decel_switch = stoi(tokens[10]);
+	pto->set_switch = stoi(tokens[11]);
+
+	return (void*) pto;
 }
 
 
@@ -1570,7 +1796,7 @@ void *CCVS_interpreter::convert(j1939_pdu_typ *pdu) {
 	byte = pdu->data_field[4];
 	ccvs->cc_accel_switch = BITS87(byte);
 	ccvs->cc_resume_switch = BITS65(byte);
-	ccvs->cc_co	ast_switch = BITS43(byte);
+	ccvs->cc_coast_switch = BITS43(byte);
 	ccvs->cc_set_switch = BITS21(byte);
 
 	ccvs->cc_set_speed = cruise_control_set_meters_per_sec(pdu->data_field[5]);
@@ -1652,13 +1878,7 @@ void CCVS_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@CCVS");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", ccvs->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", ccvs->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", ccvs->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", ccvs->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &ccvs->timestamp);
 
 	pps_encoder_add_int(&encoder, "park_brk_release", ccvs->park_brk_release);
 	pps_encoder_add_int(&encoder, "parking_brk_switch",
@@ -1693,6 +1913,55 @@ void CCVS_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *CCVS_interpreter::import(vector<string> &tokens) {
+	j1939_ccvs_typ *ccvs = new j1939_ccvs_typ();
+
+//	import_timestamp(&ccvs->timestamp, tokens[1]);
+//	ccvs->park_brk_release = stoi(tokens[2]);
+//	ccvs->parking_brk_switch = stoi(tokens[3]);
+//	ccvs->two_spd_axle_switch = stoi(tokens[4]);
+//	ccvs->vehicle_spd = stof(tokens[5]);
+//	ccvs->clutch_switch = stoi(tokens[6]);
+//	ccvs->brk_switch = stoi(tokens[7]);
+//	ccvs->cc_pause_switch = stoi(tokens[8]);
+//	ccvs->cc_enable_switch = stoi(tokens[9]);
+//	ccvs->cc_active = stoi(tokens[10]);
+//	ccvs->cc_accel_switch = stoi(tokens[11]);
+//	ccvs->cc_resume_switch = stoi(tokens[12]);
+//	ccvs->cc_coast_switch = stoi(tokens[13]);
+//	ccvs->cc_set_switch = stoi(tokens[14]);
+//	ccvs->cc_set_speed = stof(tokens[15]);
+//	ccvs->cc_state = stoi(tokens[16]);
+//	ccvs->pto_state = stoi(tokens[17]);
+//	ccvs->eng_shutdown_override = stoi(tokens[18]);
+//	ccvs->eng_test_mode_switch = stoi(tokens[19]);
+//	ccvs->eng_idle_decr_switch = stoi(tokens[20]);
+//	ccvs->eng_idle_incr_switch = stoi(tokens[21]);
+
+	import_timestamp(&ccvs->timestamp, tokens[1]);
+	ccvs->park_brk_release = stoi(tokens[2]);
+	ccvs->two_spd_axle_switch = stoi(tokens[3]);
+	ccvs->vehicle_spd = stof(tokens[4]);
+	ccvs->clutch_switch = stoi(tokens[5]);
+	ccvs->brk_switch = stoi(tokens[6]);
+	ccvs->cc_enable_switch = stoi(tokens[7]);
+	ccvs->cc_active = stoi(tokens[8]);
+	ccvs->cc_accel_switch = stoi(tokens[9]);
+	ccvs->cc_resume_switch = stoi(tokens[10]);
+	ccvs->cc_coast_switch = stoi(tokens[11]);
+	ccvs->cc_set_switch = stoi(tokens[12]);
+	ccvs->cc_set_speed = stof(tokens[13]);
+	ccvs->cc_state = stoi(tokens[14]);
+	ccvs->pto_state = stoi(tokens[15]);
+	ccvs->eng_shutdown_override = stoi(tokens[16]);
+	ccvs->eng_test_mode_switch = stoi(tokens[17]);
+	ccvs->eng_idle_decr_switch = stoi(tokens[18]);
+	ccvs->eng_idle_incr_switch = stoi(tokens[19]);
+
+	return (void*) ccvs;
 }
 
 
@@ -1753,13 +2022,7 @@ void LFE_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@LFE");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", lfe->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", lfe->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", lfe->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", lfe->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &lfe->timestamp);
 
 	pps_encoder_add_double(&encoder, "eng_fuel_rate", lfe->eng_fuel_rate);
 	pps_encoder_add_double(&encoder, "eng_inst_fuel_economy",
@@ -1777,6 +2040,26 @@ void LFE_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *LFE_interpreter::import(vector<string> &tokens) {
+	j1939_lfe_typ *lfe = new j1939_lfe_typ();
+
+//	import_timestamp(&lfe->timestamp, tokens[1]);
+//	lfe->eng_fuel_rate = stof(tokens[2]);
+//	lfe->eng_inst_fuel_economy = stof(tokens[3]);
+//	lfe->eng_avg_fuel_economy = stof(tokens[4]);
+//	lfe->eng_throttle1_pos = stof(tokens[5]);
+//	lfe->eng_throttle2_pos = stof(tokens[6]);
+
+	import_timestamp(&lfe->timestamp, tokens[1]);
+	lfe->eng_fuel_rate = stof(tokens[2]);
+	lfe->eng_inst_fuel_economy = stof(tokens[3]);
+	lfe->eng_avg_fuel_economy = stof(tokens[4]);
+	lfe->eng_throttle1_pos = stof(tokens[5]);
+
+	return (void*) lfe;
 }
 
 
@@ -1834,13 +2117,7 @@ void AMBC_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@AMBC");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", ambc->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", ambc->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", ambc->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", ambc->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &ambc->timestamp);
 
 	pps_encoder_add_double(&encoder, "barometric_pressure",
 			ambc->barometric_pressure);
@@ -1858,6 +2135,20 @@ void AMBC_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *AMBC_interpreter::import(vector<string> &tokens) {
+	j1939_ambc_typ *ambc = new j1939_ambc_typ();
+
+	import_timestamp(&ambc->timestamp, tokens[1]);
+	ambc->barometric_pressure = stof(tokens[2]);
+	ambc->cab_interior_temp = stof(tokens[3]);
+	ambc->ambient_air_temp = stof(tokens[4]);
+	ambc->air_inlet_temp = stof(tokens[5]);
+	ambc->road_surface_temp = stof(tokens[6]);
+
+	return (void*) ambc;
 }
 
 
@@ -1921,13 +2212,7 @@ void IEC_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@IEC");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", iec->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", iec->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", iec->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", iec->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &iec->timestamp);
 
 	pps_encoder_add_double(&encoder, "particulate_inlet_pressure",
 			iec->particulate_inlet_pressure);
@@ -1948,6 +2233,22 @@ void IEC_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *IEC_interpreter::import(vector<string> &tokens) {
+	j1939_iec_typ *iec = new j1939_iec_typ();
+
+	import_timestamp(&iec->timestamp, tokens[1]);
+	iec->particulate_inlet_pressure = stof(tokens[2]);
+	iec->boost_pressure = stof(tokens[3]);
+	iec->intake_manifold_temp = stof(tokens[4]);
+	iec->air_inlet_pressure = stof(tokens[5]);
+	iec->air_filter_diff_pressure = stof(tokens[6]);
+	iec->exhaust_gas_temp = stof(tokens[7]);
+	iec->coolant_filter_diff_pressure = stof(tokens[8]);
+
+	return (void*) iec;
 }
 
 
@@ -2004,13 +2305,7 @@ void VEP_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@VEP");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", vep->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", vep->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", vep->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", vep->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &vep->timestamp);
 
 	pps_encoder_add_double(&encoder, "net_battery_current",
 			vep->net_battery_current);
@@ -2029,6 +2324,20 @@ void VEP_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *VEP_interpreter::import(vector<string> &tokens) {
+	j1939_vep_typ *vep = new j1939_vep_typ();
+
+	import_timestamp(&vep->timestamp, tokens[1]);
+	vep->net_battery_current = stof(tokens[2]);
+	vep->alternator_current = stof(tokens[3]);
+	vep->alternator_potential = stof(tokens[4]);
+	vep->electrical_potential = stof(tokens[5]);
+	vep->battery_potential = stof(tokens[6]);
+
+	return (void*) vep;
 }
 
 
@@ -2081,13 +2390,7 @@ void TF_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@TF");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", tf->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", tf->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", tf->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", tf->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &tf->timestamp);
 
 	pps_encoder_add_double(&encoder, "clutch_pressure", tf->clutch_pressure);
 	pps_encoder_add_double(&encoder, "oil_level", tf->oil_level);
@@ -2101,6 +2404,20 @@ void TF_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *TF_interpreter::import(vector<string> &tokens) {
+	j1939_tf_typ *tf = new j1939_tf_typ();
+
+	import_timestamp(&tf->timestamp, tokens[1]);
+	tf->clutch_pressure = stof(tokens[2]);
+	tf->oil_level = stof(tokens[3]);
+	tf->diff_pressure = stof(tokens[4]);
+	tf->oil_pressure = stof(tokens[5]);
+	tf->oil_temp = stof(tokens[6]);
+
+	return (void*) tf;
 }
 
 
@@ -2139,13 +2456,7 @@ void RF_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@RF");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", rf->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", rf->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", rf->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", rf->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &rf->timestamp);
 
 	pps_encoder_add_double(&encoder, "pressure", rf->pressure);
 	pps_encoder_add_double(&encoder, "oil_temp", rf->oil_temp);
@@ -2156,6 +2467,17 @@ void RF_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *RF_interpreter::import(vector<string> &tokens) {
+	j1939_rf_typ *rf = new j1939_rf_typ();
+
+	import_timestamp(&rf->timestamp, tokens[1]);
+	rf->pressure = stof(tokens[2]);
+	rf->oil_temp = stof(tokens[3]);
+
+	return (void*) rf;
 }
 
 
@@ -2202,13 +2524,7 @@ void HRVD_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@HRVD");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", hrvd->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", hrvd->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", hrvd->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", hrvd->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &hrvd->timestamp);
 
 	pps_encoder_add_double(&encoder, "vehicle_distance", hrvd->vehicle_distance);
 	pps_encoder_add_double(&encoder, "trip_distance", hrvd->trip_distance);
@@ -2219,6 +2535,17 @@ void HRVD_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *HRVD_interpreter::import(vector<string> &tokens) {
+	j1939_hrvd_typ *hrvd = new j1939_hrvd_typ();
+
+	import_timestamp(&hrvd->timestamp, tokens[1]);
+	hrvd->vehicle_distance = stof(tokens[2]);
+	hrvd->trip_distance = stof(tokens[3]);
+
+	return (void*) hrvd;
 }
 
 
@@ -2257,13 +2584,7 @@ void FD_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@FD");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", fdd->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", fdd->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", fdd->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", fdd->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &fdd->timestamp);
 
 	pps_encoder_add_double(&encoder, "prcnt_fan_spd", fdd->prcnt_fan_spd);
 	pps_encoder_add_int(&encoder, "fan_drive_state", fdd->fan_drive_state);
@@ -2274,6 +2595,17 @@ void FD_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *FD_interpreter::import(vector<string> &tokens) {
+	j1939_fd_typ *fd = new j1939_fd_typ();
+
+	import_timestamp(&fd->timestamp, tokens[1]);
+	fd->prcnt_fan_spd = stof(tokens[2]);
+	fd->fan_drive_state = stoi(tokens[3]);
+
+	return (void*) fd;
 }
 
 
@@ -2325,13 +2657,7 @@ void GFI2_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@GFI2");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", gfi2->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", gfi2->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", gfi2->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", gfi2->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &gfi2->timestamp);
 
 	pps_encoder_add_double(&encoder, "fuel_flow_rate1", gfi2->fuel_flow_rate1);
 	pps_encoder_add_double(&encoder, "fuel_flow_rate2", gfi2->fuel_flow_rate2);
@@ -2344,6 +2670,19 @@ void GFI2_interpreter::publish(void *pdv, int fd) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
+}
+
+
+void *GFI2_interpreter::import(vector<string> &tokens) {
+	j1939_gfi2_typ *gfi2 = new j1939_gfi2_typ();
+
+	import_timestamp(&gfi2->timestamp, tokens[1]);
+	gfi2->fuel_flow_rate1 = stof(tokens[2]);
+	gfi2->fuel_flow_rate2 = stof(tokens[3]);
+	gfi2->fuel_valve_pos1 = stof(tokens[4]);
+	gfi2->fuel_valve_pos2 = stof(tokens[5]);
+
+	return (void*) gfi2;
 }
 
 
@@ -2399,23 +2738,17 @@ void EI_interpreter::publish(void *pdv, int fd) {
 
 	// setup the object to be encoded
 	pps_encoder_start_object(&encoder, "@EI");
-
-	pps_encoder_start_object(&encoder, "time");
-	pps_encoder_add_int(&encoder, "hour", ei->timestamp.hour);
-	pps_encoder_add_int(&encoder, "minute", ei->timestamp.minute);
-	pps_encoder_add_int(&encoder, "second", ei->timestamp.second);
-	pps_encoder_add_int(&encoder, "millisecond", ei->timestamp.millisecond);
-	pps_encoder_end_object(&encoder);
+	encode_timestamp(encoder, &ei->timestamp);
 
 	pps_encoder_add_double(&encoder, "pre_filter_oil_pressure",
-			fdd->pre_filter_oil_pressure);
+			ei->pre_filter_oil_pressure);
 	pps_encoder_add_double(&encoder, "exhaust_gas_pressure",
-			fdd->exhaust_gas_pressure);
-	pps_encoder_add_double(&encoder, "rack_position", fdd->rack_position);
+			ei->exhaust_gas_pressure);
+	pps_encoder_add_double(&encoder, "rack_position", ei->rack_position);
 	pps_encoder_add_double(&encoder, "eng_gas_mass_flow",
-			fdd->eng_gas_mass_flow);
+			ei->eng_gas_mass_flow);
 	pps_encoder_add_double(&encoder, "inst_estimated_brake_power",
-			fdd->inst_estimated_brake_power);
+			ei->inst_estimated_brake_power);
 
 	pps_encoder_end_object(&encoder);
 
@@ -2424,4 +2757,19 @@ void EI_interpreter::publish(void *pdv, int fd) {
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
+
+
+void *EI_interpreter::import(vector<string> &tokens) {
+	j1939_ei_typ *ei = new j1939_ei_typ();
+
+	import_timestamp(&ei->timestamp, tokens[1]);
+	ei->pre_filter_oil_pressure = stof(tokens[2]);
+	ei->exhaust_gas_pressure = stof(tokens[3]);
+	ei->rack_position = stof(tokens[4]);
+	ei->eng_gas_mass_flow = stof(tokens[5]);
+	ei->inst_estimated_brake_power = stof(tokens[6]);
+
+	return (void*) ei;
+}
+
 

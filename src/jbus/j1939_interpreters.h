@@ -8,6 +8,8 @@
  *    by any specific subclass of the abstract class
  *  - printing: printing/logging the information in a message
  *  - publishing: sending messages to a pub/sub servers
+ *  - importing: collecting data from a file of numeric formatted data and
+ *    placing it in a message-specific object
  *
  * This file contains also interpreters for all used J1939 messages.
  *
@@ -20,8 +22,12 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <vector>
+#include <string>
 #include "j1939_struct.h"
 #include "j1939_utils.h"
+
+using namespace std;
 
 
 /** Base interpreter for processing pdu variables into their message-specific
@@ -30,7 +36,7 @@ class j1939_interpreter
 {
 public:
 	// converts a message from its pdu format to its data-specific format
-	virtual void* convert(j1939_pdu_typ*) = 0;
+	virtual void *convert(j1939_pdu_typ*) = 0;
 
 	// checks whether the incoming message is of the same pdu type as the
 	// one covered by this (child) class
@@ -43,7 +49,10 @@ public:
 
 	// publish the message to the QNX publish/subscribe server
 	virtual void publish(void*, int) = 0;
-//	virtual void ~publish();
+	// virtual void ~publish();
+
+	// imports data from a printed file into a message-specific object
+	virtual void *import(vector<string>&) = 0;
 
 	// J1939 PGN number for the data-type
 	int pgn;
@@ -63,6 +72,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
     virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -79,6 +89,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -90,6 +101,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -101,6 +113,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -117,6 +130,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -128,6 +142,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -139,6 +154,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -150,6 +166,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -161,6 +178,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -172,6 +190,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -183,6 +202,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -194,6 +214,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -205,6 +226,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -221,6 +243,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -239,6 +262,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -250,6 +274,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -261,6 +286,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -272,6 +298,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -296,6 +323,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -307,6 +335,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -318,6 +347,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -329,6 +359,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -340,6 +371,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -351,6 +383,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -362,6 +395,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -373,6 +407,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -405,6 +440,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
@@ -416,6 +452,7 @@ public:
 	virtual void *convert(j1939_pdu_typ*);
 	virtual void print(void*, FILE*, bool);
 	virtual void publish(void*, int);
+    virtual void *import(vector<string>&);
 };
 
 
