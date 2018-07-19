@@ -1,12 +1,12 @@
 /**
  * long_controller.h
  *
- *  Created on: Jul 11, 2018
+ *  Created on: July 11, 2018
  *      Author: Abdul Rahman Kreidieh
  */
 
-#ifndef SRC_CTRL_LONG_LONG_CONTROLLER_H_
-#define SRC_CTRL_LONG_LONG_CONTROLLER_H_
+#ifndef SRC_CONTROL_LONG_CONTROLLER_H_
+#define SRC_CONTROL_LONG_CONTROLLER_H_
 
 #include "long_utils.h"
 
@@ -39,4 +39,4 @@ public:
 
 
 
-#endif /* SRC_CTRL_LONG_LONG_CONTROLLER_H_ */
+#endif /* SRC_CONTROL_LONG_CONTROLLER_H_ */

@@ -1,12 +1,12 @@
 /*
  * long_utils.h
  *
- *  Created on: Jul 11, 2018
- *      Author: aboudy
+ *  Created on: July 11, 2018
+ *      Author: Abdul Rahman Kreidieh
  */
 
-#ifndef SRC_CTRL_LONG_LONG_UTILS_H_
-#define SRC_CTRL_LONG_LONG_UTILS_H_
+#ifndef SRC_CONTROL_LONG_UTILS_H_
+#define SRC_CONTROL_LONG_UTILS_H_
 
 
 /** Longitudinal control structure
@@ -90,4 +90,4 @@ typedef struct {
 } long_vehicle_state;
 
 
-#endif /* SRC_CTRL_LONG_LONG_UTILS_H_ */
+#endif /* SRC_CONTROL_LONG_UTILS_H_ */
