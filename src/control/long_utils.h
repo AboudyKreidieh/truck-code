@@ -1,5 +1,8 @@
-/*
+/**
  * long_utils.h
+ *
+ * This file contains utility structures and loose methods used during the
+ * longitudonal control process.
  *
  *  Created on: July 11, 2018
  *      Author: Abdul Rahman Kreidieh

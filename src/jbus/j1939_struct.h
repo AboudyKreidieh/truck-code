@@ -1,7 +1,8 @@
 /**
  * j1939_struct.h
  *
- * Database variable definitions for J1939 and J1587 buses.
+ * Database variable definitions for J1939 buses.
+ *
  * Note that first field for all structures is the time stamp, so it can be
  * altered by routines that do not know the type of the message.
  *
@@ -418,7 +419,7 @@ typedef struct {
 } j1939_ebc_acc_typ;
 
 
-/** PDU 	 (Gaseous Fuel Information 2), J1939-71, sec 5.3.123 */
+/** PDU GFI2 (Gaseous Fuel Information 2), J1939-71, sec 5.3.123 */
 typedef struct {
 	timestamp_t timestamp;
 	float fuel_flow_rate1;		// Engine Fuel Flow Rate 1 (0-6425.5 m^3/h)
