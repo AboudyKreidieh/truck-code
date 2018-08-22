@@ -1,8 +1,10 @@
-/*
+/**\file
+ *
  * j1939_utls.cpp
  *
- *  Created on: June 21, 2018
- *      Author: Abdul Rahman Kreidieh
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date June 21, 2018
  */
 
 #include "j1939_utils.h"

@@ -1,4 +1,5 @@
-/**
+/**\file
+ *
  * long_controller.h
  *
  * This file contains the controller class used for longitudonal control. This
@@ -6,8 +7,9 @@
  *  - storing updated vehicle state information
  *  - issuing commands for both the torque and the break
  *
- *  Created on: July 11, 2018
- *      Author: Abdul Rahman Kreidieh
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date July 11, 2018
  */
 
 #ifndef SRC_CONTROL_LONG_CONTROLLER_H_

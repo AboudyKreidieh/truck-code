@@ -1,11 +1,13 @@
-/**
+/**\file
+ *
  * j1939_utils.h
  *
  * This file contains several constants, macros, and methods that are used when
  * trying to interpret a J1939 message.
  *
- *  Created on: May 31, 2018
- *      Author: Abdul Rahman Kreidieh
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date May 31, 2018
  */
 
 #ifndef INCLUDE_JBUS_J1939_UTILS_H_
@@ -163,7 +165,7 @@ extern float pressure_0_to_4000kpa(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 1000 kilopascals pressure */
-extern float pressure_0_to_1000kpa(int );
+extern float pressure_0_to_1000kpa(int);
 
 /** Values from 251 to 255 indicate errors, stored as negative. Range from 0 to
  * 250 corresponds to 0 to 500 kilopascals pressure */

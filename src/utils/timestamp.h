@@ -1,12 +1,14 @@
-/**
+/**\file
+ *
  * timestamp.h
  *
  * This file contains a timestamp object and methods needed to collect, print,
  * and publish timestamps, for use in jbus/j1939 message and when sending
  * lateral / longitudinal commands.
  *
- *  Created on: July 11, 2018
- *      Author: Abdul Rahman Kreidieh
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date July 11, 2018
  */
 
 #ifndef SRC_UTILS_TIMESTAMP_H_

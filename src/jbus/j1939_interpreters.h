@@ -1,4 +1,5 @@
-/**
+/**\file
+ *
  * j1939_interpreters.h
  *
  * This file contains the abstract class for J1939 message processing. The
@@ -13,8 +14,9 @@
  *
  * This file contains also interpreters for all used J1939 messages.
  *
- *  Created on: May 31, 2018
- *      Author: Abdul Rahman Kreidieh
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date May 31, 2018
  */
 
 #ifndef INCLUDE_JBUS_J1939_INTERPRETERS_H_
@@ -32,10 +34,13 @@ using namespace std;
 
 /** Base interpreter for processing pdu variables into their message-specific
  * format. */
-class j1939_interpreter
+class J1939Interpreter
 {
 public:
-	// converts a message from its pdu format to its data-specific format
+	/** Converts a message from its pdu format to its data-specific format
+	 *
+	 * @param
+	 */
 	virtual void *convert(j1939_pdu_typ*) = 0;
 
 	// checks whether the incoming message is of the same pdu type as the
@@ -54,7 +59,7 @@ public:
 	// imports data from a printed file into a message-specific object
 	virtual void *import(vector<string>&) = 0;
 
-	// J1939 PGN number for the data-type
+	/** J1939 PGN number for the data-type */
 	int pgn;
 };
 
@@ -65,7 +70,7 @@ public:
 
 
 /** PDU generic interpreter (in case the PGN number is not interpretable) */
-class PDU_interpreter : public j1939_interpreter
+class PDU_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = 0;
@@ -82,7 +87,7 @@ public:
 
 
 /** PDU TSC1 (Torque/Speed Control) doc. in J1939 - 71, p149 */
-class TSC1_interpreter : public j1939_interpreter
+class TSC1_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = TSC1;
@@ -94,7 +99,7 @@ public:
 
 
 /** PDU EBC1 (Electronic Brake Controller #1) doc. in J1939 - 71, p151 */
-class EBC1_interpreter : public j1939_interpreter
+class EBC1_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EBC1;
@@ -106,7 +111,7 @@ public:
 
 
 /** PDU EBC2 (Electronic Brake Controller 2) doc. in J1939 - 71, p170 */
-class EBC2_interpreter : public j1939_interpreter
+class EBC2_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EBC2;
@@ -123,7 +128,7 @@ public:
 
 
 /** PDU EEC1 (Electronic Engine Controller #1) doc. in J1939 - 71, p152 */
-class EEC1_interpreter : public j1939_interpreter
+class EEC1_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EEC1;
@@ -135,7 +140,7 @@ public:
 
 
 /** PDU EEC2 (Electronic Engine Controller #2) doc. in J1939 - 71, p152 */
-class EEC2_interpreter : public j1939_interpreter
+class EEC2_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EEC2;
@@ -147,7 +152,7 @@ public:
 
 
 /** PDU EEC3 (Electronic Engine Controller #3) doc. in J1939 - 71, p154 */
-class EEC3_interpreter : public j1939_interpreter
+class EEC3_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EEC3;
@@ -159,7 +164,7 @@ public:
 
 
 /** PDU ETC1 (Elec. Transmission Controller #1) doc. in J1939 - 71, p151 */
-class ETC1_interpreter : public j1939_interpreter
+class ETC1_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = ETC1;
@@ -171,7 +176,7 @@ public:
 
 
 /** PDU ETC2 (Electronic Transmission Controller #2) doc. in J1939 - 71, p152 */
-class ETC2_interpreter : public j1939_interpreter
+class ETC2_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = ETC2;
@@ -183,7 +188,7 @@ public:
 
 
 /** PDU ERC1 (Electronic Retarder Controller #1) doc. in J1939 - 71, p150 */
-class ERC1_interpreter : public j1939_interpreter
+class ERC1_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = ERC1;
@@ -195,7 +200,7 @@ public:
 
 
 /** PDU TF (Transmission Fluids) doc. in J1939 - 71, p164 */
-class TF_interpreter : public j1939_interpreter
+class TF_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = TF;
@@ -207,7 +212,7 @@ public:
 
 
 /** PDU CCVS (Cruise Control/Vehicle Speed) doc. in J1939 - 71, p162 */
-class CCVS_interpreter : public j1939_interpreter
+class CCVS_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = CCVS;
@@ -219,7 +224,7 @@ public:
 
 
 /** PDU LFE (Fuel Economy) doc. in J1939 - 71, p162 */
-class LFE_interpreter : public j1939_interpreter
+class LFE_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = LFE;
@@ -236,7 +241,7 @@ public:
 
 
 /** PDU RF (Retarder Fluids) doc. in J1939 - 71, p164 */
-class RF_interpreter : public j1939_interpreter
+class RF_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = RF;
@@ -254,7 +259,7 @@ public:
 
 // FIXME(ak): is this not written anywhere?
 /** PDU TC1 (Transmission Control) doc. in J1939 - 71, p149 */
-class TC1_interpreter : public j1939_interpreter
+class TC1_interpreter : public J1939Interpreter
 {
 public:
 	// char* name = "Transmission Control (TC1)";
@@ -267,7 +272,7 @@ public:
 
 
 /** PDU TURBO (Turbocharger) doc. in J1939 - 71, p153 */
-class TURBO_interpreter : public j1939_interpreter
+class TURBO_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = TURBO;
@@ -279,7 +284,7 @@ public:
 
 
 /** PDU VD (Vehicle Distance) doc. in J1939 - 71, p154 */
-class VD_interpreter : public j1939_interpreter
+class VD_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = VD;
@@ -291,7 +296,7 @@ public:
 
 
 /** PDU RCFG (Retarder Configuration) doc. in J1939 - 71, p155 */
-class RCFG_interpreter : public j1939_interpreter
+class RCFG_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = RCFG;
@@ -304,7 +309,7 @@ public:
 
 // TODO(ak): do this
 /** PDU TCFG (Transmission Configuration) doc. in J1939 - 71, p155 */
-//class TCFG_interpreter : public j1939_interpreter
+//class TCFG_interpreter : public J1939Interpreter
 //{
 //public:
 //	// char* name = "Transmission Configuration (TCFG)";
@@ -316,7 +321,7 @@ public:
 
 
 /** PDU ECFG (Engine Configuration) doc. in J1939 - 71, p156 */
-class ECFG_interpreter : public j1939_interpreter
+class ECFG_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = ECFG;
@@ -328,7 +333,7 @@ public:
 
 
 /** PDU ETEMP (Engine Temperature) doc. in J1939 - 71, p160 */
-class ETEMP_interpreter : public j1939_interpreter
+class ETEMP_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = ETEMP;
@@ -340,7 +345,7 @@ public:
 
 
 /** PDU PTO (Power Takeoff Information) doc. in J1939 - 71, p161 */
-class PTO_interpreter : public j1939_interpreter
+class PTO_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = PTO;
@@ -352,7 +357,7 @@ public:
 
 
 /** PDU AMBC (Ambient Conditions) doc. in J1939 - 71, p163 */
-class AMBC_interpreter : public j1939_interpreter
+class AMBC_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = AMBC;
@@ -364,7 +369,7 @@ public:
 
 
 /** PDU IEC (Inlet/Exhaust Conditions) doc. in J1939 - 71, p164 */
-class IEC_interpreter : public j1939_interpreter
+class IEC_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = IEC;
@@ -376,7 +381,7 @@ public:
 
 
 /** PDU VEP (Vehicle Electrical Power) doc. in J1939 - 71, p164 */
-class VEP_interpreter : public j1939_interpreter
+class VEP_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = VEP;
@@ -388,7 +393,7 @@ public:
 
 
 /** PDU HRVD (High Resolution Vehicle Distance) doc. in J1939 - 71, p170 */
-class HRVD_interpreter : public j1939_interpreter
+class HRVD_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = HRVD;
@@ -400,7 +405,7 @@ public:
 
 
 /** PDU FD (Fan Drive) doc. in J1939 - 71, sec. 5.3.58 */
-class FD_interpreter : public j1939_interpreter
+class FD_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = FD;
@@ -413,7 +418,7 @@ public:
 
 // TODO(ak): find out if we need these
 /** PDU EXAC (External Acceleration Control), WABCO proprietary */
-//class EXAC_interpreter : public j1939_interpreter
+//class EXAC_interpreter : public J1939Interpreter
 //{
 //public:
 //	int pgn = EXAC;
@@ -423,7 +428,7 @@ public:
 
 
 /** PDU EBC_ACC (Electronic Brake Control for ACC), WABCO proprietary */
-//class EBC_ACC_interpreter : public j1939_interpreter
+//class EBC_ACC_interpreter : public J1939Interpreter
 //{
 //public:
 //	int pgn = 0;
@@ -433,7 +438,7 @@ public:
 
 
 /** PDU GFI2 (Gaseous Fuel Information 2), J1939-71, sec 5.3.123 */
-class GFI2_interpreter : public j1939_interpreter
+class GFI2_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = GFI2;
@@ -445,7 +450,7 @@ public:
 
 
 /** PDU EI (Engine Information), J1939-71, sec 5.3.105 */
-class EI_interpreter : public j1939_interpreter
+class EI_interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EI;

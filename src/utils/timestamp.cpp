@@ -1,10 +1,12 @@
-/**
+/**\file
+ *
  * timestamp.cpp
  *
  * Implementation of methods for timestamp.h header file.
  *
- *  Created on: July 11, 2018
- *      Author: Abdul Rahman Kreidieh
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date July 11, 2018
  */
 
 #include "timestamp.h"

@@ -1,4 +1,5 @@
-/**
+/**\file
+ *
  * translate_pdu.cpp
  *
  * This script translates several pdu-formatted j1939 messages into their
@@ -17,8 +18,9 @@
  * TODO(ak): replace text files with published content that this process
  * subscribes to.
  *
- * 	Created on: May 31, 2018
- * 		Author: Abdul Rahman Kreidieh
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date May 31, 2018
  */
 
 #include "j1939_utils.h"

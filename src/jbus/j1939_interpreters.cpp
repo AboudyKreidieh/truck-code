@@ -1,8 +1,12 @@
-/**
+/**\file
+ *
  * j1939_interpreters.cpp
  *
- *  Created on: May 31, 2018
- *      Author: Abdul Rahman Kreidieh
+ * Function definitions for j1939_interpreter.h
+ *
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date May 31, 2018
  */
 
 #include "j1939_interpreters.h"
@@ -15,7 +19,7 @@
 using namespace std;
 
 
-bool j1939_interpreter::is_type(j1939_pdu_typ *pdu) {
+bool J1939Interpreter::is_type(j1939_pdu_typ *pdu) {
 	int target_pgn = TWOBYTES(pdu->pdu_format, pdu->pdu_specific);
     return (target_pgn == pgn);
 }

@@ -1,11 +1,13 @@
-/**
+/**\file
+ *
  * long_utils.h
  *
  * This file contains utility structures and loose methods used during the
  * longitudonal control process.
  *
- *  Created on: July 11, 2018
- *      Author: Abdul Rahman Kreidieh
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date July 11, 2018
  */
 
 #ifndef SRC_CONTROL_LONG_UTILS_H_

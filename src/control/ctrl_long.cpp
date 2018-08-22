@@ -1,8 +1,10 @@
-/*
+/**\file
+ *
  * ctrl_long.cpp
  *
- *  Created on: July 19, 2018
- *      Author: Abdul Rahman Kreidieh
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date July 19, 2018
  */
 
 #include "long_controller.h"
