@@ -1,8 +1,0 @@
-digraph "/home/aboudy/Documents/truck-code/src/control/long_controller.h"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/home/aboudy/Documents\l/truck-code/src/control\l/long_controller.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="long_utils.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$long__utils_8h.html"];
-}
