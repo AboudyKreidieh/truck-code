@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['tot_5fvehicle_5fdist',['tot_vehicle_dist',['../structj1939__vd__typ.html#a4b8c663dfc6715b5ab672631c448b0c0',1,'j1939_vd_typ']]],
+  ['total_5fbrk_5fdemand',['total_brk_demand',['../structj1939__ebc1__typ.html#aca1847158a7fea80ef41fb21d80cb990',1,'j1939_ebc1_typ']]],
+  ['trac_5fctrl_5foverride_5fswitch',['trac_ctrl_override_switch',['../structj1939__ebc1__typ.html#aa2ddb13e8e5e7c44edef1181c53b6482',1,'j1939_ebc1_typ']]],
+  ['tran_5foutput_5fshaft_5fspd',['tran_output_shaft_spd',['../structj1939__etc1__typ.html#a683c57bbe4318024f245e3683ccb36be',1,'j1939_etc1_typ']]],
+  ['trans_5fact_5fgear_5fratio',['trans_act_gear_ratio',['../structj1939__etc2__typ.html#adf98b82d1487897320e286e2e74cd0f9',1,'j1939_etc2_typ']]],
+  ['trans_5fcurrent_5fgear',['trans_current_gear',['../structj1939__etc2__typ.html#a2d19de62f393dda831e138dbddfe6df4',1,'j1939_etc2_typ']]],
+  ['trans_5fdriveline',['trans_driveline',['../structj1939__etc1__typ.html#a6d7b5e68ab9a20e55a0c714dadae7f92',1,'j1939_etc1_typ']]],
+  ['trans_5finput_5fshaft_5fspd',['trans_input_shaft_spd',['../structj1939__etc1__typ.html#a9f45872b38b4753f30741f5f5f9e0c20',1,'j1939_etc1_typ']]],
+  ['trans_5fselected_5fgear',['trans_selected_gear',['../structj1939__etc2__typ.html#a55334f5ee062f59605aa74f2ed6e316b',1,'j1939_etc2_typ']]],
+  ['trans_5fshift',['trans_shift',['../structj1939__etc1__typ.html#a12358e4182d81fd7099199260a6e23fd',1,'j1939_etc1_typ']]],
+  ['trip_5fdist',['trip_dist',['../structj1939__vd__typ.html#a1a0c7d8b60fb8003e39293330f339865',1,'j1939_vd_typ']]],
+  ['trip_5fdistance',['trip_distance',['../structj1939__hrvd__typ.html#af0f4becc29600645705cb779a80eca33',1,'j1939_hrvd_typ']]],
+  ['trq_5fconv_5flockup',['trq_conv_lockup',['../structj1939__etc1__typ.html#ad2b39407a35d579aa25f78cbbb3c378a',1,'j1939_etc1_typ']]],
+  ['trq_5fconv_5flockup_5fdisable',['trq_conv_lockup_disable',['../structj1939__tc1__typ.html#a014dff58306c17ad59ee9293e9ffe745',1,'j1939_tc1_typ']]],
+  ['trq_5fctrl_5flower_5flim',['trq_ctrl_lower_lim',['../structj1939__ecfg__typ.html#ae6f33e26380071bb15478c9bf433e010',1,'j1939_ecfg_typ']]],
+  ['trq_5fctrl_5fupper_5flim',['trq_ctrl_upper_lim',['../structj1939__ecfg__typ.html#a7e6996fe2a3b526483bc33a31b58c335',1,'j1939_ecfg_typ']]],
+  ['trq_5fmode',['trq_mode',['../structj1939__erc1__typ.html#a1df5436cccb2239e8d03d70bd0999d15',1,'j1939_erc1_typ']]],
+  ['turbo_5flube_5foil_5fpressure',['turbo_lube_oil_pressure',['../structj1939__turbo__typ.html#a6b9d71544288d06eab9973ba0e502883',1,'j1939_turbo_typ']]],
+  ['turbo_5foil_5ftemp',['turbo_oil_temp',['../structj1939__etemp__typ.html#adf28f9ac81deba8d4f9215050e823ae0',1,'j1939_etemp_typ']]],
+  ['turbo_5fspeed',['turbo_speed',['../structj1939__turbo__typ.html#a8ac306c453fafff3da68054bc520f989',1,'j1939_turbo_typ']]],
+  ['two_5fspd_5faxle_5fswitch',['two_spd_axle_switch',['../structj1939__ccvs__typ.html#a59896bd4c6231f7112f6c9e967c800a9',1,'j1939_ccvs_typ']]]
+];

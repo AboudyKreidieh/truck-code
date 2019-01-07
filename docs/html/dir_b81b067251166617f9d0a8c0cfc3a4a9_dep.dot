@@ -1,0 +1,11 @@
+digraph "/home/aboudy/Documents/truck-code/src/control" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_68267d1309a1af8e8297ef4c3efbcdba {
+    graph [ bgcolor="#ddddee", pencolor="black", label="src" fontname="Helvetica", fontsize="10", URL="dir_68267d1309a1af8e8297ef4c3efbcdba.html"]
+  dir_b81b067251166617f9d0a8c0cfc3a4a9 [shape=box, label="control", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_b81b067251166617f9d0a8c0cfc3a4a9.html"];
+  }
+  dir_26f744e4b816d919816da40ab702982a [shape=box label="jbus" URL="dir_26f744e4b816d919816da40ab702982a.html"];
+  dir_b81b067251166617f9d0a8c0cfc3a4a9->dir_26f744e4b816d919816da40ab702982a [headlabel="1", labeldistance=1.5 headhref="dir_000001_000002.html"];
+}
