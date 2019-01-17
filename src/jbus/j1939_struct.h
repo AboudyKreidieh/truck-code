@@ -17,15 +17,20 @@
 
 #include <string>
 #include "j1939_utils.h"
-#include "timestamp.h"
+#include "utils/timestamp.h"
 
 
-/** generic database variable type for storing information about Protocol Data
- * Units that have been received with a correct sum, with no field translation.
+/** J1939 Protocol Data Unit (PDU) format.
+ *
+ * This is the format the messages are collected from the CAN card. This object
+ * is used for storing information about Protocol Data Units that have been
+ * received with a correct sum, with no field translation.
+ *
+ * See SAE J1939, 3.1.2
  */
 typedef struct
 {
-    timestamp_t timestamp;
+    timestamp_t timestamp;		/**< time the message was received */
 	int priority;         		/**< priority of message */
 	int pdu_format;	    		/**< Protocol Data Unit Format (PF) */
 	int pdu_specific;	    	/**< PDU Specific (PS) */
@@ -37,7 +42,7 @@ typedef struct
 
 /** PDU TSC1 (Torque/Speed Control) doc. in J1939 - 71, p149 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;		/**< time the message was received */
 	int ovrd_ctrl_m;			/**< Engine Override Control Mode (0-3) */
 	int req_spd_ctrl;			/**< Engine Requested Speed Control Conditions (0-3) */
 	int ovrd_ctrl_m_pr;			/**< Override Control Mode Priority (0-3) */
@@ -50,7 +55,7 @@ typedef struct {
 
 /** PDU EBC1 (Electronic Brake Controller #1) doc. in J1939 - 71, p151 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;				/**< time the message was received */
 	int asr_engine_ctrl_active;			/**< ASR Engine Control Active (0-3) */
 	int asr_brk_ctrl_active;			/**< ASR Brake Control Active (0-3) */
 	int antilock_brk_active;			/**< Anti-Lock Braking (ABS) Active (0-3) */
@@ -75,8 +80,8 @@ typedef struct {
 
 /** PDU EBC2 (Electronic Brake Controller 2) doc. in J1939 - 71, p170 */
 typedef struct {
-	timestamp_t timestamp;
-	float front_axle_spd;			/**< Front Axle Speed (0 to 250.996 km/h)
+	timestamp_t timestamp;			/**< time the message was received */
+	float front_axle_spd;			/**< Front Axle Speed (0 to 250.996 km/h) */
 	float rel_spd_front_left;		/**< Relative Speed; Front Axle, Left Wheel (-7.8125 to 7.8125 km/h) */
 	float rel_spd_front_right;		/**< Relative Speed; Front Axle, Right Wheel (-7.8125 to 7.8125 km/h) */
 	float rel_spd_rear_left_1;		/**< Relative Speed; Rear Axle #1, Left Wheel (-7.8125 to 7.8125 km/h) */
@@ -96,7 +101,7 @@ typedef struct {
 
 /** PDU TC1 (Transmission Control) doc. in J1939 - 71, p149 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	int disengage_driveline;		/**< Disengage Driveline Request (0-3) */
 	int trq_conv_lockup_disable;	/**< Transmission Torque Converter Lockup Disable Request (0-3) */
 	int gear_shift_inhibit;			/**< Transmission Reverse Gear Shift Inhibit Request (0-3) */
@@ -114,7 +119,7 @@ typedef struct {
 
 /** PDU ERC1 (Electronic Retarder Controller #1) doc. in J1939 - 71, p150 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	int trq_mode;					/**< Retarder Torque Mode (0-15) */
 	int enable_brake_assist;		/**< Retarder Enable - Brake Assist Switch (0-3) */
 	int enable_shift_assist;		/**< Retarder Enable - Shift Assist Switch (0-3) */
@@ -130,7 +135,7 @@ typedef struct {
 
 /** PDU ETC1 (Elec. Transmission Controller #1) doc. in J1939 - 71, p151 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	int trans_driveline;			/**< Transmission Driveline Engaged (0-3) */
 	int trq_conv_lockup;			/**< Transmission Torque Converter Lockup Engaged (0-3) */
 	int trans_shift;				/**< Transmission Shift In Progress (0-3) */
@@ -145,7 +150,7 @@ typedef struct {
 
 /** PDU EEC1 (Electronic Engine Controller #1) doc. in J1939 - 71, p152 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	int eng_trq_mode;				/**< Engine Torque Mode (0-15) */
 	float drvr_demand_eng_trq;		/**< Driver's Demand Engine - Percent Torque (-125% to 125%) */
 	float actual_eng_trq;			/**< Actual Engine - Percent Torque (-125% to 125%) */
@@ -157,7 +162,7 @@ typedef struct {
 
 /** PDU EEC2 (Electronic Engine Controller #2) doc. in J1939 - 71, p152 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	int accel_pedal1_idle;			/**< Accelerator Pedal 1 Low Idle Switch (0-3) */
 	int accel_pedal_kickdown;		/**< Accelerator Pedal Kickdown Switch (0-3) */
 	int spd_limit_status;			/**< Road Speed Limit Status (0-3) */
@@ -171,7 +176,7 @@ typedef struct {
 
 /** PDU ETC2 (Electronic Transmission Controller #2) doc. in J1939 - 71, p152 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	int trans_selected_gear;		/**< Transmission Selected Gear (-125 to 125) */
 	float trans_act_gear_ratio;		/**< Transmission Actual Gear Ratio (0 to 64.255) */
 	int trans_current_gear;			/**< Transmission Current Gear (-125 to 125) */
@@ -182,7 +187,7 @@ typedef struct {
 
 /** PDU TURBO (Turbocharger) doc. in J1939 - 71, p153 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	float turbo_lube_oil_pressure;	/**< Engine Turbocharger Lube Oil Pressure 1 (0-1000 kPa) */
 	float turbo_speed;				/**< Engine Turbocharger 1 Speed (0-257,020 RPM) */
 } j1939_turbo_typ;
@@ -190,7 +195,7 @@ typedef struct {
 
 /** PDU EEC3 (Electronic Engine Controller #3) doc. in J1939 - 71, p154 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	float nominal_friction;			/**< Nominal Friction - Percent Torque (-125 to 125 %) */
 	float desired_operating_spd;	/**< Engine's Desired Operating Speed (0 to 8,031.875 RPM) */
 	int operating_spd_adjust;		/**< Engine's Desired Operating Speed Asymmetry Adjustment (0 to 250) */
@@ -200,7 +205,7 @@ typedef struct {
 
 /** PDU VD (Vehicle Distance) doc. in J1939 - 71, p154 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;		/**< time the message was received */
 	float trip_dist;			/**< Trip Distance (0 to 526,385,151.9 km) */
 	float tot_vehicle_dist;		/**< Total Vehicle Distance (0 to 526,385,151.9 km) */
 } j1939_vd_typ;
@@ -208,7 +213,7 @@ typedef struct {
 
 /** PDU RCFG (Retarder Configuration) doc. in J1939 - 71, p155 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	int retarder_type;				/**< Retarder Type (0-15) */
 	int retarder_loc;				/**< Retarder Location (0-15) */
 	int retarder_ctrl_steps;		/**< Retarder Control Method (0 to 250 steps) */
@@ -224,7 +229,7 @@ typedef struct {
 
 /** PDU TCFG (Transmission Configuration) doc. in J1939 - 71, p155 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;						/**< time the message was received */
 	int num_rev_gear_ratios;					/**< Number of Reverse Gear Ratios (0-250) */
 	int num_fwd_gear_ratios;					/**< Number of Forward Gear Ratios (0-250) */
 	float rev_gear_ratios[MAX_REVERSE_GEARS];	/**< Gear Ratios for Reverse Gears */
@@ -234,7 +239,7 @@ typedef struct {
 
 /** PDU ECFG (Engine Configuration) doc. in J1939 - 71, p156 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;				/**< time the message was received */
 	float engine_spd[7];				/**< Engine Speed, Points 1-7 (0-8,031.875 RPM) */
 	float percent_trq[5];				/**< Engine Percent Torque, Points 1-5 (-125 to 125 %) */
 	float gain_endspeed_governor;		/**< Engine Gain (Kp) Of The Endspeed Governor (0-50.2 %/RPM) */
@@ -250,7 +255,7 @@ typedef struct {
 
 /** PDU ETEMP (Engine Temperature) doc. in J1939 - 71, p160 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;						/**< time the message was received */
 	float eng_coolant_temp;						/**< Engine Coolant Temperature (-40 to 210 deg C) */
 	float fuel_temp;							/**< Engine Fuel Temperature (-40 to 210 deg C) */
 	float eng_oil_temp;							/**< Engine Oil Temperature (-273 to 1735 deg C) */
@@ -262,7 +267,7 @@ typedef struct {
 
 /** PDU PTO (Power Takeoff Information) doc. in J1939 - 71, p161 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	float oil_temp;					/**< Power Takeoff Oil Temperature (-40 to 210 deg C) */
 	float speed;					/**< Power Takeoff Speed (0-8,031.875 RPM) */
 	float set_speed;				/**< Power Takeoff Set Speed (0-8,031.875 RPM) */
@@ -278,7 +283,7 @@ typedef struct {
 
 /** PDU CCVS (Cruise Control/Vehicle Speed) doc. in J1939 - 71, p162 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	int two_spd_axle_switch;		/**< Two Speed Axle Switch (0-3) */
 	int parking_brk_switch;			/**< Parking Brake Switch (0-3) */
 	int cc_pause_switch;			/**< Cruise Control Pause Switch (0-3) */
@@ -304,7 +309,7 @@ typedef struct {
 
 /** PDU LFE (Fuel Economy) doc. in J1939 - 71, p162 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;				/**< time the message was received */
 	float eng_fuel_rate;				/**< Engine Fuel Rate (0-3212.75 L/h) */
 	float eng_inst_fuel_economy;		/**< Engine Instantaneous Fuel Economy (0-125.5 km/L) */
 	float eng_avg_fuel_economy;			/**< Engine Average Fuel Economy (0-125.5 km/L) */
@@ -315,7 +320,7 @@ typedef struct {
 
 /** PDU AMBC (Ambient Conditions) doc. in J1939 - 71, p163 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	float barometric_pressure;		/**< Barometric Pressure (0-125 kPa) */
 	float cab_interior_temp;		/**< Cab Interior Temperature (-273 to 1735 deg C) */
 	float ambient_air_temp;			/**< Ambient Air Temperature (-273 to 1735 deg C) */
@@ -326,7 +331,7 @@ typedef struct {
 
 /** PDU IEC (Inlet/Exhaust Conditions) doc. in J1939 - 71, p164 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;					/**< time the message was received */
 	float particulate_inlet_pressure;		/**< Engine Diesel Particulate Filter Inlet Pressure (0-125 kPa) */
 	float boost_pressure;					/**< Engine Intake Manifold #1 Pressure (0-500 kPa) */
 	float intake_manifold_temp;				/**< Engine Intake Manifold 1 Temperature (-40 to 210 deg C) */
@@ -339,7 +344,7 @@ typedef struct {
 
 /** PDU VEP (Vehicle Electrical Power) doc. in J1939 - 71, p164 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	float net_battery_current;		/**< Net Battery Current (-125 to 125 A) */
 	float alternator_current;		/**< Alternator Current (0-250 A) */
 	float alternator_potential;		/**< Charging System Potential (Voltage) (0-3212.75 V) */
@@ -350,7 +355,7 @@ typedef struct {
 
 /** PDU TF (Transmission Fluids) doc. in J1939 - 71, p164 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;		/**< time the message was received */
 	float clutch_pressure;		/**< Clutch Pressure (0-4000 kPa) */
 	float oil_level;			/**< Transmission Oil Level (0-100%) */
 	float diff_pressure;		/**< Transmission Filter Differential Pressure (0-500 kPa) */
@@ -361,7 +366,7 @@ typedef struct {
 
 /** PDU HRVD (High Resolution Vehicle Distance) doc. in J1939 - 71, p170 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;		/**< time the message was received */
 	float vehicle_distance;		/**< High Resolution Total Vehicle Distance (0 to 21,055,406 km) */
 	float trip_distance;		/**< High Resolution Trip Distance (0 to 21,055,406 km) */
 } j1939_hrvd_typ;
@@ -369,7 +374,7 @@ typedef struct {
 
 /** PDU EBC5 (Electronic Brake Controller 5)*/
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	int halt_brk_mode;				/**< Halt brake mode (0-7) */
 	int brk_use;					/**< Foundation Brake Use (0-3) */
 	int xbr_active_ctrl_mode;		/**< XBR Active Control Mode (0-15) */
@@ -379,7 +384,7 @@ typedef struct {
 
 /** PDU VDC2 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;			/**< time the message was received */
 	float steering_wheel_angle;		/**< Steering Wheel Angle (-31.374 to +31.374 rad) */
 	int steering_wheel_turn_ctr;	/**< Steering Wheel Turn Counter (-32 to 29 turns) */
 	float yaw_rate;					/**< Yaw Rate (-3.92 to +3.92 rad/s) */
@@ -390,40 +395,15 @@ typedef struct {
 
 /** PDU FD (Fan Drive) doc. in J1939 - 71, sec. 5.3.58 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;		/**< time the message was received */
 	float prcnt_fan_spd;		/**< Estimated Percent Fan Speed (0-100%) */
 	int fan_drive_state;		/**< Fan Drive State (0-15) */
 } j1939_fd_typ;
 
 
-/** PDU EXAC (External Acceleration Control), WABCO proprietary */
-typedef struct {
-	timestamp_t timestamp;
-	int ebs_ctrl_mode_priority;		/**< */
-	int ext_decel_ctrl_mode;		/**< */
-	float req_decel_to_ebs;			/**< */
-	int edc_ctrl_mode_priority;		/**< */
-	int override_ctrl_modes;		/**< */
-	float req_trq_to_edc;			/**< */
-	int alive_signal;				/**< */
-	int acc_internal_status;		/**< */
-	int undefined;					/**< */
-	int checksum;					/**< */
-	int src_address;				/**< */
-} j1939_exac_typ;
-
-
-/** PDU EBC_ACC (Electronic Brake Control for ACC), WABCO proprietary */
-typedef struct {
-	timestamp_t timestamp;
-	float vehicle_mass;			/**< 0 to 100 t */
-	float road_slope;			/**< -25% to +25% */
-} j1939_ebc_acc_typ;
-
-
 /** PDU GFI2 (Gaseous Fuel Information 2), J1939-71, sec 5.3.123 */
 typedef struct {
-	timestamp_t timestamp;
+	timestamp_t timestamp;		/**< time the message was received */
 	float fuel_flow_rate1;		/**< Engine Fuel Flow Rate 1 (0-6425.5 m^3/h) */
 	float fuel_flow_rate2;		/**< Engine Fuel Flow Rate 2 (0-6425.5 m^3/h) */
 	float fuel_valve_pos1;		/**< Engine Fuel Valve 1 Position (0-100%) */
@@ -433,13 +413,53 @@ typedef struct {
 
 /** PDU EI (Engine Information), J1939-71, sec 5.3.105 */
 typedef struct {
-	timestamp_t timestamp;
-	float pre_filter_oil_pressure;      /**< Engine Pre-filter Oil Pressure (0-1000 kPa) */
-	float exhaust_gas_pressure;	        /**< Engine Exhaust Gas Pressure (-250 kPa to 251.99 kPa) */
+	timestamp_t timestamp;				/**< time the message was received */
+	float pre_filter_oil_pressure;      /**< Engine Pre-filter Oil Pressure */
+										/**< (0-1000 kPa) */
+	float exhaust_gas_pressure;	        /**< Engine Exhaust Gas Pressure */
+										/**< (-250 kPa to 251.99 kPa) */
 	float rack_position;                /**< Engine Fuel Rack Position (0-100%) */
-	float eng_gas_mass_flow;       		/**< Engine Gas Mass Flow Rate 1 (0 to 3212.75 kg/h) */
-	float inst_estimated_brake_power;	/**< Instantaneous Estimated Brake Power (0-32127.5 kW) */
+	float eng_gas_mass_flow;       		/**< Engine Gas Mass Flow Rate 1 (0 */
+										/**< to 3212.75 kg/h) */
+	float inst_estimated_brake_power;	/**< Instantaneous Estimated Brake */
+										/**< Power (0-32127.5 kW) */
 } j1939_ei_typ;
+
+
+/** PDU VOLVO_XBR_WARN (Volvo brake message) */
+typedef struct {
+	timestamp_t timestamp;					/**< time the message was received */
+	unsigned char src_address;
+	unsigned char destination_address;
+	unsigned char pdu_format;
+	unsigned char byte1;                    // 0xFF
+	unsigned char byte2;                    // 0x31
+	unsigned char byte3;                    // 0xFF
+	unsigned char byte4;                    // 0xFF
+	unsigned char byte5;                    // 0xFF
+	unsigned char byte6;                    // 0xFF
+	unsigned char byte7;                    // 0xFF
+	unsigned char byte8;                    // 0xFF
+} j1939_volvo_xbr_warn_typ;
+
+
+/** PDU VOLVO_XBR (Volvo brake message) */
+typedef struct {
+	timestamp_t timestamp;					/**< time the message was received */
+	float ExternalAccelerationDemand;	    //
+	unsigned char src_address;              //
+	unsigned char destination_address;      //
+	unsigned char pdu_format;               //
+	unsigned char XBREBIMode;	            //
+	unsigned char XBRPriority;	            //
+	unsigned char XBRControlMode;	        //
+	unsigned char XBRUrgency;	            //
+	unsigned char spare1;		            // 0xFF
+	unsigned char spare2;		            // 0xFF
+	unsigned char spare3;		            // 0xFF
+	unsigned char XBRMessageCounter;        //
+	unsigned char XBRMessageChecksum;       //
+} j1939_volvo_xbr_typ;
 
 
 // /** PDU ETC2_E (Electronic Transmission Controller #2, source engine) doc. in
@@ -460,49 +480,6 @@ typedef struct {
 // 	float VP_X_TGW_Latitude_BB1_X_TGW;
 // 	float VP_X_TGW_Longitude_BB1_X_TGW;
 // } j1939_vp_x_typ;
-
-
-// /** blank */
-// typedef struct {
-// 	timestamp_t timestamp;
-// 	float MVS_X_E_AppliedVehicleSpeedLimit_BB1_X_E;
-// } j1939_mvs_x_e_typ;
-
-
-// /** PDU VOLVO_XBR_WARN (Volvo brake message)*/
-// typedef struct {
-// 	timestamp_t timestamp;
-// 	unsigned char src_address;
-// 	unsigned char destination_address;
-// 	unsigned char pdu_format;
-// 	unsigned char byte1;                    // 0xFF
-// 	unsigned char byte2;                    // 0x31
-// 	unsigned char byte3;                    // 0xFF
-// 	unsigned char byte4;                    // 0xFF
-// 	unsigned char byte5;                    // 0xFF
-// 	unsigned char byte6;                    // 0xFF
-// 	unsigned char byte7;                    // 0xFF
-// 	unsigned char byte8;                    // 0xFF
-// } j1939_volvo_xbr_warn_typ;
-
-
-// /** PDU VOLVO_XBR (Volvo brake message)*/
-// typedef struct {
-// 	timestamp_t timestamp;
-// 	float ExternalAccelerationDemand;	    //
-// 	unsigned char src_address;              //
-// 	unsigned char destination_address;      //
-// 	unsigned char pdu_format;               //
-// 	unsigned char XBREBIMode;	            //
-// 	unsigned char XBRPriority;	            //
-// 	unsigned char XBRControlMode;	        //
-// 	unsigned char XBRUrgency;	            //
-// 	unsigned char spare1;		            // 0xFF
-// 	unsigned char spare2;		            // 0xFF
-// 	unsigned char spare3;		            // 0xFF
-// 	unsigned char XBRMessageCounter;        //
-// 	unsigned char XBRMessageChecksum;       //
-// } j1939_volvo_xbr_typ;
 
 
 // /** PDU VOLVO_TARGET(Volvo target data)*/
@@ -535,37 +512,5 @@ typedef struct {
 //     unsigned char VBRK_ParkBrkReleaseInhibitStat;
 // } j1939_volvo_brk_t;
 
-
-// /** PDU VP15 (Volvo brake type, Bendix brakes) */
-// typedef struct {
-//     timestamp_t timestamp;
-// 	unsigned char VP15_EcoRollStatus;
-// 	unsigned char VP15_AutomaticHSARequest;
-//     unsigned char VP15_EngineShutdownRequest;
-// 	float VP15_RoadInclinationVP15;
-// 	float VP15_PermittedHillHolderP;
-// 	unsigned char VP15_RecommendedGearshift;
-// 	unsigned char VP15_EcoRollActiveStatus;
-// 	unsigned char VP15_ClutchOverloadStatus;
-// 	unsigned char VP15_PowerDownAcknowledge;
-// 	unsigned char VP15_DirectionGearAllowed;
-// 	float VP15_VehicleWeightVP15;
-// } j1939_volvo_vp15_t;
-
-
-// /** PDU CAN1 */
-// typedef struct {
-// 	timestamp_t timestamp;
-//     unsigned char CAN1_ExtData;
-//     unsigned char CAN1_StdData;
-//     unsigned char CAN1_BusLoad;
-// } j1939_can1_typ;
-
-
-// /** PDU CAN2 */
-// typedef struct {
-// 	timestamp_t timestamp;
-//         unsigned char CAN2_BusLoad;
-// } j1939_can2_typ;
 
 #endif /* INCLUDE_JBUS_J1939_STRUCT_H_ */

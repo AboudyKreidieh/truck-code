@@ -14,6 +14,8 @@ var searchData=
   ['act_5fmax_5favail_5feng_5ftrq',['act_max_avail_eng_trq',['../structj1939__eec2__typ.html#a65b93011b9e63251b077f85c8d5958d1',1,'j1939_eec2_typ']]],
   ['actual_5feng_5ftrq',['actual_eng_trq',['../structj1939__eec1__typ.html#a41175bd6a72c46db65cb04bf834e3414',1,'j1939_eec1_typ']]],
   ['actual_5fret_5fpcnt_5ftrq',['actual_ret_pcnt_trq',['../structj1939__erc1__typ.html#a99389e40e2b3668c0c2ffe2aa35b7234',1,'j1939_erc1_typ']]],
+  ['ad_5fmax',['ad_max',['../structdas__info__typ.html#ac4813318b1ab79b7aea321fa867801ef',1,'das_info_typ']]],
+  ['ad_5fmin',['ad_min',['../structdas__info__typ.html#a549beb38bb2ca64b92691238470290ad',1,'das_info_typ']]],
   ['air_5ffilter_5fdiff_5fpressure',['air_filter_diff_pressure',['../structj1939__iec__typ.html#a4e28f49a1c778153e3b37b4c13d5e2c0',1,'j1939_iec_typ']]],
   ['air_5finlet_5fpressure',['air_inlet_pressure',['../structj1939__iec__typ.html#a7a56ec8c0576dc91d6fc338d4b5f09b9',1,'j1939_iec_typ']]],
   ['air_5finlet_5ftemp',['air_inlet_temp',['../structj1939__ambc__typ.html#a0254ecb0a16cde95246ceca1f67c38c2',1,'j1939_ambc_typ']]],

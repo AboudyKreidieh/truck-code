@@ -37,30 +37,50 @@ using namespace std;
 class J1939Interpreter
 {
 public:
-	/** Converts a message from its pdu format to its data-specific format
-	 *
-	 * @param
-	 */
-	virtual void *convert(j1939_pdu_typ*) = 0;
-
-	// checks whether the incoming message is of the same pdu type as the
-	// one covered by this (child) class
-	bool is_type(j1939_pdu_typ*);
-
-	// prints and logs the message-specific format of a data point to the
-	// file path located in FILE*. Furthermore, if the third element is set
-	// to true, the names of the separate data points are further revealed
-	virtual void print(void*, FILE*, bool) = 0;
-
-	// publish the message to the QNX publish/subscribe server
-	virtual void publish(void*, int) = 0;
-	// virtual void ~publish();
-
-	// imports data from a printed file into a message-specific object
-	virtual void *import(vector<string>&) = 0;
-
 	/** J1939 PGN number for the data-type */
 	int pgn;
+
+	/** Convert a message from its pdu format to its data-specific format.
+	 *
+	 * @param pdu generic format of the message
+	 * @return data-specific format of the message, depending on the child class
+	 * used
+	 */
+	virtual void *convert(j1939_pdu_typ *pdu) = 0;
+
+	/** Check whether the incoming message is of the same pdu type as the one
+	 * covered by this (child) class.
+	 *
+	 * @param pdu generic format of the message
+	 * @return True if the parameter group number (PGN) of the message matches
+	 * the PGN of the child class; False otherwise
+	 */
+	bool is_type(j1939_pdu_typ* pdu);
+
+	/** Print and log the message-specific format of a data point.
+	 *
+	 * @param pdv the message to print
+	 * @param fp location of the file to print to
+	 * @param numeric If set to true, the names of the separate data points are
+	 * further revealed.
+	 */
+	virtual void print(void *pdv, FILE *fp, bool numeric) = 0;
+
+	/** Publish a message to the QNX publish/subscribe server.
+	 *
+	 * @param pdv the message
+	 * @param fd file descriptor
+	 */
+	virtual void publish(void *pdv, int fd) = 0;
+
+	/** Import data from a printed file into a message-specific object.
+	 *
+	 * This is used primarily for processing preprinted messages from a file.
+	 *
+	 * @param tokens list of string values from each data element in the message
+	 * @return the data-specific format of the message
+	 */
+	virtual void *import(vector<string> &tokens) = 0;
 };
 
 
@@ -70,14 +90,14 @@ public:
 
 
 /** PDU generic interpreter (in case the PGN number is not interpretable) */
-class PDU_interpreter : public J1939Interpreter
+class PDUInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = 0;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-    virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	int pgn = PDU;
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+    virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
@@ -87,38 +107,38 @@ public:
 
 
 /** PDU TSC1 (Torque/Speed Control) doc. in J1939 - 71, p149 */
-class TSC1_interpreter : public J1939Interpreter
+class TSC1Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = TSC1;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU EBC1 (Electronic Brake Controller #1) doc. in J1939 - 71, p151 */
-class EBC1_interpreter : public J1939Interpreter
+class EBC1Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EBC1;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU EBC2 (Electronic Brake Controller 2) doc. in J1939 - 71, p170 */
-class EBC2_interpreter : public J1939Interpreter
+class EBC2Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EBC2;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
@@ -128,110 +148,110 @@ public:
 
 
 /** PDU EEC1 (Electronic Engine Controller #1) doc. in J1939 - 71, p152 */
-class EEC1_interpreter : public J1939Interpreter
+class EEC1Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EEC1;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU EEC2 (Electronic Engine Controller #2) doc. in J1939 - 71, p152 */
-class EEC2_interpreter : public J1939Interpreter
+class EEC2Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EEC2;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU EEC3 (Electronic Engine Controller #3) doc. in J1939 - 71, p154 */
-class EEC3_interpreter : public J1939Interpreter
+class EEC3Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = EEC3;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU ETC1 (Elec. Transmission Controller #1) doc. in J1939 - 71, p151 */
-class ETC1_interpreter : public J1939Interpreter
+class ETC1Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = ETC1;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU ETC2 (Electronic Transmission Controller #2) doc. in J1939 - 71, p152 */
-class ETC2_interpreter : public J1939Interpreter
+class ETC2Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = ETC2;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU ERC1 (Electronic Retarder Controller #1) doc. in J1939 - 71, p150 */
-class ERC1_interpreter : public J1939Interpreter
+class ERC1Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = ERC1;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
 	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU TF (Transmission Fluids) doc. in J1939 - 71, p164 */
-class TF_interpreter : public J1939Interpreter
+class TFInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = TF;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU CCVS (Cruise Control/Vehicle Speed) doc. in J1939 - 71, p162 */
-class CCVS_interpreter : public J1939Interpreter
+class CCVSInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = CCVS;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU LFE (Fuel Economy) doc. in J1939 - 71, p162 */
-class LFE_interpreter : public J1939Interpreter
+class LFEInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = LFE;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
@@ -241,14 +261,14 @@ public:
 
 
 /** PDU RF (Retarder Fluids) doc. in J1939 - 71, p164 */
-class RF_interpreter : public J1939Interpreter
+class RFInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = RF;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
@@ -259,51 +279,51 @@ public:
 
 // FIXME(ak): is this not written anywhere?
 /** PDU TC1 (Transmission Control) doc. in J1939 - 71, p149 */
-class TC1_interpreter : public J1939Interpreter
+class TC1Interpreter : public J1939Interpreter
 {
 public:
 	// char* name = "Transmission Control (TC1)";
 	int pgn = 0;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU TURBO (Turbocharger) doc. in J1939 - 71, p153 */
-class TURBO_interpreter : public J1939Interpreter
+class TURBOInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = TURBO;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU VD (Vehicle Distance) doc. in J1939 - 71, p154 */
-class VD_interpreter : public J1939Interpreter
+class VDInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = VD;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU RCFG (Retarder Configuration) doc. in J1939 - 71, p155 */
-class RCFG_interpreter : public J1939Interpreter
+class RCFGInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = RCFG;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
@@ -314,150 +334,129 @@ public:
 //public:
 //	// char* name = "Transmission Configuration (TCFG)";
 //	int pgn = TCFG;
-//	virtual void *convert(j1939_pdu_typ*);
-//	virtual void print(void*, FILE*, bool);
+//	virtual void *convert(j1939_pdu_typ *pdu);
+//	virtual void print(void *pdv, FILE *fp, bool numeric);
 //	virtual void publish(void*);
 //};
 
 
 /** PDU ECFG (Engine Configuration) doc. in J1939 - 71, p156 */
-class ECFG_interpreter : public J1939Interpreter
+class ECFGInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = ECFG;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU ETEMP (Engine Temperature) doc. in J1939 - 71, p160 */
-class ETEMP_interpreter : public J1939Interpreter
+class ETEMPInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = ETEMP;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU PTO (Power Takeoff Information) doc. in J1939 - 71, p161 */
-class PTO_interpreter : public J1939Interpreter
+class PTOInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = PTO;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU AMBC (Ambient Conditions) doc. in J1939 - 71, p163 */
-class AMBC_interpreter : public J1939Interpreter
+class AMBCInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = AMBC;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU IEC (Inlet/Exhaust Conditions) doc. in J1939 - 71, p164 */
-class IEC_interpreter : public J1939Interpreter
+class IECInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = IEC;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU VEP (Vehicle Electrical Power) doc. in J1939 - 71, p164 */
-class VEP_interpreter : public J1939Interpreter
+class VEPInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = VEP;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU HRVD (High Resolution Vehicle Distance) doc. in J1939 - 71, p170 */
-class HRVD_interpreter : public J1939Interpreter
+class HRVDInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = HRVD;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU FD (Fan Drive) doc. in J1939 - 71, sec. 5.3.58 */
-class FD_interpreter : public J1939Interpreter
+class FDInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = FD;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
-// TODO(ak): find out if we need these
-/** PDU EXAC (External Acceleration Control), WABCO proprietary */
-//class EXAC_interpreter : public J1939Interpreter
-//{
-//public:
-//	int pgn = EXAC;
-//	j1939_exac_typ *convert(j1939_pdu_typ*);
-//	void print(j1939_exac_typ*, FILE*, bool);
-//};
-
-
-/** PDU EBC_ACC (Electronic Brake Control for ACC), WABCO proprietary */
-//class EBC_ACC_interpreter : public J1939Interpreter
-//{
-//public:
-//	int pgn = 0;
-//	j1939_ebc_acc_typ *convert(j1939_pdu_typ*);
-//	void print(j1939_ebc_acc_typ*, FILE*, bool);
-//};
-
-
 /** PDU GFI2 (Gaseous Fuel Information 2), J1939-71, sec 5.3.123 */
-class GFI2_interpreter : public J1939Interpreter
+class GFI2Interpreter : public J1939Interpreter
 {
 public:
 	int pgn = GFI2;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 
 /** PDU EI (Engine Information), J1939-71, sec 5.3.105 */
-class EI_interpreter : public J1939Interpreter
+class EIInterpreter : public J1939Interpreter
 {
 public:
 	int pgn = EI;
-	virtual void *convert(j1939_pdu_typ*);
-	virtual void print(void*, FILE*, bool);
-	virtual void publish(void*, int);
-    virtual void *import(vector<string>&);
+	virtual void *convert(j1939_pdu_typ *pdu);
+	virtual void print(void *pdv, FILE *fp, bool numeric);
+	virtual void publish(void *pdv, int fd);
+    virtual void *import(vector<string> &tokens);
 };
 
 

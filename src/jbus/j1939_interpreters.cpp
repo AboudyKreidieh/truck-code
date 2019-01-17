@@ -11,7 +11,7 @@
 
 #include "j1939_interpreters.h"
 #include "j1939_utils.h"
-#include "timestamp.h"
+#include "utils/timestamp.h"
 #include <vector>
 #include <string>
 #include <sys/pps.h>
@@ -29,12 +29,12 @@ bool J1939Interpreter::is_type(j1939_pdu_typ *pdu) {
 /* -------------------------------------------------------------------------- */
 
 
-void *PDU_interpreter::convert(j1939_pdu_typ *pdu) {
+void *PDUInterpreter::convert(j1939_pdu_typ *pdu) {
 	return (void*) pdu;  // no changes are made
 }
 
 
-void PDU_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void PDUInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_pdu_typ *pdu = (j1939_pdu_typ*) pdv;
 
 	fprintf(fp, "PDU");
@@ -63,7 +63,7 @@ void PDU_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void PDU_interpreter::publish(void *pdv, int fd) {
+void PDUInterpreter::publish(void *pdv, int fd) {
 	j1939_pdu_typ *pdu = (j1939_pdu_typ*) pdv;
 
 	// initialize the encoder object
@@ -93,7 +93,7 @@ void PDU_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *PDU_interpreter::import(vector<string> &tokens) {
+void *PDUInterpreter::import(vector<string> &tokens) {
 	j1939_pdu_typ *pdu = new j1939_pdu_typ();
 
 	import_timestamp(&pdu->timestamp, tokens[1]);
@@ -114,7 +114,7 @@ void *PDU_interpreter::import(vector<string> &tokens) {
 /* -------------------------------------------------------------------------- */
 
 
-void *TSC1_interpreter::convert(j1939_pdu_typ *pdu) {
+void *TSC1Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_tsc1_typ *tsc1 = new j1939_tsc1_typ();
 	tsc1->timestamp = pdu->timestamp;
 
@@ -134,7 +134,7 @@ void *TSC1_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void TSC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void TSC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_tsc1_typ *tsc1 = (j1939_tsc1_typ*) pdv;
 
 	fprintf(fp, "TSC1");
@@ -163,7 +163,7 @@ void TSC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void TSC1_interpreter::publish(void *pdv, int fd) {
+void TSC1Interpreter::publish(void *pdv, int fd) {
 	 j1939_tsc1_typ *tsc1 = (j1939_tsc1_typ*) pdv;
 
 	// initialize the encoder object
@@ -192,7 +192,7 @@ void TSC1_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *TSC1_interpreter::import(vector<string> &tokens) {
+void *TSC1Interpreter::import(vector<string> &tokens) {
 	j1939_tsc1_typ *tsc1 = new j1939_tsc1_typ();
 
 	import_timestamp(&tsc1->timestamp, tokens[1]);
@@ -208,7 +208,7 @@ void *TSC1_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *EBC1_interpreter::convert(j1939_pdu_typ *pdu) {
+void *EBC1Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ebc1_typ *ebc1 = new j1939_ebc1_typ();
 	ebc1->timestamp = pdu->timestamp;
 
@@ -243,7 +243,7 @@ void *EBC1_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void EBC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void EBC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_ebc1_typ *ebc1 = (j1939_ebc1_typ*) pdv;
 
 	fprintf(fp, "EBC1");
@@ -308,7 +308,7 @@ void EBC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void EBC1_interpreter::publish(void *pdv, int fd) {
+void EBC1Interpreter::publish(void *pdv, int fd) {
 	j1939_ebc1_typ *ebc1 = (j1939_ebc1_typ*) pdv;
 
 	// initialize the encoder object
@@ -362,7 +362,7 @@ void EBC1_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *EBC1_interpreter::import(vector<string> &tokens) {
+void *EBC1Interpreter::import(vector<string> &tokens) {
 	j1939_ebc1_typ *ebc1 = new j1939_ebc1_typ();
 
 	import_timestamp(&ebc1->timestamp, tokens[1]);
@@ -390,7 +390,7 @@ void *EBC1_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *EBC2_interpreter::convert(j1939_pdu_typ *pdu) {
+void *EBC2Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ebc2_typ *ebc2 = new j1939_ebc2_typ();
 	ebc2->timestamp = pdu->timestamp;
 
@@ -407,7 +407,7 @@ void *EBC2_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void EBC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void EBC2Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_ebc2_typ *ebc2 = (j1939_ebc2_typ*) pdv;
 
 	fprintf(fp, "EBC2");
@@ -440,7 +440,7 @@ void EBC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void EBC2_interpreter::publish(void *pdv, int fd) {
+void EBC2Interpreter::publish(void *pdv, int fd) {
 	j1939_ebc2_typ *ebc2 = (j1939_ebc2_typ*) pdv;
 
 	// initialize the encoder object
@@ -474,7 +474,7 @@ void EBC2_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *EBC2_interpreter::import(vector<string> &tokens) {
+void *EBC2Interpreter::import(vector<string> &tokens) {
 	j1939_ebc2_typ *ebc2 = new j1939_ebc2_typ();
 
 	import_timestamp(&ebc2->timestamp, tokens[1]);
@@ -490,7 +490,7 @@ void *EBC2_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *EEC1_interpreter::convert(j1939_pdu_typ *pdu) {
+void *EEC1Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_eec1_typ *eec1 = new j1939_eec1_typ();
 	eec1->timestamp = pdu->timestamp;
 
@@ -506,7 +506,7 @@ void *EEC1_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void EEC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void EEC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_eec1_typ *eec1 = (j1939_eec1_typ*) pdv;
 
 	fprintf(fp, "EEC1");
@@ -535,7 +535,7 @@ void EEC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void EEC1_interpreter::publish(void *pdv, int fd) {
+void EEC1Interpreter::publish(void *pdv, int fd) {
 	j1939_eec1_typ *eec1 = (j1939_eec1_typ*) pdv;
 
 	// initialize the encoder object
@@ -563,7 +563,7 @@ void EEC1_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *EEC1_interpreter::import(vector<string> &tokens) {
+void *EEC1Interpreter::import(vector<string> &tokens) {
 	j1939_eec1_typ *eec1 = new j1939_eec1_typ();
 
 //	import_timestamp(&eec1->timestamp, tokens[1]);
@@ -585,7 +585,7 @@ void *EEC1_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *EEC2_interpreter::convert(j1939_pdu_typ *pdu) {
+void *EEC2Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_eec2_typ *eec2 = new j1939_eec2_typ();
 	eec2->timestamp = pdu->timestamp;
 
@@ -603,7 +603,7 @@ void *EEC2_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void EEC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void EEC2Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_eec2_typ *eec2 = (j1939_eec2_typ*) pdv;
 
 	fprintf(fp, "EEC2");
@@ -632,7 +632,7 @@ void EEC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void EEC2_interpreter::publish(void *pdv, int fd) {
+void EEC2Interpreter::publish(void *pdv, int fd) {
 	j1939_eec2_typ *eec2 = (j1939_eec2_typ*) pdv;
 
 	// initialize the encoder object
@@ -666,7 +666,7 @@ void EEC2_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *EEC2_interpreter::import(vector<string> &tokens) {
+void *EEC2Interpreter::import(vector<string> &tokens) {
 	j1939_eec2_typ *eec2 = new j1939_eec2_typ();
 
 //	import_timestamp(&eec2->timestamp, tokens[1]);
@@ -691,7 +691,7 @@ void *EEC2_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *EEC3_interpreter::convert(j1939_pdu_typ *pdu) {
+void *EEC3Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_eec3_typ *eec3 = new j1939_eec3_typ();
 	eec3->timestamp = pdu->timestamp;
 
@@ -708,7 +708,7 @@ void *EEC3_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void EEC3_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void EEC3Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_eec3_typ *eec3 = (j1939_eec3_typ*) pdv;
 
 	fprintf(fp, "EEC3");
@@ -734,7 +734,7 @@ void EEC3_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void EEC3_interpreter::publish(void *pdv, int fd) {
+void EEC3Interpreter::publish(void *pdv, int fd) {
 	j1939_eec3_typ *eec3 = (j1939_eec3_typ*) pdv;
 
 	// initialize the encoder object
@@ -763,7 +763,7 @@ void EEC3_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *EEC3_interpreter::import(vector<string> &tokens) {
+void *EEC3Interpreter::import(vector<string> &tokens) {
 	j1939_eec3_typ *eec3 = new j1939_eec3_typ();
 
 //	import_timestamp(&eec3->timestamp, tokens[1]);
@@ -781,7 +781,7 @@ void *EEC3_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *ERC1_interpreter::convert(j1939_pdu_typ *pdu) {
+void *ERC1Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_erc1_typ *erc1 = new j1939_erc1_typ();
 	erc1->timestamp = pdu->timestamp;
 
@@ -801,7 +801,7 @@ void *ERC1_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void ERC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void ERC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_erc1_typ *erc1 = (j1939_erc1_typ*) pdv;
 
 	fprintf(fp, "ERC1");
@@ -843,7 +843,7 @@ void ERC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ERC1_interpreter::publish(void *pdv, int fd) {
+void ERC1Interpreter::publish(void *pdv, int fd) {
 	j1939_erc1_typ *erc1 = (j1939_erc1_typ*) pdv;
 
 	// initialize the encoder object
@@ -881,7 +881,7 @@ void ERC1_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *ERC1_interpreter::import(vector<string> &tokens) {
+void *ERC1Interpreter::import(vector<string> &tokens) {
 	j1939_erc1_typ *erc1 = new j1939_erc1_typ();
 
 //	import_timestamp(&erc1->timestamp, tokens[1]);
@@ -909,7 +909,7 @@ void *ERC1_interpreter::import(vector<string> &tokens) {
 }
 
 
-void* ETC1_interpreter::convert(j1939_pdu_typ *pdu) {
+void* ETC1Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_etc1_typ *etc1 = new j1939_etc1_typ();
 	etc1->timestamp = pdu->timestamp;
 	int two_bytes;
@@ -935,7 +935,7 @@ void* ETC1_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void ETC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void ETC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_etc1_typ *etc1 = (j1939_etc1_typ*) pdv;
 
 	fprintf(fp, "ETC1");
@@ -969,7 +969,7 @@ void ETC1_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ETC1_interpreter::publish(void *pdv, int fd) {
+void ETC1Interpreter::publish(void *pdv, int fd) {
 	j1939_etc1_typ *etc1 = (j1939_etc1_typ*) pdv;
 
 	// initialize the encoder object
@@ -1004,7 +1004,7 @@ void ETC1_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *ETC1_interpreter::import(vector<string> &tokens) {
+void *ETC1Interpreter::import(vector<string> &tokens) {
 	j1939_etc1_typ *etc1 = new j1939_etc1_typ();
 
 	import_timestamp(&etc1->timestamp, tokens[1]);
@@ -1022,7 +1022,7 @@ void *ETC1_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *ETC2_interpreter::convert(j1939_pdu_typ *pdu) {
+void *ETC2Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_etc2_typ *etc2 = new j1939_etc2_typ();
 	etc2->timestamp = pdu->timestamp;
 
@@ -1037,7 +1037,7 @@ void *ETC2_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void ETC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void ETC2Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_etc2_typ *etc2 = (j1939_etc2_typ*) pdv;
 
 	fprintf(fp, "ETC2");
@@ -1060,7 +1060,7 @@ void ETC2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ETC2_interpreter::publish(void *pdv, int fd) {
+void ETC2Interpreter::publish(void *pdv, int fd) {
 	j1939_etc2_typ *etc2 = (j1939_etc2_typ*) pdv;
 
 	// initialize the encoder object
@@ -1089,7 +1089,7 @@ void ETC2_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *ETC2_interpreter::import(vector<string> &tokens) {
+void *ETC2Interpreter::import(vector<string> &tokens) {
 	j1939_etc2_typ *etc2 = new j1939_etc2_typ();
 
 	import_timestamp(&etc2->timestamp, tokens[1]);
@@ -1103,7 +1103,7 @@ void *ETC2_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *TURBO_interpreter::convert(j1939_pdu_typ *pdu) {
+void *TURBOInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_turbo_typ *turbo = new j1939_turbo_typ();
 	turbo->timestamp = pdu->timestamp;
 
@@ -1115,7 +1115,7 @@ void *TURBO_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void TURBO_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void TURBOInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_turbo_typ *turbo = (j1939_turbo_typ*) pdv;
 
 	fprintf(fp, "TURBO");
@@ -1133,7 +1133,7 @@ void TURBO_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void TURBO_interpreter::publish(void *pdv, int fd) {
+void TURBOInterpreter::publish(void *pdv, int fd) {
 	j1939_turbo_typ *turbo = (j1939_turbo_typ*) pdv;
 
 	// initialize the encoder object
@@ -1157,7 +1157,7 @@ void TURBO_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *TURBO_interpreter::import(vector<string> &tokens) {
+void *TURBOInterpreter::import(vector<string> &tokens) {
 	j1939_turbo_typ *turbo = new j1939_turbo_typ();
 
 	import_timestamp(&turbo->timestamp, tokens[1]);
@@ -1168,7 +1168,7 @@ void *TURBO_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *VD_interpreter::convert(j1939_pdu_typ *pdu) {
+void *VDInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_vd_typ *vd = new j1939_vd_typ();
 	vd->timestamp = pdu->timestamp;
 	unsigned int four_bytes;
@@ -1186,7 +1186,7 @@ void *VD_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void VD_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void VDInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_vd_typ *vd = (j1939_vd_typ*) pdv;
 
 	fprintf(fp, "VD");
@@ -1203,7 +1203,7 @@ void VD_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void VD_interpreter::publish(void *pdv, int fd) {
+void VDInterpreter::publish(void *pdv, int fd) {
 	j1939_vd_typ *vd = (j1939_vd_typ*) pdv;
 
 	// initialize the encoder object
@@ -1226,7 +1226,7 @@ void VD_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *VD_interpreter::import(vector<string> &tokens) {
+void *VDInterpreter::import(vector<string> &tokens) {
 	j1939_vd_typ *vd = new j1939_vd_typ();
 
 	import_timestamp(&vd->timestamp, tokens[1]);
@@ -1237,7 +1237,7 @@ void *VD_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *RCFG_interpreter::convert(j1939_pdu_typ *pdu) {
+void *RCFGInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_rcfg_typ *rcfg = new j1939_rcfg_typ();
 	rcfg->timestamp = pdu->timestamp;
 	unsigned short two_bytes;
@@ -1270,7 +1270,7 @@ void *RCFG_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void RCFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void RCFGInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_rcfg_typ *rcfg = (j1939_rcfg_typ*) pdv;
 	int i;
 
@@ -1308,7 +1308,7 @@ void RCFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void RCFG_interpreter::publish(void *pdv, int fd) {
+void RCFGInterpreter::publish(void *pdv, int fd) {
 	j1939_rcfg_typ *rcfg = (j1939_rcfg_typ*) pdv;
 	int i;
 
@@ -1350,7 +1350,7 @@ void RCFG_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *RCFG_interpreter::import(vector<string> &tokens) {
+void *RCFGInterpreter::import(vector<string> &tokens) {
 	j1939_rcfg_typ *rcfg = new j1939_rcfg_typ();
 	int i;
 
@@ -1393,7 +1393,7 @@ void *RCFG_interpreter::import(vector<string> &tokens) {
 //}
 
 
-void *ECFG_interpreter::convert(j1939_pdu_typ *pdu) {
+void *ECFGInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ecfg_typ *ecfg = new j1939_ecfg_typ();
 	ecfg->timestamp = pdu->timestamp;
 	int two_bytes;
@@ -1434,7 +1434,7 @@ void *ECFG_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void ECFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void ECFGInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_ecfg_typ *ecfg = (j1939_ecfg_typ*) pdv;
 	int i;
 
@@ -1482,7 +1482,7 @@ void ECFG_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ECFG_interpreter::publish(void *pdv, int fd) {
+void ECFGInterpreter::publish(void *pdv, int fd) {
 	j1939_ecfg_typ *ecfg = (j1939_ecfg_typ*) pdv;
 	int i;
 
@@ -1530,7 +1530,7 @@ void ECFG_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *ECFG_interpreter::import(vector<string> &tokens) {
+void *ECFGInterpreter::import(vector<string> &tokens) {
 	j1939_ecfg_typ *ecfg = new j1939_ecfg_typ();
 	int i;
 
@@ -1565,7 +1565,7 @@ void *ECFG_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *ETEMP_interpreter::convert(j1939_pdu_typ *pdu) {
+void *ETEMPInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_etemp_typ *etemp = new j1939_etemp_typ();
 	etemp->timestamp = pdu->timestamp;
 	unsigned short two_bytes;
@@ -1589,7 +1589,7 @@ void *ETEMP_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void ETEMP_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void ETEMPInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_etemp_typ *etemp = (j1939_etemp_typ*) pdv;
 
 	fprintf(fp, "ETEMP");
@@ -1617,7 +1617,7 @@ void ETEMP_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void ETEMP_interpreter::publish(void *pdv, int fd) {
+void ETEMPInterpreter::publish(void *pdv, int fd) {
 	j1939_etemp_typ *etemp = (j1939_etemp_typ*) pdv;
 
 	// initialize the encoder object
@@ -1647,7 +1647,7 @@ void ETEMP_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *ETEMP_interpreter::import(vector<string> &tokens) {
+void *ETEMPInterpreter::import(vector<string> &tokens) {
 	j1939_etemp_typ *etemp = new j1939_etemp_typ();
 
 	import_timestamp(&etemp->timestamp, tokens[1]);
@@ -1662,7 +1662,7 @@ void *ETEMP_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *PTO_interpreter::convert(j1939_pdu_typ *pdu) {
+void *PTOInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_pto_typ *pto = new j1939_pto_typ();
 	pto->timestamp = pdu->timestamp;
 	int two_bytes;
@@ -1688,7 +1688,7 @@ void *PTO_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void PTO_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void PTOInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_pto_typ *pto = (j1939_pto_typ*) pdv;
 
 	fprintf(fp, "PTO");
@@ -1724,7 +1724,7 @@ void PTO_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void PTO_interpreter::publish(void *pdv, int fd) {
+void PTOInterpreter::publish(void *pdv, int fd) {
 	j1939_pto_typ *pto = (j1939_pto_typ*) pdv;
 
 	// initialize the encoder object
@@ -1758,7 +1758,7 @@ void PTO_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *PTO_interpreter::import(vector<string> &tokens) {
+void *PTOInterpreter::import(vector<string> &tokens) {
 	j1939_pto_typ *pto = new j1939_pto_typ();
 
 	import_timestamp(&pto->timestamp, tokens[1]);
@@ -1777,7 +1777,7 @@ void *PTO_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *CCVS_interpreter::convert(j1939_pdu_typ *pdu) {
+void *CCVSInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ccvs_typ *ccvs = new j1939_ccvs_typ();
 	ccvs->timestamp = pdu->timestamp;
 	int byte;
@@ -1820,7 +1820,7 @@ void *CCVS_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void CCVS_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void CCVSInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_ccvs_typ *ccvs = (j1939_ccvs_typ*) pdv;
 
 	fprintf(fp, "CCVS");
@@ -1874,7 +1874,7 @@ void CCVS_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void CCVS_interpreter::publish(void *pdv, int fd) {
+void CCVSInterpreter::publish(void *pdv, int fd) {
 	j1939_ccvs_typ *ccvs = (j1939_ccvs_typ*) pdv;
 
 	// initialize the encoder object
@@ -1921,7 +1921,7 @@ void CCVS_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *CCVS_interpreter::import(vector<string> &tokens) {
+void *CCVSInterpreter::import(vector<string> &tokens) {
 	j1939_ccvs_typ *ccvs = new j1939_ccvs_typ();
 
 //	import_timestamp(&ccvs->timestamp, tokens[1]);
@@ -1970,7 +1970,7 @@ void *CCVS_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *LFE_interpreter::convert(j1939_pdu_typ *pdu) {
+void *LFEInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_lfe_typ *lfe = new j1939_lfe_typ();
 	lfe->timestamp = pdu->timestamp;
 	int two_bytes;
@@ -1991,7 +1991,7 @@ void *LFE_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void LFE_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void LFEInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_lfe_typ *lfe = (j1939_lfe_typ*) pdv;
 
 	fprintf(fp, "LFE");
@@ -2018,7 +2018,7 @@ void LFE_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void LFE_interpreter::publish(void *pdv, int fd) {
+void LFEInterpreter::publish(void *pdv, int fd) {
 	j1939_lfe_typ *lfe = (j1939_lfe_typ*) pdv;
 
 	// initialize the encoder object
@@ -2048,7 +2048,7 @@ void LFE_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *LFE_interpreter::import(vector<string> &tokens) {
+void *LFEInterpreter::import(vector<string> &tokens) {
 	j1939_lfe_typ *lfe = new j1939_lfe_typ();
 
 //	import_timestamp(&lfe->timestamp, tokens[1]);
@@ -2068,7 +2068,7 @@ void *LFE_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *AMBC_interpreter::convert(j1939_pdu_typ *pdu) {
+void *AMBCInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ambc_typ *ambc = new j1939_ambc_typ();
 	ambc->timestamp = pdu->timestamp;
 	int two_bytes;
@@ -2090,7 +2090,7 @@ void *AMBC_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void AMBC_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void AMBCInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_ambc_typ *ambc = (j1939_ambc_typ*) pdv;
 
 	fprintf(fp, "AMBC");
@@ -2113,7 +2113,7 @@ void AMBC_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void AMBC_interpreter::publish(void *pdv, int fd) {
+void AMBCInterpreter::publish(void *pdv, int fd) {
 	j1939_ambc_typ *ambc = (j1939_ambc_typ*) pdv;
 
 	// initialize the encoder object
@@ -2143,7 +2143,7 @@ void AMBC_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *AMBC_interpreter::import(vector<string> &tokens) {
+void *AMBCInterpreter::import(vector<string> &tokens) {
 	j1939_ambc_typ *ambc = new j1939_ambc_typ();
 
 	import_timestamp(&ambc->timestamp, tokens[1]);
@@ -2157,7 +2157,7 @@ void *AMBC_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *IEC_interpreter::convert(j1939_pdu_typ *pdu) {
+void *IECInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_iec_typ *iec = new j1939_iec_typ();
 	iec->timestamp = pdu->timestamp;
 	unsigned short two_bytes;
@@ -2177,7 +2177,7 @@ void *IEC_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void IEC_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void IECInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_iec_typ *iec = (j1939_iec_typ*) pdv;
 
 	fprintf(fp, "IEC");
@@ -2208,7 +2208,7 @@ void IEC_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void IEC_interpreter::publish(void *pdv, int fd) {
+void IECInterpreter::publish(void *pdv, int fd) {
 	j1939_iec_typ *iec = (j1939_iec_typ*) pdv;
 
 	// initialize the encoder object
@@ -2241,7 +2241,7 @@ void IEC_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *IEC_interpreter::import(vector<string> &tokens) {
+void *IECInterpreter::import(vector<string> &tokens) {
 	j1939_iec_typ *iec = new j1939_iec_typ();
 
 	import_timestamp(&iec->timestamp, tokens[1]);
@@ -2257,7 +2257,7 @@ void *IEC_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *VEP_interpreter::convert(j1939_pdu_typ *pdu) {
+void *VEPInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_vep_typ *vep = new j1939_vep_typ();
 	vep->timestamp = pdu->timestamp;
 	int two_bytes;
@@ -2278,7 +2278,7 @@ void *VEP_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void VEP_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void VEPInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_vep_typ *vep = (j1939_vep_typ*) pdv;
 
 	fprintf(fp, "VEP");
@@ -2301,7 +2301,7 @@ void VEP_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void VEP_interpreter::publish(void *pdv, int fd) {
+void VEPInterpreter::publish(void *pdv, int fd) {
 	j1939_vep_typ *vep = (j1939_vep_typ*) pdv;
 
 	// initialize the encoder object
@@ -2332,7 +2332,7 @@ void VEP_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *VEP_interpreter::import(vector<string> &tokens) {
+void *VEPInterpreter::import(vector<string> &tokens) {
 	j1939_vep_typ *vep = new j1939_vep_typ();
 
 	import_timestamp(&vep->timestamp, tokens[1]);
@@ -2346,7 +2346,7 @@ void *VEP_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *TF_interpreter::convert(j1939_pdu_typ *pdu) {
+void *TFInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_tf_typ *tf = new j1939_tf_typ();
 	tf->timestamp = pdu->timestamp;
 	unsigned short two_bytes;
@@ -2363,7 +2363,7 @@ void *TF_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void TF_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void TFInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_tf_typ *tf = (j1939_tf_typ*) pdv;
 
 	fprintf(fp, "TF");
@@ -2386,7 +2386,7 @@ void TF_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void TF_interpreter::publish(void *pdv, int fd) {
+void TFInterpreter::publish(void *pdv, int fd) {
 	j1939_tf_typ *tf = (j1939_tf_typ*) pdv;
 
 	// initialize the encoder object
@@ -2412,7 +2412,7 @@ void TF_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *TF_interpreter::import(vector<string> &tokens) {
+void *TFInterpreter::import(vector<string> &tokens) {
 	j1939_tf_typ *tf = new j1939_tf_typ();
 
 	import_timestamp(&tf->timestamp, tokens[1]);
@@ -2426,7 +2426,7 @@ void *TF_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *RF_interpreter::convert(j1939_pdu_typ *pdu) {
+void *RFInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_rf_typ *rf = new j1939_rf_typ();
 	rf->timestamp = pdu->timestamp;
 	rf->pressure = pressure_0_to_4000kpa(pdu->data_field[0]);
@@ -2435,7 +2435,7 @@ void *RF_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void RF_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void RFInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_rf_typ *rf = (j1939_rf_typ*) pdv;
 
 	fprintf(fp, "RF");
@@ -2452,7 +2452,7 @@ void RF_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void RF_interpreter::publish(void *pdv, int fd) {
+void RFInterpreter::publish(void *pdv, int fd) {
 	j1939_rf_typ *rf = (j1939_rf_typ*) pdv;
 
 	// initialize the encoder object
@@ -2475,7 +2475,7 @@ void RF_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *RF_interpreter::import(vector<string> &tokens) {
+void *RFInterpreter::import(vector<string> &tokens) {
 	j1939_rf_typ *rf = new j1939_rf_typ();
 
 	import_timestamp(&rf->timestamp, tokens[1]);
@@ -2486,7 +2486,7 @@ void *RF_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *HRVD_interpreter::convert(j1939_pdu_typ *pdu) {
+void *HRVDInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_hrvd_typ *hrvd = new j1939_hrvd_typ();
 	hrvd->timestamp = pdu->timestamp;
 	unsigned int four_bytes;
@@ -2503,7 +2503,7 @@ void *HRVD_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void HRVD_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void HRVDInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_hrvd_typ *hrvd = (j1939_hrvd_typ*) pdv;
 
 	fprintf(fp, "HRVD");
@@ -2520,7 +2520,7 @@ void HRVD_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void HRVD_interpreter::publish(void *pdv, int fd) {
+void HRVDInterpreter::publish(void *pdv, int fd) {
 	j1939_hrvd_typ *hrvd = (j1939_hrvd_typ*) pdv;
 
 	// initialize the encoder object
@@ -2543,7 +2543,7 @@ void HRVD_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *HRVD_interpreter::import(vector<string> &tokens) {
+void *HRVDInterpreter::import(vector<string> &tokens) {
 	j1939_hrvd_typ *hrvd = new j1939_hrvd_typ();
 
 	import_timestamp(&hrvd->timestamp, tokens[1]);
@@ -2554,7 +2554,7 @@ void *HRVD_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *FD_interpreter::convert(j1939_pdu_typ *pdu) {
+void *FDInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_fd_typ *fd = new j1939_fd_typ();
 	fd->timestamp = pdu->timestamp;
 	fd->prcnt_fan_spd = percent_0_to_100(pdu->data_field[0]);
@@ -2563,7 +2563,7 @@ void *FD_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void FD_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void FDInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_fd_typ *fd = (j1939_fd_typ*) pdv;
 
 	fprintf(fp, "FD");
@@ -2580,7 +2580,7 @@ void FD_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void FD_interpreter::publish(void *pdv, int fd) {
+void FDInterpreter::publish(void *pdv, int fd) {
 	j1939_fd_typ *fdd = (j1939_fd_typ*) pdv;
 
 	// initialize the encoder object
@@ -2603,7 +2603,7 @@ void FD_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *FD_interpreter::import(vector<string> &tokens) {
+void *FDInterpreter::import(vector<string> &tokens) {
 	j1939_fd_typ *fd = new j1939_fd_typ();
 
 	import_timestamp(&fd->timestamp, tokens[1]);
@@ -2614,7 +2614,7 @@ void *FD_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *GFI2_interpreter::convert(j1939_pdu_typ *pdu) {
+void *GFI2Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_gfi2_typ *gfi2 = new j1939_gfi2_typ();
 	gfi2->timestamp = pdu->timestamp;
 	int two_bytes;
@@ -2632,7 +2632,7 @@ void *GFI2_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void GFI2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void GFI2Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_gfi2_typ *gfi2 = (j1939_gfi2_typ*) pdv;
 
 	fprintf(fp, "GFI2");
@@ -2653,7 +2653,7 @@ void GFI2_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void GFI2_interpreter::publish(void *pdv, int fd) {
+void GFI2Interpreter::publish(void *pdv, int fd) {
 	j1939_gfi2_typ *gfi2 = (j1939_gfi2_typ*) pdv;
 
 	// initialize the encoder object
@@ -2678,7 +2678,7 @@ void GFI2_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *GFI2_interpreter::import(vector<string> &tokens) {
+void *GFI2Interpreter::import(vector<string> &tokens) {
 	j1939_gfi2_typ *gfi2 = new j1939_gfi2_typ();
 
 	import_timestamp(&gfi2->timestamp, tokens[1]);
@@ -2691,7 +2691,7 @@ void *GFI2_interpreter::import(vector<string> &tokens) {
 }
 
 
-void *EI_interpreter::convert(j1939_pdu_typ *pdu) {
+void *EIInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ei_typ *ei = new j1939_ei_typ();
 	ei->timestamp = pdu->timestamp;
 	int data;
@@ -2709,7 +2709,7 @@ void *EI_interpreter::convert(j1939_pdu_typ *pdu) {
 }
 
 
-void EI_interpreter::print(void *pdv, FILE *fp, bool numeric) {
+void EIInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	j1939_ei_typ *ei = (j1939_ei_typ*) pdv;
 
 	fprintf(fp, "EI");
@@ -2734,7 +2734,7 @@ void EI_interpreter::print(void *pdv, FILE *fp, bool numeric) {
 }
 
 
-void EI_interpreter::publish(void *pdv, int fd) {
+void EIInterpreter::publish(void *pdv, int fd) {
 	j1939_ei_typ *ei = (j1939_ei_typ*) pdv;
 
 	// initialize the encoder object
@@ -2764,7 +2764,7 @@ void EI_interpreter::publish(void *pdv, int fd) {
 }
 
 
-void *EI_interpreter::import(vector<string> &tokens) {
+void *EIInterpreter::import(vector<string> &tokens) {
 	j1939_ei_typ *ei = new j1939_ei_typ();
 
 	import_timestamp(&ei->timestamp, tokens[1]);
@@ -2776,5 +2776,3 @@ void *EI_interpreter::import(vector<string> &tokens) {
 
 	return (void*) ei;
 }
-
-

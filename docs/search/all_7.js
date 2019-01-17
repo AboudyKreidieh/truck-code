@@ -1,7 +1,11 @@
 var searchData=
 [
-  ['halt_5fbrk_5fmode',['halt_brk_mode',['../structj1939__ebc5__typ.html#a0ba88fdadd122b8134e36768f36ef6e4',1,'j1939_ebc5_typ']]],
-  ['hibyte',['HIBYTE',['../j1939__utils_8h.html#aa1ba73e45dd29eeb526a52d9a3336f35',1,'j1939_utils.h']]],
-  ['hr_5fdistance_5fin_5fkm',['hr_distance_in_km',['../j1939__utils_8cpp.html#a611635eba707129896542218eb67d3f8',1,'hr_distance_in_km(unsigned int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#aaea916fd2aa496a991ef02f867fa23dc',1,'hr_distance_in_km(unsigned int):&#160;j1939_utils.cpp']]],
-  ['hrvd_5finterpreter',['HRVD_interpreter',['../classHRVD__interpreter.html',1,'']]]
+  ['gain_5fendspeed_5fgovernor',['gain_endspeed_governor',['../structj1939__ecfg__typ.html#a70f9c1f3410076e77ebea22898000f84',1,'j1939_ecfg_typ']]],
+  ['gain_5fin_5fkp',['gain_in_kp',['../j1939__utils_8cpp.html#af4c645a172bc9dd58efdc116d03737ce',1,'gain_in_kp(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#af4c645a172bc9dd58efdc116d03737ce',1,'gain_in_kp(int data):&#160;j1939_utils.cpp']]],
+  ['gear_5fm125_5fto_5fp125',['gear_m125_to_p125',['../j1939__utils_8cpp.html#af883052c19c6cda84aa819896f91e1ea',1,'gear_m125_to_p125(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#af883052c19c6cda84aa819896f91e1ea',1,'gear_m125_to_p125(int data):&#160;j1939_utils.cpp']]],
+  ['gear_5fratio',['gear_ratio',['../j1939__utils_8cpp.html#a4f6211eb7ca037be73bdcb1414130da8',1,'gear_ratio(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a4f6211eb7ca037be73bdcb1414130da8',1,'gear_ratio(int data):&#160;j1939_utils.cpp']]],
+  ['gear_5fshift_5finhibit',['gear_shift_inhibit',['../structj1939__tc1__typ.html#ad7b7697c83a507dae3902f59bda32280',1,'j1939_tc1_typ']]],
+  ['get_5fcurrent_5ftimestamp',['get_current_timestamp',['../timestamp_8cpp.html#a9aa94d4868fbe116293b94903d5d7647',1,'get_current_timestamp(timestamp_t *t):&#160;timestamp.cpp'],['../timestamp_8h.html#ae804f8b3ca71c7b936cdc6ae34606749',1,'get_current_timestamp(timestamp_t *):&#160;timestamp.cpp']]],
+  ['gfi2',['GFI2',['../j1939__utils_8h.html#acf82567c92f3f4d224083163dbae757b',1,'j1939_utils.h']]],
+  ['gfi2interpreter',['GFI2Interpreter',['../classGFI2Interpreter.html',1,'']]]
 ];

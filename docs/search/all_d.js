@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['oil_5flevel',['oil_level',['../structj1939__tf__typ.html#a459406662e229e97903d9eac77c21b05',1,'j1939_tf_typ']]],
-  ['oil_5fpressure',['oil_pressure',['../structj1939__tf__typ.html#afe5f61243cf78e0a509f29ade81563b9',1,'j1939_tf_typ']]],
-  ['oil_5ftemp',['oil_temp',['../structj1939__rf__typ.html#a6473753c3773c9f01e73ec2495e134e4',1,'j1939_rf_typ::oil_temp()'],['../structj1939__pto__typ.html#aa6b5f00de3daf43b55b75ed5c8b62053',1,'j1939_pto_typ::oil_temp()'],['../structj1939__tf__typ.html#abd8316220307fea6aeae1b534720f031',1,'j1939_tf_typ::oil_temp()']]],
-  ['operating_5fspd_5fadjust',['operating_spd_adjust',['../structj1939__eec3__typ.html#ae116af28740c2cf3cd6787accd52d26e',1,'j1939_eec3_typ']]],
-  ['ovrd_5fctrl_5fm',['ovrd_ctrl_m',['../structj1939__tsc1__typ.html#a03c752538c32e2d1b458cef3151d6d38',1,'j1939_tsc1_typ']]],
-  ['ovrd_5fctrl_5fm_5fpr',['ovrd_ctrl_m_pr',['../structj1939__tsc1__typ.html#a5be6ceefb1091637307dba9c77657ccb',1,'j1939_tsc1_typ']]]
+  ['net_5fbattery_5fcurrent',['net_battery_current',['../structj1939__vep__typ.html#ac67c726b744b43af36358caac86ec0fa',1,'j1939_vep_typ']]],
+  ['new_5fbits',['new_bits',['../structdas__dout__t.html#af169459e0db4f46c0e6bdc67d8a9c0b4',1,'das_dout_t']]],
+  ['nominal_5ffriction',['nominal_friction',['../structj1939__eec3__typ.html#a0d646020860a67877d8e6f70125ce59b',1,'j1939_eec3_typ']]],
+  ['num_5fai',['num_ai',['../structdas__info__typ.html#a9f5f6dc7470fc492353693bbf758da71',1,'das_info_typ']]],
+  ['num_5fbytes',['num_bytes',['../structj1939__pdu.html#a1dc57d4a0f86fbe243633faedd467066',1,'j1939_pdu::num_bytes()'],['../structj1939__pdu__typ.html#a5165246a49657cfd8c2772411114a14a',1,'j1939_pdu_typ::num_bytes()']]],
+  ['num_5ffwd_5fgear_5fratios',['num_fwd_gear_ratios',['../structj1939__tcfg__typ.html#af17137a7dfe078d790923b936ba3cf40',1,'j1939_tcfg_typ']]],
+  ['num_5frev_5fgear_5fratios',['num_rev_gear_ratios',['../structj1939__tcfg__typ.html#a070e15db68e928cb164560b7f97f005f',1,'j1939_tcfg_typ']]]
 ];

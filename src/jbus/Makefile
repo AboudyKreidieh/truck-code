@@ -1,33 +1,31 @@
-#Location of the base directory (TODO: get this as an include)
-BASE_DIR = /home/aboudy/ide-7.0-workspace/truck-code
+# Location of the base directory
+BASE_DIR = $(shell pwd)/../..
+PATH_FROM_BASE = src/jbus
 
-ARTIFACT = translate_pdu
+ARTIFACT = rd_j1939
 
-#Build architecture/variant string, possible values: x86, armv7le, etc...
+# Build architecture/variant string, possible values: x86, armv7le, etc...
 PLATFORM ?= x86_64
 
-#Build profile, possible values: release, debug, profile, coverage
+# Build profile, possible values: release, debug, profile, coverage
 BUILD_PROFILE ?= debug
 
 CONFIG_NAME ?= $(PLATFORM)-$(BUILD_PROFILE)
-# TODO(ak): fix hack
-OUTPUT_DIR = $(BASE_DIR)/build/$(CONFIG_NAME)/src/jbus
+OUTPUT_DIR = $(BASE_DIR)/build/$(CONFIG_NAME)/$(PATH_FROM_BASE)
 TARGET = $(BASE_DIR)/build/$(CONFIG_NAME)/$(ARTIFACT)
-#TARGET = $(OUTPUT_DIR)/$(ARTIFACT)
 
-#Compiler definitions
+# Compiler definitions
 CC = qcc -Vgcc_nto$(PLATFORM)
 CXX = qcc -lang-c++ -Vgcc_nto$(PLATFORM)
 LD = $(CXX)
 
-#User defined include/preprocessor flags and libraries
-INCLUDES += -I../utils
-#INCLUDES += -I../mylib/public
+# User defined include/preprocessor flags and libraries
+INCLUDES += -I../
 
 #LIBS += -L/path/to/my/lib/$(PLATFORM)/usr/lib -lmylib
 #LIBS += -L$(OUTPUT_DIR)/../utils -ltimestamp
 
-#Compiler flags for build profiles
+# Compiler flags for build profiles
 CCFLAGS_release += -O2
 CCFLAGS_debug += -g -O0 -fno-builtin
 CCFLAGS_coverage += -g -O0 -ftest-coverage -fprofile-arcs -nopipe -Wc,-auxbase-strip,$@
@@ -35,24 +33,24 @@ LDFLAGS_coverage += -ftest-coverage -fprofile-arcs
 CCFLAGS_profile += -g -O0 -finstrument-functions
 LIBS_profile += -lprofilingS
 
-#Generic compiler flags (which include build type flags)
+# Generic compiler flags (which include build type flags)
 CCFLAGS_all += -Wall -fmessage-length=0
 CCFLAGS_all += $(CCFLAGS_$(BUILD_PROFILE))
-#Shared library has to be compiled with -fPIC
+# Shared library has to be compiled with -fPIC
 #CCFLAGS_all += -fPIC
 LDFLAGS_all += $(LDFLAGS_$(BUILD_PROFILE))
 LIBS_all += $(LIBS_$(BUILD_PROFILE)) -lpps
 DEPS = -Wp,-MMD,$(@:%.o=%.d),-MT,$@
 
-#Macro to expand files recursively: parameters $1 -  directory, $2 - extension, i.e. cpp
+# Macro to expand files recursively: parameters $1 -  directory, $2 - extension, i.e. cpp
 rwildcard = $(wildcard $(addprefix $1/*.,$2)) $(foreach d,$(wildcard $1/*),$(call rwildcard,$d,$2))
 
-#Source list
+# Source list
 #SRCS = $(call rwildcard, src, c, cpp)
 SRCS := $(shell find -name '*.cpp' -or -name '*.c' -or -name '*.s')
 #SRC = $(wildcard *.cpp)
 
-#Object files list
+# Object files list
 OBJS = $(addprefix $(OUTPUT_DIR)/,$(addsuffix .o, $(basename $(SRCS))))
 #OBJS := $(addsuffix .o,$(basename $(SRCS)))
 

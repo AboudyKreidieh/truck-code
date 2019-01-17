@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['wheel_5fbased_5fmps',['wheel_based_mps',['../j1939__utils_8cpp.html#a1f51f0a525a968310e48ff491b2d77e5',1,'wheel_based_mps(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a44e6fac1cf41087e82df8b6f928d63e3',1,'wheel_based_mps(int):&#160;j1939_utils.cpp']]],
-  ['wheel_5fbased_5fmps_5frelative',['wheel_based_mps_relative',['../j1939__utils_8cpp.html#af8e22a7f051adb8435e2a9f2d72aee74',1,'wheel_based_mps_relative(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#acd02254df23de1df9b337505cec682f2',1,'wheel_based_mps_relative(int):&#160;j1939_utils.cpp']]]
+  ['vd',['VD',['../j1939__utils_8h.html#aa786055ad8b70c06fcd3fb7c848bc390',1,'j1939_utils.h']]],
+  ['vdinterpreter',['VDInterpreter',['../classVDInterpreter.html',1,'']]],
+  ['vehicle_5fdistance',['vehicle_distance',['../structj1939__hrvd__typ.html#af4096e1fa21972901811157431ff8be1',1,'j1939_hrvd_typ']]],
+  ['vehicle_5fspd',['vehicle_spd',['../structj1939__ccvs__typ.html#a9411fa76d61b3250b4afe8fcde793f6c',1,'j1939_ccvs_typ']]],
+  ['vep',['VEP',['../j1939__utils_8h.html#a6afd3ce23fb13b2657061fd4b8cc5b48',1,'j1939_utils.h']]],
+  ['vepinterpreter',['VEPInterpreter',['../classVEPInterpreter.html',1,'']]],
+  ['voltage',['voltage',['../j1939__utils_8cpp.html#a2c63b5febf9bae71d280c03a4972386c',1,'voltage(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a2c63b5febf9bae71d280c03a4972386c',1,'voltage(int data):&#160;j1939_utils.cpp']]]
 ];

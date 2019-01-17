@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['vd_5finterpreter',['VD_interpreter',['../classVD__interpreter.html',1,'']]],
-  ['vep_5finterpreter',['VEP_interpreter',['../classVEP__interpreter.html',1,'']]]
+  ['vdinterpreter',['VDInterpreter',['../classVDInterpreter.html',1,'']]],
+  ['vepinterpreter',['VEPInterpreter',['../classVEPInterpreter.html',1,'']]]
 ];

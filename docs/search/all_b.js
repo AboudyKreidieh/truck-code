@@ -1,7 +1,15 @@
 var searchData=
 [
-  ['mass_5f0_5fto_5f100t',['mass_0_to_100t',['../j1939__utils_8cpp.html#a97b8c70526f69a7a8663d9a858e3446c',1,'mass_0_to_100t(unsigned char data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#ae80b186ce51f3dff8642b20f6d405443',1,'mass_0_to_100t(unsigned char):&#160;j1939_utils.cpp']]],
-  ['mass_5fflow',['mass_flow',['../j1939__utils_8cpp.html#a22d09b8a188888e3980f6910b70cd60d',1,'mass_flow(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a0900e9257cbc25e2e18690f6834de918',1,'mass_flow(int):&#160;j1939_utils.cpp']]],
-  ['max_5favailable_5fprcnt_5ftrq',['max_available_prcnt_trq',['../structj1939__erc1__typ.html#af2f39b5c444df1c20c550b71ae1c1b07',1,'j1939_erc1_typ']]],
-  ['max_5fmomentary_5foveride_5ftime',['max_momentary_overide_time',['../structj1939__ecfg__typ.html#a472d97aa1f118627773a098b2505e151',1,'j1939_ecfg_typ']]]
+  ['lat_5faccel',['lat_accel',['../structj1939__vdc2__typ.html#ad735dcab01e77af41002fc7b37732c3b',1,'j1939_vdc2_typ']]],
+  ['lfe',['LFE',['../j1939__utils_8h.html#a29410ff51692e6d43abd2ca130713d1c',1,'j1939_utils.h']]],
+  ['lfeinterpreter',['LFEInterpreter',['../classLFEInterpreter.html',1,'']]],
+  ['lobyte',['LOBYTE',['../j1939__utils_8h.html#a373c90214222e94d07424e7a8d41b92b',1,'j1939_utils.h']]],
+  ['long_5faccel',['long_accel',['../structj1939__vdc2__typ.html#aeee9f4d0a58b6f2dad6c98af48d27218',1,'j1939_vdc2_typ']]],
+  ['long_5fcontroller_2ecpp',['long_controller.cpp',['../long__controller_8cpp.html',1,'']]],
+  ['long_5fcontroller_2eh',['long_controller.h',['../long__controller_8h.html',1,'']]],
+  ['long_5fout_2ecpp',['long_out.cpp',['../long__out_8cpp.html',1,'']]],
+  ['long_5futils_2eh',['long_utils.h',['../long__utils_8h.html',1,'']]],
+  ['long_5fvehicle_5fstate',['long_vehicle_state',['../structlong__vehicle__state.html',1,'']]],
+  ['longcontroller',['LongController',['../classLongController.html',1,'']]],
+  ['lonibble',['LONIBBLE',['../j1939__utils_8h.html#a78ab77f66ce62dd65fdd2eabdf787cdf',1,'j1939_utils.h']]]
 ];

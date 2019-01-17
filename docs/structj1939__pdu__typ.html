@@ -77,8 +77,7 @@ Collaboration diagram for j1939_pdu_typ:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a3bbbcf9a03e3482bba4aeef3e14574b6"><td class="memItemLeft" align="right" valign="top"><a id="a3bbbcf9a03e3482bba4aeef3e14574b6"></a>
-<a class="el" href="structtimestamp__t.html">timestamp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></tr>
+<tr class="memitem:a3bbbcf9a03e3482bba4aeef3e14574b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structtimestamp__t.html">timestamp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structj1939__pdu__typ.html#a3bbbcf9a03e3482bba4aeef3e14574b6">timestamp</a></td></tr>
 <tr class="separator:a3bbbcf9a03e3482bba4aeef3e14574b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a7676c8c02e6bc39373a426b55d6440"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structj1939__pdu__typ.html#a2a7676c8c02e6bc39373a426b55d6440">priority</a></td></tr>
 <tr class="separator:a2a7676c8c02e6bc39373a426b55d6440"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -94,7 +93,9 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a5165246a49657cfd8c2772411114a14a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>generic database variable type for storing information about Protocol Data Units that have been received with a correct sum, with no field translation. </p>
+<div class="textblock"><p>J1939 Protocol Data Unit (PDU) format.</p>
+<p>This is the format the messages are collected from the CAN card. This object is used for storing information about Protocol Data Units that have been received with a correct sum, with no field translation.</p>
+<p>See SAE J1939, 3.1.2 </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a93025cb446ff01a356726fa4795b978a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a93025cb446ff01a356726fa4795b978a">&#9670;&nbsp;</a></span>data_field</h2>
@@ -183,6 +184,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Source address </p>
+
+</div>
+</div>
+<a id="a3bbbcf9a03e3482bba4aeef3e14574b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bbbcf9a03e3482bba4aeef3e14574b6">&#9670;&nbsp;</a></span>timestamp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structtimestamp__t.html">timestamp_t</a> j1939_pdu_typ::timestamp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>time the message was received </p>
 
 </div>
 </div>

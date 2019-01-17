@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="j1939_ebc2_typ",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structj1939__ebc2__typ.html"];
+  Node0 [label="das_info_typ",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structdas__info__typ.html"];
 }

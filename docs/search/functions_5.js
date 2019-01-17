@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['fuel_5feconomy_5fmeters_5fper_5fcm3',['fuel_economy_meters_per_cm3',['../j1939__utils_8cpp.html#a39d19933e0daf755e200f03c15275942',1,'fuel_economy_meters_per_cm3(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a1d3af717112f4751e8a33046a586783b',1,'fuel_economy_meters_per_cm3(int):&#160;j1939_utils.cpp']]],
-  ['fuel_5frate_5fcm3_5fper_5fsec',['fuel_rate_cm3_per_sec',['../j1939__utils_8cpp.html#a297a098aeb03033b58e42f44a38730fb',1,'fuel_rate_cm3_per_sec(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#aae90a9bd09cceb3ffa1728b6afd40ab1',1,'fuel_rate_cm3_per_sec(int):&#160;j1939_utils.cpp']]]
+  ['gain_5fin_5fkp',['gain_in_kp',['../j1939__utils_8cpp.html#af4c645a172bc9dd58efdc116d03737ce',1,'gain_in_kp(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#af4c645a172bc9dd58efdc116d03737ce',1,'gain_in_kp(int data):&#160;j1939_utils.cpp']]],
+  ['gear_5fm125_5fto_5fp125',['gear_m125_to_p125',['../j1939__utils_8cpp.html#af883052c19c6cda84aa819896f91e1ea',1,'gear_m125_to_p125(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#af883052c19c6cda84aa819896f91e1ea',1,'gear_m125_to_p125(int data):&#160;j1939_utils.cpp']]],
+  ['gear_5fratio',['gear_ratio',['../j1939__utils_8cpp.html#a4f6211eb7ca037be73bdcb1414130da8',1,'gear_ratio(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a4f6211eb7ca037be73bdcb1414130da8',1,'gear_ratio(int data):&#160;j1939_utils.cpp']]],
+  ['get_5fcurrent_5ftimestamp',['get_current_timestamp',['../timestamp_8cpp.html#a9aa94d4868fbe116293b94903d5d7647',1,'get_current_timestamp(timestamp_t *t):&#160;timestamp.cpp'],['../timestamp_8h.html#ae804f8b3ca71c7b936cdc6ae34606749',1,'get_current_timestamp(timestamp_t *):&#160;timestamp.cpp']]]
 ];
