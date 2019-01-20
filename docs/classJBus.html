@@ -70,8 +70,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aec448682818ac2e6830215156e878f99"><td class="memItemLeft" align="right" valign="top">virtual int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJBus.html#aec448682818ac2e6830215156e878f99">init</a> (std::string filename, int flags, void *p_other)</td></tr>
-<tr class="separator:aec448682818ac2e6830215156e878f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1279e1eeb40076ad0e410cdd4456599b"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJBus.html#a1279e1eeb40076ad0e410cdd4456599b">init</a> (std::string filename, int flags, void *p_other)</td></tr>
+<tr class="separator:a1279e1eeb40076ad0e410cdd4456599b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4360be7271912bef711243f39e4b02a"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJBus.html#ae4360be7271912bef711243f39e4b02a">receive</a> (int fd, <a class="el" href="structj1939__pdu__typ.html">j1939_pdu_typ</a> *pdu, int *extended, int *slot)</td></tr>
 <tr class="separator:ae4360be7271912bef711243f39e4b02a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bf767e578a0d659d1b3d7e37c361b56"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJBus.html#a1bf767e578a0d659d1b3d7e37c361b56">close_conn</a> (int *pfd)</td></tr>
@@ -116,8 +116,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aec448682818ac2e6830215156e878f99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec448682818ac2e6830215156e878f99">&#9670;&nbsp;</a></span>init()</h2>
+<a id="a1279e1eeb40076ad0e410cdd4456599b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1279e1eeb40076ad0e410cdd4456599b">&#9670;&nbsp;</a></span>init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -126,7 +126,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int * JBus::init </td>
+          <td class="memname">int JBus::init </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>filename</em>, </td>
@@ -156,18 +156,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Initialize the jbus connection.</p>
-<p>Calls can_open. If access to channel and connection IDs used by the CAN driver are actually required outside of the CAN driver, and its client calls, we must call operations on the "fd" returned by can_open (actually a pointer) to retrieve them.</p>
-<p>Wrapper for the open call; some drivers are not file structured and different calls will be needed to "open"</p>
-<p>Filename string and flags contain any information needed to do the open.</p>
+<p>Opens a connection with the CAN card. If access to channel and connection IDs used by the CAN driver are actually required outside of the CAN driver, and its client calls, we must call operations on the "fd" returned by can_open (actually a pointer) to retrieve them.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td></td></tr>
-    <tr><td class="paramname">flags</td><td>if RDONLY, this method will arm the pulse </td></tr>
+    <tr><td class="paramname">filename</td><td>location of the CAN data stream </td></tr>
+    <tr><td class="paramname">flags</td><td>flag variable for the open() process. If RDONLY, this method will arm the pulse </td></tr>
     <tr><td class="paramname">p_other</td><td>pointer in case other information is needed for some driver initialization </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>file descriptor that will be used in all subsequent calls </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>file descriptor that will be used in all subsequent calls, -1 if an error was experienced </dd></dl>
 
 </div>
 </div>
@@ -219,10 +217,10 @@ Public Member Functions</h2></td></tr>
 <p>Update a PDU object with information from the can card.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fd</td><td>blank </td></tr>
-    <tr><td class="paramname">pdu</td><td>blank </td></tr>
+    <tr><td class="paramname">fd</td><td>file descriptor acquired while opening the connection </td></tr>
+    <tr><td class="paramname">pdu</td><td>pointer to a generic PDU message that will be updated with information received from the CAN card </td></tr>
     <tr><td class="paramname">extended</td><td>updated to be 1 if the identifier is in extended (29 bit) format, 0 if it is in the unextended (11 bit) format </td></tr>
-    <tr><td class="paramname">slot</td><td>blank </td></tr>
+    <tr><td class="paramname">slot</td><td>external slot, internal type </td></tr>
   </table>
   </dd>
 </dl>
@@ -231,8 +229,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/jbus/<a class="el" href="jbus_8h_source.html">jbus.h</a></li>
-<li>src/jbus/<a class="el" href="jbus_8cpp.html">jbus.cpp</a></li>
+<li>include/jbus/<a class="el" href="jbus_8h_source.html">jbus.h</a></li>
+<li>include/jbus/<a class="el" href="jbus_8cpp.html">jbus.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

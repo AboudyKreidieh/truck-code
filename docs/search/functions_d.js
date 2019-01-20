@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['update_5fvehicle_5fstate',['update_vehicle_state',['../classLongController.html#ab07262fda7a3e8e27e8ee716bc214786',1,'LongController']]]
+  ['voltage',['voltage',['../j1939__utils_8cpp.html#a2c63b5febf9bae71d280c03a4972386c',1,'voltage(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a2c63b5febf9bae71d280c03a4972386c',1,'voltage(int data):&#160;j1939_utils.cpp']]]
 ];

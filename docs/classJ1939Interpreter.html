@@ -84,10 +84,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3160bd6a9247925e6f65147c087aefa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84b9768d4ca1102af4799c20d7295094"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#a84b9768d4ca1102af4799c20d7295094">print</a> (void *pdv, FILE *fp, bool numeric)=0</td></tr>
 <tr class="separator:a84b9768d4ca1102af4799c20d7295094"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae38358706a4acdd0b402e1001a52e82c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#ae38358706a4acdd0b402e1001a52e82c">publish</a> (void *pdv, int fd)=0</td></tr>
-<tr class="separator:ae38358706a4acdd0b402e1001a52e82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc58e11a90d424a28fa5db9d4df847f4"><td class="memItemLeft" align="right" valign="top">virtual void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#acc58e11a90d424a28fa5db9d4df847f4">import</a> (vector&lt; string &gt; &amp;tokens)=0</td></tr>
 <tr class="separator:acc58e11a90d424a28fa5db9d4df847f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5ee3370ac2451a3344c4005c172b2ef"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#ab5ee3370ac2451a3344c4005c172b2ef">~J1939Interpreter</a> ()=0</td></tr>
+<tr class="separator:ab5ee3370ac2451a3344c4005c172b2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -96,7 +96,34 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base interpreter for processing pdu variables into their message-specific format. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab5ee3370ac2451a3344c4005c172b2ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5ee3370ac2451a3344c4005c172b2ef">&#9670;&nbsp;</a></span>~J1939Interpreter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">J1939Interpreter::~J1939Interpreter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>destructor </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a364db6379d1c7a4111bb852a4ceacc54"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a364db6379d1c7a4111bb852a4ceacc54">&#9670;&nbsp;</a></span>convert()</h2>
 
@@ -249,52 +276,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ae38358706a4acdd0b402e1001a52e82c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae38358706a4acdd0b402e1001a52e82c">&#9670;&nbsp;</a></span>publish()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void J1939Interpreter::publish </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>pdv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>fd</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Publish a message to the QNX publish/subscribe server.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pdv</td><td>the message </td></tr>
-    <tr><td class="paramname">fd</td><td>file descriptor </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classEIInterpreter.html#a93cdfae4d8d5f25ba9c17e12d1029e24">EIInterpreter</a>, <a class="el" href="classGFI2Interpreter.html#aac46fbc88dcdb768ba8cfd06eb1b4cf1">GFI2Interpreter</a>, <a class="el" href="classFDInterpreter.html#a5ef8d43681ac4f9ae55c568a7899e8c0">FDInterpreter</a>, <a class="el" href="classHRVDInterpreter.html#ad7603870400f8ee3f5329756c8c6595e">HRVDInterpreter</a>, <a class="el" href="classVEPInterpreter.html#a76ab8545c630dca4ed42e78c94cf03cd">VEPInterpreter</a>, <a class="el" href="classIECInterpreter.html#a519d4b43e2b929b46c7b1cfecb117b84">IECInterpreter</a>, <a class="el" href="classAMBCInterpreter.html#a3ab66be59639421ec37d9d0475f59365">AMBCInterpreter</a>, <a class="el" href="classPTOInterpreter.html#a144836753eba7d18d82d51a8bf4e9c92">PTOInterpreter</a>, <a class="el" href="classETEMPInterpreter.html#a08cd6181e5453ac9e1bdfccb59031284">ETEMPInterpreter</a>, <a class="el" href="classECFGInterpreter.html#ad80fcf02bacf013dd98a9446c6c5d608">ECFGInterpreter</a>, <a class="el" href="classRCFGInterpreter.html#a77912d604f130ef01312d378679ca8b3">RCFGInterpreter</a>, <a class="el" href="classVDInterpreter.html#ae510d5bc6e23519a985ad9587ccf54be">VDInterpreter</a>, <a class="el" href="classTURBOInterpreter.html#ad03f486da26577e2086885128bb4e902">TURBOInterpreter</a>, <a class="el" href="classTC1Interpreter.html#a076bc56b0a95f6c2ff792b9ad1a19ff8">TC1Interpreter</a>, <a class="el" href="classRFInterpreter.html#a51eaf6dfc492e6a5e8ebdbb1f367e91b">RFInterpreter</a>, <a class="el" href="classLFEInterpreter.html#ad45ee62211536fe4b0a80933dde19f80">LFEInterpreter</a>, <a class="el" href="classCCVSInterpreter.html#a3fff7af7adab7ffd60f08289e7187aac">CCVSInterpreter</a>, <a class="el" href="classTFInterpreter.html#aca783d25d7409094f11daa4b60afd637">TFInterpreter</a>, <a class="el" href="classERC1Interpreter.html#afc2a6eaca1335e9ae7a81fa93674c56c">ERC1Interpreter</a>, <a class="el" href="classETC2Interpreter.html#a8e294814ecebf08f86be1cb8af1aaed9">ETC2Interpreter</a>, <a class="el" href="classETC1Interpreter.html#a9e315c4427dcc6729f44cbbe96b94eed">ETC1Interpreter</a>, <a class="el" href="classEEC3Interpreter.html#a7f522da9d5ff2c32cf3851347a4f02ae">EEC3Interpreter</a>, <a class="el" href="classEEC2Interpreter.html#ae98ba1e99295e6ea80766a57150ad588">EEC2Interpreter</a>, <a class="el" href="classEEC1Interpreter.html#a2c351276eb111c514ae721fd256aec78">EEC1Interpreter</a>, <a class="el" href="classEBC2Interpreter.html#a8a154a8390f70c8f7522f60e2365900e">EBC2Interpreter</a>, <a class="el" href="classEBC1Interpreter.html#aa25402cc7e3d739b57d0c88ce95ed6eb">EBC1Interpreter</a>, <a class="el" href="classTSC1Interpreter.html#a08906057a32c9a57511abfdd35a75391">TSC1Interpreter</a>, and <a class="el" href="classPDUInterpreter.html#aa2ccc7cfebade8fda7faf25da32a29d0">PDUInterpreter</a>.</p>
-
-</div>
-</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a0423378a32ecacebbb5b44604be352ff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0423378a32ecacebbb5b44604be352ff">&#9670;&nbsp;</a></span>pgn</h2>
@@ -312,8 +293,8 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/jbus/<a class="el" href="j1939__interpreters_8h_source.html">j1939_interpreters.h</a></li>
-<li>src/jbus/<a class="el" href="j1939__interpreters_8cpp.html">j1939_interpreters.cpp</a></li>
+<li>include/jbus/<a class="el" href="j1939__interpreters_8h_source.html">j1939_interpreters.h</a></li>
+<li>include/jbus/<a class="el" href="j1939__interpreters_8cpp.html">j1939_interpreters.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
