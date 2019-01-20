@@ -1,9 +1,6 @@
 var searchData=
 [
   ['selection_5fnonengine',['selection_nonengine',['../structj1939__erc1__typ.html#a71bfc1c381f49eefb9996604ad691318',1,'j1939_erc1_typ']]],
-  ['send_5fcmd_5fbrake',['send_cmd_brake',['../classLongController.html#a30234edd6e108d4fd1743651e1cc7091',1,'LongController']]],
-  ['send_5fcmd_5ftorque',['send_cmd_torque',['../classLongController.html#ad555eec997eabd3bef6e47afe809afe8',1,'LongController']]],
-  ['send_5fmessages_2ecpp',['send_messages.cpp',['../send__messages_8cpp.html',1,'']]],
   ['set_5fspeed',['set_speed',['../structj1939__pto__typ.html#a679e1f7b5948152f9592f5e51e77e5cd',1,'j1939_pto_typ']]],
   ['set_5fswitch',['set_switch',['../structj1939__pto__typ.html#a241633933da777612cbb6ef993ebefa8',1,'j1939_pto_typ']]],
   ['size',['size',['../structcan__msg__t.html#a6e2a00fd0565068d93af74deb6b60ec2',1,'can_msg_t']]],

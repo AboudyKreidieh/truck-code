@@ -1,14 +1,17 @@
-# Top level make file for Truck code
+# Top level make file for truck-code
 
 all:
-	+ make -C src/utils
-	+ make -C src/jbus
+	+ make -C include/utils
+	+ make -C include/jbus
+	+ make -C src/
 
 install: all
 	if [[ ! -d test ]] ; then mkdir -p test; fi
-	+ make install -C src/utils
-	+ make install -C src/jbus
+	+ make install -C include/utils
+	+ make install -C include/jbus
+	+ make install -C src/
 
 clean:
-	+ make clean -C src/utils
-	+ make clean -C src/jbus
+	+ make clean -C include/utils
+	+ make clean -C include/jbus
+	+ make clean -C src/
