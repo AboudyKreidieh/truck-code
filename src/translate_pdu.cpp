@@ -2,18 +2,17 @@
  *
  * translate_pdu.cpp
  *
- * This script translates several pdu-formatted j1939 messages into their
+ * This script translates several PDU-formatted J1939 messages into their
  * message-specific formats, and once it is done, logs the data into an new text
  * file.
  *
  * Arguments:
  * 	-v: verbose
- *  -n: numeric (?)
+ *  -n: numeric
  *  -o: outfile path
- *  -i: infile file
  *
  * Usage:
- *  translate_pdu -i "~/j1939_brake.dbg" -o "~/parsed.txt"
+ *  translate_pdu "~/j1939_brake.dbg" -o "~/parsed.txt"
  *
  * @author Abdul Rahman Kreidieh
  * @version 1.0.0
@@ -34,14 +33,18 @@
 #include <fcntl.h>
 #include <cstdlib>
 #include <iostream>
+#include <stdio.h>
 
 using namespace std;
 
 
-/** This method initializes a map used to equate a specific PGN value with an
+/* Create a mapping from the names of messages to their PGN values.
+ *
+ * This method initializes a map used to equate a specific PGN value with an
  * interpreter class that can convert and print the messages within the PDU-
- * formatted variable. */
-map<string, int> get_pgn_by_name() {
+ * formatted variable.
+ */
+static map<string, int> get_pgn_by_name() {
     map<string, int> pgn_by_name;
     pgn_by_name.insert(make_pair("PDU", PDU));
     pgn_by_name.insert(make_pair("TSC1", TSC1));
@@ -73,154 +76,141 @@ map<string, int> get_pgn_by_name() {
     pgn_by_name.insert(make_pair("VEP", VEP));
     pgn_by_name.insert(make_pair("TF", TF));
     pgn_by_name.insert(make_pair("RF", RF));
-    pgn_by_name.insert(make_pair("EBC_ACC", EBC_ACC));
 
     return pgn_by_name;
 }
 
 
-/** The method initializes the list of all interpretable PGN values (used to
- * check if a certain PGN value is valid) */
-vector<int> get_PGNs() {
-    vector<int> PGNs {
-        PDU, TSC1, EXAC, RQST, ERC1, EBC1, ETC1, EEC2, EEC1, ETC2, GFI2, EI, FD,
-        EBC2, HRVD, TURBO, EEC3, VD, RCFG, TCFG, ECFG, ETEMP, PTO, CCVS, LFE,
-        AMBC, IEC, VEP, TF, RF, EBC_ACC,
-    };
+/* Interpretable parameter group number values, used to check if a certain PGN
+ * value is valid */
+static vector<int> PGNs {
+	PDU, TSC1, EXAC, RQST, ERC1, EBC1, ETC1, EEC2, EEC1, ETC2, GFI2, EI, FD,
+	EBC2, HRVD, TURBO, EEC3, VD, RCFG, TCFG, ECFG, ETEMP, PTO, CCVS, LFE,
+	AMBC, IEC, VEP, TF, RF,
+};
 
-    return PGNs;
+
+/* Names of the interpretable messages */
+static vector<string> names {
+	"PDU", "TSC1", "EXAC", "RQST", "ERC1", "EBC1", "ETC1", "EEC2", "EEC1",
+	"ETC2", "GFI2", "EI", "FD", "EBC2", "HRVD", "TURBO", "EEC3", "VD",
+	"RCFG", "TCFG", "ECFG", "ETEMP", "PTO", "CCVS", "LFE", "AMBC", "IEC",
+	"VEP", "TF", "RF", "TPDT", "TPCM"
+};
+
+
+static void show_usage(std::string name) {
+    cout << "Usage: " << name << " <option(s)> INFILE\n"
+    	 << "Options:\n"
+         << "\t-o OUTFILE\tSpecify the destination to stored the data.\n"
+         << "\t-n\t\tNumeric (less expressive and more compact outfile)\n"
+         << "\t-v\t\tVerbose\n"
+         << endl;
 }
 
-vector<string> get_message_names() {
-	vector<string> message_names {
-        "PDU", "TSC1", "EXAC", "RQST", "ERC1", "EBC1", "ETC1", "EEC2", "EEC1",
-		"ETC2", "GFI2", "EI", "FD", "EBC2", "HRVD", "TURBO", "EEC3", "VD",
-		"RCFG", "TCFG", "ECFG", "ETEMP", "PTO", "CCVS", "LFE", "AMBC", "IEC",
-		"VEP", "TF", "RF", "TPDT", "TPCM"
-	};
 
-	return message_names;
-}
-
-//#include <cstdio>
-//#include <iostream>
-//#include <memory>
-//#include <stdexcept>
-//#include <string>
-//#include <array>
-//
-//std::string exec(const char* cmd) {
-//    std::array<char, 128> buffer;
-//    std::string result;
-//    std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
-//    if (!pipe) throw std::runtime_error("popen() failed!");
-//    while (!feof(pipe.get())) {
-//        if (fgets(buffer.data(), 128, pipe.get()) != nullptr)
-//            result += buffer.data();
-//    }
-//    return result;
-//}
-
-
-int main() {
-    // process arguments that are inputed during execution
-    FILE *fp = fopen("/usr/aboudy/j1939_eng_output.txt" , "w");
+int main(int argc, char* argv[]) {
     bool numeric = false;
-    int pgn_val;
-    string infile = "/usr/aboudy/j1939_eng.dbg";
-    int fd = open("/pps/truck", O_WRONLY);
+    bool verbose = false;
+    string outfile = "j1939_output.txt";
 
-    // some predefined variables
-    void *message;
+    /* we expect 2 arguments: the program name and the input filepath */
+    if (argc < 2) {
+        cerr << "Usage: " << argv[0] << "INFILE" << endl;
+        return 1;
+    }
+    string infile = argv[1];
 
-    // collect initial variables
+    /* process arguments that are inputed during execution */
+    for (int i=2; i<argc; ++i) {
+        string arg = argv[i];
+        if ((arg == "-h") || (arg == "--help")) {
+            show_usage(argv[0]);
+            return 0;
+        } else if (arg == "-o") {
+			if (i + 1 < argc) {
+				outfile = argv[++i];
+			} else {
+				cerr << "-o option requires one argument." << endl;
+				return 1;
+			}
+        } else if (arg == "-n") {
+        	numeric = true;
+        } else if (arg == "-v") {
+        	verbose = true;
+        } else {
+			cerr << arg << " argument is not known." << endl;
+			return 1;
+        }
+    }
+
+    /* some predefined variables */
+    FILE *fp = fopen(outfile.c_str(), "w");
     map <int, J1939Interpreter*> interpreters = get_interpreters();
     map<string, int> pgn_by_name = get_pgn_by_name();
-    vector<int> PGNs = get_PGNs();
-    vector<string> names = get_message_names();
+    int pgn_val;
+    void *message;
 
-    // start streaming the text file
+    /* start streaming the text file */
     ifstream in(infile);
     char line[255];
 
-    // ignore first two (header) lines
-    for (int i=0; i<2; i++){
-        in.getline(line, 255);
-    }
-
     while (in) {
-        // Read data from the text file
+        /* read data from the text file */
         in.getline(line, 255);
 
-        // separate the string by its " " delimiter
+        /* separate the string by its " " delimiter */
         vector<string> tokens;
         char *pch = strtok(line, " ");
+        int i = 0;
+        bool flag = false;
         while (pch != NULL) {
+        	/* check if the message can be deciphered */
+        	if (i == 0 && find(names.begin(), names.end(), string(pch)) == names.end()) {
+				flag = true;
+				break;
+        	}
+        	/* store the next component of the message in a list of strings */
             tokens.push_back(string(pch));
             pch = strtok(NULL, " ");
+        	i++;
         }
 
-        // check for empty line
+        /* skip if the interpreter is cannot be deciphered */
+        if (flag) continue;
+
+        /* check for empty line */
         if (tokens.size() == 0) continue;
 
-        // FIXME: check for end of text file
-        if (tokens[0] == "rdj1939") break;
-
-        // if prompted, print the collected message
-        if (true) {
-            for (int i=0; i<tokens.size(); ++i)
-                cout << tokens[i] << " ";
-            cout << endl;
-        }
-
-        // if the message was not in it's PDU format, convert it. Otherwise,
-        // determine the interpreter for printing and publishing from the first
-        // token term (i.e. the name of the message)
+        /* If the message was not in it's PDU format, convert it. Otherwise,
+         * determine the interpreter for printing and publishing from the first
+         * token term (i.e. the name of the message) */
         if (tokens[0] =="PDU") {
         	j1939_pdu_typ *pdu = (j1939_pdu_typ*) interpreters[PDU]->import(tokens);
 
-            // compute the PGN value from the PDU format and specific terms
+            /* compute the PGN value from the PDU format and specific terms */
             pgn_val = TWOBYTES(pdu->pdu_format, pdu->pdu_specific);
 
-            // skip if the interpreter is cannot be deciphered
-            if (find(PGNs.begin(), PGNs.end(), pgn_val) == PGNs.end()) {
+            /* skip if the interpreter is cannot be deciphered */
+            if (find(PGNs.begin(), PGNs.end(), pgn_val) == PGNs.end())
                 continue;
-            }
 
-            // convert the message to its message-specific format
+            /* convert the message to its message-specific format */
             message = interpreters[pgn_val]->convert(pdu);
         } else {
-            // skip if the interpreter is cannot be deciphered
-            if (find(names.begin(), names.end(), tokens[0]) == names.end()) {
-                continue;
-            }
-
-            // get the PGN value from the name of the message
+            /* get the PGN value from the name of the message */
             pgn_val = pgn_by_name[tokens[0]];
 
-            // import the message
+            /* import the message */
             message = interpreters[pgn_val]->import(tokens);
-
         }
 
-        // print the message in it's message-specific format
+        /* print the message in it's processed format to the output file */
         interpreters[pgn_val]->print(message, fp, numeric);
 
-        // publish the message onto the pub/sub server
-//        interpreters[pgn_val]->publish(message, fd);
-
-//        string res = exec("ls /usr/aboudy");
-//        cout << res << endl;
-
-//        FILE *f = fopen("/pps/truck/TSC1", "r");
-//        int BUFFER_SIZE = 16;
-//        char buffer[BUFFER_SIZE];
-//        if (f != NULL)
-//        {
-//            while (fgets(buffer, BUFFER_SIZE, f) != NULL)
-//                printf("%s", buffer);
-//            pclose(f);
-//        }
+        /* if verbose, print to stdout */
+        if (verbose)
+        	interpreters[pgn_val]->print(message, stdout, numeric);
     }
 
     return 0;
