@@ -1,6 +1,7 @@
 var searchData=
 [
   ['selection_5fnonengine',['selection_nonengine',['../structj1939__erc1__typ.html#a71bfc1c381f49eefb9996604ad691318',1,'j1939_erc1_typ']]],
+  ['set_5fextended_5fframe',['SET_EXTENDED_FRAME',['../can_8h.html#a42754008439dd8ec5fb0c05e2b1b7b2a',1,'can.h']]],
   ['set_5fspeed',['set_speed',['../structj1939__pto__typ.html#a679e1f7b5948152f9592f5e51e77e5cd',1,'j1939_pto_typ']]],
   ['set_5fswitch',['set_switch',['../structj1939__pto__typ.html#a241633933da777612cbb6ef993ebefa8',1,'j1939_pto_typ']]],
   ['size',['size',['../structcan__msg__t.html#a6e2a00fd0565068d93af74deb6b60ec2',1,'can_msg_t']]],

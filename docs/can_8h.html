@@ -115,25 +115,26 @@ Macros</h2></td></tr>
 <tr class="separator:a33ec2f277c4ca81fe07641b9f4e8f572"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ad6dd17561986e36ce5d1601b17e4f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a7ad6dd17561986e36ce5d1601b17e4f3">PATH_CAN_SA</a>(j)&#160;&#160;&#160;((j) &amp; 0xff)</td></tr>
 <tr class="separator:a7ad6dd17561986e36ce5d1601b17e4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27beb0641278bd5912b2db02b803656c"><td class="memItemLeft" align="right" valign="top"><a id="a27beb0641278bd5912b2db02b803656c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_EXTENDED_FRAME</b>(MSG)&#160;&#160;&#160;(((MSG).id) &amp; 0x80000000)</td></tr>
+<tr class="memitem:a27beb0641278bd5912b2db02b803656c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a27beb0641278bd5912b2db02b803656c">IS_EXTENDED_FRAME</a>(MSG)&#160;&#160;&#160;(((MSG).id) &amp; 0x80000000)</td></tr>
 <tr class="separator:a27beb0641278bd5912b2db02b803656c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42754008439dd8ec5fb0c05e2b1b7b2a"><td class="memItemLeft" align="right" valign="top"><a id="a42754008439dd8ec5fb0c05e2b1b7b2a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SET_EXTENDED_FRAME</b>(MSG)&#160;&#160;&#160;(MSG).id |= 0x80000000</td></tr>
+<tr class="memitem:a42754008439dd8ec5fb0c05e2b1b7b2a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a42754008439dd8ec5fb0c05e2b1b7b2a">SET_EXTENDED_FRAME</a>(MSG)&#160;&#160;&#160;(MSG).id |= 0x80000000</td></tr>
 <tr class="separator:a42754008439dd8ec5fb0c05e2b1b7b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2f37543ba1ef1dc46a346ade5f4ccbf"><td class="memItemLeft" align="right" valign="top"><a id="ad2f37543ba1ef1dc46a346ade5f4ccbf"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_ID</b>(MSG)&#160;&#160;&#160;((MSG).id &amp; ~0x80000000)</td></tr>
+<tr class="memitem:ad2f37543ba1ef1dc46a346ade5f4ccbf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#ad2f37543ba1ef1dc46a346ade5f4ccbf">CAN_ID</a>(MSG)&#160;&#160;&#160;((MSG).id &amp; ~0x80000000)</td></tr>
 <tr class="separator:ad2f37543ba1ef1dc46a346ade5f4ccbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a51bc991acc9fa9941372ce1c339a2f95"><td class="memItemLeft" align="right" valign="top">typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a51bc991acc9fa9941372ce1c339a2f95">MSG_BIT</a></td></tr>
+<tr class="memitem:a51bc991acc9fa9941372ce1c339a2f95"><td class="memItemLeft" align="right" valign="top"><a id="a51bc991acc9fa9941372ce1c339a2f95"></a>
+typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>MSG_BIT</b></td></tr>
 <tr class="separator:a51bc991acc9fa9941372ce1c339a2f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8c32f7691de35df1478d1de7a4ab523"><td class="memItemLeft" align="right" valign="top">typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#ae8c32f7691de35df1478d1de7a4ab523">MSG_FIELD</a></td></tr>
+<tr class="memitem:ae8c32f7691de35df1478d1de7a4ab523"><td class="memItemLeft" align="right" valign="top"><a id="ae8c32f7691de35df1478d1de7a4ab523"></a>
+typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>MSG_FIELD</b></td></tr>
 <tr class="separator:ae8c32f7691de35df1478d1de7a4ab523"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3205d30f45c055e66a0e5318b0b7c7e"><td class="memItemLeft" align="right" valign="top">typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#ab3205d30f45c055e66a0e5318b0b7c7e">MSG_BYTE</a></td></tr>
+<tr class="memitem:ab3205d30f45c055e66a0e5318b0b7c7e"><td class="memItemLeft" align="right" valign="top"><a id="ab3205d30f45c055e66a0e5318b0b7c7e"></a>
+typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>MSG_BYTE</b></td></tr>
 <tr class="separator:ab3205d30f45c055e66a0e5318b0b7c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0abbc4d2222617ebab2b9f6d68091e9a"><td class="memItemLeft" align="right" valign="top">typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a0abbc4d2222617ebab2b9f6d68091e9a">FRAME_BIT</a></td></tr>
+<tr class="memitem:a0abbc4d2222617ebab2b9f6d68091e9a"><td class="memItemLeft" align="right" valign="top"><a id="a0abbc4d2222617ebab2b9f6d68091e9a"></a>
+typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>FRAME_BIT</b></td></tr>
 <tr class="separator:a0abbc4d2222617ebab2b9f6d68091e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -160,6 +161,44 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
 <dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>January 14, 2019 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ad2f37543ba1ef1dc46a346ade5f4ccbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2f37543ba1ef1dc46a346ade5f4ccbf">&#9670;&nbsp;</a></span>CAN_ID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_ID</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">MSG</td><td>)</td>
+          <td>&#160;&#160;&#160;((MSG).id &amp; ~0x80000000)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get CAN identity number. </p>
+
+</div>
+</div>
+<a id="a27beb0641278bd5912b2db02b803656c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27beb0641278bd5912b2db02b803656c">&#9670;&nbsp;</a></span>IS_EXTENDED_FRAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IS_EXTENDED_FRAME</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">MSG</td><td>)</td>
+          <td>&#160;&#160;&#160;(((MSG).id) &amp; 0x80000000)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Checks if identifier is 29 or 11 bit. </p>
+
+</div>
+</div>
 <a id="a82929be40b928366482f296dda7acdc0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a82929be40b928366482f296dda7acdc0">&#9670;&nbsp;</a></span>MAX_MSG_BUF</h2>
 
@@ -190,7 +229,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">((((j)-&gt;priority &amp; 0x7) &lt;&lt; 26) | \</div><div class="line">            (((j)-&gt;reserved &amp; 0x1) &lt;&lt; 25) | \</div><div class="line">            (((j)-&gt;data_page &amp; 0x1) &lt;&lt; 24) | \</div><div class="line">            (((j)-&gt;pdu_format &amp; 0xff) &lt;&lt; 16) | \</div><div class="line">            (((j)-&gt;pdu_specific &amp; 0xff) &lt;&lt; 8) | \</div><div class="line">            (((j)-&gt;src_address &amp; 0xff)))</div></div><!-- fragment --><p>blank </p>
+<b>Value:</b><div class="fragment"><div class="line">((((j)-&gt;priority &amp; 0x7) &lt;&lt; 26) | \</div><div class="line">            (((j)-&gt;reserved &amp; 0x1) &lt;&lt; 25) | \</div><div class="line">            (((j)-&gt;data_page &amp; 0x1) &lt;&lt; 24) | \</div><div class="line">            (((j)-&gt;pdu_format &amp; 0xff) &lt;&lt; 16) | \</div><div class="line">            (((j)-&gt;pdu_specific &amp; 0xff) &lt;&lt; 8) | \</div><div class="line">            (((j)-&gt;src_address &amp; 0xff)))</div></div><!-- fragment --><p>Get pdu identifier. </p>
 
 </div>
 </div>
@@ -209,7 +248,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
         </tr>
       </table>
 </div><div class="memdoc">
-<p>blank </p>
+<p>Get pdu format value. </p>
 
 </div>
 </div>
@@ -228,7 +267,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
         </tr>
       </table>
 </div><div class="memdoc">
-<p>blank </p>
+<p>Get priority value. </p>
 
 </div>
 </div>
@@ -247,7 +286,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
         </tr>
       </table>
 </div><div class="memdoc">
-<p>blank </p>
+<p>Get pdu specific value. </p>
 
 </div>
 </div>
@@ -266,68 +305,26 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
         </tr>
       </table>
 </div><div class="memdoc">
-<p>blank </p>
+<p>Get source address value </p>
 
 </div>
 </div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a0abbc4d2222617ebab2b9f6d68091e9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0abbc4d2222617ebab2b9f6d68091e9a">&#9670;&nbsp;</a></span>FRAME_BIT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef unsigned char <a class="el" href="can_8h.html#a0abbc4d2222617ebab2b9f6d68091e9a">FRAME_BIT</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>blank </p>
-
-</div>
-</div>
-<a id="a51bc991acc9fa9941372ce1c339a2f95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51bc991acc9fa9941372ce1c339a2f95">&#9670;&nbsp;</a></span>MSG_BIT</h2>
+<a id="a42754008439dd8ec5fb0c05e2b1b7b2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42754008439dd8ec5fb0c05e2b1b7b2a">&#9670;&nbsp;</a></span>SET_EXTENDED_FRAME</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef unsigned char <a class="el" href="can_8h.html#a51bc991acc9fa9941372ce1c339a2f95">MSG_BIT</a></td>
+          <td class="memname">#define SET_EXTENDED_FRAME</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">MSG</td><td>)</td>
+          <td>&#160;&#160;&#160;(MSG).id |= 0x80000000</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>blank </p>
-
-</div>
-</div>
-<a id="ab3205d30f45c055e66a0e5318b0b7c7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3205d30f45c055e66a0e5318b0b7c7e">&#9670;&nbsp;</a></span>MSG_BYTE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef unsigned char <a class="el" href="can_8h.html#ab3205d30f45c055e66a0e5318b0b7c7e">MSG_BYTE</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>blank </p>
-
-</div>
-</div>
-<a id="ae8c32f7691de35df1478d1de7a4ab523"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8c32f7691de35df1478d1de7a4ab523">&#9670;&nbsp;</a></span>MSG_FIELD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef unsigned int <a class="el" href="can_8h.html#ae8c32f7691de35df1478d1de7a4ab523">MSG_FIELD</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>blank </p>
+<p>Set the 29 bit identifier. </p>
 
 </div>
 </div>
@@ -461,6 +458,14 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
       </table>
 </div><div class="memdoc">
 <p>PATH CAN driver does not yet use state code or slot arguments, provided for compatibility with B&amp;B STB converter send routine.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>file descriptor that is used when sending the message </td></tr>
+    <tr><td class="paramname">pdu</td><td>message to send </td></tr>
+    <tr><td class="paramname">slot</td><td>blank </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on error, 1 on success. </dd></dl>
 
 </div>
