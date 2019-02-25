@@ -10,5 +10,6 @@ var searchData=
   ['intake_5fmanifold_5ftemp',['intake_manifold_temp',['../structj1939__iec__typ.html#ac6d69284aea7329a9df2bb6b137d9b99',1,'j1939_iec_typ']]],
   ['intended_5fret_5fpcnt_5ftrq',['intended_ret_pcnt_trq',['../structj1939__erc1__typ.html#ad8169c012ba5273dbd57efce7542263e',1,'j1939_erc1_typ']]],
   ['irq',['irq',['../structdas__info__typ.html#a08009bbf6a8c8eaa20e7c5a6517622ab',1,'das_info_typ']]],
+  ['is_5fextended_5fframe',['IS_EXTENDED_FRAME',['../can_8h.html#a27beb0641278bd5912b2db02b803656c',1,'can.h']]],
   ['is_5ftype',['is_type',['../classJ1939Interpreter.html#a3160bd6a9247925e6f65147c087aefa4',1,'J1939Interpreter']]]
 ];
