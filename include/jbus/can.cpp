@@ -9,17 +9,161 @@
  * @date January 14, 2019
  */
 
+#include <iostream>
+#include <csetjmp>
+#include <string>
 #include "can.h"
+#include "can_dev.h"
+#include "can_struct.h"
 #include "j1939_struct.h"
+#include "utils/sys.h"
+#include "utils/constants.h"
 #include "das_clt.h"
 #include <sys/types.h>
 #include <sys/neutrino.h>
+#include <sys/iomsg.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <devctl.h>
 #include <errno.h>
 
+#define DEFAULT_CONFIG		((char*)"realtime.ini")
+#define DEFAULT_DEVICE		 ((char*)"/dev/can1")
+#define DEFAULT_IRQ			0				// by default, no interrupt
+#define DEFAULT_PORT		0x210
+#define CAN_IN_BUFFER_SIZE	150
+#define CAN_OUT_BUFFER_SIZE	150
+#define INI_IRQ_ENTRY		((char*)"Irq")
+#define INI_PORT_ENTRY		((char*)"Port")
 
+static resmgr_io_funcs_t	io_func;
+static jmp_buf exit_env;
+
+
+static void sig_hand(int code)
+{
+	longjmp(exit_env, code);
+}
+
+
+static int sig_list[] =
+{
+	SIGTERM,
+	SIGKILL,
+	ERROR
+};
+
+
+static void usage_can_init(char *pargv0)
+{
+	fprintf(stderr, "%s:\t-[pfv]\n", pargv0);
+	fprintf(stderr, "\t\tp\tPath name (%s).\n", DEFAULT_DEVICE);
+	fprintf(stderr, "\t\tf\tConfiguration file (%s).\n", DEFAULT_CONFIG);
+	fprintf(stderr, "\t\tv\tVerbose mode.\n");
+	fprintf(stderr, "\t\t?\tPrints this message.\n");
+}
+
+
+void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
+	resmgr_io_funcs_t *pio, can_attr_t *pattr)
+{
+	int opt;
+	// These are set to 1 if specified by command line arguments
+	int arg_speed = 0;
+	int arg_port = 0;
+	int arg_irq = 0;
+	int arg_ext = 0;
+
+	char *pconfig;
+	FILE *pfile;
+	can_info_t *pinfo = &pattr->can_info;
+
+	// Setup default parameters.
+	pconfig = DEFAULT_CONFIG;
+	pattr->verbose_flag = false;
+	pattr->devname = DEFAULT_DEVICE;
+	pattr->notify_pocb = NULL;
+	pinfo->use_extended_frame = 1;	// by default, use extended frame
+	pinfo->irq = DEFAULT_IRQ;
+	pinfo->port = DEFAULT_PORT;
+	pinfo->filter.id = 0;			// set up to accept all messages from all
+	pinfo->filter.mask = 0xff;
+	pinfo->bit_speed = 250;
+
+	// If arguments are specified, they override config file
+	while((opt = getopt(argc, argv, "e:f:i:n:p:s:v?")) != EOF) {
+		switch(opt) {
+		case 'e':
+			pinfo->use_extended_frame = atoi(optarg);
+			arg_ext = 1;
+			break;
+		case 'f':
+			pconfig = strdup(optarg);
+			break;
+		case 'i':
+			pinfo->irq = atoi(optarg);
+			arg_irq = 1;
+			break;
+		case 'n':
+			pattr->devname = strdup(optarg);
+			break;
+		case 'p':
+			pinfo->port = strtol(optarg, (char**)NULL, 0);
+			printf("I/O port for base address 0x%x\n", pinfo->port);
+			arg_port = 1;
+			break;
+		case 's':
+			pinfo->bit_speed = atoi(optarg);
+			printf("Bit speed set to %d\n", pinfo->bit_speed);
+			arg_speed = 1;
+			break;
+		case 'v':
+			pattr->verbose_flag = true;
+			break;
+		default:
+		case '?':
+			usage_can_init(argv[0]);
+			exit(EXIT_SUCCESS);
+		}
+	}
+
+	// Initialize from config file, if found.
+	if ((pfile = get_ini_section(pconfig, pattr->devname)) == NULL) {
+		printf("No section %s in %s file found, using args, defaults\n",
+			pattr->devname, pconfig);
+		fflush(stdout);
+	} else {
+		if (!arg_irq)
+			pinfo->irq = get_ini_long(pfile, INI_IRQ_ENTRY, DEFAULT_IRQ);
+		if (!arg_port)
+			pinfo->port = get_ini_hex(pfile, INI_PORT_ENTRY, DEFAULT_PORT);
+		fclose(pfile);
+	}
+
+	// Initialize circular buffers for CAN read and write.
+	init_circular_buffer(&pattr->in_buff, CAN_IN_BUFFER_SIZE,
+			sizeof(can_msg_t));
+	init_circular_buffer(&pattr->out_buff, CAN_OUT_BUFFER_SIZE,
+			sizeof(can_msg_t));
+	printf("Circular buffers initialized\n");
+	fflush(stdout);
+
+	// Initialize resource manager function tables with CAN specific function
+	// for devctl
+	pio->devctl = io_devctl;
+
+	// Initialize resource manager function tables with CAN specific function
+	// for open
+	pconn->open = io_open;
+
+	// Set up exit environment for kill signals
+	if (setjmp(exit_env) != 0) {
+		exit(EXIT_SUCCESS);
+	} else
+		sig_ign(sig_list, sig_hand);
+	printf("Leaving caninit\n");
+	fflush(stdout);
+}
 
 int can_set_filter(int fd, unsigned long id, unsigned long mask) {
 	can_filter_t filter_data;
@@ -106,13 +250,13 @@ int can_read(int fd, unsigned long *id, char *extended, void *data,
 #ifdef DO_TRACE
 	printf("can_read: msg.id 0x%08x msg.size %hhd\n", msg.id, msg.size);
 #endif
-	return(msg.size);
+	return msg.size;
 }
 
 
 int can_write(int fd, unsigned long id, char extended, void *data,
 		unsigned char size) {
-	can_dev_handle_t *phdl = (can_dev_handle_t *) fd;
+	can_dev_handle_t *phdl = (can_dev_handle_t*) fd;
 	int real_fd = phdl->fd;
 	can_msg_t msg;
 
@@ -145,4 +289,3 @@ int can_send(int fd, j1939_pdu *pdu, int slot) {
 	} else
 		return 1;
 }
-
