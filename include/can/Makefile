@@ -1,6 +1,6 @@
 # Location of the base directory
 BASE_DIR = $(shell pwd)/../..
-PATH_FROM_BASE = include/jbus
+PATH_FROM_BASE = include/can
 
 # Build architecture/variant string, possible values: x86, armv7le, etc...
 PLATFORM ?= x86_64
@@ -28,7 +28,6 @@ SRCS := $(shell find -name '*.cpp' -or -name '*.c' -or -name '*.s')
 
 # Object files list
 OBJS = $(addprefix $(OUTPUT_DIR)/,$(addsuffix .o, $(basename $(SRCS))))
-OBJS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/can/*.o) 
 
 #Compiling rule
 $(OUTPUT_DIR)/%.o: %.c
@@ -39,7 +38,7 @@ $(OUTPUT_DIR)/%.o: %.cpp
 	$(CXX) -c $(DEPS) -o $@ $(INCLUDES) $(CCFLAGS_all) $(CCFLAGS) $<
 
 #Rules section for default compilation and linking
-all: $(OBJS) 
+all: $(OBJS)
 
 clean:
 	rm -fr $(OUTPUT_DIR)

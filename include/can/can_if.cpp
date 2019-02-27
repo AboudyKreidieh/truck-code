@@ -3,11 +3,12 @@
  *
  * Interface to the CAN hardware functions provided by SSV
  *
- *  Created on: Feb 24, 2019
- *      Author: aboudy
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date February 24, 2019
  */
 
-#include "can_dev.h"
+#include "can_man.h"
 #include "can_struct.h"
 #include <devctl.h>
 

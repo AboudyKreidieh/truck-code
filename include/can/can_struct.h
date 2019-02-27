@@ -1,14 +1,16 @@
-/*
+/**\file
+ *
  * can_struct.h
  *
- *  Created on: Feb 19, 2019
- *      Author: aboudy
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date February 19, 2019
  */
 
 #ifndef INCLUDE_JBUS_CAN_STRUCT_H_
 #define INCLUDE_JBUS_CAN_STRUCT_H_
 
-#include "j1939_struct.h"
+#include "jbus/j1939_struct.h"
 #include "utils/sys.h"
 #include <string>
 #include <sys/iofunc.h>

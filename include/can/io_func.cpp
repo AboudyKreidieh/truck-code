@@ -3,10 +3,14 @@
  *
  * Replacement functions for the default iofunc functions in the DAS resource
  * manager.
+ *
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date February 26, 2019
  */
 
 #include "can_struct.h"
-#include "can_dev.h"
+#include "can_man.h"
 #include <devctl.h>
 #include <sys/iofunc.h>
 

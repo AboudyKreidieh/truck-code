@@ -13,9 +13,9 @@
 #include <csetjmp>
 #include <string>
 #include "can.h"
-#include "can_dev.h"
+#include "can_man.h"
 #include "can_struct.h"
-#include "j1939_struct.h"
+#include "jbus/j1939_struct.h"
 #include "utils/sys.h"
 #include "utils/constants.h"
 #include "das_clt.h"

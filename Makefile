@@ -1,6 +1,7 @@
 # Top level make file for truck-code
 
 all:
+	+ make -C include/can
 	+ make -C include/utils
 	+ make -C include/jbus
 	+ make -C src/

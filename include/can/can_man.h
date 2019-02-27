@@ -1,10 +1,12 @@
 /**\file
- * can_dev.h
+ *
+ * can_man.h
  *
  * Structures, definitions, and prototypes for the SSV CAN driver
  *
- *  Created on: Feb 19, 2019
- *      Author: aboudy
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date February 19, 2019
  */
 
 #ifndef INCLUDE_JBUS_CAN_DEV_H_

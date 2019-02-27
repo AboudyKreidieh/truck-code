@@ -7,7 +7,7 @@
  * @date February 22, 2019
  */
 
-#include "can_dev.h"
+#include "can_man.h"
 #include "utils/sys.h"
 #include <sys/mman.h>
 

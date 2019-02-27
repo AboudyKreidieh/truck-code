@@ -14,7 +14,7 @@
 #define SRC_JBUS_CAN_H_
 
 #include "can_struct.h"
-#include "j1939_struct.h"
+#include "jbus/j1939_struct.h"
 #include <string>
 
 
