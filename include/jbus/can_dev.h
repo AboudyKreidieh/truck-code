@@ -43,7 +43,7 @@ extern void pulse_init(dispatch_t *dpp, IOFUNC_ATTR_T *pattr);
 extern void can_cq_add(cbuff_typ *pbuff, can_msg_t *new_msg);
 extern can_msg_t *can_cq_read_first(cbuff_typ *pbuff);
 extern can_msg_t *can_cq_pop_first(cbuff_typ *pbuff);
-extern void can_new_msg(can_msg_t *pmsg, can_attr_t *pattr);  // FIXME: IOFUNC_ATTR_T
+extern void can_new_msg(can_msg_t *pmsg, IOFUNC_ATTR_T *pattr);
 
 
 /* -------------------------------------------------------------------------- */
@@ -62,16 +62,16 @@ extern int io_open(resmgr_context_t *ctp, io_open_t *msg,
 /* ----------------------- Implemented in can_dev.cpp ----------------------- */
 /* -------------------------------------------------------------------------- */
 
-extern can_msg_t can_dev_read(can_attr_t *pattr);  // FIXME: IOFUNC_ATTR_T
+extern can_msg_t can_dev_read(IOFUNC_ATTR_T *pattr);
 
 extern int can_dev_write(can_ocb_t *pocb, can_msg_t *pmsg);
 
-extern int can_dev_empty_q(can_attr_t *pattr);  // FIXME: IOFUNC_ATTR_T
+extern int can_dev_empty_q(IOFUNC_ATTR_T *pattr);
 
 extern int can_dev_arm(resmgr_context_t *ctp, can_ocb_t *pocb,
 		sigevent event);
 
-int can_dev_add_filter(can_attr_t *pattr, can_filter_t filter);  // FIXME: IOFUNC_ATTR_T
+int can_dev_add_filter(IOFUNC_ATTR_T *pattr, can_filter_t filter);
 
 extern can_err_count_t can_dev_clear_errs();
 
@@ -80,9 +80,9 @@ extern can_err_count_t can_dev_get_errs();
 extern void can_dev_init(unsigned int base_address, unsigned int bit_speed,
 		unsigned char extended_frame);
 
-extern int can_dev_interrupt(can_attr_t *pattr);  // FIXME: IOFUNC_ATTR_T
+extern int can_dev_interrupt(IOFUNC_ATTR_T *pattr);
 
-extern void can_send(can_attr_t *pattr);  // FIXME: IOFUNC_ATTR_T
+extern void can_send(IOFUNC_ATTR_T *pattr);
 
 extern int digital_dir(int port, long bits);
 

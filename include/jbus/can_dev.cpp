@@ -2,8 +2,9 @@
  *
  * can_dev.cpp
  *
- *  Created on: Feb 22, 2019
- *      Author: aboudy
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date February 22, 2019
  */
 
 #include "can_dev.h"
@@ -146,12 +147,12 @@ BYTE set_extended_frame;	//sets listening to extended or standard messages
 
 /** Device level function prototype
  */
-void Interrupt_Request_Rx(can_attr_t *pattr);  // FIXME: IOFUNC_ATTR_T
+void Interrupt_Request_Rx(IOFUNC_ATTR_T *pattr);
 
 /***************************************************************************/
 /* function   : Interrupt_Request_Tx                                      */
 /***************************************************************************/
-void Interrupt_Request_Tx(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
+void Interrupt_Request_Tx(IOFUNC_ATTR_T *pattr)
 {
 	can_cq_pop_first(&pattr->out_buff);
 
@@ -451,7 +452,7 @@ void Set_Bit_Speed(WORD BS)
 /* function   : Interrupt_Request, ISR                                      */
 /* (renamed can_dev_interrupt, called by can_handle_interrupt) 		    */
 /***************************************************************************/
-int can_dev_interrupt(can_attr_t *pattr) // FIXME: IOFUNC_ATTR_T
+int can_dev_interrupt(IOFUNC_ATTR_T *pattr)
 {
 	int i=0;
 	int s;
@@ -564,7 +565,7 @@ int can_dev_interrupt(can_attr_t *pattr) // FIXME: IOFUNC_ATTR_T
 /* fuction   : Interrupt_Request_Rx											*/
 /* Par., var.: i, counter                                                  */
 /***************************************************************************/
-void Interrupt_Request_Rx(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
+void Interrupt_Request_Rx(IOFUNC_ATTR_T *pattr)
 {
 	//printf("receiving\n");
 
@@ -608,7 +609,7 @@ void Interrupt_Request_Rx(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
 /*             - M_ADDR, address of the data reg. of Tx-Buffer             */
 /*             - i, counter                                                */
 /***************************************************************************/
-void can_send(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
+void can_send(IOFUNC_ATTR_T *pattr)
 {
 	int i;
 	can_msg_t *msg = can_cq_read_first(&pattr->out_buff);
@@ -676,16 +677,16 @@ void can_send(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
 
 static BYTE old_bits[]= {0, 0};
 
-int digital_dir( int port, long bits )
+int digital_dir(int port, long bits)
 {
 	Write_REG(PCONF_REG+port*16, (BYTE)bits);
-	return (EOK);
+	return EOK;
 }
 
-int digital_in( int port, long *pbits )
+int digital_in(int port, long *pbits)
 {
 	*pbits = (long) Read_REG(PIN+port*16);
-	return (EOK);
+	return EOK;
 }
 
 int digital_out(int port, long mask, long bits,

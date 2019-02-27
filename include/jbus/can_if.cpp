@@ -15,12 +15,9 @@
 
 /** declared and set in can_dev.c by can_send
  */
-extern time_t last_time_can_sent;  // FIXME
-int can_timeout_count = 0;  // FIXME
-int tx_buffer_flush = 0;  // FIXME
-//extern time_t last_time_can_sent;
-//extern int can_timeout_count;
-//extern int tx_buffer_flush;
+extern time_t last_time_can_sent;
+int can_timeout_count = 0;
+int tx_buffer_flush = 0;
 
 /** Utilities to handle the circular queue of output messages
  */
@@ -75,7 +72,7 @@ void print_can_msg(can_msg_t *pc)
 /** Adds a new message if ID and MASK allow
  */
 
-void can_new_msg(can_msg_t *pmsg, can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
+void can_new_msg(can_msg_t *pmsg, IOFUNC_ATTR_T *pattr)
 {
 	can_info_t *pinfo = &pattr->can_info;
 	unsigned long id = pinfo->filter.id;
@@ -93,7 +90,7 @@ void can_new_msg(can_msg_t *pmsg, can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
 	}
 }
 
-can_msg_t can_dev_read(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
+can_msg_t can_dev_read(IOFUNC_ATTR_T *pattr)
 {
 	can_msg_t msg;
 	can_msg_t *pmsg;
@@ -122,7 +119,7 @@ can_msg_t can_dev_read(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
  *	Used to throw out buffered output when sending gets
  *	too far behind.
  */
-int can_dev_flush_q(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
+int can_dev_flush_q(IOFUNC_ATTR_T *pattr)
 {
 	int j = 0;
 	can_msg_t *dummy = can_cq_pop_first(&pattr->out_buff);
@@ -138,7 +135,7 @@ int can_dev_write(can_ocb_t *pocb, can_msg_t *pmsg)  // FIXME: RESMGR_OCB_T *poc
 #ifdef DO_TRACE_TX
 	int j;
 #endif
-	can_attr_t *pattr = (can_attr_t*) pocb->io_ocb.attr;  // FIXME: IOFUNC_ATTR_T
+	can_attr_t *pattr = (can_attr_t*) pocb->io_ocb.attr;
 
 	pmsg->error = 0;
 #ifdef DO_TRACE
@@ -187,7 +184,7 @@ int can_dev_write(can_ocb_t *pocb, can_msg_t *pmsg)  // FIXME: RESMGR_OCB_T *poc
  *	Used to throw out buffered input when a receiver first
  *	connects to the driver.
  */
-int can_dev_empty_q(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
+int can_dev_empty_q(IOFUNC_ATTR_T *pattr)
 {
 	int j = 0;
 	can_msg_t *dummy = can_cq_pop_first(&pattr->in_buff);
@@ -204,7 +201,7 @@ int can_dev_empty_q(can_attr_t *pattr)  // FIXME: IOFUNC_ATTR_T
  */
 int can_dev_arm(resmgr_context_t *ctp, can_ocb_t *pocb, sigevent event)  // FIXME: RESMGR_OCB_T *pocb
 {
-	can_attr_t *pattr = (can_attr_t *)pocb->io_ocb.attr;  // FIXME: IOFUNC_ATTR_T
+	IOFUNC_ATTR_T *pattr = (IOFUNC_ATTR_T *)pocb->io_ocb.attr;
 
 	pocb->rcvid = ctp->rcvid;
 	pocb->clt_event = event;
@@ -219,7 +216,7 @@ int can_dev_arm(resmgr_context_t *ctp, can_ocb_t *pocb, sigevent event)  // FIXM
  *      include calls to device register operations.
  */
 
-int can_dev_add_filter(can_attr_t *pattr, can_filter_t filter)  // FIXME: IOFUNC_ATTR_T
+int can_dev_add_filter(IOFUNC_ATTR_T *pattr, can_filter_t filter)
 {
 	pattr->can_info.filter = filter;
 	return EOK;

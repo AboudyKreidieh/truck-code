@@ -4,6 +4,7 @@ all:
 	+ make -C include/utils
 	+ make -C include/jbus
 	+ make -C src/
+	+ make -C tests/
 
 install: all
 	if [[ ! -d test ]] ; then mkdir -p test; fi

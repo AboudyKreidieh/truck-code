@@ -25,7 +25,7 @@
  * initialize the function tables.
  */
 extern void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
-	resmgr_io_funcs_t *pio, can_attr_t *pattr);  // FIXME: IOFUNC_ATTR_T
+	resmgr_io_funcs_t *pio, IOFUNC_ATTR_T *pattr);
 
 
 /** We never actually used this function on QNX4, so it was

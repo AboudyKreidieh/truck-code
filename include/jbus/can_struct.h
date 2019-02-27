@@ -147,11 +147,8 @@ typedef struct
 #define IOFUNC_OCB_T can_ocb_t
 #endif
 
-#ifndef IOFUNC_ATTR_T
+#undef IOFUNC_ATTR_T
 #define IOFUNC_ATTR_T can_attr_t
-#endif
-
-#define RESMGR_OCB_T can_attr_t
 
 
 #endif /* INCLUDE_JBUS_CAN_STRUCT_H_ */

@@ -36,7 +36,6 @@
 #define INI_IRQ_ENTRY		((char*)"Irq")
 #define INI_PORT_ENTRY		((char*)"Port")
 
-static resmgr_io_funcs_t	io_func;
 static jmp_buf exit_env;
 
 
@@ -65,7 +64,7 @@ static void usage_can_init(char *pargv0)
 
 
 void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
-	resmgr_io_funcs_t *pio, can_attr_t *pattr)
+	resmgr_io_funcs_t *pio, IOFUNC_ATTR_T *pattr)
 {
 	int opt;
 	// These are set to 1 if specified by command line arguments

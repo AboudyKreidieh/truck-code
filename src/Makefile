@@ -33,6 +33,7 @@ OBJS = $(addprefix $(OUTPUT_DIR)/,$(addsuffix .o, $(basename $(SRCS))))
 # object to be included while linking
 OBJECTS = $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/jbus/*.o) 
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/timestamp.o)
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/sys.o)
 
 # Compiling rule
 $(OUTPUT_DIR)/%.o: %.c
@@ -43,13 +44,14 @@ $(OUTPUT_DIR)/%.o: %.cpp
 	$(CXX) -c $(DEPS) -o $@ $(INCLUDES) $(CCFLAGS_all) $(CCFLAGS) $<
 
 # Linking rule
-$(OUTPUT_DIR)/../translate_pdu $(OUTPUT_DIR)/../rd_j1939: $(OUTPUT_DIR)/translate_pdu.o $(OUTPUT_DIR)/rd_j1939.o
+$(OUTPUT_DIR)/../can_man $(OUTPUT_DIR)/../translate_pdu $(OUTPUT_DIR)/../rd_j1939: $(OUTPUT_DIR)/translate_pdu.o $(OUTPUT_DIR)/rd_j1939.o $(OUTPUT_DIR)/can_man.o
 	@mkdir -p $(dir $@)
 	$(LD) -o $(OUTPUT_DIR)/../translate_pdu $(OUTPUT_DIR)/translate_pdu.o $(LIBS) $(OBJECTS)
 	$(LD) -o $(OUTPUT_DIR)/../rd_j1939 $(OUTPUT_DIR)/rd_j1939.o $(LIBS) $(OBJECTS)
+	$(LD) -o $(OUTPUT_DIR)/../can_man $(OUTPUT_DIR)/can_man.o $(LIBS) $(OBJECTS)
 
 # Rules section for default compilation and linking
-all: $(OUTPUT_DIR)/translate_pdu $(OUTPUT_DIR)/rd_j1939
+all: $(OUTPUT_DIR)/../translate_pdu $(OUTPUT_DIR)/../rd_j1939 $(OUTPUT_DIR)/../can_man
 
 clean:
 	rm -fr $(OUTPUT_DIR)

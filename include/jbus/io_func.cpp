@@ -19,8 +19,7 @@ int io_devctl (resmgr_context_t *ctp, io_devctl_t *msg, iofunc_ocb_t *io_ocb)
 	int status;
 	int dcmd;
 	void *data;
-//	can_attr_t *pattr = (can_attr_t*) ocb->io_ocb.attr;  // FIXME: IOFUNC_ATTR_T
-	can_attr_t *pattr = (can_attr_t*) io_ocb->attr;
+	IOFUNC_ATTR_T *pattr = (IOFUNC_ATTR_T*) io_ocb->attr;
 
 	/* temporary variables for devctl data */
 	sigevent event;
@@ -46,7 +45,7 @@ int io_devctl (resmgr_context_t *ctp, io_devctl_t *msg, iofunc_ocb_t *io_ocb)
 	dcmd = msg->i.dcmd;
 	memset (&msg->o, 0, sizeof (msg->o));
 
-	///  see which command it was, and act on it
+	// see which command it was, and act on it
 	switch (dcmd) {
 	case DCMD_CAN_I82527_READ:
 		* (can_msg_t *) data = can_dev_read(pattr);

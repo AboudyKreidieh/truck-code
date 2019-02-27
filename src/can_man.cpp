@@ -10,7 +10,9 @@
  * Digital I/O on the board is also supported by the same devctls used
  * by PATH DAS (Data Acquisition System) drivers.
  *
- *
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date February 26, 2019
  */
 
 //#include <sys_os.h>
@@ -34,9 +36,10 @@ using namespace std;
 
 static resmgr_connect_funcs_t  	connect_func;
 static resmgr_io_funcs_t	   	io_func;
-static can_attr_t		   		attr;  // FIXME: IOFUNC_ATTR_T
+static IOFUNC_ATTR_T		   	attr;
 static iofunc_mount_t 			can_mount;
 static iofunc_funcs_t 			can_mount_funcs;
+
 
 static int sig_list[]=
 {
@@ -56,10 +59,12 @@ static void sig_hand(int code)
 }
 
 /** External variables in ca_if.c, to be printed on exit */
-int can_timeout_count = 0;
-int tx_buffer_flush = 0;
+//int can_timeout_count = 0;
+//int tx_buffer_flush = 0;
+extern int can_timeout_count;
+extern int tx_buffer_flush;
 
-IOFUNC_OCB_T *can_ocb_calloc(resmgr_context_t *ctp, IOFUNC_ATTR_T *attr)
+IOFUNC_OCB_T *can_ocb_calloc(resmgr_context_t *ctp, iofunc_attr_t *attr)
 {
 	return ((IOFUNC_OCB_T *) calloc(1, sizeof(IOFUNC_OCB_T)));
 }
@@ -79,7 +84,7 @@ int main (int argc, char **argv)
 	ThreadCtl(_NTO_TCTL_IO, NULL); //required to access I/O ports
 
 	// create the dispatch structure
-	if ((dpp = dispatch_create ()) == NULL) {
+	if ((dpp = dispatch_create()) == NULL) {
 		perror ("Unable to dispatch_create\n");
 		exit (EXIT_FAILURE);
 	}
@@ -127,8 +132,7 @@ int main (int argc, char **argv)
 	fflush(stdout);
 #endif
 	// attach pulses and interrupt event
-//	pulse_init(dpp, &attr);  FIXME
-	pulse_init(dpp, &(attr.io_attr));
+	pulse_init(dpp, &attr);
 
 	// allocate dispatch context
 	ctp = dispatch_context_alloc(dpp);
