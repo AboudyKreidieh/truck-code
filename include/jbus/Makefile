@@ -28,6 +28,7 @@ SRCS := $(shell find -name '*.cpp' -or -name '*.c' -or -name '*.s')
 
 # Object files list
 OBJS = $(addprefix $(OUTPUT_DIR)/,$(addsuffix .o, $(basename $(SRCS))))
+OBJS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/can/*.o) 
 
 #Compiling rule
 $(OUTPUT_DIR)/%.o: %.c
