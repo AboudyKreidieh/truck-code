@@ -17,6 +17,7 @@ CXX = qcc -lang-c++ -Vgcc_nto$(PLATFORM)
 
 # User defined include/preprocessor flags and libraries
 INCLUDES += -I../include
+INCLUDES += -I../thirdparty/eigen3
 
 # Generic compiler flags (which include build type flags)
 CCFLAGS_all += -Wall -fmessage-length=0
@@ -32,6 +33,7 @@ OBJS = $(addprefix $(OUTPUT_DIR)/,$(addsuffix .o, $(basename $(SRCS))))
 
 # object to be included while linking
 OBJECTS = $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/jbus/*.o) 
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/can/*.o) 
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/timestamp.o)
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/sys.o)
 

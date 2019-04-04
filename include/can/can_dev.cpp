@@ -2,6 +2,12 @@
  *
  * can_dev.cpp
  *
+ * Device level code, based on sample code provided by SSV, originally
+ * ported to QNX4 by Jorge M. Estrela da Silva, 2002  ISEP, Porto, Portugal.
+ *
+ * Filtering into different message registers is not implemented.
+ * All transmit is done from MSG1, all received in MSG15.
+ *
  * @author Abdul Rahman Kreidieh
  * @version 1.0.0
  * @date February 22, 2019
@@ -10,84 +16,65 @@
 #include "can_man.h"
 #include "utils/sys.h"
 #include <sys/mman.h>
+#include "can.h"
 
 
 /* Definition the Registers of 82527 */
-/*-----------------------------------*/
-#define CONTROL_REG      0x00  /* Address Kontroll-Reg.                */
-#define STATUS_REG       0x01  /* Address Status-Reg.                  */
-#define CPU_IF_REG       0x02  /* Address CPU-Interface-Register       */
-#define HIGH_SPEED_READ	 0x04  /* Has result of last read, for fast CPU */
-#define G_MASK_S_REG0    0x06  /* Address Global Mask Standard Reg. 0  */
-#define G_MASK_S_REG1    0x07  /* Address Global Mask Standard Reg. 1  */
-#define G_MASK_E_REG0    0x08  /* Address Global Mask Extended Reg. 0  */
-#define G_MASK_E_REG1    0x09  /* Address Global Mask Extended Reg. 1  */
-#define G_MASK_E_REG2    0x0A  /* Address Global Mask Extended Reg. 2  */
-#define G_MASK_E_REG3    0x0B  /* Address Global Mask Extended Reg. 3  */
-#define M_MASK_REG0      0x0C  /* Address Message Mask Reg. 0          */
-#define M_MASK_REG1      0x0D  /* Address Message Mask Reg. 1          */
-#define M_MASK_REG2      0x0E  /* Address Message Mask Reg. 2          */
-#define M_MASK_REG3      0x0F  /* Address Message Mask Reg. 3          */
-#define CLKOUT_REG  	 0x1F  /* Clock Out Reg..      */
-#define BUS_CON_REG      0x2F  /* Address Bus Konfigurations Reg.      */
-#define BIT_TIMING_REG0  0x3F  /* Address Bit Timing Reg. 0            */
-#define BIT_TIMING_REG1  0x4F  /* Address Bit Timing Reg. 1            */
-#define INT_REG          0x5F  /* Address Interrupt Reg.               */
-#define P1CONF_REG       0x9F  /* Address Port1 Konfig. Reg.           */
-#define PCONF_REG       0x9F  /* Address Port1 Konfig. Reg.           */
-#define PIN		       0xBF  /* Address Port1 Konfig. Reg.           */
-#define POUT		       0xDF  /* Address Port1 Konfig. Reg.           */
-#define MSG_1            0x10  /* Address Message 1;   0x10-0x1E       */
-#define MSG_2            0x20  /* Address Message 2;   0x20-0x2E       */
-#define MSG_3            0x30  /* Address Message 3;   0x30-0x3E       */
-#define MSG_4            0x40  /* Address Message 4;   0x40-0x4E       */
-#define MSG_5            0x50  /* Address Message 5;   0x50-0x5E       */
-#define MSG_6            0x60  /* Address Message 6;   0x60-0x6E       */
-#define MSG_7            0x70  /* Address Message 7;   0x70-0x7E       */
-#define MSG_8            0x80  /* Address Message 8;   0x80-0x8E       */
-#define MSG_9            0x90  /* Address Message 9;   0x90-0x9E       */
-#define MSG_10           0xA0  /* Address Message 10;  0xA0-0xAE       */
-#define MSG_11           0xB0  /* Address Message 11;  0xB0-0xBE       */
-#define MSG_12           0xC0  /* Address Message 12;  0xC0-0xCE       */
-#define MSG_13           0xD0  /* Address Message 13;  0xD0-0xDE       */
-#define MSG_14           0xE0  /* Address Message 14;  0xE0-0xEE       */
-#define MSG_15           0xF0  /* Address Message 15;  0xF0-0xFE       */
 
-#define CTRL_0_REG       0x00
-#define CTRL_1_REG       0x01
-#define DATA0_REG 	0x07
-#define CONF_REG 	0x06
-
-
-#define _82527_XTD_FRAME 4
-#define _DIR_TX 8
-
-
-
-
-/*\file
- *
- * Device level code, based on sample code provided by SSV, originally
- * ported to QNX4 by Jorge M. Estrela da Silva, 2002  ISEP, Porto, Portugal.
- *
- * Filtering into different message registers is not implemented.
- * All transmit is done from MSG1, all received in MSG15.
- *
- */
-
-#include "can.h"
+#define CONTROL_REG      0x00  /**< Address Kontroll-Reg.                 */
+#define STATUS_REG       0x01  /**< Address Status-Reg.                   */
+#define CPU_IF_REG       0x02  /**< Address CPU-Interface-Register        */
+#define HIGH_SPEED_READ	 0x04  /**< Has result of last read, for fast CPU */
+#define G_MASK_S_REG0    0x06  /**< Address Global Mask Standard Reg. 0   */
+#define G_MASK_S_REG1    0x07  /**< Address Global Mask Standard Reg. 1   */
+#define G_MASK_E_REG0    0x08  /**< Address Global Mask Extended Reg. 0   */
+#define G_MASK_E_REG1    0x09  /**< Address Global Mask Extended Reg. 1   */
+#define G_MASK_E_REG2    0x0A  /**< Address Global Mask Extended Reg. 2   */
+#define G_MASK_E_REG3    0x0B  /**< Address Global Mask Extended Reg. 3   */
+#define M_MASK_REG0      0x0C  /**< Address Message Mask Reg. 0           */
+#define M_MASK_REG1      0x0D  /**< Address Message Mask Reg. 1           */
+#define M_MASK_REG2      0x0E  /**< Address Message Mask Reg. 2           */
+#define M_MASK_REG3      0x0F  /**< Address Message Mask Reg. 3           */
+#define CLKOUT_REG  	 0x1F  /**< Clock Out Reg..      				  */
+#define BUS_CON_REG      0x2F  /**< Address Bus Konfigurations Reg.		  */
+#define BIT_TIMING_REG0  0x3F  /**< Address Bit Timing Reg. 0			  */
+#define BIT_TIMING_REG1  0x4F  /**< Address Bit Timing Reg. 1             */
+#define INT_REG          0x5F  /**< Address Interrupt Reg.                */
+#define P1CONF_REG       0x9F  /**< Address Port1 Konfig. Reg.            */
+#define PCONF_REG        0x9F  /**< Address Port1 Konfig. Reg.            */
+#define PIN		         0xBF  /**< Address Port1 Konfig. Reg.            */
+#define POUT		     0xDF  /**< Address Port1 Konfig. Reg.            */
+#define MSG_1            0x10  /**< Address Message 1;   0x10-0x1E        */
+#define MSG_2            0x20  /**< Address Message 2;   0x20-0x2E        */
+#define MSG_3            0x30  /**< Address Message 3;   0x30-0x3E        */
+#define MSG_4            0x40  /**< Address Message 4;   0x40-0x4E        */
+#define MSG_5            0x50  /**< Address Message 5;   0x50-0x5E        */
+#define MSG_6            0x60  /**< Address Message 6;   0x60-0x6E        */
+#define MSG_7            0x70  /**< Address Message 7;   0x70-0x7E        */
+#define MSG_8            0x80  /**< Address Message 8;   0x80-0x8E        */
+#define MSG_9            0x90  /**< Address Message 9;   0x90-0x9E        */
+#define MSG_10           0xA0  /**< Address Message 10;  0xA0-0xAE        */
+#define MSG_11           0xB0  /**< Address Message 11;  0xB0-0xBE        */
+#define MSG_12           0xC0  /**< Address Message 12;  0xC0-0xCE        */
+#define MSG_13           0xD0  /**< Address Message 13;  0xD0-0xDE        */
+#define MSG_14           0xE0  /**< Address Message 14;  0xE0-0xEE        */
+#define MSG_15           0xF0  /**< Address Message 15;  0xF0-0xFE        */
+#define CTRL_0_REG       0x00  /**< TODO */
+#define CTRL_1_REG       0x01  /**< TODO */
+#define DATA0_REG 		 0x07  /**< TODO */
+#define CONF_REG 		 0x06  /**< TODO */
+#define _82527_XTD_FRAME 4	   /**< TODO */
+#define _DIR_TX 		 8	   /**< TODO */
 
 #undef  DO_TRACE
 
-unsigned int shadow_buffer_count = 0;
-unsigned int intr_in_handler_count = 0;
-unsigned int rx_interrupt_count = 0;
-unsigned int rx_message_lost_count = 0;
-unsigned int tx_interrupt_count = 0;
+/* TODO: why is this here? */
+unsigned int shadow_buffer_count = 0;	/**< TODO */
+unsigned int intr_in_handler_count = 0;	/**< TODO */
+unsigned int rx_interrupt_count = 0;	/**< TODO */
+unsigned int rx_message_lost_count = 0;	/**< TODO */
+unsigned int tx_interrupt_count = 0;	/**< TODO */
 
-/**
- *      Clear the error counts and return the old counts.
- */
 can_err_count_t can_dev_clear_errs()
 {
         can_err_count_t errs;
@@ -101,12 +88,9 @@ can_err_count_t can_dev_clear_errs()
         rx_interrupt_count = 0;
         shadow_buffer_count = 0;
         rx_message_lost_count = 0;
-        return (errs);
+        return errs;
 }
 
-/**
- *      Return the current error count .
- */
 can_err_count_t can_dev_get_errs()
 {
         can_err_count_t errs;
@@ -115,38 +99,34 @@ can_err_count_t can_dev_get_errs()
         errs.rx_interrupt_count = rx_interrupt_count;
         errs.shadow_buffer_count = shadow_buffer_count;
         errs.rx_message_lost_count = rx_message_lost_count;
-        return (errs);
+        return errs;
 }
 
-/** Redefine I/O port macros in terms of QNX6 versions
- */
+
+// TODO: is this still needed?
+/** Redefine I/O port macros in terms of QNX6 versions */
 #define inportb(ARG) in8(ARG)
 #define inport(ARG) in8(ARG)
 #define outportb(ARG1,ARG2) out8(ARG1,ARG2)
 #define outport(ARG1,ARG2) out8(ARG1,ARG2)
 
 typedef unsigned char BYTE;
-typedef unsigned int WORD;
+typedef unsigned int  WORD;
 
 
-/** Global Variables for device-level code
- */
+/** Global variables for device-level code */
 
-WORD BaseAddress;    // Base-Address CAN
-WORD Speed;          // Speed, to get bit rate
-BYTE ID[4];	     // CAN device ID
-BYTE STATUS;         // STATUS, current value of reg.
-///static BYTE Interrupt_REG;   /* Interrupt_REG, current value of reg. */
-BYTE INTERRUPT_VALUE;      /* Interrupt_VALUE, STATUS, current  */
-BYTE DEBUG_BYTE;		/* used to read from registers during debug */
-#undef DEBUG
-
-time_t last_time_can_sent; 	//last time a message was sent
-BYTE set_extended_frame;	//sets listening to extended or standard messages
+WORD BaseAddress;    		/**< Base-Address CAN 								 */
+WORD Speed;          		/**< Speed, to get bit rate 						 */
+BYTE ID[4];					/**< CAN device ID									 */
+BYTE STATUS;         		/**< STATUS, current value of reg.					 */
+BYTE INTERRUPT_VALUE;		/**< Interrupt_VALUE, STATUS, current  				 */
+BYTE DEBUG_BYTE;			/**< used to read from registers during debug 		 */
+time_t last_time_can_sent; 	/**< last time a message was sent					 */
+BYTE set_extended_frame;	/**< sets listening to extended or standard messages */
 
 
-/** Device level function prototype
- */
+/** Device level function prototype */
 void Interrupt_Request_Rx(IOFUNC_ATTR_T *pattr);
 
 /***************************************************************************/
@@ -199,6 +179,7 @@ BYTE Read_REG(BYTE Addr)
 
 #else
 #define I82527_MAP_SIZE 256
+
 /** Start of read/write register code for ECAN527, with non-multiplexed 8 bit bus
  */
 void Write_REG(BYTE Addr,BYTE value)
@@ -321,7 +302,7 @@ void can_dev_init(unsigned int base_address, unsigned int bit_speed,
 
    Set_Bit_Speed(Speed);
 
-   /* Define alll MSG as invalid */
+   /* Define all MSG as invalid */
    Write_REG(MSG_1+CTRL_0_REG,0x55);
    Write_REG(MSG_2+CTRL_0_REG,0x55);
    Write_REG(MSG_3+CTRL_0_REG,0x55);
@@ -338,7 +319,6 @@ void can_dev_init(unsigned int base_address, unsigned int bit_speed,
    Write_REG(MSG_14+CTRL_0_REG,0x55);
    Write_REG(MSG_15+CTRL_0_REG,0x55);
 
-
    /* don't apply global accepting filters*/
    Write_REG(G_MASK_S_REG0,0xFF);
    Write_REG(G_MASK_S_REG1,0xFF);
@@ -352,8 +332,7 @@ void can_dev_init(unsigned int base_address, unsigned int bit_speed,
    Write_REG(M_MASK_REG2,0x00);
    Write_REG(M_MASK_REG3,0x00);
 
-
-   /* Reveive conf. */
+   /* Receive conf. */
    Write_REG(MSG_15+CTRL_0_REG,0x99);
    /* 0x1001 1001 - ==>
         |||| |||--- ==> IntPnd, MSB=0 no interrupt was generated by message
@@ -364,7 +343,6 @@ void can_dev_init(unsigned int base_address, unsigned int bit_speed,
         ||--------- ==>
         |---------- ==> MsgVal, MSB=1 message valid */
 
-
    Write_REG(MSG_15+CTRL_1_REG,0x55);
    /* 0x0101 0101 - ==>
         |||| |||--- ==> NewDat, MSB=0 no new Data
@@ -374,7 +352,6 @@ void can_dev_init(unsigned int base_address, unsigned int bit_speed,
         |||-------- ==> TxRqst, MSB=0 no waiting for transmit
         ||--------- ==>
         |---------- ==> RmtPnd, MSB=0 no waiting for remote request */
-
 
 	if(set_extended_frame)
    		Write_REG(MSG_15+0x06,0x84);
@@ -422,16 +399,14 @@ void can_dev_init(unsigned int base_address, unsigned int bit_speed,
 /***************************************************************************/
 void Set_Bit_Speed(WORD BS)
 {
-   BYTE BTR0,BTR1;
+   BYTE BTR0, BTR1;
    switch (BS)
    {
       case 1000: BTR0=0x00; BTR1=0x14; break;
       case  800: BTR0=0x00; BTR1=0x16; break;
       case  500: BTR0=0x00; BTR1=0x1C; break;
-// case  250: BTR0=0x01; BTR1=0x1C; break;//original
       case  250: BTR0=0x41; BTR1=0xD8; break;
-     case  125: BTR0=0xc3; BTR1=0xc9; break;//alterei o valor BTR1 de 1c para 0xC9, BTR0 de 0x03 para 0xC3
-//      case  125: BTR0=0x83; BTR1=0xd8; break;
+      case  125: BTR0=0xc3; BTR1=0xc9; break;
       case  100: BTR0=0x04; BTR1=0x1C; break;
       case   50: BTR0=0x09; BTR1=0x1C; break;
       case   25: BTR0=0x13; BTR1=0x1C; break;
@@ -444,8 +419,6 @@ void Set_Bit_Speed(WORD BS)
    Write_REG(BIT_TIMING_REG0, BTR0);
    Write_REG(BIT_TIMING_REG1, BTR1);
 }
-/* Set_Bit_Speed End */
-/***************************************************************************/
 
 
 /***************************************************************************/

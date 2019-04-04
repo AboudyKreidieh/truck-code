@@ -17,7 +17,7 @@
 #undef DO_TRACE
 
 //int io_devctl (resmgr_context_t *ctp, io_devctl_t *msg, can_ocb_t *ocb)
-int io_devctl (resmgr_context_t *ctp, io_devctl_t *msg, iofunc_ocb_t *io_ocb)
+int io_devctl(resmgr_context_t *ctp, io_devctl_t *msg, iofunc_ocb_t *io_ocb)
 {
 //	can_ocb_t *ocb = (can_ocb_t*) ocb_res;
 	int status;

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['xbr_5faccel_5flimit',['xbr_accel_limit',['../structj1939__ebc5__typ.html#a7707a08f511ca64c4f2a56d298ba4120',1,'j1939_ebc5_typ']]],
-  ['xbr_5factive_5fctrl_5fmode',['xbr_active_ctrl_mode',['../structj1939__ebc5__typ.html#a7779789905c41b45887eb534d1919771',1,'j1939_ebc5_typ']]]
+  ['vehicle_5fdistance',['vehicle_distance',['../structj1939__hrvd__typ.html#af4096e1fa21972901811157431ff8be1',1,'j1939_hrvd_typ']]],
+  ['vehicle_5fspd',['vehicle_spd',['../structj1939__ccvs__typ.html#a9411fa76d61b3250b4afe8fcde793f6c',1,'j1939_ccvs_typ']]],
+  ['verbose_5fflag',['verbose_flag',['../structcan__attr__t.html#ae175e993c85361f8c5c27eb0b0f42efe',1,'can_attr_t']]]
 ];

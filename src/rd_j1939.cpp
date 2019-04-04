@@ -10,7 +10,7 @@
  *
  * Arguments:
  * 	-d 	prints debug messages
- * 	-f 	filename for input
+ * 	-f	 	filename for input
  * 	-t 	puts bytes from every frame received on stdout
  * 	-g 	specifies whether to use "generic" mode. In "generic" mode, write all
  * 		PDUs to database as byte streams, don't translate into specific PDU
@@ -47,12 +47,14 @@ int main(int argc, char **argv) {
 	int j1939_debug = 0;	/* whether to print during the receive process */
 	int use_can = 0;		/* */
 	j1939_pdu_typ *pdu = new j1939_pdu_typ();	/* */
-	string fname = J1939STB_SERIAL_DEVICE_NAME;	/* */
+	char  *fname = J1939STB_SERIAL_DEVICE_NAME;	/* */
 
     /* collect initial variables for interpreting J1939 messages. */
     map <int, J1939Interpreter*> interpreters = get_interpreters();
     bool numeric = false;
     void *message;
+
+    printf("options\n");
 
 	int ch;
 	while ((ch = getopt(argc, argv, "a:cd:f:s:tvg")) != EOF) {
@@ -74,8 +76,10 @@ int main(int argc, char **argv) {
 	}
 
 	/* Initialize device port. */
-	int fpin = jfunc.init(fname, O_RDONLY, NULL);
-	if (fpin == -1) {
+    printf("Initializing device port: %s\n", fname);
+    int fpin = jfunc.init(fname, O_RDONLY, NULL);
+
+    if (fpin == -1) {
 		printf("Error opening %s device %s for input\n",
 				use_can?"CAN":"STB", fname);
 		exit(EXIT_FAILURE);
@@ -84,6 +88,8 @@ int main(int argc, char **argv) {
 	int pgn;
 	int rcv_val;
 	while (true) {
+	    printf("receive");
+
 		rcv_val = jfunc.receive(fpin, pdu, &external, &slot_or_type);
 
 		/* If **blank**, increment the number of errors received and try

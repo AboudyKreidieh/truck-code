@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>truck-code: include/jbus/can.h File Reference</title>
+<title>truck-code: include/can/can.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -58,87 +58,49 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_4525d057f72f34aebe3436e89afccf45.html">jbus</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_806ab3c8068dd71592b990dab5bd95a8.html">can</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">can.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="j1939__struct_8h_source.html">j1939_struct.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="can__struct_8h_source.html">can_struct.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="j1939__struct_8h_source.html">jbus/j1939_struct.h</a>&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for can.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="can_8h__incl.png" border="0" usemap="#include_2jbus_2can_8h" alt=""/></div>
-<map name="include_2jbus_2can_8h" id="include_2jbus_2can_8h">
+<div class="center"><img src="can_8h__incl.png" border="0" usemap="#include_2can_2can_8h" alt=""/></div>
+<map name="include_2can_2can_8h" id="include_2can_2can_8h">
+<area shape="rect" id="node2" href="can__struct_8h.html" title="can_struct.h" alt="" coords="182,80,276,107"/>
+<area shape="rect" id="node3" href="j1939__struct_8h.html" title="jbus/j1939_struct.h" alt="" coords="48,155,180,181"/>
+<area shape="rect" id="node10" href="sys_8h.html" title="utils/sys.h" alt="" coords="409,229,492,256"/>
+<area shape="rect" id="node5" href="j1939__utils_8h.html" title="j1939_utils.h" alt="" coords="275,229,370,256"/>
+<area shape="rect" id="node8" href="timestamp_8h.html" title="utils/timestamp.h" alt="" coords="98,229,221,256"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="can_8h__dep__incl.png" border="0" usemap="#include_2jbus_2can_8hdep" alt=""/></div>
-<map name="include_2jbus_2can_8hdep" id="include_2jbus_2can_8hdep">
+<div class="center"><img src="can_8h__dep__incl.png" border="0" usemap="#include_2can_2can_8hdep" alt=""/></div>
+<map name="include_2can_2can_8hdep" id="include_2can_2can_8hdep">
+<area shape="rect" id="node2" href="can_8cpp.html" title="include/can/can.cpp" alt="" coords="5,80,144,107"/>
+<area shape="rect" id="node3" href="can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="169,80,335,107"/>
+<area shape="rect" id="node4" href="jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="360,80,504,107"/>
+<area shape="rect" id="node5" href="can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="528,80,651,107"/>
 </map>
 </div>
 </div>
 <p><a href="can_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcan__msg__t.html">can_msg_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcan__filter__t.html">can_filter_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcan__dev__handle__t.html">can_dev_handle_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structj1939__pdu.html">j1939_pdu</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a82929be40b928366482f296dda7acdc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a82929be40b928366482f296dda7acdc0">MAX_MSG_BUF</a>&#160;&#160;&#160;1000</td></tr>
-<tr class="separator:a82929be40b928366482f296dda7acdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc5417575997ccc7a53ac3773cc08c7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#afc5417575997ccc7a53ac3773cc08c7b">PATH_CAN_ID</a>(j)</td></tr>
-<tr class="separator:afc5417575997ccc7a53ac3773cc08c7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a348af225f59c02b33e366286e3126ded"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a348af225f59c02b33e366286e3126ded">PATH_CAN_PRIORITY</a>(j)&#160;&#160;&#160;(((j) &gt;&gt; 26) &amp; 0x7)</td></tr>
-<tr class="separator:a348af225f59c02b33e366286e3126ded"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89aa49a1b4a23d14f56a0913dcc44323"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a89aa49a1b4a23d14f56a0913dcc44323">PATH_CAN_PF</a>(j)&#160;&#160;&#160;(((j) &gt;&gt; 16) &amp; 0xff)</td></tr>
-<tr class="separator:a89aa49a1b4a23d14f56a0913dcc44323"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33ec2f277c4ca81fe07641b9f4e8f572"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a33ec2f277c4ca81fe07641b9f4e8f572">PATH_CAN_PS</a>(j)&#160;&#160;&#160;(((j) &gt;&gt; 8) &amp; 0xff)</td></tr>
-<tr class="separator:a33ec2f277c4ca81fe07641b9f4e8f572"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ad6dd17561986e36ce5d1601b17e4f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a7ad6dd17561986e36ce5d1601b17e4f3">PATH_CAN_SA</a>(j)&#160;&#160;&#160;((j) &amp; 0xff)</td></tr>
-<tr class="separator:a7ad6dd17561986e36ce5d1601b17e4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27beb0641278bd5912b2db02b803656c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a27beb0641278bd5912b2db02b803656c">IS_EXTENDED_FRAME</a>(MSG)&#160;&#160;&#160;(((MSG).id) &amp; 0x80000000)</td></tr>
-<tr class="separator:a27beb0641278bd5912b2db02b803656c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42754008439dd8ec5fb0c05e2b1b7b2a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a42754008439dd8ec5fb0c05e2b1b7b2a">SET_EXTENDED_FRAME</a>(MSG)&#160;&#160;&#160;(MSG).id |= 0x80000000</td></tr>
-<tr class="separator:a42754008439dd8ec5fb0c05e2b1b7b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2f37543ba1ef1dc46a346ade5f4ccbf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#ad2f37543ba1ef1dc46a346ade5f4ccbf">CAN_ID</a>(MSG)&#160;&#160;&#160;((MSG).id &amp; ~0x80000000)</td></tr>
-<tr class="separator:ad2f37543ba1ef1dc46a346ade5f4ccbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a51bc991acc9fa9941372ce1c339a2f95"><td class="memItemLeft" align="right" valign="top"><a id="a51bc991acc9fa9941372ce1c339a2f95"></a>
-typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>MSG_BIT</b></td></tr>
-<tr class="separator:a51bc991acc9fa9941372ce1c339a2f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8c32f7691de35df1478d1de7a4ab523"><td class="memItemLeft" align="right" valign="top"><a id="ae8c32f7691de35df1478d1de7a4ab523"></a>
-typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>MSG_FIELD</b></td></tr>
-<tr class="separator:ae8c32f7691de35df1478d1de7a4ab523"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3205d30f45c055e66a0e5318b0b7c7e"><td class="memItemLeft" align="right" valign="top"><a id="ab3205d30f45c055e66a0e5318b0b7c7e"></a>
-typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>MSG_BYTE</b></td></tr>
-<tr class="separator:ab3205d30f45c055e66a0e5318b0b7c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0abbc4d2222617ebab2b9f6d68091e9a"><td class="memItemLeft" align="right" valign="top"><a id="a0abbc4d2222617ebab2b9f6d68091e9a"></a>
-typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>FRAME_BIT</b></td></tr>
-<tr class="separator:a0abbc4d2222617ebab2b9f6d68091e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a5ec367b5ae68929b7516c68b6ee8d152"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a5ec367b5ae68929b7516c68b6ee8d152">can_init</a> (int argc, char *argv[], resmgr_connect_funcs_t *pconn, resmgr_io_funcs_t *pio, IOFUNC_ATTR_T *pattr)</td></tr>
+<tr class="separator:a5ec367b5ae68929b7516c68b6ee8d152"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f3488fd7d51e2711caeae9a8e90821f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a2f3488fd7d51e2711caeae9a8e90821f">can_set_filter</a> (int fd, unsigned long id, unsigned long mask)</td></tr>
 <tr class="separator:a2f3488fd7d51e2711caeae9a8e90821f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3807ddfc0a7ed992d6578b7cdae1812"><td class="memItemLeft" align="right" valign="top"><a id="ab3807ddfc0a7ed992d6578b7cdae1812"></a>
@@ -160,175 +122,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
 <dl class="section author"><dt>Author</dt><dd>Abdul Rahman Kreidieh </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>January 14, 2019 </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ad2f37543ba1ef1dc46a346ade5f4ccbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2f37543ba1ef1dc46a346ade5f4ccbf">&#9670;&nbsp;</a></span>CAN_ID</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CAN_ID</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">MSG</td><td>)</td>
-          <td>&#160;&#160;&#160;((MSG).id &amp; ~0x80000000)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get CAN identity number. </p>
-
-</div>
-</div>
-<a id="a27beb0641278bd5912b2db02b803656c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27beb0641278bd5912b2db02b803656c">&#9670;&nbsp;</a></span>IS_EXTENDED_FRAME</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IS_EXTENDED_FRAME</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">MSG</td><td>)</td>
-          <td>&#160;&#160;&#160;(((MSG).id) &amp; 0x80000000)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Checks if identifier is 29 or 11 bit. </p>
-
-</div>
-</div>
-<a id="a82929be40b928366482f296dda7acdc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82929be40b928366482f296dda7acdc0">&#9670;&nbsp;</a></span>MAX_MSG_BUF</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MAX_MSG_BUF&#160;&#160;&#160;1000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>blank </p>
-
-</div>
-</div>
-<a id="afc5417575997ccc7a53ac3773cc08c7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc5417575997ccc7a53ac3773cc08c7b">&#9670;&nbsp;</a></span>PATH_CAN_ID</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PATH_CAN_ID</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">j</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">((((j)-&gt;priority &amp; 0x7) &lt;&lt; 26) | \</div><div class="line">            (((j)-&gt;reserved &amp; 0x1) &lt;&lt; 25) | \</div><div class="line">            (((j)-&gt;data_page &amp; 0x1) &lt;&lt; 24) | \</div><div class="line">            (((j)-&gt;pdu_format &amp; 0xff) &lt;&lt; 16) | \</div><div class="line">            (((j)-&gt;pdu_specific &amp; 0xff) &lt;&lt; 8) | \</div><div class="line">            (((j)-&gt;src_address &amp; 0xff)))</div></div><!-- fragment --><p>Get pdu identifier. </p>
-
-</div>
-</div>
-<a id="a89aa49a1b4a23d14f56a0913dcc44323"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89aa49a1b4a23d14f56a0913dcc44323">&#9670;&nbsp;</a></span>PATH_CAN_PF</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PATH_CAN_PF</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">j</td><td>)</td>
-          <td>&#160;&#160;&#160;(((j) &gt;&gt; 16) &amp; 0xff)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get pdu format value. </p>
-
-</div>
-</div>
-<a id="a348af225f59c02b33e366286e3126ded"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a348af225f59c02b33e366286e3126ded">&#9670;&nbsp;</a></span>PATH_CAN_PRIORITY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PATH_CAN_PRIORITY</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">j</td><td>)</td>
-          <td>&#160;&#160;&#160;(((j) &gt;&gt; 26) &amp; 0x7)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get priority value. </p>
-
-</div>
-</div>
-<a id="a33ec2f277c4ca81fe07641b9f4e8f572"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33ec2f277c4ca81fe07641b9f4e8f572">&#9670;&nbsp;</a></span>PATH_CAN_PS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PATH_CAN_PS</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">j</td><td>)</td>
-          <td>&#160;&#160;&#160;(((j) &gt;&gt; 8) &amp; 0xff)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get pdu specific value. </p>
-
-</div>
-</div>
-<a id="a7ad6dd17561986e36ce5d1601b17e4f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ad6dd17561986e36ce5d1601b17e4f3">&#9670;&nbsp;</a></span>PATH_CAN_SA</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PATH_CAN_SA</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">j</td><td>)</td>
-          <td>&#160;&#160;&#160;((j) &amp; 0xff)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get source address value </p>
-
-</div>
-</div>
-<a id="a42754008439dd8ec5fb0c05e2b1b7b2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42754008439dd8ec5fb0c05e2b1b7b2a">&#9670;&nbsp;</a></span>SET_EXTENDED_FRAME</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SET_EXTENDED_FRAME</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">MSG</td><td>)</td>
-          <td>&#160;&#160;&#160;(MSG).id |= 0x80000000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set the 29 bit identifier. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a525e8830c9044004537b1874310ac528"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a525e8830c9044004537b1874310ac528">&#9670;&nbsp;</a></span>can_arm()</h2>
 
@@ -364,6 +158,54 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>blank </dd></dl>
+
+</div>
+</div>
+<a id="a5ec367b5ae68929b7516c68b6ee8d152"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ec367b5ae68929b7516c68b6ee8d152">&#9670;&nbsp;</a></span>can_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void can_init </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">resmgr_connect_funcs_t *&#160;</td>
+          <td class="paramname"><em>pconn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">resmgr_io_funcs_t *&#160;</td>
+          <td class="paramname"><em>pio</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IOFUNC_ATTR_T *&#160;</td>
+          <td class="paramname"><em>pattr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="can_8h.html#a5ec367b5ae68929b7516c68b6ee8d152">can_init()</a></p>
+<p>This function is called from the main() during the initialization of the CAN driver to read the .ini file and initialize the can_info structure, and initialize the function tables. </p>
 
 </div>
 </div>

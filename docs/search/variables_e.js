@@ -3,6 +3,7 @@ var searchData=
   ['rack_5fposition',['rack_position',['../structj1939__ei__typ.html#ae39cad58fc22293c3e2d03fae4635373',1,'j1939_ei_typ']]],
   ['range_5fattained',['range_attained',['../structj1939__etc2__typ.html#a7f07bb1f00d95a1f5dd9acd6853ba392',1,'j1939_etc2_typ']]],
   ['range_5fselected',['range_selected',['../structj1939__etc2__typ.html#ad42c0d0822780358cd55942afec36d55',1,'j1939_etc2_typ']]],
+  ['rcvid',['rcvid',['../structcan__ocb__t.html#a731e58fdab6f8cdd217a19d852885708',1,'can_ocb_t']]],
   ['receive_5fstatus',['receive_status',['../structj1939__ecfg__typ.html#a57986d0f378cb2ab48940ae54eb56026',1,'j1939_ecfg_typ']]],
   ['reference_5feng_5ftrq',['reference_eng_trq',['../structj1939__ecfg__typ.html#a44e8194dd2d4d1c18343477d0d6b1a5f',1,'j1939_ecfg_typ']]],
   ['reference_5fretarder_5ftrq',['reference_retarder_trq',['../structj1939__rcfg__typ.html#aeae09be70e2d1c35a382483e6b3133a9',1,'j1939_rcfg_typ']]],
@@ -26,5 +27,7 @@ var searchData=
   ['retarder_5ftype',['retarder_type',['../structj1939__rcfg__typ.html#a800df94860f311e75f3a8c32b31357e2',1,'j1939_rcfg_typ']]],
   ['rev_5fgear_5fratios',['rev_gear_ratios',['../structj1939__tcfg__typ.html#acf1261920d0a877d8c35d27df8255bed',1,'j1939_tcfg_typ']]],
   ['road_5fsurface_5ftemp',['road_surface_temp',['../structj1939__ambc__typ.html#a35a9d9f5554ad989cc2cc313b2b40762',1,'j1939_ambc_typ']]],
-  ['rq_5fbrake_5flight',['rq_brake_light',['../structj1939__erc1__typ.html#a0ebea6574e4cbb2b3dbe8c2dfa6658a5',1,'j1939_erc1_typ']]]
+  ['rq_5fbrake_5flight',['rq_brake_light',['../structj1939__erc1__typ.html#a0ebea6574e4cbb2b3dbe8c2dfa6658a5',1,'j1939_erc1_typ']]],
+  ['rx_5finterrupt_5fcount',['rx_interrupt_count',['../can__dev_8cpp.html#a02f0ff2a50f369df9a3055e1acad16e6',1,'rx_interrupt_count():&#160;can_dev.cpp'],['../can__man_8h.html#a02f0ff2a50f369df9a3055e1acad16e6',1,'rx_interrupt_count():&#160;can_dev.cpp']]],
+  ['rx_5fmessage_5flost_5fcount',['rx_message_lost_count',['../can__dev_8cpp.html#ab2f32e73f74c2b322c86f542a85129a3',1,'rx_message_lost_count():&#160;can_dev.cpp'],['../can__man_8h.html#ab2f32e73f74c2b322c86f542a85129a3',1,'rx_message_lost_count():&#160;can_dev.cpp']]]
 ];

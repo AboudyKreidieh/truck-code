@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>truck-code: include/jbus/das_clt.h File Reference</title>
+<title>truck-code: include/can/das_clt.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -58,7 +58,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_4525d057f72f34aebe3436e89afccf45.html">jbus</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_806ab3c8068dd71592b990dab5bd95a8.html">can</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -74,15 +74,19 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for das_clt.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="das__clt_8h__incl.png" border="0" usemap="#include_2jbus_2das__clt_8h" alt=""/></div>
-<map name="include_2jbus_2das__clt_8h" id="include_2jbus_2das__clt_8h">
-</map>
+<div class="center"><img src="das__clt_8h__incl.png" border="0" usemap="#include_2can_2das__clt_8h" alt=""/></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="das__clt_8h__dep__incl.png" border="0" usemap="#include_2jbus_2das__clt_8hdep" alt=""/></div>
-<map name="include_2jbus_2das__clt_8hdep" id="include_2jbus_2das__clt_8hdep">
+<div class="center"><img src="das__clt_8h__dep__incl.png" border="0" usemap="#include_2can_2das__clt_8hdep" alt=""/></div>
+<map name="include_2can_2das__clt_8hdep" id="include_2can_2das__clt_8hdep">
+<area shape="rect" id="node2" href="can__man_8h.html" title="include/can/can_man.h" alt="" coords="269,80,425,107"/>
+<area shape="rect" id="node3" href="can_8cpp.html" title="include/can/can.cpp" alt="" coords="5,155,144,181"/>
+<area shape="rect" id="node4" href="can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="169,155,335,181"/>
+<area shape="rect" id="node5" href="can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="360,155,523,181"/>
+<area shape="rect" id="node6" href="io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="547,155,706,181"/>
+<area shape="rect" id="node7" href="can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="731,155,853,181"/>
 </map>
 </div>
 </div>
@@ -171,10 +175,10 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_CAN_EMPTY_Q</b>&#160;&#160;&#160;__DIOTF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, CAN_EMPTY_Q, int)</td></tr>
 <tr class="separator:a92bf9adc48680bf9ad4b5fd370df92c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab97caa6dc6a8f69e02f112a418d44591"><td class="memItemLeft" align="right" valign="top"><a id="ab97caa6dc6a8f69e02f112a418d44591"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_CAN_GET_ERRS</b>&#160;&#160;&#160;__DIOTF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, CAN_GET_ERRS, can_err_count_t)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_CAN_GET_ERRS</b>&#160;&#160;&#160;__DIOTF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, CAN_GET_ERRS, <a class="el" href="structcan__err__count__t.html">can_err_count_t</a>)</td></tr>
 <tr class="separator:ab97caa6dc6a8f69e02f112a418d44591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacb652aa13bccde0ad4b8b43d2008b6a"><td class="memItemLeft" align="right" valign="top"><a id="aacb652aa13bccde0ad4b8b43d2008b6a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_CAN_CLEAR_ERRS</b>&#160;&#160;&#160;__DIOTF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, CAN_CLEAR_ERRS, can_err_count_t)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_CAN_CLEAR_ERRS</b>&#160;&#160;&#160;__DIOTF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, CAN_CLEAR_ERRS, <a class="el" href="structcan__err__count__t.html">can_err_count_t</a>)</td></tr>
 <tr class="separator:aacb652aa13bccde0ad4b8b43d2008b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f536a892ce7bece7492ba07da4664fd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="das__clt_8h.html#a9f536a892ce7bece7492ba07da4664fd">_IOMGR_DAS</a>&#160;&#160;&#160;0xff00</td></tr>
 <tr class="separator:a9f536a892ce7bece7492ba07da4664fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,7 +232,7 @@ Enumerations</h2></td></tr>
 <p>Revision 1.1.1.1 2004/08/26 23:45:03 dickey local for IDS, CCW, CACC, etc.</p>
 <dl class="section author"><dt>Author</dt><dd>Abdul Rahman Kreidieh </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>July 15, 2019 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>January 15, 2019 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a8e07207164987c257d435c575b90e7ef"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8e07207164987c257d435c575b90e7ef">&#9670;&nbsp;</a></span>_DCMD_DAS</h2>

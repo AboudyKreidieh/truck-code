@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>truck-code: include/jbus/can.cpp File Reference</title>
+<title>truck-code: include/can/can.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -58,21 +58,30 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_4525d057f72f34aebe3436e89afccf45.html">jbus</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_806ab3c8068dd71592b990dab5bd95a8.html">can</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">can.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="can_8h_source.html">can.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="j1939__struct_8h_source.html">j1939_struct.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;csetjmp&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &quot;<a class="el" href="can_8h_source.html">can.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="can__man_8h_source.html">can_man.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="can__struct_8h_source.html">can_struct.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="j1939__struct_8h_source.html">jbus/j1939_struct.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="sys_8h_source.html">utils/sys.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="constants_8h_source.html">utils/constants.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="das__clt_8h_source.html">das_clt.h</a>&quot;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &lt;sys/neutrino.h&gt;</code><br />
+<code>#include &lt;sys/iomsg.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;devctl.h&gt;</code><br />
@@ -80,13 +89,51 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for can.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="can_8cpp__incl.png" border="0" usemap="#include_2jbus_2can_8cpp" alt=""/></div>
-<map name="include_2jbus_2can_8cpp" id="include_2jbus_2can_8cpp">
+<div class="center"><img src="can_8cpp__incl.png" border="0" usemap="#include_2can_2can_8cpp" alt=""/></div>
+<map name="include_2can_2can_8cpp" id="include_2can_2can_8cpp">
+<area shape="rect" id="node5" href="can_8h.html" title="can.h" alt="" coords="334,80,389,107"/>
+<area shape="rect" id="node6" href="can__struct_8h.html" title="can_struct.h" alt="" coords="465,155,559,181"/>
+<area shape="rect" id="node7" href="j1939__struct_8h.html" title="jbus/j1939_struct.h" alt="" coords="347,229,479,256"/>
+<area shape="rect" id="node13" href="sys_8h.html" title="utils/sys.h" alt="" coords="635,229,717,256"/>
+<area shape="rect" id="node16" href="can__man_8h.html" title="can_man.h" alt="" coords="643,80,730,107"/>
+<area shape="rect" id="node17" href="das__clt_8h.html" title="das_clt.h" alt="" coords="803,155,877,181"/>
+<area shape="rect" id="node20" href="constants_8h.html" title="utils/constants.h" alt="" coords="1003,80,1122,107"/>
+<area shape="rect" id="node8" href="j1939__utils_8h.html" title="j1939_utils.h" alt="" coords="545,304,639,331"/>
+<area shape="rect" id="node11" href="timestamp_8h.html" title="utils/timestamp.h" alt="" coords="397,304,520,331"/>
 </map>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ab642d6a3ab8577dc9bb6373f5a3823b9"><td class="memItemLeft" align="right" valign="top"><a id="ab642d6a3ab8577dc9bb6373f5a3823b9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_CONFIG</b>&#160;&#160;&#160;((char*)&quot;realtime.ini&quot;)</td></tr>
+<tr class="separator:ab642d6a3ab8577dc9bb6373f5a3823b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84cb8bbda8042a324f49102bc200cc54"><td class="memItemLeft" align="right" valign="top"><a id="a84cb8bbda8042a324f49102bc200cc54"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_DEVICE</b>&#160;&#160;&#160;((char*)&quot;/dev/can1&quot;)</td></tr>
+<tr class="separator:a84cb8bbda8042a324f49102bc200cc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc217aa3600fd4951714ff89457fd5b0"><td class="memItemLeft" align="right" valign="top"><a id="adc217aa3600fd4951714ff89457fd5b0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_IRQ</b>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:adc217aa3600fd4951714ff89457fd5b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16b710f592bf8f7900666392adc444dc"><td class="memItemLeft" align="right" valign="top"><a id="a16b710f592bf8f7900666392adc444dc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_PORT</b>&#160;&#160;&#160;0x210</td></tr>
+<tr class="separator:a16b710f592bf8f7900666392adc444dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77d2ddee4711bae81e225f846875f948"><td class="memItemLeft" align="right" valign="top"><a id="a77d2ddee4711bae81e225f846875f948"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_IN_BUFFER_SIZE</b>&#160;&#160;&#160;150</td></tr>
+<tr class="separator:a77d2ddee4711bae81e225f846875f948"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31b880642862f0e7c8726f6ef6624716"><td class="memItemLeft" align="right" valign="top"><a id="a31b880642862f0e7c8726f6ef6624716"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OUT_BUFFER_SIZE</b>&#160;&#160;&#160;150</td></tr>
+<tr class="separator:a31b880642862f0e7c8726f6ef6624716"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7a2cc1c83a7f52299a6ab03f8d17f20"><td class="memItemLeft" align="right" valign="top"><a id="ab7a2cc1c83a7f52299a6ab03f8d17f20"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>INI_IRQ_ENTRY</b>&#160;&#160;&#160;((char*)&quot;Irq&quot;)</td></tr>
+<tr class="separator:ab7a2cc1c83a7f52299a6ab03f8d17f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25392e53ca8132874cdacbc7ae4e4270"><td class="memItemLeft" align="right" valign="top"><a id="a25392e53ca8132874cdacbc7ae4e4270"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>INI_PORT_ENTRY</b>&#160;&#160;&#160;((char*)&quot;Port&quot;)</td></tr>
+<tr class="separator:a25392e53ca8132874cdacbc7ae4e4270"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a5ec367b5ae68929b7516c68b6ee8d152"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8cpp.html#a5ec367b5ae68929b7516c68b6ee8d152">can_init</a> (int argc, char *argv[], resmgr_connect_funcs_t *pconn, resmgr_io_funcs_t *pio, IOFUNC_ATTR_T *pattr)</td></tr>
+<tr class="separator:a5ec367b5ae68929b7516c68b6ee8d152"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f3488fd7d51e2711caeae9a8e90821f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8cpp.html#a2f3488fd7d51e2711caeae9a8e90821f">can_set_filter</a> (int fd, unsigned long id, unsigned long mask)</td></tr>
 <tr class="separator:a2f3488fd7d51e2711caeae9a8e90821f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3807ddfc0a7ed992d6578b7cdae1812"><td class="memItemLeft" align="right" valign="top"><a id="ab3807ddfc0a7ed992d6578b7cdae1812"></a>
@@ -144,6 +191,54 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_write</b> (int fd,
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>blank </dd></dl>
+
+</div>
+</div>
+<a id="a5ec367b5ae68929b7516c68b6ee8d152"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ec367b5ae68929b7516c68b6ee8d152">&#9670;&nbsp;</a></span>can_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void can_init </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">resmgr_connect_funcs_t *&#160;</td>
+          <td class="paramname"><em>pconn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">resmgr_io_funcs_t *&#160;</td>
+          <td class="paramname"><em>pio</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IOFUNC_ATTR_T *&#160;</td>
+          <td class="paramname"><em>pattr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="can_8h.html#a5ec367b5ae68929b7516c68b6ee8d152">can_init()</a></p>
+<p>This function is called from the main() during the initialization of the CAN driver to read the .ini file and initialize the can_info structure, and initialize the function tables. </p>
 
 </div>
 </div>

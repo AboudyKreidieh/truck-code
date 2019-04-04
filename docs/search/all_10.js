@@ -5,6 +5,7 @@ var searchData=
   ['range_5fselected',['range_selected',['../structj1939__etc2__typ.html#ad42c0d0822780358cd55942afec36d55',1,'j1939_etc2_typ']]],
   ['rcfg',['RCFG',['../j1939__utils_8h.html#abfb1b610c0291e27801ce2b17f696a80',1,'j1939_utils.h']]],
   ['rcfginterpreter',['RCFGInterpreter',['../classRCFGInterpreter.html',1,'']]],
+  ['rcvid',['rcvid',['../structcan__ocb__t.html#a731e58fdab6f8cdd217a19d852885708',1,'can_ocb_t']]],
   ['rd_5fj1939_2ecpp',['rd_j1939.cpp',['../rd__j1939_8cpp.html',1,'']]],
   ['receive',['receive',['../classJBus.html#ae4360be7271912bef711243f39e4b02a',1,'JBus']]],
   ['receive_5fstatus',['receive_status',['../structj1939__ecfg__typ.html#a57986d0f378cb2ab48940ae54eb56026',1,'j1939_ecfg_typ']]],
@@ -34,5 +35,7 @@ var searchData=
   ['road_5fsurface_5ftemp',['road_surface_temp',['../structj1939__ambc__typ.html#a35a9d9f5554ad989cc2cc313b2b40762',1,'j1939_ambc_typ']]],
   ['rotor_5fspeed_5fin_5frpm',['rotor_speed_in_rpm',['../j1939__utils_8cpp.html#acf22f95d71170b3532d799ea0d7acdff',1,'rotor_speed_in_rpm(unsigned short data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#acf22f95d71170b3532d799ea0d7acdff',1,'rotor_speed_in_rpm(unsigned short data):&#160;j1939_utils.cpp']]],
   ['rq_5fbrake_5flight',['rq_brake_light',['../structj1939__erc1__typ.html#a0ebea6574e4cbb2b3dbe8c2dfa6658a5',1,'j1939_erc1_typ']]],
-  ['rqst',['RQST',['../j1939__utils_8h.html#ab0f70249638f4e13a36004e61c35308b',1,'j1939_utils.h']]]
+  ['rqst',['RQST',['../j1939__utils_8h.html#ab0f70249638f4e13a36004e61c35308b',1,'j1939_utils.h']]],
+  ['rx_5finterrupt_5fcount',['rx_interrupt_count',['../can__dev_8cpp.html#a02f0ff2a50f369df9a3055e1acad16e6',1,'rx_interrupt_count():&#160;can_dev.cpp'],['../can__man_8h.html#a02f0ff2a50f369df9a3055e1acad16e6',1,'rx_interrupt_count():&#160;can_dev.cpp']]],
+  ['rx_5fmessage_5flost_5fcount',['rx_message_lost_count',['../can__dev_8cpp.html#ab2f32e73f74c2b322c86f542a85129a3',1,'rx_message_lost_count():&#160;can_dev.cpp'],['../can__man_8h.html#ab2f32e73f74c2b322c86f542a85129a3',1,'rx_message_lost_count():&#160;can_dev.cpp']]]
 ];

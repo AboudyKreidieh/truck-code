@@ -75,8 +75,13 @@ extern int can_dev_arm(resmgr_context_t *ctp, can_ocb_t *pocb,
 
 int can_dev_add_filter(IOFUNC_ATTR_T *pattr, can_filter_t filter);
 
+/** Clear the error counts.
+ *
+ * @return old counts
+ */
 extern can_err_count_t can_dev_clear_errs();
 
+/** Return the current error count. */
 extern can_err_count_t can_dev_get_errs();
 
 extern void can_dev_init(unsigned int base_address, unsigned int bit_speed,

@@ -23,7 +23,7 @@ INCLUDES += -I../thirdparty/boost/include
 CCFLAGS_all += -Wall -fmessage-length=0
 CCFLAGS_all += $(CCFLAGS_$(BUILD_PROFILE))
 DEPS = -Wp,-MMD,$(@:%.o=%.d),-MT,$@
-LIBS += -l pps -l stdc++
+LIBS += -lpps -lstdc++
 
 # Source list
 SRCS := $(shell find -name '*.cpp' -or -name '*.c' -or -name '*.s')
@@ -36,6 +36,7 @@ TARGETS = $(OUTPUT_DIR)/../run_tests
 
 # Objects to be included while linking
 OBJECTS = $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/jbus/*.o) 
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/can/*.o) 
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/timestamp.o)
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/sys.o)
 #OBJECTS += $(wildcard ../thirdparty/boost/lib//*)

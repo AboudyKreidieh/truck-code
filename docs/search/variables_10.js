@@ -21,5 +21,6 @@ var searchData=
   ['turbo_5flube_5foil_5fpressure',['turbo_lube_oil_pressure',['../structj1939__turbo__typ.html#a6b9d71544288d06eab9973ba0e502883',1,'j1939_turbo_typ']]],
   ['turbo_5foil_5ftemp',['turbo_oil_temp',['../structj1939__etemp__typ.html#adf28f9ac81deba8d4f9215050e823ae0',1,'j1939_etemp_typ']]],
   ['turbo_5fspeed',['turbo_speed',['../structj1939__turbo__typ.html#a8ac306c453fafff3da68054bc520f989',1,'j1939_turbo_typ']]],
-  ['two_5fspd_5faxle_5fswitch',['two_spd_axle_switch',['../structj1939__ccvs__typ.html#a59896bd4c6231f7112f6c9e967c800a9',1,'j1939_ccvs_typ']]]
+  ['two_5fspd_5faxle_5fswitch',['two_spd_axle_switch',['../structj1939__ccvs__typ.html#a59896bd4c6231f7112f6c9e967c800a9',1,'j1939_ccvs_typ']]],
+  ['tx_5finterrupt_5fcount',['tx_interrupt_count',['../can__dev_8cpp.html#abbc210871099af2e0463cd02c19d67bc',1,'tx_interrupt_count():&#160;can_dev.cpp'],['../can__man_8h.html#abbc210871099af2e0463cd02c19d67bc',1,'tx_interrupt_count():&#160;can_dev.cpp']]]
 ];

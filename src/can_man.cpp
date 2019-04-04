@@ -16,16 +16,13 @@
  */
 
 //#include <sys_os.h>
+#include <can/can_man.h>
 #include <iostream>
 #include <sys/dispatch.h>
-#include "jbus/can.h"
-#include "jbus/can_dev.h"
+#include "can/can.h"
 #include "utils/constants.h"
 #include <setjmp.h>
 #include <sys/iofunc.h>
-
-//#include "sys_rt.h"
-//#include "can_man.h"
 
 using namespace std;
 
@@ -81,25 +78,25 @@ int main (int argc, char **argv)
 	dispatch_context_t *ctp;
 	can_info_t *pinfo = &attr.can_info;
 
-	ThreadCtl(_NTO_TCTL_IO, NULL); //required to access I/O ports
+	ThreadCtl(_NTO_TCTL_IO, NULL);  /* required to access I/O ports */
 
-	// create the dispatch structure
+	/* create the dispatch structure */
 	if ((dpp = dispatch_create()) == NULL) {
 		perror ("Unable to dispatch_create\n");
 		exit (EXIT_FAILURE);
 	}
 
-	// initialize the various data structures
+	/* initialize the various data structures */
 	memset (&resmgr_attr, 0, sizeof (resmgr_attr));
 	resmgr_attr.nparts_max = 2;
 	resmgr_attr.msg_max_size = DAS_MSG_BUF;
 
-	// bind default functions into the outcall tables
+	/* bind default functions into the outcall tables */
 	iofunc_func_init (_RESMGR_CONNECT_NFUNCS, &connect_func,
 			 _RESMGR_IO_NFUNCS, &io_func);
 	iofunc_attr_init (&attr.io_attr, S_IFNAM | 0666, 0, 0);
 
-	// add allocation and deallocation for extended OCB
+	/* add allocation and deallocation for extended OCB */
 	can_mount_funcs.nfuncs = _IOFUNC_NFUNCS;
 	can_mount_funcs.ocb_calloc = can_ocb_calloc;
 	can_mount_funcs.ocb_free = can_ocb_free;
@@ -107,15 +104,16 @@ int main (int argc, char **argv)
 	can_mount.funcs = &can_mount_funcs;
 	attr.io_attr.mount = &can_mount;
 
-	// read configuration files and bind device-specific functions
+	/* read configuration files and bind device-specific functions */
 	can_init(argc, argv, &connect_func, &io_func, &attr);
 
-	// establish a name in the pathname space
-	if (resmgr_attach (dpp, &resmgr_attr, attr.devname, _FTYPE_ANY,
-		 0, &connect_func, &io_func, &attr) == -1) {
-		perror ("Unable to resmgr_attach\n");
-		exit (EXIT_FAILURE);
-	}
+	// FIXME
+//	// establish a name in the pathname space
+//	if (resmgr_attach (dpp, &resmgr_attr, attr.devname, _FTYPE_ANY,
+//		 0, &connect_func, &io_func, &attr) == -1) {
+//		perror ("Unable to resmgr_attach\n");
+//		exit (EXIT_FAILURE);
+//	}
 
 #ifdef DO_TRACE
 	printf("Calling can_dev_init: base address 0x%x speed %d extended %d\n",
@@ -123,14 +121,14 @@ int main (int argc, char **argv)
 	fflush(stdout);
 #endif
 
-	// initialize device
+	/* initialize device */
 	can_dev_init(pinfo->port, pinfo->bit_speed, pinfo->use_extended_frame);
-
 
 #ifdef DO_TRACE
 	printf("Attaching pulses\n");
 	fflush(stdout);
 #endif
+
 	// attach pulses and interrupt event
 	pulse_init(dpp, &attr);
 
