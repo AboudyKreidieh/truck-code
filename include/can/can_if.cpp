@@ -14,67 +14,26 @@
 
 #undef DO_TRACE
 
-/** declared and set in can_dev.c by can_send
- */
+
+/* declared and set in can_dev.c by can_send */  // TODO: remove globals
+
 extern time_t last_time_can_sent;
 int can_timeout_count = 0;
 int tx_buffer_flush = 0;
 
-/** Utilities to handle the circular queue of output messages
- */
-void can_cq_add(cbuff_typ *pbuff, can_msg_t *new_msg)
-{
-	int index = get_circular_index(pbuff);
-	can_msg_t *pdata = (can_msg_t *) pbuff->data_array;
-#ifdef DO_TRACE
-	printf("cq add data 0x%02x to buff 0x%x at index %d\n",
-		new_msg->data[0], (unsigned int) pbuff, index);
-#endif
-	pdata[index] = *new_msg;
-}
 
-can_msg_t *can_cq_read_first(cbuff_typ *pbuff)
-{
-	can_msg_t *pdata = (can_msg_t *) pbuff->data_array;
-	return (&pdata[pbuff->data_start]);
-}
+///** Print routine for debugging can_msg_t */
+//void print_can_msg(can_msg_t *pc) {
+//	int i;
+//	printf("0x%08x ", (unsigned int) pc->id);
+//	printf("%d ", pc->size);
+//	for (i = 0; i < 8; i++)
+//		printf("0x%02x ", pc->data[i]);
+//	printf("%d\n", pc->error);
+//}
 
-can_msg_t *can_cq_pop_first(cbuff_typ *pbuff)
-{
-	can_msg_t *pdata = (can_msg_t *) pbuff->data_array;
-#ifdef DO_TRACE
-	printf("cq pop from buff 0x%x, start %d, count %d\n",
-		(unsigned int) pbuff,pbuff->data_start, pbuff->data_count);
-#endif
-	if (pbuff->data_count > 0) {
-		can_msg_t *rtnval = &pdata[pbuff->data_start];
-		pbuff->data_count--;
-		pbuff->data_start++;
-		if (pbuff->data_start == pbuff->data_size)
-			pbuff->data_start = 0;
-		return (rtnval);
-	}
-	return (NULL);
-}
 
-/**
- *	Print routine for debugging can_msg_t
- */
-void print_can_msg(can_msg_t *pc)
-{
-	int i;
-	printf("0x%08x ", (unsigned int) pc->id);
-	printf("%d ", pc->size);
-	for (i = 0; i < 8; i++)
-		printf("0x%02x ", pc->data[i]);
-	printf("%d\n", pc->error);
-}
-
-/** Adds a new message if ID and MASK allow
- */
-
-void can_new_msg(can_msg_t *pmsg, IOFUNC_ATTR_T *pattr)
-{
+void can_new_msg(can_msg_t *pmsg, IOFUNC_ATTR_T *pattr) {
 	can_info_t *pinfo = &pattr->can_info;
 	unsigned long id = pinfo->filter.id;
 	unsigned long mask = pinfo->filter.mask;
@@ -91,8 +50,8 @@ void can_new_msg(can_msg_t *pmsg, IOFUNC_ATTR_T *pattr)
 	}
 }
 
-can_msg_t can_dev_read(IOFUNC_ATTR_T *pattr)
-{
+
+can_msg_t can_dev_read(IOFUNC_ATTR_T *pattr) {
 	can_msg_t msg;
 	can_msg_t *pmsg;
 
@@ -113,23 +72,9 @@ can_msg_t can_dev_read(IOFUNC_ATTR_T *pattr)
 	print_can_msg(&msg);
 	fflush(stdout);
 #endif
-	return (msg);
+	return msg;
 }
 
-/**
- *	Used to throw out buffered output when sending gets
- *	too far behind.
- */
-int can_dev_flush_q(IOFUNC_ATTR_T *pattr)
-{
-	int j = 0;
-	can_msg_t *dummy = can_cq_pop_first(&pattr->out_buff);
-	while (pattr->out_buff.data_count > 1) {
-		dummy = can_cq_pop_first(&pattr->out_buff);
-		j++;
-	}
-	return(j);
-}
 
 int can_dev_write(can_ocb_t *pocb, can_msg_t *pmsg)  // FIXME: RESMGR_OCB_T *pocb
 {
@@ -158,67 +103,39 @@ int can_dev_write(can_ocb_t *pocb, can_msg_t *pmsg)  // FIXME: RESMGR_OCB_T *poc
 #endif
 
 	if(pattr->out_buff.data_count == 1)
-		can_send(pattr);
+		can_dev_send(pattr);
 	else {
 		// Assumes message sends are at least 1 Hz
 		if ((time((time_t *)NULL) - last_time_can_sent) > 1) {
 			can_timeout_count++;
-			can_send(pattr);
+			can_dev_send(pattr);
 		}
 
 		if (pattr->out_buff.data_count > 10) {
 			// must have missed an interrupt, throw old stuff out
-
-			tx_buffer_flush += can_dev_flush_q(pattr);
+			tx_buffer_flush += can_dev_empty_q(pattr);
 		}
-
 	}
-#ifdef DO_TRACE_TX
-	printf("returning from can_dev_write\n");
-#endif
-	return (EOK);
+
+	return EOK;
 
 }
 
 
-/**
- *	Used to throw out buffered input when a receiver first
- *	connects to the driver.
- */
-int can_dev_empty_q(IOFUNC_ATTR_T *pattr)
+int can_dev_arm(resmgr_context_t *ctp, iofunc_ocb_t *io_ocb, sigevent event)
 {
-	int j = 0;
-	can_msg_t *dummy = can_cq_pop_first(&pattr->in_buff);
-	while (dummy != NULL) {
-		j++;
-		dummy = can_cq_pop_first(&pattr->in_buff);
-	}
-	return(j);
-}
-
-/**
- *	Attach the hardware interrupt, and save the event to be
- *	used to notify the client in the ocb structure.
- */
-int can_dev_arm(resmgr_context_t *ctp, can_ocb_t *pocb, sigevent event)  // FIXME: RESMGR_OCB_T *pocb
-{
-	IOFUNC_ATTR_T *pattr = (IOFUNC_ATTR_T *)pocb->io_ocb.attr;
-
+	can_ocb_t *pocb = new can_ocb_t();
 	pocb->rcvid = ctp->rcvid;
 	pocb->clt_event = event;
+
+	IOFUNC_ATTR_T *pattr = (IOFUNC_ATTR_T *)io_ocb->attr;
 	pattr->notify_pocb = pocb;
 
 	return EOK;
 }
 
-/**
- *	Not implemented yet at the level of the device registers
- *	All are received in Object 15. Later this function may
- *      include calls to device register operations.
- */
 
-int can_dev_add_filter(IOFUNC_ATTR_T *pattr, can_filter_t filter)
-{
+int can_dev_add_filter(IOFUNC_ATTR_T *pattr, can_filter_t filter) {
 	pattr->can_info.filter = filter;
 	return EOK;
 }

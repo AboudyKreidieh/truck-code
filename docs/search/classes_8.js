@@ -19,7 +19,6 @@ var searchData=
   ['j1939_5fhrvd_5ftyp',['j1939_hrvd_typ',['../structj1939__hrvd__typ.html',1,'']]],
   ['j1939_5fiec_5ftyp',['j1939_iec_typ',['../structj1939__iec__typ.html',1,'']]],
   ['j1939_5flfe_5ftyp',['j1939_lfe_typ',['../structj1939__lfe__typ.html',1,'']]],
-  ['j1939_5fpdu',['j1939_pdu',['../structj1939__pdu.html',1,'']]],
   ['j1939_5fpdu_5ftyp',['j1939_pdu_typ',['../structj1939__pdu__typ.html',1,'']]],
   ['j1939_5fpto_5ftyp',['j1939_pto_typ',['../structj1939__pto__typ.html',1,'']]],
   ['j1939_5frcfg_5ftyp',['j1939_rcfg_typ',['../structj1939__rcfg__typ.html',1,'']]],

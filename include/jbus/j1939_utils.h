@@ -23,6 +23,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include "utils/common.h"	/* BYTE */
 
 
 /* Parameter group numbers for supported messages (pdu_format, pdu_specific) */
@@ -374,7 +375,7 @@ extern float torque_in_nm(unsigned short data);
  * @param data one-byte value
  * @return time (s)
  */
-extern float time_0_to_25sec(unsigned char data);
+extern float time_0_to_25sec(BYTE data);
 
 
 /** Compute the gain.

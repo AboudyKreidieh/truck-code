@@ -4,10 +4,10 @@
  *
  * @author Abdul Rahman Kreidieh
  * @version 1.0.0
- * @date July 15, 2019
+ * @date January 15, 2019
  */
 
-#include "can.h"
+#include "can/can.h"
 #include "jbus.h"
 #include "j1939_utils.h"
 #include "j1939_struct.h"
@@ -61,7 +61,7 @@ int JBus::close_conn(int *pfd) {
 	int retval = close(phdl->fd);
 
 	// free up memory
-  	free(phdl);
+  	delete phdl;
 	*pphdl = NULL;
 
 	// check whether the connection was successfully closed
@@ -91,4 +91,3 @@ int JBus::receive(int fd, j1939_pdu_typ *pdu, int *extended, int *slot) {
 
 
 JBus::~JBus() {}
-

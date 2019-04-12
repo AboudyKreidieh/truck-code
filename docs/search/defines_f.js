@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['tf',['TF',['../j1939__utils_8h.html#a1c0168a9703a05a19de4ce775acc6647',1,'j1939_utils.h']]],
-  ['tsc1',['TSC1',['../j1939__utils_8h.html#acfd2b67f04087b045cdb21848417effc',1,'j1939_utils.h']]],
-  ['turbo',['TURBO',['../j1939__utils_8h.html#a0a305887de8e1a6b972a5d8edbafcb88',1,'j1939_utils.h']]],
-  ['twobytes',['TWOBYTES',['../j1939__utils_8h.html#aa4cd421b38c3002fd49715c3adacf423',1,'j1939_utils.h']]]
+  ['set_5fextended_5fframe',['SET_EXTENDED_FRAME',['../can__struct_8h.html#a42754008439dd8ec5fb0c05e2b1b7b2a',1,'can_struct.h']]],
+  ['sja1000_5fmap_5fsize',['SJA1000_MAP_SIZE',['../sja1000_8h.html#ac9896b97467fa7cdaf9dc45c1f2b3a5c',1,'sja1000.h']]]
 ];

@@ -29,6 +29,8 @@ var searchData=
   ['eng_5ftrq_5fmode',['eng_trq_mode',['../structj1939__eec1__typ.html#ae2256fd48cbb54a42f3ba53d68af311e',1,'j1939_eec1_typ']]],
   ['engine_5fspd',['engine_spd',['../structj1939__ecfg__typ.html#a20d92a8cdb3af060002f23ffe3a4c45b',1,'j1939_ecfg_typ']]],
   ['error',['error',['../structcan__msg__t.html#a940be991c7d975e92a606c88665d9a18',1,'can_msg_t']]],
+  ['error_5fcode',['error_code',['../structCanStatusPar.html#a3f626979e7382a0edb9eff6a9afcbd43',1,'CanStatusPar']]],
+  ['error_5fwarning_5flimit',['error_warning_limit',['../structCanStatusPar.html#ad9d8294cb260a3d918c08e7a371cdd42',1,'CanStatusPar']]],
   ['est_5feng_5fprstic_5floss',['est_eng_prstic_loss',['../structj1939__eec3__typ.html#a2e900a683874ecb65d4500a3ec5841e9',1,'j1939_eec3_typ']]],
   ['exhaust_5fgas_5fpressure',['exhaust_gas_pressure',['../structj1939__ei__typ.html#a1e2c8bd0999454da212bda0c4a22c2de',1,'j1939_ei_typ']]],
   ['exhaust_5fgas_5ftemp',['exhaust_gas_temp',['../structj1939__iec__typ.html#af33668ad422c84851d461706a554667a',1,'j1939_iec_typ']]]

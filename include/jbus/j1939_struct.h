@@ -18,6 +18,7 @@
 #include <string>
 #include "j1939_utils.h"
 #include "utils/timestamp.h"
+#include "utils/common.h"		/* BYTE */
 
 
 /** J1939 Protocol Data Unit (PDU) format.
@@ -30,13 +31,15 @@
  */
 typedef struct
 {
-    timestamp_t timestamp;		/**< time the message was received */
-	int priority;         		/**< priority of message */
-	int pdu_format;	    		/**< Protocol Data Unit Format (PF) */
-	int pdu_specific;	    	/**< PDU Specific (PS) */
-	int src_address;	    	/**< Source address */
-	int data_field[8];			/**< 64 bits maximum */
-	int num_bytes;				/**< number of bytes in data_field */
+    timestamp_t timestamp;	/**< time the message was received */
+	BIT reserved;			/**< frame bit 5; ID 25; reserved for future use */
+	BIT data_page;			/**< frame bit 6; ID 24; 0 currently  */
+	int priority;         	/**< priority of message */
+	int pdu_format;	    	/**< Protocol Data Unit Format (PF) */
+	int pdu_specific;	    /**< PDU Specific (PS) */
+	int src_address;	    /**< Source address */
+	int data_field[8];		/**< 64 bits maximum */
+	int num_bytes;			/**< number of bytes in data_field */
 } j1939_pdu_typ;
 
 
@@ -55,26 +58,26 @@ typedef struct {
 
 /** PDU EBC1 (Electronic Brake Controller #1) doc. in J1939 - 71, p151 */
 typedef struct {
-	timestamp_t timestamp;				/**< time the message was received */
-	int asr_engine_ctrl_active;			/**< ASR Engine Control Active (0-3) */
-	int asr_brk_ctrl_active;			/**< ASR Brake Control Active (0-3) */
-	int antilock_brk_active;			/**< Anti-Lock Braking (ABS) Active (0-3) */
-	int ebs_brk_switch;					/**< EBS Brake Switch (0-3) */
-	float brk_pedal_pos;				/**< Brake Pedal Position (0-100%) */
-	int abs_offroad_switch;				/**< ABS Off-road Switch (0-3) */
-	int asr_offroad_switch;				/**< ASR Off-road Switch (0-3) */
-	int asr_hillholder_switch;			/**< ASR "Hill Holder" Switch (0-3) */
-	int trac_ctrl_override_switch;		/**< Traction Control Override Switch (0-3) */
-	int accel_interlock_switch;			/**< Accelerator Interlock Switch (0-3) */
-	int eng_derate_switch;				/**< Engine Derate Switch (0-3) */
-	int aux_eng_shutdown_switch;		/**< Engine Auxiliary Shutdown Switch (0-3) */
-	int accel_enable_switch;			/**< Remote Accelerator Enable Switch (0-3) */
-	float eng_retarder_selection;		/**< Engine Retarder Selection (0-100%) */
-	int abs_fully_operational;			/**< ABS Fully Operational (0-3) */
-	int ebs_red_warning;				/**< EBS Red Warning Signal (0-3) */
-	int abs_ebs_amber_warning;			/**< ABS/EBS Amber Warning Signal (Powered Vehicle) (0-3) */
-	int src_address_ctrl;				/**< Source Address of Controlling Device for Brake Control (0-255) */
-	float total_brk_demand;				/**< Total brake demand */
+	timestamp_t timestamp;			/**< time the message was received */
+	int asr_engine_ctrl_active;		/**< ASR Engine Control Active (0-3) */
+	int asr_brk_ctrl_active;		/**< ASR Brake Control Active (0-3) */
+	int antilock_brk_active;		/**< Anti-Lock Braking (ABS) Active (0-3) */
+	int ebs_brk_switch;				/**< EBS Brake Switch (0-3) */
+	float brk_pedal_pos;			/**< Brake Pedal Position (0-100%) */
+	int abs_offroad_switch;			/**< ABS Off-road Switch (0-3) */
+	int asr_offroad_switch;			/**< ASR Off-road Switch (0-3) */
+	int asr_hillholder_switch;		/**< ASR "Hill Holder" Switch (0-3) */
+	int trac_ctrl_override_switch;	/**< Traction Control Override Switch (0-3) */
+	int accel_interlock_switch;		/**< Accelerator Interlock Switch (0-3) */
+	int eng_derate_switch;			/**< Engine Derate Switch (0-3) */
+	int aux_eng_shutdown_switch;	/**< Engine Auxiliary Shutdown Switch (0-3) */
+	int accel_enable_switch;		/**< Remote Accelerator Enable Switch (0-3) */
+	float eng_retarder_selection;	/**< Engine Retarder Selection (0-100%) */
+	int abs_fully_operational;		/**< ABS Fully Operational (0-3) */
+	int ebs_red_warning;			/**< EBS Red Warning Signal (0-3) */
+	int abs_ebs_amber_warning;		/**< ABS/EBS Amber Warning Signal (Powered Vehicle) (0-3) */
+	int src_address_ctrl;			/**< Source Address of Controlling Device for Brake Control (0-255) */
+	float total_brk_demand;			/**< Total brake demand */
 } j1939_ebc1_typ;
 
 
@@ -93,9 +96,9 @@ typedef struct {
 
 /** PDU RF (Retarder Fluids) doc. in J1939 - 71, p164 */
 typedef struct {
-	timestamp_t timestamp;
-	float pressure;				/**< Hydraulic Retarder Pressure (0-4000 kPa) */
-	float oil_temp;				/**< Hydraulic Retarder Oil Temperature (-40 to 210 deg C) */
+	timestamp_t timestamp;	/**< time the message was received */
+	float pressure;			/**< Hydraulic Retarder Pressure (0-4000 kPa) */
+	float oil_temp;			/**< Hydraulic Retarder Oil Temperature (-40 to 210 deg C) */
 } j1939_rf_typ;
 
 
@@ -283,38 +286,38 @@ typedef struct {
 
 /** PDU CCVS (Cruise Control/Vehicle Speed) doc. in J1939 - 71, p162 */
 typedef struct {
-	timestamp_t timestamp;			/**< time the message was received */
-	int two_spd_axle_switch;		/**< Two Speed Axle Switch (0-3) */
-	int parking_brk_switch;			/**< Parking Brake Switch (0-3) */
-	int cc_pause_switch;			/**< Cruise Control Pause Switch (0-3) */
-	int park_brk_release;			/**< Park Brake Release Inhibit Request (0-3) */
-	float vehicle_spd;				/**< Wheel-Based Vehicle Speed (0 to 250.996 km/h) */
-	int cc_active;					/**< Cruise Control Active (0-3) */
-	int cc_enable_switch;			/**< Cruise Control Enable Switch (0-3) */
-	int brk_switch;					/**< Brake Switch (0-3) */
-	int clutch_switch;				/**< Clutch Switch (0-3) */
-	int cc_set_switch;				/**< Cruise Control Set Switch (0-3) */
-	int cc_coast_switch;			/**< Cruise Control Coast (Decelerate) Switch (0-3) */
-	int cc_resume_switch;			/**< Cruise Control Resume Switch (0-3) */
-	int cc_accel_switch;			/**< Cruise Control Accelerate Switch (0-3) */
-	float cc_set_speed;				/**< Cruise Control Set Speed (0-250 km/h) */
-	int pto_state;					/**< PTO Governor State (0-31) */
-	int cc_state;					/**< Cruise Control States (0-7) */
-	int eng_idle_incr_switch;		/**< Engine Idle Increment Switch (0-3) */
-	int eng_idle_decr_switch;		/**< Engine Idle Decrement Switch (0-3) */
-	int eng_test_mode_switch;		/**< Engine Test Mode Switch (0-3) */
-	int eng_shutdown_override;		/**< Engine Shutdown Override Switch (0-3) */
+	timestamp_t timestamp;		/**< time the message was received */
+	int two_spd_axle_switch;	/**< Two Speed Axle Switch (0-3) */
+	int parking_brk_switch;		/**< Parking Brake Switch (0-3) */
+	int cc_pause_switch;		/**< Cruise Control Pause Switch (0-3) */
+	int park_brk_release;		/**< Park Brake Release Inhibit Request (0-3) */
+	float vehicle_spd;			/**< Wheel-Based Vehicle Speed (0 to 250.996 km/h) */
+	int cc_active;				/**< Cruise Control Active (0-3) */
+	int cc_enable_switch;		/**< Cruise Control Enable Switch (0-3) */
+	int brk_switch;				/**< Brake Switch (0-3) */
+	int clutch_switch;			/**< Clutch Switch (0-3) */
+	int cc_set_switch;			/**< Cruise Control Set Switch (0-3) */
+	int cc_coast_switch;		/**< Cruise Control Coast (Decelerate) Switch (0-3) */
+	int cc_resume_switch;		/**< Cruise Control Resume Switch (0-3) */
+	int cc_accel_switch;		/**< Cruise Control Accelerate Switch (0-3) */
+	float cc_set_speed;			/**< Cruise Control Set Speed (0-250 km/h) */
+	int pto_state;				/**< PTO Governor State (0-31) */
+	int cc_state;				/**< Cruise Control States (0-7) */
+	int eng_idle_incr_switch;	/**< Engine Idle Increment Switch (0-3) */
+	int eng_idle_decr_switch;	/**< Engine Idle Decrement Switch (0-3) */
+	int eng_test_mode_switch;	/**< Engine Test Mode Switch (0-3) */
+	int eng_shutdown_override;	/**< Engine Shutdown Override Switch (0-3) */
 } j1939_ccvs_typ;
 
 
 /** PDU LFE (Fuel Economy) doc. in J1939 - 71, p162 */
 typedef struct {
-	timestamp_t timestamp;				/**< time the message was received */
-	float eng_fuel_rate;				/**< Engine Fuel Rate (0-3212.75 L/h) */
-	float eng_inst_fuel_economy;		/**< Engine Instantaneous Fuel Economy (0-125.5 km/L) */
-	float eng_avg_fuel_economy;			/**< Engine Average Fuel Economy (0-125.5 km/L) */
-	float eng_throttle1_pos;			/**< Engine Throttle 1 Position (0-100%) */
-	float eng_throttle2_pos;			/**< Engine Throttle 2 Position (0-100%) */
+	timestamp_t timestamp;			/**< time the message was received */
+	float eng_fuel_rate;			/**< Engine Fuel Rate (0-3212.75 L/h) */
+	float eng_inst_fuel_economy;	/**< Engine Instantaneous Fuel Economy (0-125.5 km/L) */
+	float eng_avg_fuel_economy;		/**< Engine Average Fuel Economy (0-125.5 km/L) */
+	float eng_throttle1_pos;		/**< Engine Throttle 1 Position (0-100%) */
+	float eng_throttle2_pos;		/**< Engine Throttle 2 Position (0-100%) */
 } j1939_lfe_typ;
 
 
@@ -331,14 +334,14 @@ typedef struct {
 
 /** PDU IEC (Inlet/Exhaust Conditions) doc. in J1939 - 71, p164 */
 typedef struct {
-	timestamp_t timestamp;					/**< time the message was received */
-	float particulate_inlet_pressure;		/**< Engine Diesel Particulate Filter Inlet Pressure (0-125 kPa) */
-	float boost_pressure;					/**< Engine Intake Manifold #1 Pressure (0-500 kPa) */
-	float intake_manifold_temp;				/**< Engine Intake Manifold 1 Temperature (-40 to 210 deg C) */
-	float air_inlet_pressure;				/**< Engine Air Inlet Pressure (0-500 kPa) */
-	float air_filter_diff_pressure;			/**< Engine Air Filter 1 Differential Pressure (0-12.5 kPa) */
-	float exhaust_gas_temp;					/**< Engine Exhaust Gas Temperature (-273 to 1735 deg C) */
-	float coolant_filter_diff_pressure;		/**< Engine Coolant Filter Differential Pressure (0-125 kPa) */
+	timestamp_t timestamp;				/**< time the message was received */
+	float particulate_inlet_pressure;	/**< Engine Diesel Particulate Filter Inlet Pressure (0-125 kPa) */
+	float boost_pressure;				/**< Engine Intake Manifold #1 Pressure (0-500 kPa) */
+	float intake_manifold_temp;			/**< Engine Intake Manifold 1 Temperature (-40 to 210 deg C) */
+	float air_inlet_pressure;			/**< Engine Air Inlet Pressure (0-500 kPa) */
+	float air_filter_diff_pressure;		/**< Engine Air Filter 1 Differential Pressure (0-12.5 kPa) */
+	float exhaust_gas_temp;				/**< Engine Exhaust Gas Temperature (-273 to 1735 deg C) */
+	float coolant_filter_diff_pressure;	/**< Engine Coolant Filter Differential Pressure (0-125 kPa) */
 } j1939_iec_typ;
 
 
@@ -355,12 +358,12 @@ typedef struct {
 
 /** PDU TF (Transmission Fluids) doc. in J1939 - 71, p164 */
 typedef struct {
-	timestamp_t timestamp;		/**< time the message was received */
-	float clutch_pressure;		/**< Clutch Pressure (0-4000 kPa) */
-	float oil_level;			/**< Transmission Oil Level (0-100%) */
-	float diff_pressure;		/**< Transmission Filter Differential Pressure (0-500 kPa) */
-	float oil_pressure;			/**< Transmission Oil Pressure (0-4000 kPa) */
-	float oil_temp;				/**< Transmission Oil Temperature (-273 to 1735 deg C) */
+	timestamp_t timestamp;	/**< time the message was received */
+	float clutch_pressure;	/**< Clutch Pressure (0-4000 kPa) */
+	float oil_level;		/**< Transmission Oil Level (0-100%) */
+	float diff_pressure;	/**< Transmission Filter Differential Pressure (0-500 kPa) */
+	float oil_pressure;		/**< Transmission Oil Pressure (0-4000 kPa) */
+	float oil_temp;			/**< Transmission Oil Temperature (-273 to 1735 deg C) */
 } j1939_tf_typ;
 
 
@@ -374,11 +377,11 @@ typedef struct {
 
 /** PDU EBC5 (Electronic Brake Controller 5)*/
 typedef struct {
-	timestamp_t timestamp;			/**< time the message was received */
-	int halt_brk_mode;				/**< Halt brake mode (0-7) */
-	int brk_use;					/**< Foundation Brake Use (0-3) */
-	int xbr_active_ctrl_mode;		/**< XBR Active Control Mode (0-15) */
-	float xbr_accel_limit;			/**< XBR Acceleration Limit (-12.5 to +12.5 m/s²) */
+	timestamp_t timestamp;		/**< time the message was received */
+	int halt_brk_mode;			/**< Halt brake mode (0-7) */
+	int brk_use;				/**< Foundation Brake Use (0-3) */
+	int xbr_active_ctrl_mode;	/**< XBR Active Control Mode (0-15) */
+	float xbr_accel_limit;		/**< XBR Acceleration Limit (-12.5 to +12.5 m/s²) */
 } j1939_ebc5_typ;
 
 
@@ -395,9 +398,9 @@ typedef struct {
 
 /** PDU FD (Fan Drive) doc. in J1939 - 71, sec. 5.3.58 */
 typedef struct {
-	timestamp_t timestamp;		/**< time the message was received */
-	float prcnt_fan_spd;		/**< Estimated Percent Fan Speed (0-100%) */
-	int fan_drive_state;		/**< Fan Drive State (0-15) */
+	timestamp_t timestamp;	/**< time the message was received */
+	float prcnt_fan_spd;	/**< Estimated Percent Fan Speed (0-100%) */
+	int fan_drive_state;	/**< Fan Drive State (0-15) */
 } j1939_fd_typ;
 
 
@@ -429,17 +432,17 @@ typedef struct {
 /** PDU VOLVO_XBR_WARN (Volvo brake message) */
 typedef struct {
 	timestamp_t timestamp;					/**< time the message was received */
-	unsigned char src_address;
-	unsigned char destination_address;
-	unsigned char pdu_format;
-	unsigned char byte1;                    // 0xFF
-	unsigned char byte2;                    // 0x31
-	unsigned char byte3;                    // 0xFF
-	unsigned char byte4;                    // 0xFF
-	unsigned char byte5;                    // 0xFF
-	unsigned char byte6;                    // 0xFF
-	unsigned char byte7;                    // 0xFF
-	unsigned char byte8;                    // 0xFF
+	BYTE src_address;
+	BYTE destination_address;
+	BYTE pdu_format;
+	BYTE byte1;                    // 0xFF
+	BYTE byte2;                    // 0x31
+	BYTE byte3;                    // 0xFF
+	BYTE byte4;                    // 0xFF
+	BYTE byte5;                    // 0xFF
+	BYTE byte6;                    // 0xFF
+	BYTE byte7;                    // 0xFF
+	BYTE byte8;                    // 0xFF
 } j1939_volvo_xbr_warn_typ;
 
 
@@ -447,18 +450,18 @@ typedef struct {
 typedef struct {
 	timestamp_t timestamp;					/**< time the message was received */
 	float ExternalAccelerationDemand;	    //
-	unsigned char src_address;              //
-	unsigned char destination_address;      //
-	unsigned char pdu_format;               //
-	unsigned char XBREBIMode;	            //
-	unsigned char XBRPriority;	            //
-	unsigned char XBRControlMode;	        //
-	unsigned char XBRUrgency;	            //
-	unsigned char spare1;		            // 0xFF
-	unsigned char spare2;		            // 0xFF
-	unsigned char spare3;		            // 0xFF
-	unsigned char XBRMessageCounter;        //
-	unsigned char XBRMessageChecksum;       //
+	BYTE src_address;              //
+	BYTE destination_address;      //
+	BYTE pdu_format;               //
+	BYTE XBREBIMode;	            //
+	BYTE XBRPriority;	            //
+	BYTE XBRControlMode;	        //
+	BYTE XBRUrgency;	            //
+	BYTE spare1;		            // 0xFF
+	BYTE spare2;		            // 0xFF
+	BYTE spare3;		            // 0xFF
+	BYTE XBRMessageCounter;        //
+	BYTE XBRMessageChecksum;       //
 } j1939_volvo_xbr_typ;
 
 
@@ -488,7 +491,7 @@ typedef struct {
 // 	float TargetDist;	            // 0-655.35 m
 // 	float TargetVel;	            // 0-655.35 m/sec
 // 	float TargetAcc;	            // -327.68-327.67 m/sec/sec
-// 	unsigned char TargetAvailable;  // 0=no target, 1=target
+// 	BYTE TargetAvailable;  // 0=no target, 1=target
 // } j1939_volvo_target_typ;
 
 
@@ -507,9 +510,9 @@ typedef struct {
 //     float VBRK_BrkAppPressure;
 //     float VBRK_BrkPrimaryPressure;
 //     float VBRK_BrkSecondaryPressure;
-//     unsigned char VBRK_BrkStatParkBrkActuator;
-//     unsigned char VBRK_ParkBrkRedWarningSignal;
-//     unsigned char VBRK_ParkBrkReleaseInhibitStat;
+//     BYTE VBRK_BrkStatParkBrkActuator;
+//     BYTE VBRK_ParkBrkRedWarningSignal;
+//     BYTE VBRK_ParkBrkReleaseInhibitStat;
 // } j1939_volvo_brk_t;
 
 

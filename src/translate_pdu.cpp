@@ -166,7 +166,8 @@ int main(int argc, char* argv[]) {
         bool flag = false;
         while (pch != NULL) {
         	/* check if the message can be deciphered */
-        	if (i == 0 && find(names.begin(), names.end(), string(pch)) == names.end()) {
+        	if (i == 0 && find(names.begin(), names.end(),
+        			string(pch)) == names.end()) {
 				flag = true;
 				break;
         	}

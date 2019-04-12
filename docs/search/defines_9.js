@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['j1939_5freceive_5ffatal_5ferror',['J1939_RECEIVE_FATAL_ERROR',['../j1939__utils_8h.html#aeb39ae18bd21f87a4cfc133679b332fc',1,'j1939_utils.h']]],
-  ['j1939_5freceive_5fmessage_5ferror',['J1939_RECEIVE_MESSAGE_ERROR',['../j1939__utils_8h.html#a174214d5da6b4af8c591a07ff01b13e1',1,'j1939_utils.h']]],
-  ['j1939_5freceive_5fmessage_5fvalid',['J1939_RECEIVE_MESSAGE_VALID',['../j1939__utils_8h.html#ae271f836bfba6f0d06d95bc5b8143b24',1,'j1939_utils.h']]],
-  ['j1939stb_5fserial_5fdevice_5fname',['J1939STB_SERIAL_DEVICE_NAME',['../j1939__utils_8h.html#aed0a397fe6503fb2b972e5134bf9613d',1,'j1939_utils.h']]],
-  ['jbus_5finterval_5fmsecs',['JBUS_INTERVAL_MSECS',['../jbus_8h.html#aff97c1c26a47606271a9a7e6f7c40991',1,'jbus.h']]]
+  ['iec',['IEC',['../j1939__utils_8h.html#a48a7ea952e9256f47a3ef76089bc8afe',1,'j1939_utils.h']]],
+  ['iminor',['iminor',['../sja1000_8h.html#a02ad96935d544940647f116ad47c1aa4',1,'sja1000.h']]],
+  ['ini_5fext_5fentry',['INI_EXT_ENTRY',['../can__man_8h.html#a8ba79186989242c0ced99e4ca9b4fd7f',1,'can_man.h']]],
+  ['ini_5firq_5fentry',['INI_IRQ_ENTRY',['../can__man_8h.html#ab7a2cc1c83a7f52299a6ab03f8d17f20',1,'can_man.h']]],
+  ['ini_5fport_5fentry',['INI_PORT_ENTRY',['../can__man_8h.html#a25392e53ca8132874cdacbc7ae4e4270',1,'can_man.h']]],
+  ['is_5fextended_5fframe',['IS_EXTENDED_FRAME',['../can__struct_8h.html#a27beb0641278bd5912b2db02b803656c',1,'can_struct.h']]]
 ];

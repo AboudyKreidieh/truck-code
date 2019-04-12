@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['encode_5ftimestamp',['encode_timestamp',['../timestamp_8cpp.html#a22c93932505ac61018a7894c5af5665f',1,'encode_timestamp(pps_encoder_t encoder, timestamp_t *t):&#160;timestamp.cpp'],['../timestamp_8h.html#a5739ce3300b3948998f73dab4ae1b888',1,'encode_timestamp(pps_encoder_t, timestamp_t *):&#160;timestamp.cpp']]]
+  ['distance_5fin_5fkm',['distance_in_km',['../j1939__utils_8cpp.html#a626da7ba61b59a1ab70e52b3a187b5bd',1,'distance_in_km(unsigned int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a626da7ba61b59a1ab70e52b3a187b5bd',1,'distance_in_km(unsigned int data):&#160;j1939_utils.cpp']]]
 ];

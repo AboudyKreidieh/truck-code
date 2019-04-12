@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include "constants.h"
+#include "common.h"
 #include "sys.h"
 
 static long section_offset;
@@ -45,7 +45,6 @@ int readline(FILE *pfile, char *pbuff, int size)
 				break;
 		}
 		*pcursor = END_OF_STRING;
-
 	}
 
 	return counter;
@@ -74,12 +73,10 @@ static char *get_entry(FILE *pfile, char *pentry)
 			return( NULL );
 	}
 
-	/*	Parse out the first equal sign
-	 */
-
+	/*	Parse out the first equal sign. */
 	pstring = strchr(buffer, ASC_EQUAL_SIGN);
 	pstring++;
-	if( strlen( pstring ) == 0 )		/*	No setting?					*/
+	if( strlen( pstring ) == 0 )		/*	No setting?		*/
 		return NULL;
 	else
 		return pstring;
@@ -166,40 +163,5 @@ FILE *get_ini_section(char *pname, char *psection)
 	section_offset = ftell( pfin );
 
 	return pfin;
-}
-
-/* -------------------------------------------------------------------------- */
-/* ------------------ Extracted from path/local/sys_buff.h ------------------ */
-/* -------------------------------------------------------------------------- */
-
-void init_circular_buffer(cbuff_typ *pbuff, int max_data, int item_size)
-{
-       pbuff->data_size = max_data;
-       pbuff->data_count = 0;
-       pbuff->data_start = 0;
-       if (max_data > 0)
-               pbuff->data_array = (void *) malloc (item_size *
-                                       pbuff->data_size);
-       else
-               pbuff->data_array = NULL;
-}
-
-int get_circular_index (cbuff_typ *pbuff)
-{
-        int index;
-        if (pbuff->data_size == pbuff->data_count) {
-                /* if count at max, insert in previous start location */
-                index = pbuff->data_start;
-                pbuff->data_start++;
-                if (pbuff->data_start == pbuff->data_size)
-                        pbuff->data_start = 0;
-        } else {
-                /* insert at next free location, increment count */
-                index = pbuff->data_start + pbuff->data_count;
-		if (index >= pbuff->data_size)
-			index -= pbuff->data_size;
-                pbuff->data_count++;
-        }
-        return (index);
 }
 

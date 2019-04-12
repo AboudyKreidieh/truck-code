@@ -12,6 +12,7 @@
 #include "j1939_interpreters.h"
 #include "j1939_utils.h"
 #include "utils/timestamp.h"
+#include "utils/common.h"		/* BYTE */
 #include <vector>
 #include <string>
 #include <map>
@@ -53,12 +54,12 @@ void PDUInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
-		fprintf(fp, " Priority %d \n", pdu->priority);
+		fprintf(fp, " Priority %d\n", pdu->priority);
 		fprintf(fp, " Protocol Data Unit Format (PF) %d\n", pdu->pdu_format);
 		fprintf(fp, " PDU Specific (PS) %d\n", pdu->pdu_specific);
 		fprintf(fp, " Source Address %d\n", pdu->src_address);
 		fprintf(fp, " Number of bytes %d\n", pdu->num_bytes);
-		fprintf(fp, " Data Field ");
+		fprintf(fp, " Data Field");
 		for (int i=0; i<pdu->num_bytes; ++i)
 			fprintf(fp, " %d", pdu->data_field[i]);
 		fprintf(fp, "\n");
@@ -123,14 +124,14 @@ void TSC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
-		fprintf(fp, " Destination %d \n", tsc1->destination_address);
+		fprintf(fp, " Destination %d\n", tsc1->destination_address);
 		fprintf(fp, " Source address %d\n", tsc1->src_address);
 		fprintf(fp, " Override Control Mode priority %d\n",
 				tsc1->ovrd_ctrl_m_pr);
 		fprintf(fp, " Requested speed control conditions %d\n",
 				tsc1->req_spd_ctrl);
 		fprintf(fp, " Override control mode %d\n", tsc1->ovrd_ctrl_m);
-		fprintf(fp, " Requested speed/speed limit  %.3f\n", tsc1->req_spd_lim);
+		fprintf(fp, " Requested speed/speed limit %.3f\n", tsc1->req_spd_lim);
 		fprintf(fp, " Requested torque/torque limit %.3f\n", tsc1->req_trq_lim);
 	}
 }
@@ -215,36 +216,35 @@ void EBC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
-		fprintf(fp, " EBS brake switch status %d \n", ebc1->ebs_brk_switch);
-		fprintf(fp, " ABS active status %d \n", ebc1->antilock_brk_active);
-		fprintf(fp, " ASR brake control status %d \n",
+		fprintf(fp, " EBS brake switch status %d\n", ebc1->ebs_brk_switch);
+		fprintf(fp, " ABS active status %d\n", ebc1->antilock_brk_active);
+		fprintf(fp, " ASR brake control status %d\n",
 				ebc1->asr_brk_ctrl_active);
-		fprintf(fp, " ASR engine control active status %d \n",
+		fprintf(fp, " ASR engine control active status %d\n",
 				ebc1->asr_engine_ctrl_active);
 		fprintf(fp, " Brake pedal position %.2f\n", ebc1->brk_pedal_pos);
-		fprintf(fp, " Traction control override switch status %d \n",
+		fprintf(fp, " Traction control override switch status %d\n",
 				ebc1->trac_ctrl_override_switch);
-		fprintf(fp, " Hill holder switch status %d \n",
+		fprintf(fp, " Hill holder switch status %d\n",
 				ebc1->asr_hillholder_switch);
-		fprintf(fp, " ABS off road switch status %d \n",
+		fprintf(fp, " ABS off road switch status %d\n",
 				ebc1->abs_offroad_switch);
-		fprintf(fp, " ASR off road switch status %d \n",
+		fprintf(fp, " ASR off road switch status %d\n",
 				ebc1->asr_offroad_switch);
-		fprintf(fp, " Remote accelerator enable switch status %d \n",
+		fprintf(fp, " Remote accelerator enable switch status %d\n",
 				ebc1->accel_enable_switch);
-		fprintf(fp, " Auxiliary engine shutdown switch status %d \n",
+		fprintf(fp, " Auxiliary engine shutdown switch status %d\n",
 				ebc1->aux_eng_shutdown_switch);
-		fprintf(fp, " Engine derate switch status %d \n",
+		fprintf(fp, " Engine derate switch status %d\n",
 				ebc1->eng_derate_switch);
-		fprintf(fp, " Accelerator interlock switch status %d \n",
+		fprintf(fp, " Accelerator interlock switch status %d\n",
 				ebc1->accel_interlock_switch);
-		fprintf(fp, " Percent engine retarder torque selected %.2f \n",
+		fprintf(fp, " Percent engine retarder torque selected %.2f\n",
 				ebc1->eng_retarder_selection);
-		fprintf(fp, " ABS/EBS amber warning state %d \n",
+		fprintf(fp, " ABS/EBS amber warning state %d\n",
 				ebc1->abs_ebs_amber_warning);
-		fprintf(fp, " EBS red warning state %d \n", ebc1->ebs_red_warning);
-		fprintf(fp, " ABS fully operational %d \n",
-				ebc1->abs_fully_operational);
+		fprintf(fp, " EBS red warning state %d\n", ebc1->ebs_red_warning);
+		fprintf(fp, " ABS fully operational %d\n", ebc1->abs_fully_operational);
 		fprintf(fp, " Source address %d (0x%0x)\n",
 				ebc1->src_address_ctrl, ebc1->src_address_ctrl);
 		fprintf(fp, " Total brake demand %.3f\n", ebc1->total_brk_demand);
@@ -394,20 +394,23 @@ void EEC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 void *EEC1Interpreter::import(vector<string> &tokens) {
 	j1939_eec1_typ *eec1 = new j1939_eec1_typ();
 
-//	import_timestamp(&eec1->timestamp, tokens[1]);
-//	eec1->eng_trq_mode = stoi(tokens[2]);
-//	eec1->drvr_demand_eng_trq = stof(tokens[3]);
-//	eec1->actual_eng_trq = stof(tokens[4]);
-//	eec1->eng_demand_trq = stof(tokens[5]);
-//	eec1->eng_spd = stof(tokens[6]);
-//	eec1->src_address = stoi(tokens[7]);
-
-	import_timestamp(&eec1->timestamp, tokens[1]);
-	eec1->eng_trq_mode = stoi(tokens[2]);
-	eec1->drvr_demand_eng_trq = stof(tokens[3]);
-	eec1->actual_eng_trq = stof(tokens[4]);
-	eec1->eng_spd = stof(tokens[5]);
-	eec1->src_address = stoi(tokens[6]);
+	if (tokens.size() == 8) {
+		import_timestamp(&eec1->timestamp, tokens[1]);
+		eec1->eng_trq_mode = stoi(tokens[2]);
+		eec1->drvr_demand_eng_trq = stof(tokens[3]);
+		eec1->actual_eng_trq = stof(tokens[4]);
+		eec1->eng_demand_trq = stof(tokens[5]);
+		eec1->eng_spd = stof(tokens[6]);
+		eec1->src_address = stoi(tokens[7]);
+	}
+	else if (tokens.size() == 7) {
+		import_timestamp(&eec1->timestamp, tokens[1]);
+		eec1->eng_trq_mode = stoi(tokens[2]);
+		eec1->drvr_demand_eng_trq = stof(tokens[3]);
+		eec1->actual_eng_trq = stof(tokens[4]);
+		eec1->eng_spd = stof(tokens[5]);
+		eec1->src_address = stoi(tokens[6]);
+	}
 
 	return (void*) eec1;
 }
@@ -441,10 +444,10 @@ void EEC2Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, " %d", eec2->accel_pedal_kickdown);
 		fprintf(fp, " %d", eec2->accel_pedal1_idle);
 		fprintf(fp, " %d", eec2->accel_pedal2_idle);
-		fprintf(fp, " %.2f", eec2->act_max_avail_eng_trq);
 		fprintf(fp, " %.2f", eec2->accel_pedal1_pos);
 		fprintf(fp, " %.2f", eec2->accel_pedal2_pos);
 		fprintf(fp, " %.2f", eec2->eng_prcnt_load_curr_spd);
+		fprintf(fp, " %.2f", eec2->act_max_avail_eng_trq);
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
@@ -463,23 +466,26 @@ void EEC2Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 void *EEC2Interpreter::import(vector<string> &tokens) {
 	j1939_eec2_typ *eec2 = new j1939_eec2_typ();
 
-//	import_timestamp(&eec2->timestamp, tokens[1]);
-//	eec2->spd_limit_status = stoi(tokens[2]);
-//	eec2->accel_pedal_kickdown = stoi(tokens[3]);
-//	eec2->accel_pedal1_idle = stoi(tokens[4]);
-//	eec2->accel_pedal2_idle = stoi(tokens[5]);
-//	eec2->act_max_avail_eng_trq = stof(tokens[6]);
-//	eec2->accel_pedal1_pos = stof(tokens[7]);
-//	eec2->accel_pedal2_pos = stof(tokens[8]);
-//	eec2->eng_prcnt_load_curr_spd = stof(tokens[9]);
-
-	import_timestamp(&eec2->timestamp, tokens[1]);
-	eec2->spd_limit_status = stoi(tokens[2]);
-	eec2->accel_pedal_kickdown = stoi(tokens[3]);
-	eec2->accel_pedal1_idle = stoi(tokens[4]);
-	eec2->accel_pedal1_pos = stof(tokens[5]);
-	eec2->eng_prcnt_load_curr_spd = stof(tokens[6]);
-	eec2->act_max_avail_eng_trq = stof(tokens[7]);
+	if (tokens.size() == 10) {
+		import_timestamp(&eec2->timestamp, tokens[1]);
+		eec2->spd_limit_status = stoi(tokens[2]);
+		eec2->accel_pedal_kickdown = stoi(tokens[3]);
+		eec2->accel_pedal1_idle = stoi(tokens[4]);
+		eec2->accel_pedal2_idle = stoi(tokens[5]);
+		eec2->accel_pedal1_pos = stof(tokens[6]);
+		eec2->accel_pedal2_pos = stof(tokens[7]);
+		eec2->eng_prcnt_load_curr_spd = stof(tokens[8]);
+		eec2->act_max_avail_eng_trq = stof(tokens[9]);
+	}
+	else if (tokens.size() == 8) {
+		import_timestamp(&eec2->timestamp, tokens[1]);
+		eec2->spd_limit_status = stoi(tokens[2]);
+		eec2->accel_pedal_kickdown = stoi(tokens[3]);
+		eec2->accel_pedal1_idle = stoi(tokens[4]);
+		eec2->accel_pedal1_pos = stof(tokens[5]);
+		eec2->eng_prcnt_load_curr_spd = stof(tokens[6]);
+		eec2->act_max_avail_eng_trq = stof(tokens[7]);
+	}
 
 	return (void*) eec2;
 }
@@ -510,18 +516,18 @@ void EEC3Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 	if (numeric) {
 		fprintf(fp," %.2f", eec3->nominal_friction);
 		fprintf(fp," %.2f", eec3->est_eng_prstic_loss);
-		fprintf(fp," %.2f", eec3->operating_spd_adjust);
+		fprintf(fp," %d", eec3->operating_spd_adjust);
 		fprintf(fp," %.2f", eec3->desired_operating_spd);
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
 		fprintf(fp," Nominal friction percent torque %.2f\n",
 			 eec3->nominal_friction);
-		fprintf(fp," Estimated engine power loss - percent torque %.3f\n",
+		fprintf(fp," Estimated engine power loss - percent torque %.2f\n",
 			 eec3->est_eng_prstic_loss);
 		fprintf(fp," Desired Operating Speed Asymmetry Adjustment %d\n",
 			 eec3->operating_spd_adjust);
-		fprintf(fp," Engine desired operating speed %.3f\n",
+		fprintf(fp," Engine desired operating speed %.2f\n",
 			 eec3->desired_operating_spd);
 	}
 	// TODO(ak): add asymmetry adjustment
@@ -531,16 +537,20 @@ void EEC3Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 void *EEC3Interpreter::import(vector<string> &tokens) {
 	j1939_eec3_typ *eec3 = new j1939_eec3_typ();
 
-//	import_timestamp(&eec3->timestamp, tokens[1]);
-//	eec3->nominal_friction = stof(tokens[2]);
-//	eec3->est_eng_prstic_loss = stof(tokens[3]);
-//	eec3->operating_spd_adjust = stof(tokens[4]);
-//	eec3->desired_operating_spd = stof(tokens[5]);
-
-	import_timestamp(&eec3->timestamp, tokens[1]);
-	eec3->nominal_friction = stof(tokens[2]);
-	eec3->desired_operating_spd = stof(tokens[3]);
-	eec3->operating_spd_adjust = stof(tokens[4]);
+	if (tokens.size() == 6) {
+		import_timestamp(&eec3->timestamp, tokens[1]);
+		eec3->nominal_friction = stof(tokens[2]);
+		eec3->est_eng_prstic_loss = stof(tokens[3]);
+		eec3->operating_spd_adjust = stoi(tokens[4]);
+		eec3->desired_operating_spd = stof(tokens[5]);
+	}
+	else if (tokens.size() == 5) {
+		// for backwards compatibility
+		import_timestamp(&eec3->timestamp, tokens[1]);
+		eec3->nominal_friction = stof(tokens[2]);
+		eec3->desired_operating_spd = stoi(tokens[3]);
+		eec3->operating_spd_adjust = stof(tokens[4]);
+	}
 
 	return (void*) eec3;
 }
@@ -580,7 +590,7 @@ void ERC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, " %d", erc1->rq_brake_light);
 	 	fprintf(fp, " %d", erc1->src_address_ctrl);
 		fprintf(fp, " %hhd", erc1->drvrs_demand_prcnt_trq);
-		fprintf(fp, " %d", erc1->selection_nonengine);
+		fprintf(fp, " %.2f", erc1->selection_nonengine);
 		fprintf(fp, " %hhd", erc1->max_available_prcnt_trq);
 		fprintf(fp, "\n");
 	} else {
@@ -600,7 +610,7 @@ void ERC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 				erc1->src_address_ctrl, erc1->src_address_ctrl);
 		fprintf(fp, " Drivers demand retarder percent torque %d\n",
 				erc1->drvrs_demand_prcnt_trq);
-		fprintf(fp, " Retarder selection Non-eng %d\n",
+		fprintf(fp, " Retarder selection Non-eng %.2f\n",
 				erc1->selection_nonengine);
 		fprintf(fp, " Actual maximum available retarder percent torque %d\n",
 				erc1->max_available_prcnt_trq);
@@ -611,26 +621,29 @@ void ERC1Interpreter::print(void *pdv, FILE *fp, bool numeric) {
 void *ERC1Interpreter::import(vector<string> &tokens) {
 	j1939_erc1_typ *erc1 = new j1939_erc1_typ();
 
-//	import_timestamp(&erc1->timestamp, tokens[1]);
-//	erc1->enable_shift_assist = stoi(tokens[2]);
-//	erc1->enable_brake_assist = stoi(tokens[3]);
-//	erc1->trq_mode = stoi(tokens[4]);
-//	erc1->actual_ret_pcnt_trq = stof(tokens[5]);
-//	erc1->intended_ret_pcnt_trq = stof(tokens[6]);
-//	erc1->rq_brake_light = stoi(tokens[7]);
-// 	erc1->src_address_ctrl = stoi(tokens[8]);
-//	erc1->drvrs_demand_prcnt_trq = stoi(tokens[9]);
-//	erc1->selection_nonengine = stof(tokens[10]);
-//	erc1->max_available_prcnt_trq = stoi(tokens[11]);
-
-	import_timestamp(&erc1->timestamp, tokens[1]);
-	erc1->enable_shift_assist = stoi(tokens[2]);
-	erc1->enable_brake_assist = stoi(tokens[3]);
-	erc1->trq_mode = stoi(tokens[4]);
-	erc1->actual_ret_pcnt_trq = stof(tokens[5]);
-	erc1->intended_ret_pcnt_trq = stof(tokens[6]);
-	erc1->rq_brake_light = stoi(tokens[7]);
- 	erc1->src_address_ctrl = stoi(tokens[8]);
+	if (tokens.size() == 12) {
+		import_timestamp(&erc1->timestamp, tokens[1]);
+		erc1->enable_shift_assist = stoi(tokens[2]);
+		erc1->enable_brake_assist = stoi(tokens[3]);
+		erc1->trq_mode = stoi(tokens[4]);
+		erc1->actual_ret_pcnt_trq = stof(tokens[5]);
+		erc1->intended_ret_pcnt_trq = stof(tokens[6]);
+		erc1->rq_brake_light = stoi(tokens[7]);
+	 	erc1->src_address_ctrl = stoi(tokens[8]);
+		erc1->drvrs_demand_prcnt_trq = stoi(tokens[9]);
+		erc1->selection_nonengine = stof(tokens[10]);
+		erc1->max_available_prcnt_trq = stoi(tokens[11]);
+	}
+	else if (tokens.size() == 9) {
+		import_timestamp(&erc1->timestamp, tokens[1]);
+		erc1->enable_shift_assist = stoi(tokens[2]);
+		erc1->enable_brake_assist = stoi(tokens[3]);
+		erc1->trq_mode = stoi(tokens[4]);
+		erc1->actual_ret_pcnt_trq = stof(tokens[5]);
+		erc1->intended_ret_pcnt_trq = stof(tokens[6]);
+		erc1->rq_brake_light = stoi(tokens[7]);
+	 	erc1->src_address_ctrl = stoi(tokens[8]);
+	}
 
 	return (void*) erc1;
 }
@@ -857,7 +870,7 @@ void *RCFGInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_rcfg_typ *rcfg = new j1939_rcfg_typ();
 	rcfg->timestamp = pdu->timestamp;
 	unsigned short two_bytes;
-	unsigned char data[21];	 // to hold data bytes from 3 packets
+	BYTE data[21];	 // to hold data bytes from 3 packets
 	int i, j;
 
 	for (i = 0; i < 3; i++) {
@@ -897,10 +910,10 @@ void RCFGInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 		fprintf(fp, " %d", rcfg->retarder_type);
 		fprintf(fp, " %d", rcfg->retarder_ctrl_steps);
 		for (i = 0; i < 5; i++)
-			fprintf(fp, " %7.2f", rcfg->retarder_speed[i]);
+			fprintf(fp, " %.2f", rcfg->retarder_speed[i]);
 		for (i = 0; i < 5; i++)
-			fprintf(fp, " %7.2f", rcfg->percent_torque[i]);
-		fprintf(fp, " %7.2f", rcfg->reference_retarder_trq);
+			fprintf(fp, " %.2f", rcfg->percent_torque[i]);
+		fprintf(fp, " %.2f", rcfg->reference_retarder_trq);
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
@@ -908,17 +921,17 @@ void RCFGInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 				rcfg->retarder_loc, rcfg->retarder_type,
 				rcfg->retarder_ctrl_steps);
 
-		fprintf(fp, " Retarder speed ");
+		fprintf(fp, " Retarder speed");
 		for (i = 0; i < 5; i++)
-			fprintf(fp, " %7.2f", rcfg->retarder_speed[i]);
+			fprintf(fp, " %.2f", rcfg->retarder_speed[i]);
 		fprintf(fp, "\n");
 
-		fprintf(fp, "Percent torque ");
+		fprintf(fp, " Percent torque");
 		for (i = 0; i < 5; i++)
-			fprintf(fp, " %7.2f", rcfg->percent_torque[i]);
+			fprintf(fp, " %.2f", rcfg->percent_torque[i]);
 		fprintf(fp, "\n");
 
-		fprintf(fp, "Reference retarder torque %7.2f\n",
+		fprintf(fp, " Reference retarder torque %.2f\n",
 				rcfg->reference_retarder_trq);
 	}
 }
@@ -928,25 +941,28 @@ void *RCFGInterpreter::import(vector<string> &tokens) {
 	j1939_rcfg_typ *rcfg = new j1939_rcfg_typ();
 	int i;
 
-//	import_timestamp(&rcfg->timestamp, tokens[1]);
-//	rcfg->retarder_loc = stoi(tokens[2]);
-//	rcfg->retarder_type = stoi(tokens[3]);
-//	rcfg->retarder_ctrl_steps = stoi(tokens[4]);
-//	for (i = 0; i < 5; i++)
-//		rcfg->retarder_speed[i] = stof(tokens[5+i]);
-//	for (i = 0; i < 5; i++)
-//		rcfg->percent_torque[i] = stof(tokens[10+i]);
-//	rcfg->reference_retarder_trq = stof(tokens[15]);
-
-//	import_timestamp(&rcfg->timestamp, tokens[1]);
-	rcfg->retarder_loc = stoi(tokens[3]);
-	rcfg->retarder_type = stoi(tokens[4]);
-	rcfg->retarder_ctrl_steps = stoi(tokens[5]);
-	for (i = 0; i < 5; i++)
-		rcfg->retarder_speed[i] = stof(tokens[6+i]);
-	for (i = 0; i < 5; i++)
-		rcfg->percent_torque[i] = stof(tokens[11+i]);
-	rcfg->reference_retarder_trq = stof(tokens[16]);
+	if (tokens.size() == 16) {
+		import_timestamp(&rcfg->timestamp, tokens[1]);
+		rcfg->retarder_loc = stoi(tokens[2]);
+		rcfg->retarder_type = stoi(tokens[3]);
+		rcfg->retarder_ctrl_steps = stoi(tokens[4]);
+		for (i = 0; i < 5; i++)
+			rcfg->retarder_speed[i] = stof(tokens[5+i]);
+		for (i = 0; i < 5; i++)
+			rcfg->percent_torque[i] = stof(tokens[10+i]);
+		rcfg->reference_retarder_trq = stof(tokens[15]);
+	}
+	else if (tokens.size() == 17) {
+//		import_timestamp(&rcfg->timestamp, tokens[1]);
+		rcfg->retarder_loc = stoi(tokens[3]);
+		rcfg->retarder_type = stoi(tokens[4]);
+		rcfg->retarder_ctrl_steps = stoi(tokens[5]);
+		for (i = 0; i < 5; i++)
+			rcfg->retarder_speed[i] = stof(tokens[6+i]);
+		for (i = 0; i < 5; i++)
+			rcfg->percent_torque[i] = stof(tokens[11+i]);
+		rcfg->reference_retarder_trq = stof(tokens[16]);
+	}
 
 	return (void*) rcfg;
 }
@@ -1015,42 +1031,42 @@ void ECFGInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	fprintf(fp, "ECFG");
 	print_timestamp(fp, &ecfg->timestamp);
 	if (numeric) {
-		fprintf(fp, " %x", ecfg->receive_status);
+		fprintf(fp, " 0x%x", ecfg->receive_status);
 		for (i = 0; i < 7; i++)
-			fprintf(fp, " %7.2f", ecfg->engine_spd[i]);
+			fprintf(fp, " %.2f", ecfg->engine_spd[i]);
 		for (i = 0; i < 5; i++)
-			fprintf(fp, " %7.2f", ecfg->percent_trq[i]);
-		fprintf(fp, " %7.2f", ecfg->gain_endspeed_governor);
-		fprintf(fp, " %7.2f", ecfg->reference_eng_trq);
-		fprintf(fp, " %7.2f", ecfg->max_momentary_overide_time);
-		fprintf(fp, " %7.2f", ecfg->spd_ctrl_lower_lim);
-		fprintf(fp, " %7.2f", ecfg->spd_ctrl_upper_lim);
-		fprintf(fp, " %7.2f", ecfg->trq_ctrl_lower_lim);
-		fprintf(fp, " %7.2f", ecfg->trq_ctrl_upper_lim);
+			fprintf(fp, " %.2f", ecfg->percent_trq[i]);
+		fprintf(fp, " %.2f", ecfg->gain_endspeed_governor);
+		fprintf(fp, " %.2f", ecfg->reference_eng_trq);
+		fprintf(fp, " %.2f", ecfg->max_momentary_overide_time);
+		fprintf(fp, " %.2f", ecfg->spd_ctrl_lower_lim);
+		fprintf(fp, " %.2f", ecfg->spd_ctrl_upper_lim);
+		fprintf(fp, " %.2f", ecfg->trq_ctrl_lower_lim);
+		fprintf(fp, " %.2f", ecfg->trq_ctrl_upper_lim);
 		fprintf(fp, "\n");
 	} else {
 		fprintf(fp, "\n");
-		fprintf(fp, " Engine configuration received mask 0x%x \n",
+		fprintf(fp, " Engine configuration received mask 0x%x\n",
 				ecfg->receive_status);
-		fprintf(fp, " Engine speed ");
+		fprintf(fp, " Engine speed");
 		for (i = 0; i < 7; i++)
-			fprintf(fp, " %7.2f", ecfg->engine_spd[i]);
-		fprintf(fp, "\n Percent torque ");
+			fprintf(fp, " %.2f", ecfg->engine_spd[i]);
+		fprintf(fp, "\n Percent torque");
 		for (i = 0; i < 5; i++)
-			fprintf(fp, " %7.2f", ecfg->percent_trq[i]);
-		fprintf(fp, "\n Gain endspeed governor %7.2f\n",
+			fprintf(fp, " %.2f", ecfg->percent_trq[i]);
+		fprintf(fp, "\n Gain endspeed governor %.2f\n",
 				ecfg->gain_endspeed_governor);
-		fprintf(fp, " Reference engine torque %7.2f\n",
+		fprintf(fp, " Reference engine torque %.2f\n",
 				ecfg->reference_eng_trq);
-		fprintf(fp, " Max Momentary Override Time %7.2f\n",
+		fprintf(fp, " Max Momentary Override Time %.2f\n",
 				ecfg->max_momentary_overide_time);
-		fprintf(fp, " Speed Control Lower Limit %7.2f\n",
+		fprintf(fp, " Speed Control Lower Limit %.2f\n",
 				ecfg->spd_ctrl_lower_lim);
-		fprintf(fp, " Speed Control Upper Limit %7.2f\n",
+		fprintf(fp, " Speed Control Upper Limit %.2f\n",
 				ecfg->spd_ctrl_upper_lim);
-		fprintf(fp, " Torque Control Lower Limit %7.2f\n",
+		fprintf(fp, " Torque Control Lower Limit %.2f\n",
 				ecfg->trq_ctrl_lower_lim);
-		fprintf(fp, " Torque Control Upper Limit %7.2f\n",
+		fprintf(fp, " Torque Control Upper Limit %.2f\n",
 				ecfg->trq_ctrl_upper_lim);
 	}
 }
@@ -1060,21 +1076,8 @@ void *ECFGInterpreter::import(vector<string> &tokens) {
 	j1939_ecfg_typ *ecfg = new j1939_ecfg_typ();
 	int i;
 
-//	import_timestamp(&ecfg->timestamp, tokens[1]);
-//	ecfg->receive_status = stoi(tokens[2]);
-//	for (i = 0; i < 7; i++)
-//		ecfg->engine_spd[i] = stof(tokens[3+i]);
-//	for (i = 0; i < 5; i++)
-//		ecfg->percent_trq[i] = stof(tokens[10+i]);
-//	ecfg->gain_endspeed_governor = stof(tokens[15]);
-//	ecfg->reference_eng_trq = stof(tokens[16]);
-//	ecfg->max_momentary_overide_time = stof(tokens[17]);
-//	ecfg->spd_ctrl_lower_lim = stof(tokens[18]);
-//	ecfg->spd_ctrl_upper_lim = stof(tokens[19]);
-//	ecfg->trq_ctrl_lower_lim = stof(tokens[20]);
-//	ecfg->trq_ctrl_upper_lim = stof(tokens[21]);
-
 	import_timestamp(&ecfg->timestamp, tokens[1]);
+	ecfg->receive_status = stoi(tokens[2]);
 	for (i = 0; i < 7; i++)
 		ecfg->engine_spd[i] = stof(tokens[3+i]);
 	for (i = 0; i < 5; i++)
@@ -1086,6 +1089,19 @@ void *ECFGInterpreter::import(vector<string> &tokens) {
 	ecfg->spd_ctrl_upper_lim = stof(tokens[19]);
 	ecfg->trq_ctrl_lower_lim = stof(tokens[20]);
 	ecfg->trq_ctrl_upper_lim = stof(tokens[21]);
+
+//	import_timestamp(&ecfg->timestamp, tokens[1]);
+//	for (i = 0; i < 7; i++)
+//		ecfg->engine_spd[i] = stof(tokens[3+i]);
+//	for (i = 0; i < 5; i++)
+//		ecfg->percent_trq[i] = stof(tokens[10+i]);
+//	ecfg->gain_endspeed_governor = stof(tokens[15]);
+//	ecfg->reference_eng_trq = stof(tokens[16]);
+//	ecfg->max_momentary_overide_time = stof(tokens[17]);
+//	ecfg->spd_ctrl_lower_lim = stof(tokens[18]);
+//	ecfg->spd_ctrl_upper_lim = stof(tokens[19]);
+//	ecfg->trq_ctrl_lower_lim = stof(tokens[20]);
+//	ecfg->trq_ctrl_upper_lim = stof(tokens[21]);
 
 	return (void*) ecfg;
 }
@@ -1289,8 +1305,8 @@ void CCVSInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 	fprintf(fp, "CCVS");
 	print_timestamp(fp, &ccvs->timestamp);
 	if (numeric){
-		fprintf(fp, " %d", ccvs->park_brk_release);
 		fprintf(fp, " %d", ccvs->parking_brk_switch);
+		fprintf(fp, " %d", ccvs->park_brk_release);
 		fprintf(fp, " %d", ccvs->two_spd_axle_switch);
 		fprintf(fp, " %.3f", ccvs->vehicle_spd);
 		fprintf(fp, " %d", ccvs->clutch_switch);
@@ -1340,47 +1356,50 @@ void CCVSInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 void *CCVSInterpreter::import(vector<string> &tokens) {
 	j1939_ccvs_typ *ccvs = new j1939_ccvs_typ();
 
-//	import_timestamp(&ccvs->timestamp, tokens[1]);
-//	ccvs->park_brk_release = stoi(tokens[2]);
-//	ccvs->parking_brk_switch = stoi(tokens[3]);
-//	ccvs->two_spd_axle_switch = stoi(tokens[4]);
-//	ccvs->vehicle_spd = stof(tokens[5]);
-//	ccvs->clutch_switch = stoi(tokens[6]);
-//	ccvs->brk_switch = stoi(tokens[7]);
-//	ccvs->cc_pause_switch = stoi(tokens[8]);
-//	ccvs->cc_enable_switch = stoi(tokens[9]);
-//	ccvs->cc_active = stoi(tokens[10]);
-//	ccvs->cc_accel_switch = stoi(tokens[11]);
-//	ccvs->cc_resume_switch = stoi(tokens[12]);
-//	ccvs->cc_coast_switch = stoi(tokens[13]);
-//	ccvs->cc_set_switch = stoi(tokens[14]);
-//	ccvs->cc_set_speed = stof(tokens[15]);
-//	ccvs->cc_state = stoi(tokens[16]);
-//	ccvs->pto_state = stoi(tokens[17]);
-//	ccvs->eng_shutdown_override = stoi(tokens[18]);
-//	ccvs->eng_test_mode_switch = stoi(tokens[19]);
-//	ccvs->eng_idle_decr_switch = stoi(tokens[20]);
-//	ccvs->eng_idle_incr_switch = stoi(tokens[21]);
-
-	import_timestamp(&ccvs->timestamp, tokens[1]);
-	ccvs->park_brk_release = stoi(tokens[2]);
-	ccvs->two_spd_axle_switch = stoi(tokens[3]);
-	ccvs->vehicle_spd = stof(tokens[4]);
-	ccvs->clutch_switch = stoi(tokens[5]);
-	ccvs->brk_switch = stoi(tokens[6]);
-	ccvs->cc_enable_switch = stoi(tokens[7]);
-	ccvs->cc_active = stoi(tokens[8]);
-	ccvs->cc_accel_switch = stoi(tokens[9]);
-	ccvs->cc_resume_switch = stoi(tokens[10]);
-	ccvs->cc_coast_switch = stoi(tokens[11]);
-	ccvs->cc_set_switch = stoi(tokens[12]);
-	ccvs->cc_set_speed = stof(tokens[13]);
-	ccvs->cc_state = stoi(tokens[14]);
-	ccvs->pto_state = stoi(tokens[15]);
-	ccvs->eng_shutdown_override = stoi(tokens[16]);
-	ccvs->eng_test_mode_switch = stoi(tokens[17]);
-	ccvs->eng_idle_decr_switch = stoi(tokens[18]);
-	ccvs->eng_idle_incr_switch = stoi(tokens[19]);
+	if (tokens.size() == 22) {
+		import_timestamp(&ccvs->timestamp, tokens[1]);
+		ccvs->parking_brk_switch = stoi(tokens[2]);
+		ccvs->park_brk_release = stoi(tokens[3]);
+		ccvs->two_spd_axle_switch = stoi(tokens[4]);
+		ccvs->vehicle_spd = stof(tokens[5]);
+		ccvs->clutch_switch = stoi(tokens[6]);
+		ccvs->brk_switch = stoi(tokens[7]);
+		ccvs->cc_pause_switch = stoi(tokens[8]);
+		ccvs->cc_enable_switch = stoi(tokens[9]);
+		ccvs->cc_active = stoi(tokens[10]);
+		ccvs->cc_accel_switch = stoi(tokens[11]);
+		ccvs->cc_resume_switch = stoi(tokens[12]);
+		ccvs->cc_coast_switch = stoi(tokens[13]);
+		ccvs->cc_set_switch = stoi(tokens[14]);
+		ccvs->cc_set_speed = stof(tokens[15]);
+		ccvs->cc_state = stoi(tokens[16]);
+		ccvs->pto_state = stoi(tokens[17]);
+		ccvs->eng_shutdown_override = stoi(tokens[18]);
+		ccvs->eng_test_mode_switch = stoi(tokens[19]);
+		ccvs->eng_idle_decr_switch = stoi(tokens[20]);
+		ccvs->eng_idle_incr_switch = stoi(tokens[21]);
+	}
+	else if (tokens.size() == 20) {
+		import_timestamp(&ccvs->timestamp, tokens[1]);
+		ccvs->park_brk_release = stoi(tokens[2]);
+		ccvs->two_spd_axle_switch = stoi(tokens[3]);
+		ccvs->vehicle_spd = stof(tokens[4]);
+		ccvs->clutch_switch = stoi(tokens[5]);
+		ccvs->brk_switch = stoi(tokens[6]);
+		ccvs->cc_enable_switch = stoi(tokens[7]);
+		ccvs->cc_active = stoi(tokens[8]);
+		ccvs->cc_accel_switch = stoi(tokens[9]);
+		ccvs->cc_resume_switch = stoi(tokens[10]);
+		ccvs->cc_coast_switch = stoi(tokens[11]);
+		ccvs->cc_set_switch = stoi(tokens[12]);
+		ccvs->cc_set_speed = stof(tokens[13]);
+		ccvs->cc_state = stoi(tokens[14]);
+		ccvs->pto_state = stoi(tokens[15]);
+		ccvs->eng_shutdown_override = stoi(tokens[16]);
+		ccvs->eng_test_mode_switch = stoi(tokens[17]);
+		ccvs->eng_idle_decr_switch = stoi(tokens[18]);
+		ccvs->eng_idle_incr_switch = stoi(tokens[19]);
+	}
 
 	return (void*) ccvs;
 }
@@ -1437,18 +1456,21 @@ void LFEInterpreter::print(void *pdv, FILE *fp, bool numeric) {
 void *LFEInterpreter::import(vector<string> &tokens) {
 	j1939_lfe_typ *lfe = new j1939_lfe_typ();
 
-//	import_timestamp(&lfe->timestamp, tokens[1]);
-//	lfe->eng_fuel_rate = stof(tokens[2]);
-//	lfe->eng_inst_fuel_economy = stof(tokens[3]);
-//	lfe->eng_avg_fuel_economy = stof(tokens[4]);
-//	lfe->eng_throttle1_pos = stof(tokens[5]);
-//	lfe->eng_throttle2_pos = stof(tokens[6]);
-
-	import_timestamp(&lfe->timestamp, tokens[1]);
-	lfe->eng_fuel_rate = stof(tokens[2]);
-	lfe->eng_inst_fuel_economy = stof(tokens[3]);
-	lfe->eng_avg_fuel_economy = stof(tokens[4]);
-	lfe->eng_throttle1_pos = stof(tokens[5]);
+	if (tokens.size() == 7) {
+		import_timestamp(&lfe->timestamp, tokens[1]);
+		lfe->eng_fuel_rate = stof(tokens[2]);
+		lfe->eng_inst_fuel_economy = stof(tokens[3]);
+		lfe->eng_avg_fuel_economy = stof(tokens[4]);
+		lfe->eng_throttle1_pos = stof(tokens[5]);
+		lfe->eng_throttle2_pos = stof(tokens[6]);
+	}
+	else if (tokens.size() == 6) {
+		import_timestamp(&lfe->timestamp, tokens[1]);
+		lfe->eng_fuel_rate = stof(tokens[2]);
+		lfe->eng_inst_fuel_economy = stof(tokens[3]);
+		lfe->eng_avg_fuel_economy = stof(tokens[4]);
+		lfe->eng_throttle1_pos = stof(tokens[5]);
+	}
 
 	return (void*) lfe;
 }

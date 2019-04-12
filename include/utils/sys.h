@@ -135,35 +135,4 @@ extern unsigned get_ini_hex(FILE *pfile, char *pentry, unsigned hex_def);
 extern FILE *get_ini_section( char *pname, char *psection );
 
 
-/* -------------------------------------------------------------------------- */
-/* ------------------ Extracted from path/local/sys_buff.h ------------------ */
-/* -------------------------------------------------------------------------- */
-
-/**
- * Circular buffer type used with data item saving
- * Data from last "data_size" samples can be saved in this
- * structure.
- */
-typedef struct {
-  void *data_array;     /**< circular buffer */
-  int data_size;  		/**< number of structures malloced */
-  int data_count; 		/**< control intervals saved (<=data_size) */
-  int data_start; 		/**< index of oldest item in the circular buffer */
-} cbuff_typ;
-
-
-/**
- * init_circular_buffer is used to set up buffer of items of a type defined
- * by call program. sizeof(the_type_name) is used for the
- * item_size parameter. The most recent max_data items will be saved.
- */
-extern void init_circular_buffer(cbuff_typ *pbuff, int max_data, int item_size);
-
-/**
- * get_circular_index is used to get the index of insertion into the
- * circular buffer's data array.
- */
-extern int get_circular_index (cbuff_typ *pbuff);
-
-
 #endif /* INCLUDE_UTILS_SYS_H_ */

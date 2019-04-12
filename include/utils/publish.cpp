@@ -6,7 +6,7 @@
  *
  * @author Abdul Rahman Kreidieh
  * @version 1.0.0
- * @date July 16, 2019
+ * @date January 16, 2019
  */
 
 #include "pub_sub.h"
