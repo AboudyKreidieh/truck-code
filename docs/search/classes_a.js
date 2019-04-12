@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['mobilenet',['MobileNet',['../classMobileNet.html',1,'']]],
-  ['mobilenetv2',['MobileNetV2',['../classMobileNetV2.html',1,'']]]
+  ['msg_5ffifo_5ft',['msg_fifo_t',['../structmsg__fifo__t.html',1,'']]]
 ];

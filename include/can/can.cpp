@@ -17,7 +17,7 @@
 #include "can_struct.h"
 #include "jbus/j1939_struct.h"
 #include "utils/sys.h"
-#include "utils/constants.h"
+#include "utils/common.h"
 #include "das_clt.h"
 #include <sys/types.h>
 #include <sys/neutrino.h>
@@ -26,41 +26,6 @@
 #include <unistd.h>
 #include <devctl.h>
 #include <errno.h>
-
-#define DEFAULT_CONFIG		((char*)"realtime.ini")
-#define DEFAULT_DEVICE		 ((char*)"/dev/can1")
-#define DEFAULT_IRQ			0				// by default, no interrupt
-#define DEFAULT_PORT		0x210
-#define CAN_IN_BUFFER_SIZE	150
-#define CAN_OUT_BUFFER_SIZE	150
-#define INI_IRQ_ENTRY		((char*)"Irq")
-#define INI_PORT_ENTRY		((char*)"Port")
-
-static jmp_buf exit_env;
-
-
-static void sig_hand(int code)
-{
-	longjmp(exit_env, code);
-}
-
-
-static int sig_list[] =
-{
-	SIGTERM,
-	SIGKILL,
-	ERROR
-};
-
-
-static void usage_can_init(char *pargv0)
-{
-	fprintf(stderr, "%s:\t-[pfv]\n", pargv0);
-	fprintf(stderr, "\t\tp\tPath name (%s).\n", DEFAULT_DEVICE);
-	fprintf(stderr, "\t\tf\tConfiguration file (%s).\n", DEFAULT_CONFIG);
-	fprintf(stderr, "\t\tv\tVerbose mode.\n");
-	fprintf(stderr, "\t\t?\tPrints this message.\n");
-}
 
 
 void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
@@ -78,9 +43,9 @@ void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
 	can_info_t *pinfo = &pattr->can_info;
 
 	// Setup default parameters.
-	pconfig = DEFAULT_CONFIG;
+	pconfig = (char*)DEFAULT_CONFIG;
 	pattr->verbose_flag = false;
-	pattr->devname = DEFAULT_DEVICE;
+	pattr->devname = (char*)DEFAULT_DEVICE;
 	pattr->notify_pocb = NULL;
 	pinfo->use_extended_frame = 1;	// by default, use extended frame
 	pinfo->irq = DEFAULT_IRQ;
@@ -91,7 +56,7 @@ void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
 
 	// If arguments are specified, they override config file
 	while((opt = getopt(argc, argv, "e:f:i:n:p:s:v?")) != EOF) {
-		switch(opt) {
+		switch (opt) {
 		case 'e':
 			pinfo->use_extended_frame = atoi(optarg);
 			arg_ext = 1;
@@ -119,14 +84,19 @@ void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
 		case 'v':
 			pattr->verbose_flag = true;
 			break;
-		default:
 		case '?':
-			usage_can_init(argv[0]);
+			fprintf(stderr, "%s:\t-[pfv]\n", argv[0]);
+			fprintf(stderr, "\t\tp\tPath name (%s).\n", DEFAULT_DEVICE);
+			fprintf(stderr, "\t\tf\tConfiguration file (%s).\n", DEFAULT_CONFIG);
+			fprintf(stderr, "\t\tv\tVerbose mode.\n");
+			fprintf(stderr, "\t\t?\tPrints this message.\n");
 			exit(EXIT_SUCCESS);
+		default:
+			break;
 		}
 	}
 
-	// Initialize from config file, if found.
+	/* Initialize from config file, if found. */
 	if ((pfile = get_ini_section(pconfig, pattr->devname)) == NULL) {
 		printf("No section %s in %s file found, using args, defaults\n",
 			pattr->devname, pconfig);
@@ -139,30 +109,30 @@ void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
 		fclose(pfile);
 	}
 
-	// Initialize circular buffers for CAN read and write.
-	init_circular_buffer(&pattr->in_buff, CAN_IN_BUFFER_SIZE,
-			sizeof(can_msg_t));
-	init_circular_buffer(&pattr->out_buff, CAN_OUT_BUFFER_SIZE,
-			sizeof(can_msg_t));
+	/* Initialize circular buffers for CAN read and write. */
+	init_circular_buffer(&pattr->in_buff, DEFAULT_QSIZE, sizeof(can_msg_t));
+	init_circular_buffer(&pattr->out_buff, DEFAULT_QSIZE, sizeof(can_msg_t));
 	printf("Circular buffers initialized\n");
 	fflush(stdout);
 
-	// Initialize resource manager function tables with CAN specific function
-	// for devctl
+	/* Initialize resource manager function tables with CAN specific function
+	 * for devctl. */
 	pio->devctl = io_devctl;
 
-	// Initialize resource manager function tables with CAN specific function
-	// for open
+	/* Initialize resource manager function tables with CAN specific function
+	 * for open. */
 	pconn->open = io_open;
 
-	// Set up exit environment for kill signals
+	/* Set up exit environment for kill signals. */
 	if (setjmp(exit_env) != 0) {
 		exit(EXIT_SUCCESS);
 	} else
 		sig_ign(sig_list, sig_hand);
+
 	printf("Leaving caninit\n");
 	fflush(stdout);
 }
+
 
 int can_set_filter(int fd, unsigned long id, unsigned long mask) {
 	can_filter_t filter_data;
@@ -176,8 +146,7 @@ int can_set_filter(int fd, unsigned long id, unsigned long mask) {
 
 int can_empty_queue(int fd) {
 	int num_dropped = -1;
-	(void) devctl(fd, DCMD_CAN_EMPTY_Q, (void *) &num_dropped,
-			sizeof(int), NULL);
+	devctl(fd, DCMD_CAN_EMPTY_Q, (void *) &num_dropped, sizeof(int), NULL);
 	return num_dropped;
 }
 
@@ -186,12 +155,12 @@ int can_arm(int fd, int channel_id) {
 	int coid;
     static sigevent event;
 
-    // we need a connection to that channel for the pulse to be delivered on
+    /* We need a connection to that channel for the pulse to be delivered on. */
     coid = ConnectAttach(0, 0, channel_id, _NTO_SIDE_CHANNEL, 0);
 
-    // fill in the event structure for a pulse; use the file descriptor of the
-    // CAN device so that this pulse can be distinguished from other devices
-    // that may be sending pulses to this client
+    /* Fill in the event structure for a pulse; use the file descriptor of the
+     * CAN device so that this pulse can be distinguished from other devices
+     * that may be sending pulses to this client. */
     SIGEV_PULSE_INIT(&event, coid, SIGEV_PULSE_PRIO_INHERIT, fd, 0);
 
     return devctl(fd, DCMD_CAN_ARM, (void *) &event,
@@ -199,8 +168,9 @@ int can_arm(int fd, int channel_id) {
 }
 
 
-int can_read(int fd, unsigned long *id, char *extended, void *data,
-		unsigned char size) {
+int can_read(intptr_t fd, unsigned long *id, char *extended, void *data,
+		BYTE size)
+{
 	can_msg_t msg;
 	int status;
 	can_dev_handle_t *phdl = (can_dev_handle_t *) fd;
@@ -222,7 +192,7 @@ int can_read(int fd, unsigned long *id, char *extended, void *data,
  		printf("msglen %d coid %d scoid %d\n",
 			msginfo.msglen, msginfo.coid, msginfo.scoid);
 		perror("MsgReceive");
-		return (-1);
+		return -1;
 	}
 
 	if (status != EOK) {
@@ -253,8 +223,8 @@ int can_read(int fd, unsigned long *id, char *extended, void *data,
 }
 
 
-int can_write(int fd, unsigned long id, char extended, void *data,
-		unsigned char size) {
+int can_write(intptr_t fd, unsigned long id, char extended, void *data,
+		BYTE size) {
 	can_dev_handle_t *phdl = (can_dev_handle_t*) fd;
 	int real_fd = phdl->fd;
 	can_msg_t msg;
@@ -266,23 +236,26 @@ int can_write(int fd, unsigned long id, char extended, void *data,
 
 	memcpy(msg.data, data, msg.size);
 
-
-	return(devctl(real_fd, DCMD_CAN_I82527_WRITE, (void *) &msg,
-			sizeof(msg), NULL));
+	return devctl(real_fd, DCMD_CAN_I82527_WRITE, (void *) &msg,
+			sizeof(msg), NULL);
 }
 
 
-int can_send(int fd, j1939_pdu *pdu, int slot) {
+int can_send(int fd, j1939_pdu_typ *pdu) {
+	int status;  /* used to check whether the can_write procedure passed */
 	unsigned long id = PATH_CAN_ID(pdu);
+
 #ifdef DEBUG
-	int i;
 	printf("send_can: PATH_CAN_ID 0x%x, num_bytes %d ", id, pdu->num_bytes);
-	for (i = 0; i < 8; i++)
+	for (int i = 0; i < 8; i++)
 		printf("%d ", pdu->data_field[i]);
 	printf("\n");
 #endif
-	if (can_write(fd, id, 1, &pdu->data_field,
-		 (unsigned char) (pdu->num_bytes & 0xff)) == -1) {
+
+	status = can_write(fd, id, 1, &pdu->data_field,
+		(BYTE) (pdu->num_bytes & 0xff));
+
+	if (status == -1) {
 		fprintf(stderr, "send_can: can_write failed\n");
 		return 0;
 	} else

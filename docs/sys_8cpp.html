@@ -72,15 +72,15 @@ $(function() {
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &quot;<a class="el" href="constants_8h_source.html">constants.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="common_8h_source.html">common.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sys_8h_source.html">sys.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for sys.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="sys_8cpp__incl.png" border="0" usemap="#include_2utils_2sys_8cpp" alt=""/></div>
 <map name="include_2utils_2sys_8cpp" id="include_2utils_2sys_8cpp">
-<area shape="rect" id="node6" href="constants_8h.html" title="constants.h" alt="" coords="315,80,405,107"/>
-<area shape="rect" id="node7" href="sys_8h.html" title="sys.h" alt="" coords="430,80,485,107"/>
+<area shape="rect" id="node6" href="common_8h.html" title="common.h" alt="" coords="393,80,476,107"/>
+<area shape="rect" id="node9" href="sys_8h.html" title="sys.h" alt="" coords="314,80,369,107"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -103,10 +103,6 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>get_ini_hex</b> (
 <tr class="memitem:a414bfcba9c58140f894150512204bbe6"><td class="memItemLeft" align="right" valign="top"><a id="a414bfcba9c58140f894150512204bbe6"></a>
 FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>get_ini_section</b> (char *pname, char *psection)</td></tr>
 <tr class="separator:a414bfcba9c58140f894150512204bbe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9024639d5dbba6ed88e9ddc78d65513"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sys_8cpp.html#ad9024639d5dbba6ed88e9ddc78d65513">init_circular_buffer</a> (<a class="el" href="structcbuff__typ.html">cbuff_typ</a> *pbuff, int max_data, int item_size)</td></tr>
-<tr class="separator:ad9024639d5dbba6ed88e9ddc78d65513"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0e9d0ae543d841c9a187964472f27b4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sys_8cpp.html#ac0e9d0ae543d841c9a187964472f27b4">get_circular_index</a> (<a class="el" href="structcbuff__typ.html">cbuff_typ</a> *pbuff)</td></tr>
-<tr class="separator:ac0e9d0ae543d841c9a187964472f27b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="sys_8cpp.html">sys.cpp</a></p>
@@ -114,60 +110,6 @@ FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>get_ini_section</b>
 <dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>February 21, 2019 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ac0e9d0ae543d841c9a187964472f27b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0e9d0ae543d841c9a187964472f27b4">&#9670;&nbsp;</a></span>get_circular_index()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int get_circular_index </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structcbuff__typ.html">cbuff_typ</a> *&#160;</td>
-          <td class="paramname"><em>pbuff</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>get_circular_index is used to get the index of insertion into the circular buffer's data array. </p>
-
-</div>
-</div>
-<a id="ad9024639d5dbba6ed88e9ddc78d65513"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9024639d5dbba6ed88e9ddc78d65513">&#9670;&nbsp;</a></span>init_circular_buffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void init_circular_buffer </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structcbuff__typ.html">cbuff_typ</a> *&#160;</td>
-          <td class="paramname"><em>pbuff</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>max_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>item_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>init_circular_buffer is used to set up buffer of items of a type defined by call program. sizeof(the_type_name) is used for the item_size parameter. The most recent max_data items will be saved. </p>
-
-</div>
-</div>
 <a id="aa5609186b8032a91bcf2175a73c41333"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa5609186b8032a91bcf2175a73c41333">&#9670;&nbsp;</a></span>sig_ign()</h2>
 

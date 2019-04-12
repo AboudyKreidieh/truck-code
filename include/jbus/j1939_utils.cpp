@@ -8,6 +8,7 @@
  */
 
 #include "j1939_utils.h"
+#include "utils/common.h"	/* BYTE */
 
 
 float percent_0_to_100(int data) {
@@ -168,7 +169,7 @@ float torque_in_nm(unsigned short data) {
     	return 0.0 - HIBYTE(data);
 }
 
-float time_0_to_25sec(unsigned char data) {
+float time_0_to_25sec(BYTE data) {
 	if (data <= 250)
 		return data * (1.0/10.0);
     else

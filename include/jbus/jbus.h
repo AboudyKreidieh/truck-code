@@ -18,15 +18,17 @@
 #include <string>
 
 
-/** repetition interval should be 10 milliseconds for engine, 50 milliseconds
- * for retarder, 40 milliseconds for EBS */
+/** Repetition interval should be 10 milliseconds for engine, 50 milliseconds
+ * for retarder, 40 milliseconds for EBS. */
 #define JBUS_INTERVAL_MSECS	5
 
 
-/** Primary class used to communicate with the CAN card.
+/** Primary class used to communicate with the CAN card port.
  *
- * This class is responsible for initializing communication with the CAN card,
- * as well as send and receive messages from the CAN card.
+ * This class is responsible for initializing the connection with the port to
+ * the CAN driver which enables communication with the CAN card. It is also
+ * responsible for sending and receiving messages to and from the CAN card port.
+ * Writing is then handled by device-level register commands.
  */
 class JBus
 {
@@ -71,20 +73,23 @@ public:
 	 */
 	virtual int receive(int fd, j1939_pdu_typ *pdu, int *extended, int *slot);
 
-	/** Wrapper for the close call; some drivers are not file structured
-	 * and may require disconnect functions to be called.
+	/** Wrapper for the close call.
 	 *
 	 * Sets the input "file descriptor" to NULL, so that attempts to close twice
 	 * can be caught. Requires passing address of fd/handle to this routine.
 	 *
-	 * @param
-	 * 		pfd pointer to file descriptor
+	 * Note: Some drivers are not file structured and may require disconnect
+	 * functions to be called.
+	 *
+	 * @param pfd
+	 * 		pointer to file descriptor
 	 * @return
 	 * 		-1 if handle is NULL, otherwise returns the value from the close of
 	 * 		the real fd
 	 */
 	virtual int close_conn(int *pfd);
 
+	/** Virtual destructor. */
 	virtual ~JBus();
 };
 

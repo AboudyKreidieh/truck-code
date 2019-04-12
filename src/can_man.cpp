@@ -1,30 +1,26 @@
 /**\file
  *
- *  can_man.c
+ * can_man.c
  *
- * Resource manager for the SSV CAN board.
+ * Resource manager for the SSV CAN board. FIXME
  *
- * To use both 82527 controllers of the SSV board, two instances of this
- * process must be executed.
- *
- * Digital I/O on the board is also supported by the same devctls used
- * by PATH DAS (Data Acquisition System) drivers.
+ * Digital I/O on the board is also supported by the same devctls used by PATH
+ * DAS (Data Acquisition System) drivers.
  *
  * @author Abdul Rahman Kreidieh
  * @version 1.0.0
  * @date February 26, 2019
  */
 
-//#include <sys_os.h>
 #include <can/can_man.h>
 #include <iostream>
 #include <sys/dispatch.h>
 #include "can/can.h"
-#include "utils/constants.h"
-#include <setjmp.h>
+#include "utils/common.h"
 #include <sys/iofunc.h>
 
 using namespace std;
+
 
 #define DAS_MSG_BUF     2048
 
@@ -38,41 +34,26 @@ static iofunc_mount_t 			can_mount;
 static iofunc_funcs_t 			can_mount_funcs;
 
 
-static int sig_list[]=
-{
-        SIGINT,
-        SIGQUIT,
-        SIGTERM,
-        SIGALRM,        // for timer
-        ERROR
-};
-static jmp_buf exit_env;
-static void sig_hand(int code)
-{
-        if (code == SIGALRM)
-                return;
-        else
-                longjmp(exit_env, code);
-}
-
 /** External variables in ca_if.c, to be printed on exit */
 //int can_timeout_count = 0;
 //int tx_buffer_flush = 0;
 extern int can_timeout_count;
 extern int tx_buffer_flush;
 
-IOFUNC_OCB_T *can_ocb_calloc(resmgr_context_t *ctp, iofunc_attr_t *attr)
-{
-	return ((IOFUNC_OCB_T *) calloc(1, sizeof(IOFUNC_OCB_T)));
+
+IOFUNC_OCB_T *can_ocb_calloc(resmgr_context_t *ctp, iofunc_attr_t *attr) {
+	return (IOFUNC_OCB_T *) calloc(1, sizeof(IOFUNC_OCB_T));
 }
 
-void can_ocb_free(IOFUNC_OCB_T *pocb)
-{
-	free(pocb);
+
+void can_ocb_free(IOFUNC_OCB_T *pocb) {
+	delete pocb;
 }
 
-int main (int argc, char **argv)
-{
+
+int main (int argc, char **argv) {
+	bool verbose = false;
+
 	dispatch_t *dpp;
 	resmgr_attr_t resmgr_attr;
 	dispatch_context_t *ctp;
@@ -80,23 +61,23 @@ int main (int argc, char **argv)
 
 	ThreadCtl(_NTO_TCTL_IO, NULL);  /* required to access I/O ports */
 
-	/* create the dispatch structure */
+	/* Create the dispatch structure. */
 	if ((dpp = dispatch_create()) == NULL) {
 		perror ("Unable to dispatch_create\n");
 		exit (EXIT_FAILURE);
 	}
 
-	/* initialize the various data structures */
-	memset (&resmgr_attr, 0, sizeof (resmgr_attr));
+	/* Initialize the various data structures. */
+	memset(&resmgr_attr, 0, sizeof (resmgr_attr));
 	resmgr_attr.nparts_max = 2;
 	resmgr_attr.msg_max_size = DAS_MSG_BUF;
 
-	/* bind default functions into the outcall tables */
-	iofunc_func_init (_RESMGR_CONNECT_NFUNCS, &connect_func,
-			 _RESMGR_IO_NFUNCS, &io_func);
-	iofunc_attr_init (&attr.io_attr, S_IFNAM | 0666, 0, 0);
+	/* Bind default functions into the outcall tables. */
+	iofunc_func_init(_RESMGR_CONNECT_NFUNCS, &connect_func,
+		_RESMGR_IO_NFUNCS, &io_func);
+	iofunc_attr_init(&attr.io_attr, S_IFNAM | 0666, 0, 0);
 
-	/* add allocation and deallocation for extended OCB */
+	/* Add allocation and deallocation for extended OCB. */
 	can_mount_funcs.nfuncs = _IOFUNC_NFUNCS;
 	can_mount_funcs.ocb_calloc = can_ocb_calloc;
 	can_mount_funcs.ocb_free = can_ocb_free;
@@ -104,7 +85,7 @@ int main (int argc, char **argv)
 	can_mount.funcs = &can_mount_funcs;
 	attr.io_attr.mount = &can_mount;
 
-	/* read configuration files and bind device-specific functions */
+	/* Read configuration files and bind device-specific functions. */
 	can_init(argc, argv, &connect_func, &io_func, &attr);
 
 	// FIXME
@@ -115,24 +96,25 @@ int main (int argc, char **argv)
 //		exit (EXIT_FAILURE);
 //	}
 
-#ifdef DO_TRACE
-	printf("Calling can_dev_init: base address 0x%x speed %d extended %d\n",
-		pinfo->port, pinfo->bit_speed, pinfo->use_extended_frame);
-	fflush(stdout);
-#endif
+	if (verbose) {
+		printf("Calling can_dev_init: base address 0x%x speed %d extended %d\n",
+			pinfo->port, pinfo->bit_speed, pinfo->use_extended_frame);
+		fflush(stdout);
+	}
 
-	/* initialize device */
-	can_dev_init(pinfo->port, pinfo->bit_speed, pinfo->use_extended_frame);
+	/* Initialize device. */
+	CANDeviceManager can_dev;
+	can_dev.init(pinfo->port, pinfo->bit_speed, pinfo->use_extended_frame);
 
-#ifdef DO_TRACE
-	printf("Attaching pulses\n");
-	fflush(stdout);
-#endif
+	if (verbose) {
+		printf("Attaching pulses\n");
+		fflush(stdout);
+	}
 
-	// attach pulses and interrupt event
+	/* Attach pulses and interrupt event. */
 	pulse_init(dpp, &attr);
 
-	// allocate dispatch context
+	/* Allocate dispatch context. */
 	ctp = dispatch_context_alloc(dpp);
 
 	if(setjmp(exit_env) != 0) {
@@ -148,15 +130,16 @@ int main (int argc, char **argv)
 		printf("can_timeout_count %d\n", can_timeout_count);
 		fflush(stdout);
 		exit(EXIT_SUCCESS);
-	} else
+	} else {
 		sig_ign(sig_list, sig_hand);
+	}
 
-	// wait here forever, handling messages
+	/* Wait here forever, handling messages. */
 	while (1) {
-		if ((ctp = dispatch_block (ctp)) == NULL) {
-			perror ("Unable to dispatch_block\n");
+		if ((ctp = dispatch_block(ctp)) == NULL) {
+			perror("Unable to dispatch_block\n");
 			exit(EXIT_FAILURE);
 		}
-		dispatch_handler (ctp);
+		dispatch_handler(ctp);
 	}
 }

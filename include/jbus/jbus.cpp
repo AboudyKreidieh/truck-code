@@ -91,4 +91,3 @@ int JBus::receive(int fd, j1939_pdu_typ *pdu, int *extended, int *slot) {
 
 
 JBus::~JBus() {}
-

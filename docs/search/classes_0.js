@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ambcinterpreter',['AMBCInterpreter',['../classAMBCInterpreter.html',1,'']]]
+  ['_5finstance_5fdata',['_instance_data',['../struct__instance__data.html',1,'']]]
 ];

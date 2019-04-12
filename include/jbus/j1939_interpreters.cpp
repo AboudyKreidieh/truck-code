@@ -12,6 +12,7 @@
 #include "j1939_interpreters.h"
 #include "j1939_utils.h"
 #include "utils/timestamp.h"
+#include "utils/common.h"		/* BYTE */
 #include <vector>
 #include <string>
 #include <map>
@@ -869,7 +870,7 @@ void *RCFGInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_rcfg_typ *rcfg = new j1939_rcfg_typ();
 	rcfg->timestamp = pdu->timestamp;
 	unsigned short two_bytes;
-	unsigned char data[21];	 // to hold data bytes from 3 packets
+	BYTE data[21];	 // to hold data bytes from 3 packets
 	int i, j;
 
 	for (i = 0; i < 3; i++) {

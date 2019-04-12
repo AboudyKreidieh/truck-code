@@ -1,9 +1,16 @@
 var searchData=
 [
   ['cab_5finterior_5ftemp',['cab_interior_temp',['../structj1939__ambc__typ.html#a8685291964c750e7ea1ace1611153e08',1,'j1939_ambc_typ']]],
+  ['can_5fbase_5faddr',['can_base_addr',['../can__dev_8cpp.html#aec3fc02b98ee7c276155391ec1cd2450',1,'can_base_addr():&#160;can_dev.cpp'],['../sja1000_8h.html#aec3fc02b98ee7c276155391ec1cd2450',1,'can_base_addr():&#160;can_dev.cpp']]],
   ['can_5finfo',['can_info',['../structcan__attr__t.html#a9f71c554d72744bae66dacf2efdd9888',1,'can_attr_t']]],
-  ['can_5fnotify_5fclient_5ferr',['can_notify_client_err',['../can__init_8cpp.html#a30787559dc427738613dc57e6519894e',1,'can_notify_client_err():&#160;can_init.cpp'],['../can__man_8h.html#a30787559dc427738613dc57e6519894e',1,'can_notify_client_err():&#160;can_init.cpp']]],
+  ['can_5fminors',['Can_minors',['../can__dev_8cpp.html#a30a1997c730a486893919b49baaeb914',1,'Can_minors():&#160;can_dev.cpp'],['../fifo_8h.html#ae7851951160a81711bdba25c46b7462d',1,'Can_minors():&#160;can_dev.cpp']]],
   ['can_5ftimeout_5fcount',['can_timeout_count',['../can__man_8cpp.html#a330283fcfb088031ce480c48a2ee4f48',1,'can_if.cpp']]],
+  ['candata',['candata',['../unionframe.html#ab63ad29b8885035b7b362279372b4868',1,'frame']]],
+  ['canid1',['canid1',['../unionframe.html#a2edd6e6f08f48e54065ae39e1c58b80f',1,'frame']]],
+  ['canid2',['canid2',['../unionframe.html#aa85f3ba71856e0c822ca2493ecf0ba72',1,'frame']]],
+  ['canid3',['canid3',['../unionframe.html#a6a48060fa214bd9ed09e16e79b7870ee',1,'frame']]],
+  ['canid4',['canid4',['../unionframe.html#a2d93b0e51a6c13291a531d41afbfc272',1,'frame']]],
+  ['canxdata',['canxdata',['../unionframe.html#a7aabcfd6b7ca3d68b48500ae7102546a',1,'frame']]],
   ['cc_5faccel_5fswitch',['cc_accel_switch',['../structj1939__ccvs__typ.html#aed6986b0992610b884740fd22918ae29',1,'j1939_ccvs_typ']]],
   ['cc_5factive',['cc_active',['../structj1939__ccvs__typ.html#a8b2fc9ca0ea252ef58697797689e30fc',1,'j1939_ccvs_typ']]],
   ['cc_5fcoast_5fswitch',['cc_coast_switch',['../structj1939__ccvs__typ.html#aa790cc5e9644ca28cb1ed119c7843b22',1,'j1939_ccvs_typ']]],
@@ -17,5 +24,6 @@ var searchData=
   ['clutch_5fpressure',['clutch_pressure',['../structj1939__tf__typ.html#a32d9782e960a578f426a0c1e48fd5243',1,'j1939_tf_typ']]],
   ['clutch_5fswitch',['clutch_switch',['../structj1939__ccvs__typ.html#ae10624e3f921c056664508e52925815e',1,'j1939_ccvs_typ']]],
   ['coast_5fdecel_5fswitch',['coast_decel_switch',['../structj1939__pto__typ.html#af724847fce264f929607c30a08411efb',1,'j1939_pto_typ']]],
+  ['cob',['cob',['../structcanmsg__t.html#a2a9a1988755a4f92d5706f02cf5001f9',1,'canmsg_t']]],
   ['coolant_5ffilter_5fdiff_5fpressure',['coolant_filter_diff_pressure',['../structj1939__iec__typ.html#a4f8214ccd4eb0bac42c6094292284641',1,'j1939_iec_typ']]]
 ];

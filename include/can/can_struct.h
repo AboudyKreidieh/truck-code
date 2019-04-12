@@ -12,13 +12,15 @@
 
 #include "jbus/j1939_struct.h"
 #include "utils/sys.h"
+#include "utils/common.h"
 #include <string>
 #include <sys/iofunc.h>
 #include <sys/dispatch.h>
 
 
-/** blank */
+/** Largest number of element allows in the CAN Rx buffers */
 #define MAX_MSG_BUF 1000
+
 
 /* Macros used when processing can messages. */
 #define PATH_CAN_ID(j)  ((((j)->priority & 0x7) << 26) | \
@@ -32,24 +34,18 @@
 #define PATH_CAN_PS(j)		 	(((j) >> 8) & 0xff)		/**< Get pdu specific value. */
 #define PATH_CAN_SA(j)		 	((j) & 0xff)			/**< Get source address value */
 
-/* Structures used when collecting data from the CAN. */
-typedef unsigned char MSG_BIT;
-typedef unsigned int MSG_FIELD;
-typedef unsigned char MSG_BYTE;
-typedef unsigned char FRAME_BIT;
-
 
 /* most significant bit sets frame as extended */
-#define IS_EXTENDED_FRAME(MSG)		(((MSG).id) & 0x80000000)	/**< Checks if identifier is 29 or 11 bit. */
-#define SET_EXTENDED_FRAME(MSG)		(MSG).id |= 0x80000000		/**< Set the 29 bit identifier. */
+#define IS_EXTENDED_FRAME(MSG)		((MSG).id &  0x80000000)	/**< Checks if identifier is 29 or 11 bit. */
+#define SET_EXTENDED_FRAME(MSG)		((MSG).id |= 0x80000000)	/**< Set the 29 bit identifier. */
 #define CAN_ID(MSG)					((MSG).id & ~0x80000000)	/**< Get CAN identity number. */
 
 
 /** Type used in devctl for CAN I/O. */
 typedef struct {
 	unsigned long id; 		/**< CAN device id on bus */
-	unsigned char size;		/**< number of data bytes (0-8) */
-	char data[8];			/**< data field */
+	BYTE size;				/**< number of data bytes (0-8) */
+	BYTE data[8];			/**< data field (up to 8 bytes) */
 	int error;				/**< set to non-zero if error on read or write */
 } can_msg_t;
 
@@ -62,8 +58,7 @@ typedef struct {
 
 
 /** This structure type is specific to the I82527 driver and not visible except
- * to routines in this file.
- */
+ * to routines in this file. */
 typedef struct {
 	int fd;
 	int channel_id;
@@ -77,55 +72,46 @@ typedef struct
 {
 	int port;           		/**< Base address of adapter */
 	int	irq;            		/**< Interrupt request line. */
-	int	use_extended_frame;		/**< 1 yes, 0, no */
-	int	bit_speed;				/**< Kb/s */
-	int	intr_id;;				/**< ID returned by Interrupt Attach Event */
-	can_filter_t filter;		/**< blank */
+	int	use_extended_frame;		/**< 1 yes, 0 no */
+	int	bit_speed;				/**< bit speed of the CAN in Kb/s */
+	int	intr_id;				/**< ID returned by Interrupt Attach Event */
+	can_filter_t filter;		/**< Used to set filtering of CAN messages */
 } can_info_t;
 
 
 /** struct returned to client by can_get_errs and can_clear_errs devctl */
 typedef struct {
-	unsigned int shadow_buffer_count;
-	unsigned int intr_in_handler_count;
-	unsigned int rx_interrupt_count;
-	unsigned int rx_message_lost_count;
-	unsigned int tx_interrupt_count;
+	unsigned int shadow_buffer_count;		/**< TODO */
+	unsigned int intr_in_handler_count;		/**< TODO */
+	unsigned int rx_interrupt_count;		/**< TODO */
+	unsigned int rx_message_lost_count;		/**< TODO */
+	unsigned int tx_interrupt_count;		/**< TODO */
 } can_err_count_t;
 
 
-/** J1939 Protocol Data Unit (PDU) format. TODO: merge with other thing
+/** Information per Open Context Block.
  *
- * This is the format the messages are collected from the CAN card. This is then
- * processed into message formats located in j1939_struct.h
- *
- * See SAE J1939, 3.1.2
+ * May be one for CAN and one for digital I/O per instance of driver; digital
+ * I/O does not send notify now.
  */
-typedef struct {
-	MSG_FIELD priority;		/**< bits 3:1, frame bits 2:4; ID 28:26, used for */
-							/**< arbitration, lower priority for data not time */
-							/**< critical; 000 highest priority */
-	MSG_BIT reserved;		/**< frame bit 5;ID 25; reserved for future use */
-	MSG_BIT data_page;		/**< frame bit 6;ID 24; 0 currently  */
-	MSG_FIELD pdu_format;	/**< Protocol Data Unit Format (PF); bits 8:1; */
-							/**< frame bits 7:12, 15:16; ID 23:16 */
-	MSG_FIELD pdu_specific; /**< PDU Specific (PS); bits 8:1, frame bits 18:24; */
-							/**< ID 15:8 if 0<=PF<=239, destination address */
-							/**< (DA); if 240<=PF<=255, group extension (GE); */
-	MSG_FIELD src_address;	/**< bits 8:1; frame bits 25:32; ID 7:0 */
-	MSG_BYTE data_field[8];	/**< 64 bits maximum */
-	int num_bytes;			/**< number of bytes in data_field */
-} j1939_pdu;
-
-
-/** Information per Open Context Block; may be one for CAN and one for digital
- * I/O per instance of driver; digital I/O does not send notify now. */
 typedef struct
 {
-	iofunc_ocb_t io_ocb;	/**< blank */
+	iofunc_ocb_t io_ocb;	/**< TODO */
 	int rcvid;              /**< Used to notify client. */
     sigevent clt_event;  	/**< Used to notify client, from client */
 } can_ocb_t;
+
+
+/** Circular buffer type used with data item saving.
+ *
+ * Data from last "data_size" samples can be saved in this structure.
+ */
+typedef struct {
+  void *data_array;     /**< data elements */
+  int data_size;  		/**< number of structures malloced */
+  int data_count; 		/**< control intervals saved (<=data_size) */
+  int data_start; 		/**< index of oldest item in the circular buffer */
+} cbuff_typ;
 
 
 /** Information per device manager */
@@ -137,7 +123,7 @@ typedef struct
 	cbuff_typ in_buff;			/**< Holds CAN messages until client reads */
 	cbuff_typ out_buff;			/**< Holds CAN messages until written to bus */
 	can_ocb_t *notify_pocb;   	/**< OCB of client to be notified */
-	bool verbose_flag;			/**< blank */
+	bool verbose_flag;			/**< verbose flag */
 	sigevent hw_event;			/**< initialized in pulse_init */
 } can_attr_t;
 

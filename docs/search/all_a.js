@@ -21,7 +21,6 @@ var searchData=
   ['j1939_5finterpreters_2ecpp',['j1939_interpreters.cpp',['../j1939__interpreters_8cpp.html',1,'']]],
   ['j1939_5finterpreters_2eh',['j1939_interpreters.h',['../j1939__interpreters_8h.html',1,'']]],
   ['j1939_5flfe_5ftyp',['j1939_lfe_typ',['../structj1939__lfe__typ.html',1,'']]],
-  ['j1939_5fpdu',['j1939_pdu',['../structj1939__pdu.html',1,'']]],
   ['j1939_5fpdu_5ftyp',['j1939_pdu_typ',['../structj1939__pdu__typ.html',1,'']]],
   ['j1939_5fpto_5ftyp',['j1939_pto_typ',['../structj1939__pto__typ.html',1,'']]],
   ['j1939_5frcfg_5ftyp',['j1939_rcfg_typ',['../structj1939__rcfg__typ.html',1,'']]],

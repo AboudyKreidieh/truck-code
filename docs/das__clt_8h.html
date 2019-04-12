@@ -63,7 +63,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
@@ -92,21 +91,6 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="das__clt_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdas__info__typ.html">das_info_typ</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdas__sample__t.html">das_sample_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdas__da__sync__t.html">das_da_sync_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdas__din__t.html">das_din_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdas__dout__t.html">das_dout_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdas__tmr__mode__t.html">das_tmr_mode_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:afdc703cdcdd6d866c9e7d96bd02f1f3a"><td class="memItemLeft" align="right" valign="top"><a id="afdc703cdcdd6d866c9e7d96bd02f1f3a"></a>
@@ -119,7 +103,7 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_SAMPLE_TICK</b>&#160;&#160;&#160;0xffff</td></tr>
 <tr class="separator:ad975b9697512498c4f2a43d8f0248452"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6051190ea8a314450d7666e33d245e97"><td class="memItemLeft" align="right" valign="top"><a id="a6051190ea8a314450d7666e33d245e97"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>NUM_SCAN_ENT</b>&#160;&#160;&#160;96</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NUM_SCAN_ENT</b>&#160;&#160;&#160;96		/* Number of scan table entries. */</td></tr>
 <tr class="separator:a6051190ea8a314450d7666e33d245e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ad244cf36065384a60b4f3f8265aa27"><td class="memItemLeft" align="right" valign="top"><a id="a6ad244cf36065384a60b4f3f8265aa27"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DAS_MAX_TIMERS</b>&#160;&#160;&#160;10</td></tr>
@@ -127,10 +111,10 @@ Macros</h2></td></tr>
 <tr class="memitem:a8e07207164987c257d435c575b90e7ef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>&#160;&#160;&#160;0x0f00</td></tr>
 <tr class="separator:a8e07207164987c257d435c575b90e7ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4cb5e305f657df3a56b195830efe79fc"><td class="memItemLeft" align="right" valign="top"><a id="a4cb5e305f657df3a56b195830efe79fc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_QUERY</b>&#160;&#160;&#160;__DIOF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_QUERY, <a class="el" href="structdas__info__typ.html">das_info_typ</a>)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_QUERY</b>&#160;&#160;&#160;__DIOF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_QUERY, das_info_typ)</td></tr>
 <tr class="separator:a4cb5e305f657df3a56b195830efe79fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16f9618c493f403f32b6ed88c21269d8"><td class="memItemLeft" align="right" valign="top"><a id="a16f9618c493f403f32b6ed88c21269d8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_DA_SYNC</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_DA_SYNC, <a class="el" href="structdas__da__sync__t.html">das_da_sync_t</a>)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_DA_SYNC</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_DA_SYNC, das_da_sync_t)</td></tr>
 <tr class="separator:a16f9618c493f403f32b6ed88c21269d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3736246ac0f942d3c6216460eb82254a"><td class="memItemLeft" align="right" valign="top"><a id="a3736246ac0f942d3c6216460eb82254a"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_DA_TERM</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_DA_TERM, int)</td></tr>
@@ -139,22 +123,22 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_DIG_DIR</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_DIG_DIR, long)</td></tr>
 <tr class="separator:a9a1f745f595cd2471cf208e17b2c3151"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86f222d0d1d7f0d2fa0665c6b68b1446"><td class="memItemLeft" align="right" valign="top"><a id="a86f222d0d1d7f0d2fa0665c6b68b1446"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_DIG_OUT</b>&#160;&#160;&#160;__DIOTF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_DIG_OUT, <a class="el" href="structdas__dout__t.html">das_dout_t</a>)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_DIG_OUT</b>&#160;&#160;&#160;__DIOTF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_DIG_OUT, int)	/* TODO: replace from das_dout_t */</td></tr>
 <tr class="separator:a86f222d0d1d7f0d2fa0665c6b68b1446"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeed038ba4bcffa32f571aee349d95cbc"><td class="memItemLeft" align="right" valign="top"><a id="aeed038ba4bcffa32f571aee349d95cbc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_DIG_IN</b>&#160;&#160;&#160;__DIOTF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_DIG_IN, <a class="el" href="structdas__din__t.html">das_din_t</a>)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_DIG_IN</b>&#160;&#160;&#160;__DIOTF(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_DIG_IN, int)	/* TODO: replace from das_din_t */</td></tr>
 <tr class="separator:aeed038ba4bcffa32f571aee349d95cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c230a113bf1021df2ca1b552c6d537d"><td class="memItemLeft" align="right" valign="top"><a id="a6c230a113bf1021df2ca1b552c6d537d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_AD_ENQ</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_AD_ENQ, struct sigevent)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_AD_ENQ</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_AD_ENQ, sigevent)</td></tr>
 <tr class="separator:a6c230a113bf1021df2ca1b552c6d537d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fbb5c90f31cc61ba5f14a5086d9dd21"><td class="memItemLeft" align="right" valign="top"><a id="a2fbb5c90f31cc61ba5f14a5086d9dd21"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_AD_TERM</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_AD_TERM, int)</td></tr>
 <tr class="separator:a2fbb5c90f31cc61ba5f14a5086d9dd21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ce823369690817c8efdc41acede9eab"><td class="memItemLeft" align="right" valign="top"><a id="a2ce823369690817c8efdc41acede9eab"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_AD_SET_SMP</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_AD_SET_SMP, <a class="el" href="structdas__sample__t.html">das_sample_t</a>)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_AD_SET_SMP</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_AD_SET_SMP, das_sample_t)</td></tr>
 <tr class="separator:a2ce823369690817c8efdc41acede9eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ff47b033270364649a92385d0dff920"><td class="memItemLeft" align="right" valign="top"><a id="a0ff47b033270364649a92385d0dff920"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_TMR_MODE</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_TMR_MODE, <a class="el" href="structdas__tmr__mode__t.html">das_tmr_mode_t</a>)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_TMR_MODE</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_TMR_MODE, das_tmr_mode_t)</td></tr>
 <tr class="separator:a0ff47b033270364649a92385d0dff920"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29b11a8c38190ee449c45fd15ed70808"><td class="memItemLeft" align="right" valign="top"><a id="a29b11a8c38190ee449c45fd15ed70808"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_DAS_TEST_PULSE</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, DAS_TEST_PULSE, int)</td></tr>
@@ -166,7 +150,7 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_CAN_I82527_WRITE</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, CAN_I82527_WRITE, <a class="el" href="structcan__msg__t.html">can_msg_t</a>)</td></tr>
 <tr class="separator:a018f7a657a5dbe4d35f2edebcb83dfbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadcc04efa5ab94d84a2bf94dca866864"><td class="memItemLeft" align="right" valign="top"><a id="aadcc04efa5ab94d84a2bf94dca866864"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_CAN_ARM</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, CAN_ARM, struct sigevent)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_CAN_ARM</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, CAN_ARM, sigevent)</td></tr>
 <tr class="separator:aadcc04efa5ab94d84a2bf94dca866864"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:accc1184717b76e8a8740f7fb96b7f4a6"><td class="memItemLeft" align="right" valign="top"><a id="accc1184717b76e8a8740f7fb96b7f4a6"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DCMD_CAN_FILTER</b>&#160;&#160;&#160;__DIOT(<a class="el" href="das__clt_8h.html#a8e07207164987c257d435c575b90e7ef">_DCMD_DAS</a>, CAN_FILTER, <a class="el" href="structcan__filter__t.html">can_filter_t</a>)</td></tr>
@@ -220,16 +204,7 @@ Enumerations</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="das__clt_8h.html">das_clt.h</a></p>
-<p>Definitions common to * client and DAS I/O management server. Includes devctl definitions for the CAN driver.</p>
-<p>Rewritten for QNX6 because of message passing changes. QNX4 version last modified in 1998.</p>
-<p>Copyright (c) 2003 Regents of the University of California</p>
-<p>static char rcsid[] = "$Id";</p>
-<dl class="section rcs"><dt>Log</dt><dd><a class="el" href="das__clt_8h.html">das_clt.h</a>,v </dd></dl>
-<p>Revision 1.3 2004/11/01 20:43:27 dickey Bugs found and changes made while doing CAN driver.</p>
-<p>Modified Files: <a class="el" href="das__clt_8h.html">das_clt.h</a> sys_das.c</p>
-<p>Revision 1.2 2004/10/29 02:33:29 dickey Made changes to Tilcon utilities, and minor changes to other header files. Crow's Landing version of veh_utils.cpp.</p>
-<p>Modified Files: <a class="el" href="das__clt_8h.html">das_clt.h</a> path_packet.h tilcon_utils.cpp tilcon_utils.h veh_utils.cpp</p>
-<p>Revision 1.1.1.1 2004/08/26 23:45:03 dickey local for IDS, CCW, CACC, etc.</p>
+<p>Definitions common to client and DAS I/O management server. Includes devctl definitions for the CAN driver.</p>
 <dl class="section author"><dt>Author</dt><dd>Abdul Rahman Kreidieh </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>January 15, 2019 </dd></dl>
