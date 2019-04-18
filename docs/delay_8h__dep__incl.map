@@ -1,6 +1,12 @@
 <map id="include/can/delay.h" name="include/can/delay.h">
-<area shape="rect" id="node2" href="$sja1000_8h.html" title="include/can/sja1000.h" alt="" coords="113,80,261,107"/>
-<area shape="rect" id="node4" href="$can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="5,229,172,256"/>
-<area shape="rect" id="node5" href="$sja1000_8cpp.html" title="include/can/sja1000.cpp" alt="" coords="205,229,367,256"/>
-<area shape="rect" id="node3" href="$fifo_8h.html" title="include/can/fifo.h" alt="" coords="127,155,248,181"/>
+<area shape="rect" id="node2" href="$sja1000_8h.html" title="include/can/sja1000.h" alt="" coords="938,80,1086,107"/>
+<area shape="rect" id="node5" href="$can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="853,229,1019,256"/>
+<area shape="rect" id="node11" href="$sja1000_8cpp.html" title="include/can/sja1000.cpp" alt="" coords="1048,229,1211,256"/>
+<area shape="rect" id="node3" href="$can__man_8h.html" title="include/can/can_man.h" alt="" coords="486,155,642,181"/>
+<area shape="rect" id="node10" href="$fifo_8h.html" title="include/can/fifo.h" alt="" coords="970,155,1091,181"/>
+<area shape="rect" id="node4" href="$can_8cpp.html" title="include/can/can.cpp" alt="" coords="320,229,459,256"/>
+<area shape="rect" id="node6" href="$can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="483,229,645,256"/>
+<area shape="rect" id="node7" href="$io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="670,229,829,256"/>
+<area shape="rect" id="node8" href="$jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="5,229,149,256"/>
+<area shape="rect" id="node9" href="$can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="173,229,296,256"/>
 </map>

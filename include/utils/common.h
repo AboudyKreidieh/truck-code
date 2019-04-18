@@ -64,4 +64,27 @@ static void sig_hand(int code)
 		longjmp(exit_env, code);
 }
 
+
+/** TODO
+ *
+ * This function installs the given function as a signal handler for the
+ * specified signals.  All other signals are configured to be ignored by the
+ * application code.
+ *
+ * @param sig_list
+ * 		A list of signals to be handled by the given function.  The list should
+ * 		be terminated by an invalid signal number, e.g. -1.
+ * @param sig_hand
+ * 		A signal handler with the prototype: void function(int sig);
+ */
+static void sig_ign(int *sig_list, void sig_hand(int sig))
+{
+        int i = 0;
+        while (sig_list[i] != ERROR) {
+                signal(sig_list[i], sig_hand);
+                i++;
+        }
+}
+
+
 #endif /* INCLUDE_UTILS_COMMON_H_ */

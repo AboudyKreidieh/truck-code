@@ -6,6 +6,5 @@ var searchData=
   ['can_5finit_2ecpp',['can_init.cpp',['../can__init_8cpp.html',1,'']]],
   ['can_5fman_2ecpp',['can_man.cpp',['../can__man_8cpp.html',1,'']]],
   ['can_5fman_2eh',['can_man.h',['../can__man_8h.html',1,'']]],
-  ['can_5fstruct_2eh',['can_struct.h',['../can__struct_8h.html',1,'']]],
   ['common_2eh',['common.h',['../common_8h.html',1,'']]]
 ];

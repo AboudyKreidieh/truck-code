@@ -13,7 +13,6 @@
 #ifndef SRC_JBUS_CAN_H_
 #define SRC_JBUS_CAN_H_
 
-#include "can_struct.h"
 #include "utils/common.h"		/* BYTE */
 #include "jbus/j1939_struct.h"
 #include <string>

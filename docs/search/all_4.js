@@ -1,13 +1,9 @@
 var searchData=
 [
   ['das_5fclt_2eh',['das_clt.h',['../das__clt_8h.html',1,'']]],
-  ['data',['data',['../structcan__msg__t.html#a5f05878fa520e2916b0a68f5712d2a38',1,'can_msg_t::data()'],['../structmsg__fifo__t.html#ab2494cd039ed59768db6ff87912456b9',1,'msg_fifo_t::data()'],['../structcanmsg__t.html#a2c93fc14d1f730289345fc7793cf8e9c',1,'canmsg_t::data()']]],
-  ['data_5farray',['data_array',['../structcbuff__typ.html#ad6a723e71b52e68492b2cf325bcd829a',1,'cbuff_typ']]],
-  ['data_5fcount',['data_count',['../structcbuff__typ.html#ad57afb3287450b6ee1bd37cec3a4efda',1,'cbuff_typ']]],
+  ['data',['data',['../structcan__msg__t.html#a5f05878fa520e2916b0a68f5712d2a38',1,'can_msg_t']]],
   ['data_5ffield',['data_field',['../structj1939__pdu__typ.html#a93025cb446ff01a356726fa4795b978a',1,'j1939_pdu_typ']]],
   ['data_5fpage',['data_page',['../structj1939__pdu__typ.html#aec55350d8941af81c028ee7149df79e5',1,'j1939_pdu_typ']]],
-  ['data_5fsize',['data_size',['../structcbuff__typ.html#accd33ec87276628db84cc6f74f44a8e8',1,'cbuff_typ']]],
-  ['data_5fstart',['data_start',['../structcbuff__typ.html#a40d57aa9f34b22ee89176dbf46dbaef3',1,'cbuff_typ']]],
   ['dbgprint',['DBGprint',['../sja1000_8h.html#a05abe2c8b23f2a5f1d61f111ed64d3c7',1,'sja1000.h']]],
   ['ddl_5fcentral',['ddl_central',['../structj1939__tc1__typ.html#ae3281c78f6af0a50d122b9f3d275bff9',1,'j1939_tc1_typ']]],
   ['ddl_5fcentral_5ffront',['ddl_central_front',['../structj1939__tc1__typ.html#ade9ccc17a96d0185ce5fecb726a29f1c',1,'j1939_tc1_typ']]],

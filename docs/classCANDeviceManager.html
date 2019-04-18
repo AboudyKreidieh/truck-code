@@ -60,6 +60,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classCANDeviceManager-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">CANDeviceManager Class Reference</div>  </div>
@@ -72,11 +73,39 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7eda7cff7c8000f52a4164b264f1beb5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#a7eda7cff7c8000f52a4164b264f1beb5">init</a> (unsigned int base_address, unsigned int bit_speed, <a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> extended_frame)</td></tr>
 <tr class="separator:a7eda7cff7c8000f52a4164b264f1beb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19c6bd65fa820ac02a5ef61803693f36"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#a19c6bd65fa820ac02a5ef61803693f36">interrupt</a> (<a class="el" href="classCircularBuffer.html">CircularBuffer</a> *in_buff, <a class="el" href="classCircularBuffer.html">CircularBuffer</a> *out_buff, <a class="el" href="structcan__filter__t.html">can_filter_t</a> filter)</td></tr>
+<tr class="separator:a19c6bd65fa820ac02a5ef61803693f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af635d363cf9f59e44c0abd2f2d06c9e6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#af635d363cf9f59e44c0abd2f2d06c9e6">send</a> (<a class="el" href="classCircularBuffer.html">CircularBuffer</a> *out_buff)</td></tr>
+<tr class="separator:af635d363cf9f59e44c0abd2f2d06c9e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e980540980f64bfccfab87170cbf468"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structcan__msg__t.html">can_msg_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#a5e980540980f64bfccfab87170cbf468">read</a> (<a class="el" href="classCircularBuffer.html">CircularBuffer</a> *in_buff)</td></tr>
+<tr class="separator:a5e980540980f64bfccfab87170cbf468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab739949b15725d68612899eb9fc8684"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#aab739949b15725d68612899eb9fc8684">write</a> (<a class="el" href="classCircularBuffer.html">CircularBuffer</a> *out_buff, <a class="el" href="structcan__msg__t.html">can_msg_t</a> *pmsg)</td></tr>
+<tr class="separator:aab739949b15725d68612899eb9fc8684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bb83de1065d7846b17f56216269bd5d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structcan__err__count__t.html">can_err_count_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#a1bb83de1065d7846b17f56216269bd5d">clear_errs</a> ()</td></tr>
+<tr class="separator:a1bb83de1065d7846b17f56216269bd5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbfb8912b4cf287abf7b9ba6b35b2832"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structcan__err__count__t.html">can_err_count_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#afbfb8912b4cf287abf7b9ba6b35b2832">get_errs</a> ()</td></tr>
+<tr class="separator:afbfb8912b4cf287abf7b9ba6b35b2832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2dfd038f6c5e8a4acac6efee1008570"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#ac2dfd038f6c5e8a4acac6efee1008570">tx_process_interrupt</a> (<a class="el" href="classCircularBuffer.html">CircularBuffer</a> *out_buff)</td></tr>
+<tr class="separator:ac2dfd038f6c5e8a4acac6efee1008570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45bd908e0efbd6876ac6a276bb914893"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#a45bd908e0efbd6876ac6a276bb914893">rx_process_interrupt</a> (<a class="el" href="classCircularBuffer.html">CircularBuffer</a> *in_buff, <a class="el" href="structcan__filter__t.html">can_filter_t</a> filter)</td></tr>
+<tr class="separator:a45bd908e0efbd6876ac6a276bb914893"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01ba860eb34e6b627bd94b5967accedc"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#a01ba860eb34e6b627bd94b5967accedc">~CANDeviceManager</a> ()</td></tr>
 <tr class="separator:a01ba860eb34e6b627bd94b5967accedc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:afa943513df52470b15eefc3dbd8bf171"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#afa943513df52470b15eefc3dbd8bf171">can_timeout_count</a> = 0</td></tr>
+<tr class="separator:afa943513df52470b15eefc3dbd8bf171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0724c187c7c6f1bad71c427bcb73d6b2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#a0724c187c7c6f1bad71c427bcb73d6b2">tx_buffer_flush</a> = 0</td></tr>
+<tr class="separator:a0724c187c7c6f1bad71c427bcb73d6b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3483e1101b599c8c9610d45bc2b3dbf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#ad3483e1101b599c8c9610d45bc2b3dbf">can_notify_client_err</a> = 0</td></tr>
+<tr class="separator:ad3483e1101b599c8c9610d45bc2b3dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86247aa928aa2d0c04cbb52072539adc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCANDeviceManager.html#a86247aa928aa2d0c04cbb52072539adc">mask_count_non_zero</a> = 0</td></tr>
+<tr class="separator:a86247aa928aa2d0c04cbb52072539adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODO </p>
+<div class="textblock"><p>CAN Device Manager class.</p>
+<p>This object is responsible for initializing and interacting with the CAN card. TODO: method the register and SJA1000. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a01ba860eb34e6b627bd94b5967accedc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a01ba860eb34e6b627bd94b5967accedc">&#9670;&nbsp;</a></span>~CANDeviceManager()</h2>
@@ -100,32 +129,34 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Interrupt Request, ISR</p>
-<p>Called by can_handle_interrupt.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pattr</td><td>pointer to information per device manager </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if the CAN received the interrupt, 0 otherwise Send a message to the bus.</dd></dl>
-<p>Gets the message from the front of the transmit queue and puts it on the CAN bus.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pattr</td><td>pointer to information per device manager TODO</td></tr>
-    <tr><td class="paramname">pattr</td><td>pointer to information per device manager </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>TODO TODO</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pocb</td><td>TODO </td></tr>
-    <tr><td class="paramname">pmsg</td><td>pointer to the CAN message that should be written </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for success, or -1 if an error occurs TODO</dd></dl>
+<p>Virtual destructor. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1bb83de1065d7846b17f56216269bd5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bb83de1065d7846b17f56216269bd5d">&#9670;&nbsp;</a></span>clear_errs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structcan__err__count__t.html">can_err_count_t</a> CANDeviceManager::clear_errs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Arm the CAN device manager.</p>
 <p>Attach the hardware interrupt, and save the event to be used to notify the client in the ocb structure.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -135,22 +166,38 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for success, or -1 if an error occurs TODO</dd></dl>
-<p>Not implemented yet at the level of the device registers All are received in Object 15. Later this function may include calls to device register operations.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pattr</td><td>pointer to information per device manager </td></tr>
-    <tr><td class="paramname">filter</td><td>TODO </td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section return"><dt>Returns</dt><dd>0 for success, or -1 if an error occurs Clear the error counts and return the old counts.</dd>
 <dd>
-old countsReturn the current error count. Virtual destructor. </dd></dl>
+old counts </dd></dl>
 
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a id="afbfb8912b4cf287abf7b9ba6b35b2832"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbfb8912b4cf287abf7b9ba6b35b2832">&#9670;&nbsp;</a></span>get_errs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structcan__err__count__t.html">can_err_count_t</a> CANDeviceManager::get_errs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the current error count. </p>
+
+</div>
+</div>
 <a id="a7eda7cff7c8000f52a4164b264f1beb5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7eda7cff7c8000f52a4164b264f1beb5">&#9670;&nbsp;</a></span>init()</h2>
 
@@ -193,14 +240,317 @@ old countsReturn the current error count. Virtual destructor. </dd></dl>
 <p>Initialize the Phillips SJA1000 chip to support the CAN.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base_address</td><td>TODO </td></tr>
+    <tr><td class="paramname">base_address</td><td>memory-mapped base address of the CAN registers. Used by the CANin and CANout macros to access registers. </td></tr>
     <tr><td class="paramname">bit_speed</td><td>CAN bit speed, in Kb/s </td></tr>
     <tr><td class="paramname">extended_frame</td><td>specifies whether the CAN is using the standard or extended frame format </td></tr>
   </table>
   </dd>
 </dl>
-<p>Set up global variables used by sja1000funcs to set up timing and acceptance</p>
-<p>Accept everything </p>
+<p>Set up variables used to set up timing and acceptance. </p>
+
+</div>
+</div>
+<a id="a19c6bd65fa820ac02a5ef61803693f36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19c6bd65fa820ac02a5ef61803693f36">&#9670;&nbsp;</a></span>interrupt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CANDeviceManager::interrupt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCircularBuffer.html">CircularBuffer</a> *&#160;</td>
+          <td class="paramname"><em>in_buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classCircularBuffer.html">CircularBuffer</a> *&#160;</td>
+          <td class="paramname"><em>out_buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcan__filter__t.html">can_filter_t</a>&#160;</td>
+          <td class="paramname"><em>filter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Interrupt Request, ISR</p>
+<p>Called by can_handle_interrupt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in_buff</td><td>circular buffer for the input messages </td></tr>
+    <tr><td class="paramname">out_buff</td><td>circular buffer for the output messages </td></tr>
+    <tr><td class="paramname">filter</td><td>TODO </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if the CAN received the interrupt, 0 otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a5e980540980f64bfccfab87170cbf468"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e980540980f64bfccfab87170cbf468">&#9670;&nbsp;</a></span>read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structcan__msg__t.html">can_msg_t</a> CANDeviceManager::read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCircularBuffer.html">CircularBuffer</a> *&#160;</td>
+          <td class="paramname"><em>in_buff</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>TODO</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in_buff</td><td>circular buffer for the input messages </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>TODO </dd></dl>
+
+</div>
+</div>
+<a id="a45bd908e0efbd6876ac6a276bb914893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45bd908e0efbd6876ac6a276bb914893">&#9670;&nbsp;</a></span>rx_process_interrupt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CANDeviceManager::rx_process_interrupt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCircularBuffer.html">CircularBuffer</a> *&#160;</td>
+          <td class="paramname"><em>in_buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcan__filter__t.html">can_filter_t</a>&#160;</td>
+          <td class="paramname"><em>filter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Read message from chip and queue for the resource manager.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">TODO</td><td></td></tr>
+    <tr><td class="paramname">TODO</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af635d363cf9f59e44c0abd2f2d06c9e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af635d363cf9f59e44c0abd2f2d06c9e6">&#9670;&nbsp;</a></span>send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CANDeviceManager::send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCircularBuffer.html">CircularBuffer</a> *&#160;</td>
+          <td class="paramname"><em>out_buff</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send a message to the bus.</p>
+<p>Gets the message from the front of the transmit queue and puts it on the CAN bus.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pattr</td><td>pointer to information per device manager </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac2dfd038f6c5e8a4acac6efee1008570"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2dfd038f6c5e8a4acac6efee1008570">&#9670;&nbsp;</a></span>tx_process_interrupt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CANDeviceManager::tx_process_interrupt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCircularBuffer.html">CircularBuffer</a> *&#160;</td>
+          <td class="paramname"><em>out_buff</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send a new message after notification of transmission of old one.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out_buff</td><td>circular buffer for the output messages </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aab739949b15725d68612899eb9fc8684"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab739949b15725d68612899eb9fc8684">&#9670;&nbsp;</a></span>write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CANDeviceManager::write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCircularBuffer.html">CircularBuffer</a> *&#160;</td>
+          <td class="paramname"><em>out_buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcan__msg__t.html">can_msg_t</a> *&#160;</td>
+          <td class="paramname"><em>pmsg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>TODO</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out_buff</td><td>circular buffer that stores output messages </td></tr>
+    <tr><td class="paramname">pmsg</td><td>pointer to the CAN message that should be written </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 for success, or -1 if an error occurs </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ad3483e1101b599c8c9610d45bc2b3dbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3483e1101b599c8c9610d45bc2b3dbf">&#9670;&nbsp;</a></span>can_notify_client_err</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CANDeviceManager::can_notify_client_err = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO </p>
+
+</div>
+</div>
+<a id="afa943513df52470b15eefc3dbd8bf171"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa943513df52470b15eefc3dbd8bf171">&#9670;&nbsp;</a></span>can_timeout_count</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CANDeviceManager::can_timeout_count = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of times a heartbeat was not received from the CAN for over 1 consecutive second. </p>
+
+</div>
+</div>
+<a id="a86247aa928aa2d0c04cbb52072539adc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86247aa928aa2d0c04cbb52072539adc">&#9670;&nbsp;</a></span>mask_count_non_zero</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CANDeviceManager::mask_count_non_zero = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO </p>
+
+</div>
+</div>
+<a id="a0724c187c7c6f1bad71c427bcb73d6b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0724c187c7c6f1bad71c427bcb73d6b2">&#9670;&nbsp;</a></span>tx_buffer_flush</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CANDeviceManager::tx_buffer_flush = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of messages that were flushed from the output buffer without ever being sent. </p>
 
 </div>
 </div>

@@ -1,20 +1,13 @@
 <map id="include/jbus/j1939_struct.h" name="include/jbus/j1939_struct.h">
-<area shape="rect" id="node2" href="$can__struct_8h.html" title="include/can/can_struct.h" alt="" coords="375,102,539,129"/>
-<area shape="rect" id="node6" href="$can_8cpp.html" title="include/can/can.cpp" alt="" coords="716,348,855,375"/>
-<area shape="rect" id="node11" href="$can_8h.html" title="include/can/can.h" alt="" coords="823,191,947,218"/>
-<area shape="rect" id="node12" href="$jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="913,273,1057,300"/>
-<area shape="rect" id="node13" href="$j1939__interpreters_8h.html" title="include/jbus/j1939\l_interpreters.h" alt="" coords="1279,95,1406,136"/>
-<area shape="rect" id="node17" href="$rd__j1939_8cpp.html" title="src/rd_j1939.cpp" alt="" coords="1074,191,1193,218"/>
-<area shape="rect" id="node18" href="$translate__pdu_8cpp.html" title="src/translate_pdu.cpp" alt="" coords="1217,191,1364,218"/>
-<area shape="rect" id="node19" href="$jbus_8h.html" title="include/jbus/jbus.h" alt="" coords="1023,102,1153,129"/>
-<area shape="rect" id="node3" href="$buffer_8h.html" title="include/can/buffer.h" alt="" coords="389,191,525,218"/>
-<area shape="rect" id="node5" href="$can__man_8h.html" title="include/can/can_man.h" alt="" coords="263,273,419,300"/>
-<area shape="rect" id="node8" href="$can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="5,348,168,375"/>
-<area shape="rect" id="node9" href="$io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="193,348,351,375"/>
-<area shape="rect" id="node4" href="$buffer_8cpp.html" title="include/can/buffer.cpp" alt="" coords="495,273,646,300"/>
-<area shape="rect" id="node7" href="$can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="375,348,542,375"/>
-<area shape="rect" id="node10" href="$can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="568,348,691,375"/>
-<area shape="rect" id="node14" href="$j1939__interpreters_8cpp.html" title="include/jbus/j1939\l_interpreters.cpp" alt="" coords="1389,184,1515,225"/>
-<area shape="rect" id="node15" href="$pub__sub_8h.html" title="include/utils/pub_sub.h" alt="" coords="1540,191,1695,218"/>
-<area shape="rect" id="node16" href="$publish_8cpp.html" title="include/utils/publish.cpp" alt="" coords="1537,273,1698,300"/>
+<area shape="rect" id="node2" href="$can_8h.html" title="include/can/can.h" alt="" coords="171,102,295,129"/>
+<area shape="rect" id="node3" href="$can_8cpp.html" title="include/can/can.cpp" alt="" coords="5,191,144,218"/>
+<area shape="rect" id="node4" href="$jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="315,191,459,218"/>
+<area shape="rect" id="node6" href="$j1939__interpreters_8h.html" title="include/jbus/j1939\l_interpreters.h" alt="" coords="639,95,766,136"/>
+<area shape="rect" id="node10" href="$rd__j1939_8cpp.html" title="src/rd_j1939.cpp" alt="" coords="483,191,602,218"/>
+<area shape="rect" id="node11" href="$translate__pdu_8cpp.html" title="src/translate_pdu.cpp" alt="" coords="956,191,1103,218"/>
+<area shape="rect" id="node12" href="$jbus_8h.html" title="include/jbus/jbus.h" alt="" coords="399,102,529,129"/>
+<area shape="rect" id="node5" href="$can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="168,191,291,218"/>
+<area shape="rect" id="node7" href="$j1939__interpreters_8cpp.html" title="include/jbus/j1939\l_interpreters.cpp" alt="" coords="805,184,931,225"/>
+<area shape="rect" id="node8" href="$pub__sub_8h.html" title="include/utils/pub_sub.h" alt="" coords="625,191,780,218"/>
+<area shape="rect" id="node9" href="$publish_8cpp.html" title="include/utils/publish.cpp" alt="" coords="622,273,783,300"/>
 </map>

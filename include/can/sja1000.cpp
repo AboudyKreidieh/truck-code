@@ -23,20 +23,6 @@
 using namespace std;
 
 
-/* timing values */
-BYTE CanTiming[10][2] = {
-	{CAN_TIM0_10K,  CAN_TIM1_10K},
-	{CAN_TIM0_20K,  CAN_TIM1_20K},
-	{CAN_TIM0_50K,  CAN_TIM1_50K},
-	{CAN_TIM0_100K, CAN_TIM1_100K},
-	{CAN_TIM0_125K, CAN_TIM1_125K},
-	{CAN_TIM0_250K, CAN_TIM1_250K},
-	{CAN_TIM0_500K, CAN_TIM1_500K},
-	{CAN_TIM0_800K, CAN_TIM1_800K},
-	{CAN_TIM0_1000K,CAN_TIM1_1000K}
-};
-
-
 #if defined(CAN_INDEXED_PORT_IO) || defined(CAN_INDEXED_MEM_IO)
 canregs_t* regbase = 0;
 #endif
@@ -98,67 +84,6 @@ canregs_t* regbase = 0;
 //}
 
 
-/** Board reset.
- *
- * This performs the following procedure:
- *
- * 1. Set Reset Request
- * 2. Wait for Rest request is changing - used to see if board is available
- *    initialize board (with valuse from /proc/sys/Can)
- * 3. Set output control register
- * 4. Set timings
- * 5. Set acceptance mask
- *
- * @param minor
- * 		TODO
- * @return
- * 		0 for success, or -1 if an error occurs
- */
-int CAN_ChipReset(int minor)
-{
-    DBGin();
-    DBGprint(DBG_DATA,(" INT 0x%x", CANin(minor, canirq)));
-
-    CANout(minor, canmode, CAN_RESET_REQUEST);
-
-    udelay(10);
-
-    CANin(minor, canstat);
-
-    DBGprint(DBG_DATA,("status=0x%x mode=0x%x", status,
-	    CANin(minor, canmode) ));
-#if 0
-    if( ! (CANin(minor, canmode) & CAN_RESET_REQUEST ) ){
-	    printk("ERROR: no board present!\n");
-	    /* MOD_DEC_USE_COUNT; */
-#if defined(PCM3680) || defined(CPC104) || defined(CPC_PCM_104)
-	    CAN_Release(minor);
-#endif
-	    DBGout();
-	    return -1;
-    }
-#endif
-
-    DBGprint(DBG_DATA, ("[%d] CAN_mode 0x%x", minor, CANin(minor, canmode)));
-    /* select mode: Basic or PeliCAN */
-    CANout(minor, canclk, CAN_MODE_PELICAN + CAN_MODE_CLK);
-    CANout(minor, canmode, CAN_RESET_REQUEST + CAN_MODE_DEF);
-
-    /* Board specific output control */
-    if (Outc[minor] == 0) {
-	Outc[minor] = CAN_OUTC_VAL;
-    }
-    CANout(minor, canoutc, Outc[minor]);
-
-    CAN_SetTiming(minor, Baud[minor]);
-    CAN_SetMask  (minor, AccCode[minor], AccMask[minor] );
-    DBGprint(DBG_DATA, ("[%d] CAN_mode 0x%x", minor, CANin(minor, canmode)));
-
-    DBGout();
-    return 0;
-}
-
-
 /** Configure bit timing registers directly.
  *
  * Note: Chip must be in bus off state.
@@ -174,77 +99,6 @@ int CAN_SetBTR(int minor, int btr0, int btr1)
     CANout(minor, cantim1, (BYTE) (btr1 & 0xff));
     DBGprint(DBG_DATA,("tim0=0x%x tim1=0x%x",
     		CANin(minor, cantim0), CANin(minor, cantim1)) );
-    DBGout();
-    return 0;
-}
-
-
-int CAN_SetTiming (int minor, int baud)
-{
-	int i = 5;
-	int custom = 0;
-
-    DBGin();
-
-    int isopen = atomic_read(&Can_isopen[minor]);
-    if ((isopen > 1) && (Baud[minor] != baud)) {
-		DBGprint(DBG_DATA, ("isopen = %d", isopen));
-		DBGprint(DBG_DATA, ("refused baud[%d]=%d already set to %d",
-						minor, baud, Baud[minor]));
-		return -1;
-    }
-
-    DBGprint(DBG_DATA, ("baud[%d]=%d", minor, baud));
-    switch (baud) {
-		case   10: i = 0; break;
-		case   20: i = 1; break;
-		case   50: i = 2; break;
-		case  100: i = 3; break;
-		case  125: i = 4; break;
-		case  250: i = 5; break;
-		case  500: i = 6; break;
-		case  800: i = 7; break;
-		case 1000: i = 8; break;
-		default  : custom=1;
-    }
-
-    /* select mode: Basic or PeliCAN */
-    CANout(minor, canclk, CAN_MODE_PELICAN + CAN_MODE_CLK);
-    if (custom) {
-    	CANout(minor, cantim0, (BYTE) (baud >> 8) & 0xff);
-    	CANout(minor, cantim1, (BYTE) (baud & 0xff ));
-    } else {
-    	CANout(minor,cantim0, (BYTE) CanTiming[i][0]);
-    	CANout(minor,cantim1, (BYTE) CanTiming[i][1]);
-    }
-
-    DBGprint(DBG_DATA, ("tim0=0x%x tim1=0x%x",
-    		CANin(minor, cantim0), CANin(minor, cantim1)));
-
-    DBGout();
-    return 0;
-}
-
-
-int CAN_StartChip(int minor) {
-    RxErr[minor] = TxErr[minor] = 0L;
-    DBGin();
-    DBGprint(DBG_DATA, ("[%d] CAN_mode 0x%x", minor, CANin(minor, canmode)));
-    udelay(10);
-
-    /* clear interrupts, value not used */
-    (void)CANin(minor, canirq);
-
-    /* Interrupts on Rx, TX, any Status change and data overrun */
-    CANset(minor, canirq_enable, (
-		  CAN_OVERRUN_INT_ENABLE
-		+ CAN_ERROR_INT_ENABLE
-		+ CAN_TRANSMIT_INT_ENABLE
-		+ CAN_RECEIVE_INT_ENABLE ));
-
-    CANreset(minor, canmode, CAN_RESET_REQUEST);
-    DBGprint(DBG_DATA,("start mode=0x%x", CANin(minor, canmode)));
-
     DBGout();
     return 0;
 }
@@ -314,38 +168,6 @@ int CAN_SetListenOnlyMode(int minor, int arg)
 }
 
 
-#ifdef CPC_PCI
-#define R_OFF 4 /* offset 4 for the EMS CPC-PCI card */
-#else
-#define R_OFF 1
-#endif
-
-int CAN_SetMask(int minor, unsigned int code, unsigned int mask)
-{
-    DBGin();
-    DBGprint(DBG_DATA,("[%d] acc=0x%x mask=0x%x",  minor, code, mask));
-    CANout(minor, frameinfo,
-    		(BYTE)((unsigned int)(code >> 24) & 0xff));
-    CANout(minor, frame.extframe.canid1,
-    		(BYTE)((unsigned int)(code>>16) & 0xff));
-    CANout(minor, frame.extframe.canid2,
-    		(BYTE)((unsigned int)(code>>8) & 0xff));
-    CANout(minor, frame.extframe.canid3,
-    		(BYTE)((unsigned int)(code>>0) & 0xff));
-    CANout(minor, frame.extframe.canid4,
-    		(BYTE)((unsigned int)(mask>>24) & 0xff));
-    CANout(minor, frame.extframe.canxdata[0 * R_OFF],
-    		(BYTE)((unsigned int)(mask >> 16) & 0xff));
-    CANout(minor, frame.extframe.canxdata[1 * R_OFF],
-			(BYTE)((unsigned int)(mask >>8) & 0xff));
-    CANout(minor, frame.extframe.canxdata[2 * R_OFF],
-			(BYTE)((unsigned int)(mask >> 0) & 0xff));
-
-    DBGout();
-    return 0;
-}
-
-
 
 ///*
 //Single CAN frames or the very first Message are copied into the CAN controller
@@ -356,7 +178,7 @@ int CAN_SetMask(int minor, unsigned int code, unsigned int mask)
 //*/
 //int CAN_SendMessage (int minor, canmsg_t *tx)
 //{
-//	int i = 0;
+//	int i = 0;CAN
 //	int ext;	/* message format to send */
 //	BYTE tx2reg, stat;
 //

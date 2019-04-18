@@ -9,7 +9,6 @@
  * @date February 26, 2019
  */
 
-#include "can_struct.h"
 #include "can_man.h"
 #include <devctl.h>
 
@@ -43,28 +42,32 @@ int io_devctl(resmgr_context_t *ctp, io_devctl_t *msg, iofunc_ocb_t *io_ocb)
 	/* Check which command it was, and act on it. */
 	switch (dcmd) {
 	case DCMD_CAN_ARM:
-		event =  * (struct sigevent *) data;
+		event =  * (sigevent*) data;
 		printf("io_devctl: can_dev_arm, fd %d\n", event.sigev_code);
 		return can_dev_arm(ctp, io_ocb, event);
 
 	case DCMD_CAN_FILTER:
+		/* Not implemented yet at the level of the device registers. All are
+		 * received in Object 15. Later this function may include calls to
+		 * device register operations. */
 		filter = * (can_filter_t *) data;
-		return can_dev_add_filter(pattr, filter);
+		pattr->can_info.filter = filter;
+		return EOK;
 
 	case DCMD_CAN_EMPTY_Q:
-		can_dev_empty_q(pattr);
+		pattr->in_buff->empty();
 		msg->o.nbytes = sizeof(int);
 		return _RESMGR_PTR(ctp, &msg->o, sizeof(msg->o) + msg->o.nbytes);
 
 	case DCMD_CAN_CLEAR_ERRS:
 		perrs = (can_err_count_t *) data;
-		*(perrs) = can_dev_clear_errs();
+		*(perrs) = pattr->can_dev->clear_errs();
 		msg->o.nbytes = sizeof(can_err_count_t);
         return _RESMGR_PTR(ctp, &msg->o, sizeof(msg->o) + msg->o.nbytes);
 
 	case DCMD_CAN_GET_ERRS:
         perrs = (can_err_count_t *) data;
-		*(perrs) = can_dev_get_errs();
+		*(perrs) = pattr->can_dev->get_errs();
 		msg->o.nbytes = sizeof(can_err_count_t);
         return _RESMGR_PTR(ctp, &msg->o, sizeof(msg->o) + msg->o.nbytes);
 

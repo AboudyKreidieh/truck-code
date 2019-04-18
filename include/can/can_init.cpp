@@ -13,14 +13,10 @@
 #include "utils/common.h"
 #include "utils/sys.h"
 #include "can_man.h"
-#include "can_struct.h"
+#include <sys/iofunc.h>
+#include <sys/dispatch.h>
 
 #undef DO_TRACE
-
-
-/* TODO: remove globals */
-int can_notify_client_err = 0;
-int mask_count_non_zero = 0;
 
 
 int can_handle_interrupt (message_context_t *ctp, int code, unsigned flags,
@@ -37,7 +33,8 @@ int can_handle_interrupt (message_context_t *ctp, int code, unsigned flags,
 	fflush(stdout);
 #endif
 
-	is_recv = can_dev_interrupt(pattr);
+	is_recv = pattr->can_dev->interrupt(pattr->in_buff, pattr->out_buff,
+			(pattr->can_info).filter);
 
 #ifdef DO_TRACE
 	printf("can_handle_interrupt: is_recv %d, pocb 0x%x\n",
@@ -52,7 +49,7 @@ int can_handle_interrupt (message_context_t *ctp, int code, unsigned flags,
 		fflush(stdout);
 #endif
 		if (status == ERROR) {
-			can_notify_client_err++;
+			pattr->can_dev->can_notify_client_err++;
 #ifdef DO_TRACE
 			printf("Failed to deliver CAN client notify event\n");
 #endif
@@ -60,7 +57,7 @@ int can_handle_interrupt (message_context_t *ctp, int code, unsigned flags,
 	}
 
 	if ((mask_count = InterruptUnmask(pinfo->irq, pinfo->intr_id)) != 0)
-		mask_count_non_zero++;
+		pattr->can_dev->mask_count_non_zero++;
 
 #ifdef DO_TRACE
 	printf("mask_count %d\n", mask_count);
@@ -82,8 +79,11 @@ void pulse_init(dispatch_t *dpp, can_attr_t *pattr) {
 #endif
 	if (pinfo->irq != 0) {
 		pevent = &pattr->hw_event;
-		if ((pevent->sigev_code = pulse_attach(dpp, MSG_FLAG_ALLOC_PULSE,
-				0, can_handle_interrupt, pattr)) == ERROR) {
+		pulse_attach(dpp, MSG_FLAG_ALLOC_PULSE, 0, can_handle_interrupt, pattr);
+//		if ((pevent->sigev_code = pulse_attach(dpp, MSG_FLAG_ALLOC_PULSE,
+//				0, can_handle_interrupt, pattr)) == ERROR) {
+		if (pulse_attach(dpp, MSG_FLAG_ALLOC_PULSE,
+				0, can_handle_interrupt, pattr) == (intptr_t) ERROR) {
 			fprintf(stderr, "Unable to attach irq_handler pulse.\n");
 			exit(EXIT_FAILURE);
 		}

@@ -46,21 +46,19 @@ typedef struct {
 } atomic_t;
 
 
-/**
- * atomic_read - read atomic variable
- * @v: pointer of type atomic_t
+/** Read atomic variable. Atomically reads the value of @v.
  *
- * Atomically reads the value of @v.
+ * @param v  pointer of type atomic_t
  */
 #define atomic_read(v)          ((v)->counter)
 
 
-/**
- * atomic_set - set atomic variable
- * @v: pointer of type atomic_t
- * @i: required value
+/** Set atomic variable.
  *
  * Atomically sets the value of @v to @i.
+ *
+ * @param v pointer of type atomic_t
+ * @param i required value
  */
 #define atomic_set(v,i)         (((v)->counter) = (i))
 

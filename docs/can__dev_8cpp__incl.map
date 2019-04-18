@@ -1,14 +1,10 @@
 <map id="include/can/can_dev.cpp" name="include/can/can_dev.cpp">
-<area shape="rect" id="node3" href="$can__man_8h.html" title="can_man.h" alt="" coords="481,80,567,107"/>
-<area shape="rect" id="node6" href="$buffer_8h.html" title="buffer.h" alt="" coords="587,155,653,181"/>
-<area shape="rect" id="node21" href="$fifo_8h.html" title="fifo.h" alt="" coords="817,80,868,107"/>
-<area shape="rect" id="node22" href="$sja1000_8h.html" title="sja1000.h" alt="" coords="806,155,885,181"/>
-<area shape="rect" id="node24" href="$delay_8h.html" title="delay.h" alt="" coords="744,229,808,256"/>
-<area shape="rect" id="node4" href="$das__clt_8h.html" title="das_clt.h" alt="" coords="320,155,395,181"/>
-<area shape="rect" id="node7" href="$can__struct_8h.html" title="can_struct.h" alt="" coords="465,229,559,256"/>
-<area shape="rect" id="node13" href="$common_8h.html" title="utils/common.h" alt="" coords="315,453,426,480"/>
-<area shape="rect" id="node8" href="$j1939__struct_8h.html" title="jbus/j1939_struct.h" alt="" coords="553,304,685,331"/>
-<area shape="rect" id="node18" href="$sys_8h.html" title="utils/sys.h" alt="" coords="93,379,176,405"/>
-<area shape="rect" id="node10" href="$j1939__utils_8h.html" title="j1939_utils.h" alt="" coords="201,379,295,405"/>
-<area shape="rect" id="node16" href="$timestamp_8h.html" title="utils/timestamp.h" alt="" coords="760,379,883,405"/>
+<area shape="rect" id="node3" href="$can__man_8h.html" title="can_man.h" alt="" coords="367,80,453,107"/>
+<area shape="rect" id="node6" href="$sja1000_8h.html" title="sja1000.h" alt="" coords="176,155,255,181"/>
+<area shape="rect" id="node14" href="$delay_8h.html" title="delay.h" alt="" coords="106,229,170,256"/>
+<area shape="rect" id="node16" href="$buffer_8h.html" title="utils/buffer.h" alt="" coords="597,155,692,181"/>
+<area shape="rect" id="node17" href="$fifo_8h.html" title="fifo.h" alt="" coords="239,80,290,107"/>
+<area shape="rect" id="node4" href="$das__clt_8h.html" title="das_clt.h" alt="" coords="447,155,522,181"/>
+<area shape="rect" id="node8" href="$common_8h.html" title="utils/common.h" alt="" coords="319,229,429,256"/>
+<area shape="rect" id="node11" href="$timestamp_8h.html" title="utils/timestamp.h" alt="" coords="197,304,319,331"/>
 </map>

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['fuel_5feconomy_5fmeters_5fper_5fcm3',['fuel_economy_meters_per_cm3',['../j1939__utils_8cpp.html#a39d19933e0daf755e200f03c15275942',1,'fuel_economy_meters_per_cm3(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a39d19933e0daf755e200f03c15275942',1,'fuel_economy_meters_per_cm3(int data):&#160;j1939_utils.cpp']]],
-  ['fuel_5frate_5fcm3_5fper_5fsec',['fuel_rate_cm3_per_sec',['../j1939__utils_8cpp.html#a297a098aeb03033b58e42f44a38730fb',1,'fuel_rate_cm3_per_sec(int data):&#160;j1939_utils.cpp'],['../j1939__utils_8h.html#a297a098aeb03033b58e42f44a38730fb',1,'fuel_rate_cm3_per_sec(int data):&#160;j1939_utils.cpp']]]
+  ['empty',['empty',['../classCircularBuffer.html#a77d5993c6536fd3ab7eaa9070c462838',1,'CircularBuffer']]],
+  ['encode_5ftimestamp',['encode_timestamp',['../timestamp_8cpp.html#a22c93932505ac61018a7894c5af5665f',1,'encode_timestamp(pps_encoder_t encoder, timestamp_t *t):&#160;timestamp.cpp'],['../timestamp_8h.html#a5739ce3300b3948998f73dab4ae1b888',1,'encode_timestamp(pps_encoder_t, timestamp_t *):&#160;timestamp.cpp']]]
 ];

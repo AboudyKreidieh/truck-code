@@ -1,11 +1,9 @@
 <map id="include/can/io_func.cpp" name="include/can/io_func.cpp">
-<area shape="rect" id="node2" href="$can__struct_8h.html" title="can_struct.h" alt="" coords="474,229,569,256"/>
-<area shape="rect" id="node15" href="$can__man_8h.html" title="can_man.h" alt="" coords="549,80,635,107"/>
-<area shape="rect" id="node3" href="$j1939__struct_8h.html" title="jbus/j1939_struct.h" alt="" coords="406,304,538,331"/>
-<area shape="rect" id="node8" href="$common_8h.html" title="utils/common.h" alt="" coords="669,453,779,480"/>
-<area shape="rect" id="node13" href="$sys_8h.html" title="utils/sys.h" alt="" coords="472,379,555,405"/>
-<area shape="rect" id="node5" href="$j1939__utils_8h.html" title="j1939_utils.h" alt="" coords="579,379,674,405"/>
-<area shape="rect" id="node11" href="$timestamp_8h.html" title="utils/timestamp.h" alt="" coords="325,379,448,405"/>
-<area shape="rect" id="node16" href="$das__clt_8h.html" title="das_clt.h" alt="" coords="799,155,873,181"/>
-<area shape="rect" id="node18" href="$buffer_8h.html" title="buffer.h" alt="" coords="559,155,625,181"/>
+<area shape="rect" id="node2" href="$can__man_8h.html" title="can_man.h" alt="" coords="300,80,387,107"/>
+<area shape="rect" id="node3" href="$das__clt_8h.html" title="das_clt.h" alt="" coords="103,155,178,181"/>
+<area shape="rect" id="node5" href="$sja1000_8h.html" title="sja1000.h" alt="" coords="211,155,289,181"/>
+<area shape="rect" id="node7" href="$common_8h.html" title="utils/common.h" alt="" coords="288,229,399,256"/>
+<area shape="rect" id="node15" href="$buffer_8h.html" title="utils/buffer.h" alt="" coords="592,155,687,181"/>
+<area shape="rect" id="node10" href="$timestamp_8h.html" title="utils/timestamp.h" alt="" coords="161,304,283,331"/>
+<area shape="rect" id="node13" href="$delay_8h.html" title="delay.h" alt="" coords="149,229,213,256"/>
 </map>

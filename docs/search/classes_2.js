@@ -8,9 +8,8 @@ var searchData=
   ['can_5fmsg_5ft',['can_msg_t',['../structcan__msg__t.html',1,'']]],
   ['can_5focb_5ft',['can_ocb_t',['../structcan__ocb__t.html',1,'']]],
   ['candevicemanager',['CANDeviceManager',['../classCANDeviceManager.html',1,'']]],
-  ['canmsg_5ft',['canmsg_t',['../structcanmsg__t.html',1,'']]],
   ['canregs',['canregs',['../structcanregs.html',1,'']]],
   ['canstatuspar',['CanStatusPar',['../structCanStatusPar.html',1,'']]],
-  ['cbuff_5ftyp',['cbuff_typ',['../structcbuff__typ.html',1,'']]],
-  ['ccvsinterpreter',['CCVSInterpreter',['../classCCVSInterpreter.html',1,'']]]
+  ['ccvsinterpreter',['CCVSInterpreter',['../classCCVSInterpreter.html',1,'']]],
+  ['circularbuffer',['CircularBuffer',['../classCircularBuffer.html',1,'']]]
 ];
