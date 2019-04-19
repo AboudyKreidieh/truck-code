@@ -13,7 +13,7 @@ var searchData=
   ['can_5ferror_5fpassive_5fint_5fenable',['CAN_ERROR_PASSIVE_INT_ENABLE',['../sja1000_8h.html#a7711abcc1bd4f24605a7dde3d050d383',1,'sja1000.h']]],
   ['can_5ferror_5fstatus',['CAN_ERROR_STATUS',['../sja1000_8h.html#a79e2b8800230acd0d3371417d0638c17',1,'sja1000.h']]],
   ['can_5fgoto_5fsleep',['CAN_GOTO_SLEEP',['../sja1000_8h.html#a691b4c504f8f61fa6fafe2390534c50c',1,'sja1000.h']]],
-  ['can_5fid',['CAN_ID',['../can__struct_8h.html#ad2f37543ba1ef1dc46a346ade5f4ccbf',1,'can_struct.h']]],
+  ['can_5fid',['CAN_ID',['../can__man_8h.html#ad2f37543ba1ef1dc46a346ade5f4ccbf',1,'can_man.h']]],
   ['can_5flisten_5fonly_5fmode',['CAN_LISTEN_ONLY_MODE',['../sja1000_8h.html#a92acbca795ad9a4fa0323a6c1286d595',1,'sja1000.h']]],
   ['can_5fmax_5fopen',['CAN_MAX_OPEN',['../fifo_8h.html#a3bf3276b6313b672db14383a9b3352f7',1,'fifo.h']]],
   ['can_5fmode_5fbasiccan',['CAN_MODE_BASICCAN',['../sja1000_8h.html#aac6d77194197bf1dcf898d6dc0f18da0',1,'sja1000.h']]],

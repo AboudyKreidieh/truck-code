@@ -18,9 +18,9 @@
 #include "can/can.h"
 #include "utils/common.h"
 #include <sys/iofunc.h>
+#include <sys/dispatch.h>
 
 using namespace std;
-
 
 #define DAS_MSG_BUF     2048
 
@@ -35,10 +35,7 @@ static iofunc_funcs_t 			can_mount_funcs;
 
 
 /** External variables in ca_if.c, to be printed on exit */
-//int can_timeout_count = 0;
-//int tx_buffer_flush = 0;
 extern int can_timeout_count;
-extern int tx_buffer_flush;
 
 
 IOFUNC_OCB_T *can_ocb_calloc(resmgr_context_t *ctp, iofunc_attr_t *attr) {
@@ -88,13 +85,12 @@ int main (int argc, char **argv) {
 	/* Read configuration files and bind device-specific functions. */
 	can_init(argc, argv, &connect_func, &io_func, &attr);
 
-	// FIXME
-//	// establish a name in the pathname space
-//	if (resmgr_attach (dpp, &resmgr_attr, attr.devname, _FTYPE_ANY,
-//		 0, &connect_func, &io_func, &attr) == -1) {
-//		perror ("Unable to resmgr_attach\n");
-//		exit (EXIT_FAILURE);
-//	}
+	/* Establish a name in the pathname space. */
+	if (resmgr_attach(dpp, &resmgr_attr, attr.devname, _FTYPE_ANY,
+			0, &connect_func, &io_func, (_iofunc_attr*)&attr) == -1) {  // FIXME: _iofunc_attr*
+		perror ("Unable to resmgr_attach\n");
+		exit (EXIT_FAILURE);
+	}
 
 	if (verbose) {
 		printf("Calling can_dev_init: base address 0x%x speed %d extended %d\n",
@@ -105,6 +101,11 @@ int main (int argc, char **argv) {
 	/* Initialize device. */
 	CANDeviceManager can_dev;
 	can_dev.init(pinfo->port, pinfo->bit_speed, pinfo->use_extended_frame);
+	attr.can_dev = &can_dev;
+
+	/* Initialize all classes within the attr object. */
+	attr.in_buff = new CircularBuffer();
+	attr.out_buff = new CircularBuffer();
 
 	if (verbose) {
 		printf("Attaching pulses\n");
@@ -118,16 +119,17 @@ int main (int argc, char **argv) {
 	ctp = dispatch_context_alloc(dpp);
 
 	if(setjmp(exit_env) != 0) {
+		can_err_count_t err = can_dev.get_errs();
 		printf("%s exiting\n", argv[0]);
-		printf("can_notify_client_err %d\n", can_notify_client_err);
-		printf("mask_count_non_zero %d\n", mask_count_non_zero);
-		printf("shadow_buffer_count %d\n", shadow_buffer_count);
-		printf("intr_in_handler_count %d\n", intr_in_handler_count);
-		printf("rx_interrupt_count %d\n", rx_interrupt_count);
-		printf("rx_message_lost_count %d\n", rx_message_lost_count);
-		printf("tx_interrupt_count %d\n", tx_interrupt_count);
-		printf("tx_buffer_flush %d\n", tx_buffer_flush);
-		printf("can_timeout_count %d\n", can_timeout_count);
+		printf("can_notify_client_err %d\n", can_dev.can_notify_client_err);
+		printf("mask_count_non_zero %d\n", can_dev.mask_count_non_zero);
+		printf("shadow_buffer_count %d\n", err.shadow_buffer_count);
+		printf("intr_in_handler_count %d\n", err.intr_in_handler_count);
+		printf("rx_interrupt_count %d\n", err.rx_interrupt_count);
+		printf("rx_message_lost_count %d\n", err.rx_message_lost_count);
+		printf("tx_interrupt_count %d\n", err.tx_interrupt_count);
+		printf("tx_buffer_flush %d\n", can_dev.tx_buffer_flush);
+		printf("can_timeout_count %d\n", can_dev.can_timeout_count);
 		fflush(stdout);
 		exit(EXIT_SUCCESS);
 	} else {
@@ -142,4 +144,9 @@ int main (int argc, char **argv) {
 		}
 		dispatch_handler(ctp);
 	}
+
+	/* free up memory */
+	delete attr.in_buff;
+	delete attr.out_buff;
+	delete attr.can_dev;
 }

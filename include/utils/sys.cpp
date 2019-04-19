@@ -83,16 +83,6 @@ static char *get_entry(FILE *pfile, char *pentry)
 }
 
 
-void sig_ign(int *sig_list, void sig_hand(int sig))
-{
-        int i = 0;
-        while (sig_list[i] != ERROR) {
-                signal(sig_list[i], sig_hand);
-                i++;
-        }
-}
-
-
 long get_ini_long(FILE *pfile, char *pentry, long long_def)
 {
 	char buffer[MAX_LINE_LEN+1];

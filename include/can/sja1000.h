@@ -312,11 +312,7 @@ typedef struct canregs {
 #define MAX_CHANNELS	1
 #define MY_CHANNEL		0
 
-extern int Baud[MAX_CHANNELS];
 extern int IRQ[MAX_CHANNELS];
-extern int Baud[MAX_CHANNELS];
-extern unsigned int AccCode[MAX_CHANNELS];
-extern unsigned int AccMask[MAX_CHANNELS];
 extern int Timeout[MAX_CHANNELS];
 extern int Outc[MAX_CHANNELS];
 extern int TxErr[MAX_CHANNELS];
@@ -327,8 +323,6 @@ extern atomic_t Can_isopen[MAX_CHANNELS];
 
 // value for Janus MM board
 #define CAN_OUTC_VAL	0xda
-
-extern int Outc[1];
 
 /**
  *	Fancy leveled debugging not really needed in
@@ -398,17 +392,6 @@ struct file {
 #define CAN_EFF_MASK	0x1FFFFFFFU     /**< Extended Frame Format (EFF) 	*/
 #define CANDRIVERERROR  0xFFFFFFFFul    /**< Invalid CAN ID == Error 		*/
 
-/** The CAN message structure used by can4linux, not used in PATH driver. */
-typedef struct {
-    int flags;    		/**< flags, indicating or controlling specials	*/
-    					/**< message properties 						*/
-    int cob;			/**< CAN object number, used in Full CAN  		*/
-    unsigned long id;	/**< CAN message ID, 4 bytes  					*/
-    timeval timestamp;  /**< time stamp for received messages 			*/
-    short int length;   /**< number of bytes in the CAN message 		*/
-    BYTE data[8];		/**< data, 0...8 bytes 							*/
-} canmsg_t;
-
 
 /* Bogus definitions to get simplest case to make Linux ISR in sja1000.cpp
  * compile -- not used. */
@@ -418,29 +401,6 @@ typedef int irqreturn_t;
 #define IRQ_NONE				0
 #define IRQ_HANDLED				1
 #define IRQ_RETVAL(x)			(x)
-
-
-/** Configure bit timing.
- *
- * Note: Chip must be in bus off state.
- *
- * @param minor
- * 		TODO
- * @param baud
- * 		CAN baud rate
- * @return
- * 		TODO
- */
-extern int CAN_SetTiming(int minor, int baud);
-
-
-extern int CAN_SetMask(int minor, unsigned int code, unsigned int mask);
-
-
-extern int CAN_ChipReset(int minor);
-
-
-extern int CAN_StartChip(int minor);
 
 
 /* -------------------------------------------------------------------------- */
@@ -453,17 +413,17 @@ extern canregs_t *can_base_addr;
 
 /** Read from byte register on CAN chip at address "addr" and return the value.
  */
-static inline unsigned char can_read_reg(unsigned char *addr)
+static inline unsigned char can_read_reg(BYTE *addr)
 {
-	volatile unsigned char *preg = (volatile unsigned char *) (addr);
+	volatile BYTE *preg = (volatile BYTE*) (addr);
 	return *preg;
 }
 
 /** Write "value" to byte register on CAN chip at address "addr".
  */
-static inline void can_write_reg(unsigned char *addr, unsigned char value)
+static inline void can_write_reg(BYTE *addr, BYTE value)
 {
-	volatile unsigned char *preg = (volatile unsigned char *) (addr);
+	volatile BYTE *preg = (volatile BYTE*) (addr);
     *preg = value;
 }
 
@@ -471,9 +431,9 @@ static inline void can_write_reg(unsigned char *addr, unsigned char value)
  *
  * Register must be readable and then writable.
  */
-static inline void can_set_reg(unsigned char *addr, unsigned char mask)
+static inline void can_set_reg(BYTE *addr, BYTE mask)
 {
-	volatile unsigned char *preg = (volatile unsigned char *) (addr);
+	volatile BYTE *preg = (volatile BYTE*) (addr);
 	*preg |= mask;
 }
 
@@ -481,9 +441,9 @@ static inline void can_set_reg(unsigned char *addr, unsigned char mask)
  *
  * Register must be readable and then writable.
  */
-static inline void can_reset_reg(unsigned char *addr, unsigned char mask)
+static inline void can_reset_reg(BYTE *addr, BYTE mask)
 {
-	volatile unsigned char *preg = (volatile unsigned char *) (addr);
+	volatile BYTE *preg = (volatile BYTE *) (addr);
 	*preg &= ~(mask);
 }
 
@@ -499,5 +459,11 @@ static inline void can_reset_reg(unsigned char *addr, unsigned char mask)
 #define CANset(bd,adr,m) can_set_reg(&can_base_addr->adr, m)
 #define CANreset(bd,adr,m) can_reset_reg(&can_base_addr->adr, m)
 
+
+#ifdef CPC_PCI
+#define R_OFF 4 /* offset 4 for the EMS CPC-PCI card */
+#else
+#define R_OFF 1
+#endif
 
 #endif /* INCLUDE_CAN_SJA1000_H_ */

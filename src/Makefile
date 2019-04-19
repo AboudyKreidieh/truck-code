@@ -36,6 +36,7 @@ OBJECTS = $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/jbus/*.o)
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/can/*.o) 
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/timestamp.o)
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/sys.o)
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/buffer.o)
 
 # Compiling rule
 $(OUTPUT_DIR)/%.o: %.c

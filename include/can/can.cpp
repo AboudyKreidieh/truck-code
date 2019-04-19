@@ -14,7 +14,6 @@
 #include <string>
 #include "can.h"
 #include "can_man.h"
-#include "can_struct.h"
 #include "jbus/j1939_struct.h"
 #include "utils/sys.h"
 #include "utils/common.h"
@@ -110,8 +109,8 @@ void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
 	}
 
 	/* Initialize circular buffers for CAN read and write. */
-	init_circular_buffer(&pattr->in_buff, DEFAULT_QSIZE, sizeof(can_msg_t));
-	init_circular_buffer(&pattr->out_buff, DEFAULT_QSIZE, sizeof(can_msg_t));
+	pattr->in_buff->init(DEFAULT_QSIZE, sizeof(can_msg_t));
+	pattr->out_buff->init(DEFAULT_QSIZE, sizeof(can_msg_t));
 	printf("Circular buffers initialized\n");
 	fflush(stdout);
 

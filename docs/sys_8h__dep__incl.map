@@ -1,14 +1,5 @@
 <map id="include/utils/sys.h" name="include/utils/sys.h">
-<area shape="rect" id="node2" href="$can__struct_8h.html" title="include/can/can_struct.h" alt="" coords="506,80,670,107"/>
-<area shape="rect" id="node6" href="$can_8cpp.html" title="include/can/can.cpp" alt="" coords="881,304,1020,331"/>
-<area shape="rect" id="node8" href="$can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="5,304,168,331"/>
-<area shape="rect" id="node13" href="$sys_8cpp.html" title="include/utils/sys.cpp" alt="" coords="876,80,1017,107"/>
-<area shape="rect" id="node3" href="$buffer_8h.html" title="include/can/buffer.h" alt="" coords="309,155,445,181"/>
-<area shape="rect" id="node5" href="$can__man_8h.html" title="include/can/can_man.h" alt="" coords="394,229,550,256"/>
-<area shape="rect" id="node9" href="$io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="383,304,542,331"/>
-<area shape="rect" id="node11" href="$can_8h.html" title="include/can/can.h" alt="" coords="626,229,750,256"/>
-<area shape="rect" id="node4" href="$buffer_8cpp.html" title="include/can/buffer.cpp" alt="" coords="167,229,318,256"/>
-<area shape="rect" id="node7" href="$can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="193,304,359,331"/>
-<area shape="rect" id="node10" href="$can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="567,304,689,331"/>
-<area shape="rect" id="node12" href="$jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="713,304,857,331"/>
+<area shape="rect" id="node2" href="$can_8cpp.html" title="include/can/can.cpp" alt="" coords="5,80,144,107"/>
+<area shape="rect" id="node3" href="$can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="168,80,331,107"/>
+<area shape="rect" id="node4" href="$sys_8cpp.html" title="include/utils/sys.cpp" alt="" coords="355,80,496,107"/>
 </map>

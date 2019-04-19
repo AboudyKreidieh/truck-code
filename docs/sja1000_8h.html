@@ -91,9 +91,15 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="sja1000_8h__dep__incl.png" border="0" usemap="#include_2can_2sja1000_8hdep" alt=""/></div>
 <map name="include_2can_2sja1000_8hdep" id="include_2can_2sja1000_8hdep">
-<area shape="rect" id="node2" href="fifo_8h.html" title="include/can/fifo.h" alt="" coords="123,80,244,107"/>
-<area shape="rect" id="node3" href="can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="5,155,172,181"/>
-<area shape="rect" id="node4" href="sja1000_8cpp.html" title="include/can/sja1000.cpp" alt="" coords="198,155,361,181"/>
+<area shape="rect" id="node2" href="can__man_8h.html" title="include/can/can_man.h" alt="" coords="527,80,683,107"/>
+<area shape="rect" id="node4" href="can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="854,155,1021,181"/>
+<area shape="rect" id="node9" href="fifo_8h.html" title="include/can/fifo.h" alt="" coords="967,80,1089,107"/>
+<area shape="rect" id="node10" href="sja1000_8cpp.html" title="include/can/sja1000.cpp" alt="" coords="1045,155,1208,181"/>
+<area shape="rect" id="node3" href="can_8cpp.html" title="include/can/can.cpp" alt="" coords="691,155,829,181"/>
+<area shape="rect" id="node5" href="can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="5,155,168,181"/>
+<area shape="rect" id="node6" href="io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="193,155,351,181"/>
+<area shape="rect" id="node7" href="jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="376,155,520,181"/>
+<area shape="rect" id="node8" href="can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="544,155,667,181"/>
 </map>
 </div>
 </div>
@@ -112,8 +118,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__instance__data.html">_instance_data</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfile.html">file</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcanmsg__t.html">canmsg_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -384,6 +388,9 @@ Macros</h2></td></tr>
 <tr class="memitem:a5860cb43d93df377ab1884f7ccef567d"><td class="memItemLeft" align="right" valign="top"><a id="a5860cb43d93df377ab1884f7ccef567d"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>CANreset</b>(bd,  adr,  m)&#160;&#160;&#160;can_reset_reg(&amp;<a class="el" href="sja1000_8h.html#aec3fc02b98ee7c276155391ec1cd2450">can_base_addr</a>-&gt;adr, m)</td></tr>
 <tr class="separator:a5860cb43d93df377ab1884f7ccef567d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa80ca44571dfc3998ed8f6fd4331250e"><td class="memItemLeft" align="right" valign="top"><a id="aa80ca44571dfc3998ed8f6fd4331250e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>R_OFF</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:aa80ca44571dfc3998ed8f6fd4331250e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -397,16 +404,6 @@ typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>irqreturn_t</b
 Functions</h2></td></tr>
 <tr class="memitem:adcd619799f7fe700953e0d7a96aba64d"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structcanregs.html">canregs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#adcd619799f7fe700953e0d7a96aba64d">__attribute__</a> ((packed)) canregs_t</td></tr>
 <tr class="separator:adcd619799f7fe700953e0d7a96aba64d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61bae6a7c9f24ad6d5899f6ef2b1fd5a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a61bae6a7c9f24ad6d5899f6ef2b1fd5a">CAN_SetTiming</a> (int minor, int baud)</td></tr>
-<tr class="separator:a61bae6a7c9f24ad6d5899f6ef2b1fd5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e8b9aad918fdbfdec9e761022da9c09"><td class="memItemLeft" align="right" valign="top"><a id="a1e8b9aad918fdbfdec9e761022da9c09"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_SetMask</b> (int minor, unsigned int code, unsigned int mask)</td></tr>
-<tr class="separator:a1e8b9aad918fdbfdec9e761022da9c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70a648a04708ebc12ff1aaed69ad51fd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a70a648a04708ebc12ff1aaed69ad51fd">CAN_ChipReset</a> (int minor)</td></tr>
-<tr class="separator:a70a648a04708ebc12ff1aaed69ad51fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24a8f4cdffe123cba7553d1ad56bedc3"><td class="memItemLeft" align="right" valign="top"><a id="a24a8f4cdffe123cba7553d1ad56bedc3"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_StartChip</b> (int minor)</td></tr>
-<tr class="separator:a24a8f4cdffe123cba7553d1ad56bedc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -473,23 +470,15 @@ union <a class="el" href="unionframe.html">frame</a>&#160;</td><td class="memIte
 <tr class="memitem:a2fe61eafda098ea6f2d3a59dbad24c18"><td class="memItemLeft" align="right" valign="top"><a id="a2fe61eafda098ea6f2d3a59dbad24c18"></a>
 <a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>canclk</b></td></tr>
 <tr class="separator:a2fe61eafda098ea6f2d3a59dbad24c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5e2222b542a93a07775ea763e3a302e"><td class="memItemLeft" align="right" valign="top"><a id="ae5e2222b542a93a07775ea763e3a302e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Baud</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:ae5e2222b542a93a07775ea763e3a302e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af076ccfb641d60f5530f5a2a20386623"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#af076ccfb641d60f5530f5a2a20386623">IRQ</a> [MAX_CHANNELS]</td></tr>
+<tr class="memitem:af076ccfb641d60f5530f5a2a20386623"><td class="memItemLeft" align="right" valign="top"><a id="af076ccfb641d60f5530f5a2a20386623"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>IRQ</b> [MAX_CHANNELS]</td></tr>
 <tr class="separator:af076ccfb641d60f5530f5a2a20386623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae45838b077a9c0b5650290eab32f86d1"><td class="memItemLeft" align="right" valign="top"><a id="ae45838b077a9c0b5650290eab32f86d1"></a>
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>AccCode</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:ae45838b077a9c0b5650290eab32f86d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab784053bc795be52a84ceea7d4721d17"><td class="memItemLeft" align="right" valign="top"><a id="ab784053bc795be52a84ceea7d4721d17"></a>
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>AccMask</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:ab784053bc795be52a84ceea7d4721d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f78e1fbe52d5c0de3451736feb2a5e2"><td class="memItemLeft" align="right" valign="top"><a id="a3f78e1fbe52d5c0de3451736feb2a5e2"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Timeout</b> [MAX_CHANNELS]</td></tr>
 <tr class="separator:a3f78e1fbe52d5c0de3451736feb2a5e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf39aa638b9182497a098c9cdfdc262b"><td class="memItemLeft" align="right" valign="top"><a id="aaf39aa638b9182497a098c9cdfdc262b"></a>
+<tr class="memitem:a18902cfc7cc7d639c2b27917fd0037fe"><td class="memItemLeft" align="right" valign="top"><a id="a18902cfc7cc7d639c2b27917fd0037fe"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Outc</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:aaf39aa638b9182497a098c9cdfdc262b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a18902cfc7cc7d639c2b27917fd0037fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc809057005218628cbdccfc3f528dac"><td class="memItemLeft" align="right" valign="top"><a id="acc809057005218628cbdccfc3f528dac"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>TxErr</b> [MAX_CHANNELS]</td></tr>
 <tr class="separator:acc809057005218628cbdccfc3f528dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -502,8 +491,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Overrun</b> [MAX_CHANN
 <tr class="memitem:a3d2dcdcf4b8604c62d020205a98ad60d"><td class="memItemLeft" align="right" valign="top"><a id="a3d2dcdcf4b8604c62d020205a98ad60d"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Options</b> [MAX_CHANNELS]</td></tr>
 <tr class="separator:a3d2dcdcf4b8604c62d020205a98ad60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68b1abc1c5e151e1758cee01f48db5bf"><td class="memItemLeft" align="right" valign="top"><a id="a68b1abc1c5e151e1758cee01f48db5bf"></a>
-<a class="el" href="structatomic__t.html">atomic_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Can_isopen</b> [MAX_CHANNELS]</td></tr>
+<tr class="memitem:a68b1abc1c5e151e1758cee01f48db5bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structatomic__t.html">atomic_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a68b1abc1c5e151e1758cee01f48db5bf">Can_isopen</a> [MAX_CHANNELS]</td></tr>
 <tr class="separator:a68b1abc1c5e151e1758cee01f48db5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4749cc3c71dddb769463f12963660b0e"><td class="memItemLeft" align="right" valign="top"><a id="a4749cc3c71dddb769463f12963660b0e"></a>
 unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></td></tr>
@@ -1210,7 +1198,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>mask used for detecting CAN errors in the <a class="el" href="structcanmsg__t.html">canmsg_t</a> flags field </p>
+<p>mask used for detecting CAN errors in the canmsg_t flags field </p>
 
 </div>
 </div>
@@ -1355,80 +1343,6 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
 
 </div>
 </div>
-<a id="a70a648a04708ebc12ff1aaed69ad51fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70a648a04708ebc12ff1aaed69ad51fd">&#9670;&nbsp;</a></span>CAN_ChipReset()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int CAN_ChipReset </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minor</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Read back as many status information as possible</p>
-<p>Because the CAN protocol itself describes different kind of information already, and the driver has some generic information (e.g about it's buffers) we can define a more or less hardware independent format.</p>
-<p>exception: ERROR WARNING LIMIT REGISTER (EWLR) The SJA1000 defines a EWLR, reaching this Error Warning Level an Error Warning interrupt can be generated. The default value (after hardware reset) is 96. In reset mode this register appears to the CPU as a read/write memory. In operating mode it is read only. Note, that a content change of the EWLR is only possible, if the reset mode was entered previously. An error status change (see status register; Table 14) and an error warning interrupt forced by the new register content will not occur until the reset mode is cancelled again. Board reset.</p>
-<p>This performs the following procedure:</p>
-<ol type="1">
-<li>Set Reset Request</li>
-<li>Wait for Rest request is changing - used to see if board is available initialize board (with valuse from /proc/sys/Can)</li>
-<li>Set output control register</li>
-<li>Set timings</li>
-<li>Set acceptance mask</li>
-</ol>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">minor</td><td>TODO </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for success, or -1 if an error occurs </dd></dl>
-
-</div>
-</div>
-<a id="a61bae6a7c9f24ad6d5899f6ef2b1fd5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61bae6a7c9f24ad6d5899f6ef2b1fd5a">&#9670;&nbsp;</a></span>CAN_SetTiming()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int CAN_SetTiming </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>baud</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Configure bit timing.</p>
-<p>Note: Chip must be in bus off state.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">minor</td><td>TODO </td></tr>
-    <tr><td class="paramname">baud</td><td>CAN baud rate </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>TODO </dd></dl>
-
-</div>
-</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="aec3fc02b98ee7c276155391ec1cd2450"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aec3fc02b98ee7c276155391ec1cd2450">&#9670;&nbsp;</a></span>can_base_addr</h2>
@@ -1441,23 +1355,22 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This must be initialized to the mapped address of the CAN channel.</p>
-<p>Must be set to the memory-mapped base address of the CAN registers. Used by the CANin and CANout macros to access registers. </p>
+<p>This must be initialized to the mapped address of the CAN channel. </p>
 
 </div>
 </div>
-<a id="af076ccfb641d60f5530f5a2a20386623"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af076ccfb641d60f5530f5a2a20386623">&#9670;&nbsp;</a></span>IRQ</h2>
+<a id="a68b1abc1c5e151e1758cee01f48db5bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68b1abc1c5e151e1758cee01f48db5bf">&#9670;&nbsp;</a></span>Can_isopen</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int IRQ[MAX_CHANNELS]</td>
+          <td class="memname"><a class="el" href="structatomic__t.html">atomic_t</a> Can_isopen[MAX_CHANNELS]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Global per channel variables from sja1000funcs.c TODO: remove globals For PATH driver, each channel has a separate driver, so MAX_CHANNELS is 1 Most of these are not really used in the PATH CAN driver for QNX6. </p>
+<p>Global per channel variables from sja1000funcs.c For PATH driver, each channel has a separate driver, so MAX_CHANNELS is 1 Most of these are not really used in the PATH CAN driver for QNX6. </p>
 
 </div>
 </div>

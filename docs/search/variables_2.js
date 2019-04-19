@@ -2,9 +2,11 @@ var searchData=
 [
   ['cab_5finterior_5ftemp',['cab_interior_temp',['../structj1939__ambc__typ.html#a8685291964c750e7ea1ace1611153e08',1,'j1939_ambc_typ']]],
   ['can_5fbase_5faddr',['can_base_addr',['../can__dev_8cpp.html#aec3fc02b98ee7c276155391ec1cd2450',1,'can_base_addr():&#160;can_dev.cpp'],['../sja1000_8h.html#aec3fc02b98ee7c276155391ec1cd2450',1,'can_base_addr():&#160;can_dev.cpp']]],
+  ['can_5fdev',['can_dev',['../structcan__attr__t.html#a099ffc57cca2238f117e7249a0882a01',1,'can_attr_t']]],
   ['can_5finfo',['can_info',['../structcan__attr__t.html#a9f71c554d72744bae66dacf2efdd9888',1,'can_attr_t']]],
-  ['can_5fminors',['Can_minors',['../can__dev_8cpp.html#a30a1997c730a486893919b49baaeb914',1,'Can_minors():&#160;can_dev.cpp'],['../fifo_8h.html#ae7851951160a81711bdba25c46b7462d',1,'Can_minors():&#160;can_dev.cpp']]],
-  ['can_5ftimeout_5fcount',['can_timeout_count',['../can__man_8cpp.html#a330283fcfb088031ce480c48a2ee4f48',1,'can_if.cpp']]],
+  ['can_5fisopen',['Can_isopen',['../can__dev_8cpp.html#a68b1abc1c5e151e1758cee01f48db5bf',1,'Can_isopen():&#160;can_dev.cpp'],['../sja1000_8h.html#a68b1abc1c5e151e1758cee01f48db5bf',1,'Can_isopen():&#160;can_dev.cpp']]],
+  ['can_5fnotify_5fclient_5ferr',['can_notify_client_err',['../classCANDeviceManager.html#ad3483e1101b599c8c9610d45bc2b3dbf',1,'CANDeviceManager']]],
+  ['can_5ftimeout_5fcount',['can_timeout_count',['../classCANDeviceManager.html#afa943513df52470b15eefc3dbd8bf171',1,'CANDeviceManager::can_timeout_count()'],['../can__man_8cpp.html#a330283fcfb088031ce480c48a2ee4f48',1,'can_timeout_count():&#160;can_man.cpp']]],
   ['candata',['candata',['../unionframe.html#ab63ad29b8885035b7b362279372b4868',1,'frame']]],
   ['canid1',['canid1',['../unionframe.html#a2edd6e6f08f48e54065ae39e1c58b80f',1,'frame']]],
   ['canid2',['canid2',['../unionframe.html#aa85f3ba71856e0c822ca2493ecf0ba72',1,'frame']]],
@@ -24,6 +26,5 @@ var searchData=
   ['clutch_5fpressure',['clutch_pressure',['../structj1939__tf__typ.html#a32d9782e960a578f426a0c1e48fd5243',1,'j1939_tf_typ']]],
   ['clutch_5fswitch',['clutch_switch',['../structj1939__ccvs__typ.html#ae10624e3f921c056664508e52925815e',1,'j1939_ccvs_typ']]],
   ['coast_5fdecel_5fswitch',['coast_decel_switch',['../structj1939__pto__typ.html#af724847fce264f929607c30a08411efb',1,'j1939_pto_typ']]],
-  ['cob',['cob',['../structcanmsg__t.html#a2a9a1988755a4f92d5706f02cf5001f9',1,'canmsg_t']]],
   ['coolant_5ffilter_5fdiff_5fpressure',['coolant_filter_diff_pressure',['../structj1939__iec__typ.html#a4f8214ccd4eb0bac42c6094292284641',1,'j1939_iec_typ']]]
 ];

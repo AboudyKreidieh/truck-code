@@ -8,6 +8,7 @@
  */
 
 #include "can/can.h"
+#include "can/can_man.h"
 #include "jbus.h"
 #include "j1939_utils.h"
 #include "j1939_struct.h"
