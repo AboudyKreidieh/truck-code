@@ -5,7 +5,7 @@
  * Device level code, based on device-level can4linux-3.5.4 code for the
  * Phillips SJA 1000.
  *
- * See SJA1000_3.pdf and AN9076.pdf in ../doc and can4linux directory.
+ * See SJA1000_3.pdf and AN9076.pdf in ../doc and documentation in ./sja1000.h
  *
  * @author Abdul Rahman Kreidieh
  * @version 1.0.0
@@ -15,7 +15,6 @@
 #include <sys/mman.h>
 #include "can_man.h"
 #include "utils/buffer.h"
-#include "fifo.h"
 #include "sja1000.h"
 #include "delay.h"		/* atomic_t */
 
@@ -53,7 +52,6 @@ void CANDeviceManager::init(unsigned int base_address, unsigned int bit_speed,
 	this->_baud[MY_CHANNEL] = bit_speed;
 	this->_acc_code[MY_CHANNEL] = 0x00000000;
 	this->_acc_mask[MY_CHANNEL] = 0xFFFFFFFF;  // Accept everything
-	this->_outc[MY_CHANNEL] = CAN_OUTC_VAL;
 
 	if (this->_reset_chip(MY_CHANNEL) < 0)
 		printf("Error returned from SJA1000 reset\n");
@@ -70,7 +68,6 @@ void CANDeviceManager::init(unsigned int base_address, unsigned int bit_speed,
 
 
 int CANDeviceManager::_start_chip(int minor) {
-    this->_rx_err[minor] = this->_tx_err[minor] = 0L;
     DBGin();
     DBGprint(DBG_DATA, ("[%d] CAN_mode 0x%x", minor, CANin(minor, canmode)));
     udelay(10);
@@ -92,8 +89,13 @@ int CANDeviceManager::_start_chip(int minor) {
 }
 
 
-int CANDeviceManager::_reset_chip(int minor)
-{
+int CANDeviceManager::_stop_chip(int minor) {
+    CANset(minor, canmode, CAN_RESET_REQUEST);
+    return 0;
+}
+
+
+int CANDeviceManager::_reset_chip(int minor) {
     DBGin();
     DBGprint(DBG_DATA,(" INT 0x%x", CANin(minor, canirq)));
 
@@ -105,17 +107,6 @@ int CANDeviceManager::_reset_chip(int minor)
 
     DBGprint(DBG_DATA, ("status=0x%x mode=0x%x", status,
 	    CANin(minor, canmode) ));
-#if 0
-    if( ! (CANin(minor, canmode) & CAN_RESET_REQUEST ) ){
-	    printk("ERROR: no board present!\n");
-	    /* MOD_DEC_USE_COUNT; */
-#if defined(PCM3680) || defined(CPC104) || defined(CPC_PCM_104)
-	    CAN_Release(minor);
-#endif
-	    DBGout();
-	    return -1;
-    }
-#endif
 
     DBGprint(DBG_DATA, ("[%d] CAN_mode 0x%x", minor, CANin(minor, canmode)));
 
@@ -123,10 +114,8 @@ int CANDeviceManager::_reset_chip(int minor)
     CANout(minor, canclk, CAN_MODE_PELICAN + CAN_MODE_CLK);
     CANout(minor, canmode, CAN_RESET_REQUEST + CAN_MODE_DEF);
 
-    /* Board specific output control */
-    if (this->_outc[minor] == 0)
-    	this->_outc[minor] = CAN_OUTC_VAL;
-    CANout(minor, canoutc, this->_outc[minor]);
+    /* Board specific output control (Janus MM board) */
+    CANout(minor, canoutc, 0xda);
 
     this->_set_timing(minor, this->_baud[minor]);
     this->_set_mask(minor, this->_acc_code[minor], this->_acc_mask[minor]);
@@ -148,21 +137,7 @@ CANDeviceManager::~CANDeviceManager() {};
  *  For PATH driver, each channel has a separate driver, so MAX_CHANNELS is 1
  *  Most of these are not really used in the PATH CAN driver for QNX6.
  */
-//int IRQ[MAX_CHANNELS];
-//int Timeout[MAX_CHANNELS]			= { 0x0 };
-//int Overrun[MAX_CHANNELS] 			= { 0x0 };
-//int Options[MAX_CHANNELS] 			= { 0x0 };
 atomic_t Can_isopen[MAX_CHANNELS];
-//unsigned int dbgMask;
-//int IRQ_requested[CAN_MAX_OPEN];
-//int Can_minors[CAN_MAX_OPEN];
-//int selfreception[MAX_CHANNELS][CAN_MAX_OPEN];
-//int use_timestamp[MAX_CHANNELS];
-//int wakeup[MAX_CHANNELS];
-//int listenmode;
-//wait_queue_head_t CanWait[MAX_CHANNELS][CAN_MAX_OPEN];
-//wait_queue_head_t CanOutWait[MAX_CHANNELS];
-//int CanWaitFlag[MAX_CHANNELS][CAN_MAX_OPEN];
 
 
 can_err_count_t CANDeviceManager::clear_errs() {
@@ -200,12 +175,14 @@ int CANDeviceManager::interrupt(CircularBuffer *in_buff,
 		if (i > 0)
 			this->_errs.intr_in_handler_count++;
 		++i;
+
 #ifdef DO_TRACE
 		status_val = CANin(MY_CHANNEL, canstat);
 		printf("interrupt: value 0x%02x, status 0x%02x\n",
 			ir_val, status_val);
 		fflush(stdout);
 #endif
+
 		if (ir_val & CAN_RECEIVE_INT) {
 			retval = 1;
 			this->_errs.rx_interrupt_count++;
@@ -375,7 +352,7 @@ int CANDeviceManager::write(CircularBuffer *out_buff, can_msg_t *pmsg)
 		this->send(out_buff);
 	}
 	else {
-		// Assumes message sends are at least 1 Hz
+		/* Assumes message sends are at least 1 Hz */
 		if ((time((time_t *)NULL) - this->_last_time_can_sent) > 1) {
 			this->can_timeout_count++;
 			this->send(out_buff);
@@ -393,11 +370,16 @@ int CANDeviceManager::write(CircularBuffer *out_buff, can_msg_t *pmsg)
 
 void CANDeviceManager::send(CircularBuffer *out_buff) {
 	int i;
-	can_msg_t *tx = (can_msg_t*) out_buff->read_first();
-	BYTE tx2reg;
+	DBGin();
 
-	/*info and identifier fields */
-	tx2reg = tx->size;
+	/* Grab the most recent element. */
+	can_msg_t *tx = (can_msg_t*) out_buff->read_first();
+
+	/* Info and identifier fields */
+	BYTE tx2reg = tx->size;
+
+	DBGprint(DBG_DATA, ("CAN[%d]: tx.flags=%d tx.id=0x%lx tx.length=%d stat=0x%x",
+			minor, tx->flags, tx->id, tx->length, stat));
 
 	if (IS_EXTENDED_FRAME(*tx)) {
 		CANout(MY_CHANNEL, frameinfo, CAN_EFF + tx2reg);
@@ -407,21 +389,24 @@ void CANDeviceManager::send(CircularBuffer *out_buff) {
 		CANout(MY_CHANNEL, frame.extframe.canid4, (BYTE)(tx->id << 3) & 0xff);
 		for(i=0; i<tx->size; i++)
 			CANout(MY_CHANNEL, frame.extframe.canxdata[i], tx->data[i]);
+//			CANout(MY_CHANNEL, frame.extframe.canxdata[R_OFF * i], tx->data[i]);
 	} else {
 		CANout(MY_CHANNEL, frameinfo, CAN_SFF + tx2reg);
 		CANout(MY_CHANNEL, frame.stdframe.canid1, (BYTE)((tx->id) >> 3) );
 		CANout(MY_CHANNEL, frame.stdframe.canid2, (BYTE)(tx->id << 5 ) & 0xe0);
 		for (i=0; i<tx->size; i++)
-			CANout( MY_CHANNEL, frame.stdframe.candata[i], tx->data[i]);
+			CANout(MY_CHANNEL, frame.stdframe.candata[i], tx->data[i]);
+//			CANout(MY_CHANNEL, frame.stdframe.candata[R_OFF * i], tx->data[i]); FIXME
 	}
 
 	CANout(MY_CHANNEL, cancmd, CAN_TRANSMISSION_REQUEST);
 	this->_last_time_can_sent = time((time_t *)NULL);
+
+	DBGout();
 }
 
 
-int CANDeviceManager::_set_timing(int minor, int baud)
-{
+int CANDeviceManager::_set_timing(int minor, int baud) {
 	int i = 5;
 	int custom = 0;
 
@@ -455,8 +440,8 @@ int CANDeviceManager::_set_timing(int minor, int baud)
     	CANout(minor, cantim0, (BYTE) (baud >> 8) & 0xff);
     	CANout(minor, cantim1, (BYTE) (baud & 0xff ));
     } else {
-    	CANout(minor,cantim0, (BYTE) CanTiming[i][0]);
-    	CANout(minor,cantim1, (BYTE) CanTiming[i][1]);
+    	CANout(minor, cantim0, (BYTE) CanTiming[i][0]);
+    	CANout(minor, cantim1, (BYTE) CanTiming[i][1]);
     }
 
     DBGprint(DBG_DATA, ("tim0=0x%x tim1=0x%x",
@@ -470,7 +455,7 @@ int CANDeviceManager::_set_timing(int minor, int baud)
 int CANDeviceManager::_set_mask(int minor, unsigned int code, unsigned int mask)
 {
     DBGin();
-    DBGprint(DBG_DATA,("[%d] acc=0x%x mask=0x%x",  minor, code, mask));
+    DBGprint(DBG_DATA,("[%d] acc=0x%x mask=0x%x", minor, code, mask));
     CANout(minor, frameinfo,
     		(BYTE)((unsigned int)(code >> 24) & 0xff));
     CANout(minor, frame.extframe.canid1,
@@ -490,5 +475,25 @@ int CANDeviceManager::_set_mask(int minor, unsigned int code, unsigned int mask)
 
     DBGout();
     return 0;
+}
+
+
+int CANDeviceManager::_set_omode(int minor, int arg) {
+    DBGin();
+	DBGprint(DBG_DATA,("[%d] outc=0x%x", minor, arg));
+	CANout(minor, canoutc, arg);
+    DBGout();
+
+    return 0;
+}
+
+
+int CANDeviceManager::_set_listen_only_mode(int minor, int arg) {
+	if (arg)
+		CANset(minor, canmode, CAN_LISTEN_ONLY_MODE);
+    else
+    	CANreset(minor, canmode, CAN_LISTEN_ONLY_MODE);
+
+	return 0;
 }
 

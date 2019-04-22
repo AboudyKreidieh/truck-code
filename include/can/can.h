@@ -24,14 +24,27 @@
  * driver to read the .ini file and initialize the can_info structure, and
  * initialize the function tables.
  *
+ * Additional Arguments:
+ *
+ * - -e: specifies extended frame
+ * - -f: specifies whether to create a copy of pconfig (not modify the original)
+ * - -i: interrupt request line
+ * - -n: device name
+ * - -p: port
+ * - -s: bit speed
+ * - -v: verbose
+ *
  * @param argc
- * 		TODO
+ * 		see additional arguments
  * @param argv
- * 		TODO
+ * 		see additional arguments
  * @param pconn
- * 		TODO
+ * 		table of the POSIX-level connect functions that are used by a resource
+ * 		manager. The open handle is updated to support opening the CAN card port
  * @param pio
- * 		TODO
+ * 		table of the POSIX-level I/O functions that are used by a resource
+ * 		manager. The devctl handle is updated to support interrupt handling on
+ * 		the CAN card port
  * @param pattr
  * 		pointer to information per device manager
  */
@@ -48,34 +61,28 @@ extern void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
  * @param id
  * 		CAN message format ID (standard or extended)
  * @param mask
- * 		TODO
+ * 		requested filter mask
  * @return
- * 		EOK
- * 			Success.
- * 		EAGAIN
- * 			The devctl() command couldn't be completed because the device driver
- * 			was in use by another process, or the driver was unable to carry out
- * 			the request due to an outstanding command in progress.
- * 		EBADF
- * 			Invalid open file descriptor, filedes.
- * 		EINTR
- * 			The devctl() function was interrupted by a signal.
- * 		EINVAL
- * 			The device driver detected an error in dev_data_ptr or n_bytes.
- * 		EIO
- * 			The devctl() function couldn't complete because of a hardware error.
- * 		ENOSYS
- * 			The device doesn't support the dcmd command.
- * 		ENOTTY
- * 			The dcmd argument isn't a valid command for this device.
- * 		EPERM
- * 			The process doesn't have sufficient permission to carry out the
- * 			requested command.
+ * 		EOK    - Success.\n
+ * 		EAGAIN - The devctl() command couldn't be completed because the device
+ * 		         driver was in use by another process, or the driver was unable
+ * 		         to carry out the request due to an outstanding command in
+ * 		         progress.\n
+ * 		EBADF  - Invalid open file descriptor, filedes.\n
+ * 		EINTR  - The devctl() function was interrupted by a signal.\n
+ * 		EINVAL - The device driver detected an error in dev_data_ptr or
+ * 		         n_bytes.\n
+ * 		EIO    - The devctl() function couldn't complete because of a hardware
+ * 		         error.\n
+ * 		ENOSYS - The device doesn't support the dcmd command.\n
+ * 		ENOTTY - The dcmd argument isn't a valid command for this device.\n
+ * 		EPERM  - The process doesn't have sufficient permission to carry out the
+ * 			     requested command.
  */
 extern int can_set_filter(int fd, unsigned long id, unsigned long mask);
 
 
-/* Empty the queue of messages in the CAN driver.
+/** Empty the queue of messages in the CAN driver.
  *
  * This is internal to the driver, and done as part of open for read
  *
@@ -89,36 +96,29 @@ extern int can_empty_queue(int fd);
 
 /** Enable pulses from the CAN driver to the client process.
  *
- * Pulses are waited for with MsgReceive or IP_Receive. channel_id can be one
- * obtained from DB_CHANNEL(pclt) on a the pointer returned by the database
- * clt_login. Internal to the driver, done as part of open for read
+ * Pulses are waited for with MsgReceive or IP_Receive. Internal to the driver,
+ * done as part of open for read.
  *
  * @param fd
  * 		file descriptor for the location of the CAN card
  * @param channel_id
- * 		TODO
+ * 		The ID of the channel that can be used to receive messages and pulses
  * @return
- * 		EOK
- * 			Success.
- * 		EAGAIN
- * 			The devctl() command couldn't be completed because the device driver
- * 			was in use by another process, or the driver was unable to carry out
- * 			the request due to an outstanding command in progress.
- * 		EBADF
- * 			Invalid open file descriptor, filedes.
- * 		EINTR
- * 			The devctl() function was interrupted by a signal.
- * 		EINVAL
- * 			The device driver detected an error in dev_data_ptr or n_bytes.
- * 		EIO
- * 			The devctl() function couldn't complete because of a hardware error.
- * 		ENOSYS
- * 			The device doesn't support the dcmd command.
- * 		ENOTTY
- * 			The dcmd argument isn't a valid command for this device.
- * 		EPERM
- * 			The process doesn't have sufficient permission to carry out the
- * 			requested command.
+ * 		EOK    - Success.\n
+ * 		EAGAIN - The devctl() command couldn't be completed because the device
+ * 		         driver was in use by another process, or the driver was unable
+ * 		         to carry out the request due to an outstanding command in
+ * 		         progress.\n
+ * 		EBADF  - Invalid open file descriptor, filedes.\n
+ * 		EINTR  - The devctl() function was interrupted by a signal.\n
+ * 		EINVAL - The device driver detected an error in dev_data_ptr or
+ * 				 n_bytes.\n
+ * 		EIO    - The devctl() function couldn't complete because of a hardware
+ * 				 error.\n
+ * 		ENOSYS - The device doesn't support the dcmd command.\n
+ * 		ENOTTY - The dcmd argument isn't a valid command for this device.\n
+ * 		EPERM  - The process doesn't have sufficient permission to carry out the
+ * 				 requested command.
  */
 extern int can_arm(int fd, int channel_id);
 
@@ -160,33 +160,27 @@ extern int can_read(intptr_t fd, unsigned long *id, char *extended, void *data,
  * @param size
  * 		number of bytes to be added to the data field
  * @return
- * 		EOK
- * 			Success.
- * 		EAGAIN
- * 			The devctl() command couldn't be completed because the device driver
- * 			was in use by another process, or the driver was unable to carry out
- * 			the request due to an outstanding command in progress.
- * 		EBADF
- * 			Invalid open file descriptor, filedes.
- * 		EINTR
- * 			The devctl() function was interrupted by a signal.
- * 		EINVAL
- * 			The device driver detected an error in dev_data_ptr or n_bytes.
- * 		EIO
- * 			The devctl() function couldn't complete because of a hardware error.
- * 		ENOSYS
- * 			The device doesn't support the dcmd command.
- * 		ENOTTY
- * 			The dcmd argument isn't a valid command for this device.
- * 		EPERM
- * 			The process doesn't have sufficient permission to carry out the
- * 			requested command.
+ * 		EOK	   - Success.\n
+ * 		EAGAIN - The devctl() command couldn't be completed because the device
+ * 		         driver was in use by another process, or the driver was unable
+ * 		         to carry out the request due to an outstanding command in
+ * 		         progress.\n
+ * 		EBADF  - Invalid open file descriptor, filedes.\n
+ * 		EINTR  - The devctl() function was interrupted by a signal.\n
+ * 		EINVAL - The device driver detected an error in dev_data_ptr or
+ * 		         n_bytes.\n
+ * 		EIO    - The devctl() function couldn't complete because of a hardware
+ * 				 error.\n
+ * 		ENOSYS - The device doesn't support the dcmd command.\n
+ * 		ENOTTY - The dcmd argument isn't a valid command for this device.\n
+ * 		EPERM  - The process doesn't have sufficient permission to carry out the
+ * 				 requested command.\n
  */
 extern int can_write(intptr_t fd, unsigned long id, char extended, void *data,
 	BYTE size);
 
 
-/** TODO
+/** FIXME (merge with can_write)
  *
  * PATH CAN driver does not yet use state code or slot arguments, provided
  * for compatibility with B&B STB converter send routine.

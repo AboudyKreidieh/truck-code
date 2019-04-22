@@ -26,5 +26,6 @@ var searchData=
   ['tx_5fbuffer_5fsize',['tx_buffer_size',['../structCanStatusPar.html#a841d6dfc2863fd99c552f95494af2406',1,'CanStatusPar']]],
   ['tx_5fbuffer_5fused',['tx_buffer_used',['../structCanStatusPar.html#a538f4e87485c85c1b15fb09fdefefc10',1,'CanStatusPar']]],
   ['tx_5ferrors',['tx_errors',['../structCanStatusPar.html#aa1d381d1c8f3902748b3bc69e991f475',1,'CanStatusPar']]],
-  ['tx_5finterrupt_5fcount',['tx_interrupt_count',['../structcan__err__count__t.html#a58db3620ddc530eb2ab59c0d590fea81',1,'can_err_count_t']]]
+  ['tx_5finterrupt_5fcount',['tx_interrupt_count',['../structcan__err__count__t.html#a58db3620ddc530eb2ab59c0d590fea81',1,'can_err_count_t']]],
+  ['txerror',['txerror',['../structcanregs.html#a487db1a13e2e1c49f638dc1592c2039d',1,'canregs::txerror()'],['../sja1000_8h.html#ab0bcb2f6cb9296c3814c5024c756b70c',1,'txerror():&#160;sja1000.h']]]
 ];

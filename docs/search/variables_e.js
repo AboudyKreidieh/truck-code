@@ -20,6 +20,9 @@ var searchData=
   ['req_5fspd_5flim',['req_spd_lim',['../structj1939__tsc1__typ.html#a798d0ba750c935b004b91d742b444952',1,'j1939_tsc1_typ']]],
   ['req_5ftrq_5flim',['req_trq_lim',['../structj1939__tsc1__typ.html#a305f05187743381714426594ce63c8c4',1,'j1939_tsc1_typ']]],
   ['reserved',['reserved',['../structj1939__pdu__typ.html#a9ccda290857fef7a6f212bbf51513716',1,'j1939_pdu_typ']]],
+  ['reserved1',['reserved1',['../structcanregs.html#aa3c4f94b1ab2697dd22c4542a2625fe0',1,'canregs::reserved1()'],['../sja1000_8h.html#a0e1096ca4dfb04e862d7785e8986cdfd',1,'reserved1():&#160;sja1000.h']]],
+  ['reserved2',['reserved2',['../structcanregs.html#a89a94b50cc9b31eed175d6eef274b78f',1,'canregs::reserved2()'],['../sja1000_8h.html#a2a3a2cdcaacd010f230c4cd6332c0e3d',1,'reserved2():&#160;sja1000.h']]],
+  ['reserved3',['reserved3',['../structcanregs.html#ac5642afecda0c42a33f37ca1613bc93a',1,'canregs::reserved3()'],['../sja1000_8h.html#a1b251c54564ad72f6bc6575e8a22f5b2',1,'reserved3():&#160;sja1000.h']]],
   ['resume_5fswitch',['resume_switch',['../structj1939__pto__typ.html#abbc47b84886e24e1388beb7d12a3548a',1,'j1939_pto_typ']]],
   ['retarder_5fctrl_5fsteps',['retarder_ctrl_steps',['../structj1939__rcfg__typ.html#a4922f5b1af6eecf0abfa9a983f90049b',1,'j1939_rcfg_typ']]],
   ['retarder_5floc',['retarder_loc',['../structj1939__rcfg__typ.html#a3d5f204908b244b93a6c3c6c9a23deab',1,'j1939_rcfg_typ']]],
@@ -33,5 +36,6 @@ var searchData=
   ['rx_5fbuffer_5fused',['rx_buffer_used',['../structCanStatusPar.html#a7ec3b3e5916b5a5c0946a35fe89a385c',1,'CanStatusPar']]],
   ['rx_5ferrors',['rx_errors',['../structCanStatusPar.html#a41665cd49eaf3825934744e3fff87308',1,'CanStatusPar']]],
   ['rx_5finterrupt_5fcount',['rx_interrupt_count',['../structcan__err__count__t.html#a71aa6c8f1f414e8016896a9f1ddd0cca',1,'can_err_count_t']]],
-  ['rx_5fmessage_5flost_5fcount',['rx_message_lost_count',['../structcan__err__count__t.html#a476311f8f0699f454bc988d7a482b56d',1,'can_err_count_t']]]
+  ['rx_5fmessage_5flost_5fcount',['rx_message_lost_count',['../structcan__err__count__t.html#a476311f8f0699f454bc988d7a482b56d',1,'can_err_count_t']]],
+  ['rxerror',['rxerror',['../structcanregs.html#aef52114ab28ede7b1da790a8b040a7a4',1,'canregs::rxerror()'],['../sja1000_8h.html#aceedaf55fed763a60e67404a14e35849',1,'rxerror():&#160;sja1000.h']]]
 ];

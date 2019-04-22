@@ -5,8 +5,9 @@
  * Implement Linux udelay function with nanosleep; not sure if the driver needs
  * this to be uninterruptible?
  *
- *  Created on: Apr 6, 2019
- *      Author: aboudy
+ * @author Abdul Rahman Kreidieh
+ * @version 1.0.0
+ * @date April 6, 2019
  */
 
 #ifndef INCLUDE_CAN_DELAY_H_
@@ -60,13 +61,7 @@ typedef struct {
  * @param v pointer of type atomic_t
  * @param i required value
  */
-#define atomic_set(v,i)         (((v)->counter) = (i))
-
-
-/* Other unused Linux kernel functions. */
-#define printk(fmt,args...)
-#define wake_up_interruptible(ptr)
-#define board_clear_interrupts(x)
+#define atomic_set(v,i)         (v->counter = i)
 
 
 #endif /* INCLUDE_CAN_DELAY_H_ */

@@ -1,5 +1,6 @@
 /**\file
- * io_func.c
+ *
+ * io_func.cpp
  *
  * Replacement functions for the default iofunc functions in the DAS resource
  * manager.

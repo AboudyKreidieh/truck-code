@@ -101,8 +101,7 @@ Functions</h2></td></tr>
 <tr class="separator:a5ec367b5ae68929b7516c68b6ee8d152"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f3488fd7d51e2711caeae9a8e90821f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a2f3488fd7d51e2711caeae9a8e90821f">can_set_filter</a> (int fd, unsigned long id, unsigned long mask)</td></tr>
 <tr class="separator:a2f3488fd7d51e2711caeae9a8e90821f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3807ddfc0a7ed992d6578b7cdae1812"><td class="memItemLeft" align="right" valign="top"><a id="ab3807ddfc0a7ed992d6578b7cdae1812"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>can_empty_queue</b> (int fd)</td></tr>
+<tr class="memitem:ab3807ddfc0a7ed992d6578b7cdae1812"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#ab3807ddfc0a7ed992d6578b7cdae1812">can_empty_queue</a> (int fd)</td></tr>
 <tr class="separator:ab3807ddfc0a7ed992d6578b7cdae1812"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a525e8830c9044004537b1874310ac528"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can_8h.html#a525e8830c9044004537b1874310ac528">can_arm</a> (int fd, int channel_id)</td></tr>
 <tr class="separator:a525e8830c9044004537b1874310ac528"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,15 +145,50 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_empty_queue</b> (i
       </table>
 </div><div class="memdoc">
 <p>Enable pulses from the CAN driver to the client process.</p>
-<p>Pulses are waited for with MsgReceive or IP_Receive. channel_id can be one obtained from DB_CHANNEL(pclt) on a the pointer returned by the database clt_login. Internal to the driver, done as part of open for read</p>
+<p>Pulses are waited for with MsgReceive or IP_Receive. Internal to the driver, done as part of open for read.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fd</td><td>file descriptor for the location of the CAN card </td></tr>
-    <tr><td class="paramname">channel_id</td><td>TODO </td></tr>
+    <tr><td class="paramname">channel_id</td><td>The ID of the channel that can be used to receive messages and pulses </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>EOK Success. EAGAIN The devctl() command couldn't be completed because the device driver was in use by another process, or the driver was unable to carry out the request due to an outstanding command in progress. EBADF Invalid open file descriptor, filedes. EINTR The devctl() function was interrupted by a signal. EINVAL The device driver detected an error in dev_data_ptr or n_bytes. EIO The devctl() function couldn't complete because of a hardware error. ENOSYS The device doesn't support the dcmd command. ENOTTY The dcmd argument isn't a valid command for this device. EPERM The process doesn't have sufficient permission to carry out the requested command. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>EOK - Success.<br />
+ EAGAIN - The devctl() command couldn't be completed because the device driver was in use by another process, or the driver was unable to carry out the request due to an outstanding command in progress.<br />
+ EBADF - Invalid open file descriptor, filedes.<br />
+ EINTR - The devctl() function was interrupted by a signal.<br />
+ EINVAL - The device driver detected an error in dev_data_ptr or n_bytes.<br />
+ EIO - The devctl() function couldn't complete because of a hardware error.<br />
+ ENOSYS - The device doesn't support the dcmd command.<br />
+ ENOTTY - The dcmd argument isn't a valid command for this device.<br />
+ EPERM - The process doesn't have sufficient permission to carry out the requested command. </dd></dl>
+
+</div>
+</div>
+<a id="ab3807ddfc0a7ed992d6578b7cdae1812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3807ddfc0a7ed992d6578b7cdae1812">&#9670;&nbsp;</a></span>can_empty_queue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int can_empty_queue </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Empty the queue of messages in the CAN driver.</p>
+<p>This is internal to the driver, and done as part of open for read</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>file descriptor for the location of the CAN card </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>number of messages that were dropped from the queue </dd></dl>
 
 </div>
 </div>
@@ -350,11 +384,19 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_empty_queue</b> (i
   <table class="params">
     <tr><td class="paramname">fd</td><td>file descriptor for the location of the CAN card </td></tr>
     <tr><td class="paramname">id</td><td>CAN message format ID (standard or extended) </td></tr>
-    <tr><td class="paramname">mask</td><td>TODO </td></tr>
+    <tr><td class="paramname">mask</td><td>requested filter mask </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>EOK Success. EAGAIN The devctl() command couldn't be completed because the device driver was in use by another process, or the driver was unable to carry out the request due to an outstanding command in progress. EBADF Invalid open file descriptor, filedes. EINTR The devctl() function was interrupted by a signal. EINVAL The device driver detected an error in dev_data_ptr or n_bytes. EIO The devctl() function couldn't complete because of a hardware error. ENOSYS The device doesn't support the dcmd command. ENOTTY The dcmd argument isn't a valid command for this device. EPERM The process doesn't have sufficient permission to carry out the requested command. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>EOK - Success.<br />
+ EAGAIN - The devctl() command couldn't be completed because the device driver was in use by another process, or the driver was unable to carry out the request due to an outstanding command in progress.<br />
+ EBADF - Invalid open file descriptor, filedes.<br />
+ EINTR - The devctl() function was interrupted by a signal.<br />
+ EINVAL - The device driver detected an error in dev_data_ptr or n_bytes.<br />
+ EIO - The devctl() function couldn't complete because of a hardware error.<br />
+ ENOSYS - The device doesn't support the dcmd command.<br />
+ ENOTTY - The dcmd argument isn't a valid command for this device.<br />
+ EPERM - The process doesn't have sufficient permission to carry out the requested command. </dd></dl>
 
 </div>
 </div>
@@ -412,7 +454,16 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>can_empty_queue</b> (i
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>EOK Success. EAGAIN The devctl() command couldn't be completed because the device driver was in use by another process, or the driver was unable to carry out the request due to an outstanding command in progress. EBADF Invalid open file descriptor, filedes. EINTR The devctl() function was interrupted by a signal. EINVAL The device driver detected an error in dev_data_ptr or n_bytes. EIO The devctl() function couldn't complete because of a hardware error. ENOSYS The device doesn't support the dcmd command. ENOTTY The dcmd argument isn't a valid command for this device. EPERM The process doesn't have sufficient permission to carry out the requested command. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>EOK - Success.<br />
+ EAGAIN - The devctl() command couldn't be completed because the device driver was in use by another process, or the driver was unable to carry out the request due to an outstanding command in progress.<br />
+ EBADF - Invalid open file descriptor, filedes.<br />
+ EINTR - The devctl() function was interrupted by a signal.<br />
+ EINVAL - The device driver detected an error in dev_data_ptr or n_bytes.<br />
+ EIO - The devctl() function couldn't complete because of a hardware error.<br />
+ ENOSYS - The device doesn't support the dcmd command.<br />
+ ENOTTY - The dcmd argument isn't a valid command for this device.<br />
+ EPERM - The process doesn't have sufficient permission to carry out the requested command.<br />
+</dd></dl>
 
 </div>
 </div>

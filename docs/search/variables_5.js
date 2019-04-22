@@ -2,6 +2,8 @@ var searchData=
 [
   ['fan_5fdrive_5fstate',['fan_drive_state',['../structj1939__fd__typ.html#acdb85739a4c58d1937e760e5c1e9a7a6',1,'j1939_fd_typ']]],
   ['filter',['filter',['../structcan__info__t.html#af3ef3ce9d9f84a4f7990ece8360a8d77',1,'can_info_t']]],
+  ['frame',['frame',['../structcanregs.html#a302e15a14b8297f42f104816f69971be',1,'canregs::frame()'],['../sja1000_8h.html#ac904fd71c9baf6027ede660cc9caa1e2',1,'frame():&#160;sja1000.h']]],
+  ['frameinfo',['frameinfo',['../structcanregs.html#af61799bcb7f84548c22438121976da41',1,'canregs::frameinfo()'],['../sja1000_8h.html#a527103460356afdcfb6561d4903d7a06',1,'frameinfo():&#160;sja1000.h']]],
   ['front_5faxle_5fspd',['front_axle_spd',['../structj1939__ebc2__typ.html#a2e51ac23c9f0c25aea29cddd049b6a85',1,'j1939_ebc2_typ']]],
   ['fuel_5fflow_5frate1',['fuel_flow_rate1',['../structj1939__gfi2__typ.html#aeb0c51ba411aea18b3ae51383d32fb2c',1,'j1939_gfi2_typ']]],
   ['fuel_5fflow_5frate2',['fuel_flow_rate2',['../structj1939__gfi2__typ.html#a114c9e974fc9052b88c1bc7560f37e65',1,'j1939_gfi2_typ']]],

@@ -5,6 +5,5 @@ var searchData=
   ['default_5fdevice',['DEFAULT_DEVICE',['../can__man_8h.html#a84cb8bbda8042a324f49102bc200cc54',1,'can_man.h']]],
   ['default_5firq',['DEFAULT_IRQ',['../can__man_8h.html#adc217aa3600fd4951714ff89457fd5b0',1,'can_man.h']]],
   ['default_5fport',['DEFAULT_PORT',['../can__man_8h.html#a16b710f592bf8f7900666392adc444dc',1,'can_man.h']]],
-  ['default_5fpriority',['DEFAULT_PRIORITY',['../can__man_8h.html#a0756f011ef667460d583017366823244',1,'can_man.h']]],
   ['default_5fqsize',['DEFAULT_QSIZE',['../can__man_8h.html#ab7acc79111952127f7f77472bd9bf616',1,'can_man.h']]]
 ];

@@ -1,11 +1,11 @@
 <map id="include/can/sja1000.h" name="include/can/sja1000.h">
-<area shape="rect" id="node2" href="$can__man_8h.html" title="include/can/can_man.h" alt="" coords="527,80,683,107"/>
-<area shape="rect" id="node4" href="$can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="854,155,1021,181"/>
-<area shape="rect" id="node9" href="$fifo_8h.html" title="include/can/fifo.h" alt="" coords="967,80,1089,107"/>
-<area shape="rect" id="node10" href="$sja1000_8cpp.html" title="include/can/sja1000.cpp" alt="" coords="1045,155,1208,181"/>
-<area shape="rect" id="node3" href="$can_8cpp.html" title="include/can/can.cpp" alt="" coords="691,155,829,181"/>
-<area shape="rect" id="node5" href="$can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="5,155,168,181"/>
-<area shape="rect" id="node6" href="$io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="193,155,351,181"/>
-<area shape="rect" id="node7" href="$jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="376,155,520,181"/>
-<area shape="rect" id="node8" href="$can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="544,155,667,181"/>
+<area shape="rect" id="node2" href="$can__man_8h.html" title="include/can/can_man.h" alt="" coords="448,80,604,107"/>
+<area shape="rect" id="node4" href="$can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="5,155,172,181"/>
+<area shape="rect" id="node10" href="$sja1000_8cpp.html" title="include/can/sja1000.cpp" alt="" coords="629,80,791,107"/>
+<area shape="rect" id="node3" href="$can_8cpp.html" title="include/can/can.cpp" alt="" coords="197,155,335,181"/>
+<area shape="rect" id="node5" href="$can__if_8cpp.html" title="include/can/can_if.cpp" alt="" coords="359,155,511,181"/>
+<area shape="rect" id="node6" href="$can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="535,155,698,181"/>
+<area shape="rect" id="node7" href="$io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="723,155,881,181"/>
+<area shape="rect" id="node8" href="$jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="906,155,1050,181"/>
+<area shape="rect" id="node9" href="$can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="1074,155,1197,181"/>
 </map>

@@ -91,15 +91,15 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="sja1000_8h__dep__incl.png" border="0" usemap="#include_2can_2sja1000_8hdep" alt=""/></div>
 <map name="include_2can_2sja1000_8hdep" id="include_2can_2sja1000_8hdep">
-<area shape="rect" id="node2" href="can__man_8h.html" title="include/can/can_man.h" alt="" coords="527,80,683,107"/>
-<area shape="rect" id="node4" href="can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="854,155,1021,181"/>
-<area shape="rect" id="node9" href="fifo_8h.html" title="include/can/fifo.h" alt="" coords="967,80,1089,107"/>
-<area shape="rect" id="node10" href="sja1000_8cpp.html" title="include/can/sja1000.cpp" alt="" coords="1045,155,1208,181"/>
-<area shape="rect" id="node3" href="can_8cpp.html" title="include/can/can.cpp" alt="" coords="691,155,829,181"/>
-<area shape="rect" id="node5" href="can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="5,155,168,181"/>
-<area shape="rect" id="node6" href="io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="193,155,351,181"/>
-<area shape="rect" id="node7" href="jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="376,155,520,181"/>
-<area shape="rect" id="node8" href="can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="544,155,667,181"/>
+<area shape="rect" id="node2" href="can__man_8h.html" title="include/can/can_man.h" alt="" coords="448,80,604,107"/>
+<area shape="rect" id="node4" href="can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="5,155,172,181"/>
+<area shape="rect" id="node10" href="sja1000_8cpp.html" title="include/can/sja1000.cpp" alt="" coords="629,80,791,107"/>
+<area shape="rect" id="node3" href="can_8cpp.html" title="include/can/can.cpp" alt="" coords="197,155,335,181"/>
+<area shape="rect" id="node5" href="can__if_8cpp.html" title="include/can/can_if.cpp" alt="" coords="359,155,511,181"/>
+<area shape="rect" id="node6" href="can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="535,155,698,181"/>
+<area shape="rect" id="node7" href="io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="723,155,881,181"/>
+<area shape="rect" id="node8" href="jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="906,155,1050,181"/>
+<area shape="rect" id="node9" href="can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="1074,155,1197,181"/>
 </map>
 </div>
 </div>
@@ -188,44 +188,31 @@ Macros</h2></td></tr>
 <tr class="separator:afb5b340064dd5e61b4b4a88cdd4990d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b826a2bb769adad06e54e680ffe9f25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a0b826a2bb769adad06e54e680ffe9f25">CAN_RECEIVE_BUFFER_STATUS</a>&#160;&#160;&#160;(1&lt;&lt;0)</td></tr>
 <tr class="separator:a0b826a2bb769adad06e54e680ffe9f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedfdf45e32b82e2635011f8438c245c1"><td class="memItemLeft" align="right" valign="top"><a id="aedfdf45e32b82e2635011f8438c245c1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_WAKEUP_INT</b>&#160;&#160;&#160;(1&lt;&lt;4)</td></tr>
+<tr class="memitem:aedfdf45e32b82e2635011f8438c245c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#aedfdf45e32b82e2635011f8438c245c1">CAN_WAKEUP_INT</a>&#160;&#160;&#160;(1&lt;&lt;4)</td></tr>
 <tr class="separator:aedfdf45e32b82e2635011f8438c245c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a551bc8c129ae11cf014522b33831aff5"><td class="memItemLeft" align="right" valign="top"><a id="a551bc8c129ae11cf014522b33831aff5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OVERRUN_INT</b>&#160;&#160;&#160;(1&lt;&lt;3)</td></tr>
+<tr class="memitem:a551bc8c129ae11cf014522b33831aff5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a551bc8c129ae11cf014522b33831aff5">CAN_OVERRUN_INT</a>&#160;&#160;&#160;(1&lt;&lt;3)</td></tr>
 <tr class="separator:a551bc8c129ae11cf014522b33831aff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac777d5bc3becb276a344589159cfcd4a"><td class="memItemLeft" align="right" valign="top"><a id="ac777d5bc3becb276a344589159cfcd4a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_ERROR_INT</b>&#160;&#160;&#160;(1&lt;&lt;2)</td></tr>
+<tr class="memitem:ac777d5bc3becb276a344589159cfcd4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#ac777d5bc3becb276a344589159cfcd4a">CAN_ERROR_INT</a>&#160;&#160;&#160;(1&lt;&lt;2)</td></tr>
 <tr class="separator:ac777d5bc3becb276a344589159cfcd4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc9fed622364b3d7cf17f603bc16b391"><td class="memItemLeft" align="right" valign="top"><a id="adc9fed622364b3d7cf17f603bc16b391"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TRANSMIT_INT</b>&#160;&#160;&#160;(1&lt;&lt;1)</td></tr>
+<tr class="memitem:adc9fed622364b3d7cf17f603bc16b391"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#adc9fed622364b3d7cf17f603bc16b391">CAN_TRANSMIT_INT</a>&#160;&#160;&#160;(1&lt;&lt;1)</td></tr>
 <tr class="separator:adc9fed622364b3d7cf17f603bc16b391"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5ca1427700be8577e29a420fe44e557"><td class="memItemLeft" align="right" valign="top"><a id="ad5ca1427700be8577e29a420fe44e557"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_RECEIVE_INT</b>&#160;&#160;&#160;(1&lt;&lt;0)</td></tr>
+<tr class="memitem:ad5ca1427700be8577e29a420fe44e557"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#ad5ca1427700be8577e29a420fe44e557">CAN_RECEIVE_INT</a>&#160;&#160;&#160;(1&lt;&lt;0)</td></tr>
 <tr class="separator:ad5ca1427700be8577e29a420fe44e557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f438b67d1e6c7d759f5091718debdf0"><td class="memItemLeft" align="right" valign="top"><a id="a8f438b67d1e6c7d759f5091718debdf0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OCTP1</b>&#160;&#160;&#160;(1&lt;&lt;7)</td></tr>
+<tr class="memitem:a8f438b67d1e6c7d759f5091718debdf0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a8f438b67d1e6c7d759f5091718debdf0">CAN_OCTP1</a>&#160;&#160;&#160;(1&lt;&lt;7)</td></tr>
 <tr class="separator:a8f438b67d1e6c7d759f5091718debdf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d9cd2d4d8d2ff2bf20e6cc1fe864a6f"><td class="memItemLeft" align="right" valign="top"><a id="a3d9cd2d4d8d2ff2bf20e6cc1fe864a6f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OCTN1</b>&#160;&#160;&#160;(1&lt;&lt;6)</td></tr>
+<tr class="memitem:a3d9cd2d4d8d2ff2bf20e6cc1fe864a6f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a3d9cd2d4d8d2ff2bf20e6cc1fe864a6f">CAN_OCTN1</a>&#160;&#160;&#160;(1&lt;&lt;6)</td></tr>
 <tr class="separator:a3d9cd2d4d8d2ff2bf20e6cc1fe864a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a472542bc9ad6a14b8c2fa75cc5520b"><td class="memItemLeft" align="right" valign="top"><a id="a7a472542bc9ad6a14b8c2fa75cc5520b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OCPOL1</b>&#160;&#160;&#160;(1&lt;&lt;5)</td></tr>
+<tr class="memitem:a7a472542bc9ad6a14b8c2fa75cc5520b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a7a472542bc9ad6a14b8c2fa75cc5520b">CAN_OCPOL1</a>&#160;&#160;&#160;(1&lt;&lt;5)</td></tr>
 <tr class="separator:a7a472542bc9ad6a14b8c2fa75cc5520b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28e2e60609b9125c48f0cf09dbecd42c"><td class="memItemLeft" align="right" valign="top"><a id="a28e2e60609b9125c48f0cf09dbecd42c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OCTP0</b>&#160;&#160;&#160;(1&lt;&lt;4)</td></tr>
+<tr class="memitem:a28e2e60609b9125c48f0cf09dbecd42c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a28e2e60609b9125c48f0cf09dbecd42c">CAN_OCTP0</a>&#160;&#160;&#160;(1&lt;&lt;4)</td></tr>
 <tr class="separator:a28e2e60609b9125c48f0cf09dbecd42c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf7dae4dfa19290fa41ad1ebd78161e1"><td class="memItemLeft" align="right" valign="top"><a id="aaf7dae4dfa19290fa41ad1ebd78161e1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OCTN0</b>&#160;&#160;&#160;(1&lt;&lt;3)</td></tr>
+<tr class="memitem:aaf7dae4dfa19290fa41ad1ebd78161e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#aaf7dae4dfa19290fa41ad1ebd78161e1">CAN_OCTN0</a>&#160;&#160;&#160;(1&lt;&lt;3)</td></tr>
 <tr class="separator:aaf7dae4dfa19290fa41ad1ebd78161e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7de2eaedcd59829b3ec21885165c05b"><td class="memItemLeft" align="right" valign="top"><a id="ae7de2eaedcd59829b3ec21885165c05b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OCPOL0</b>&#160;&#160;&#160;(1&lt;&lt;2)</td></tr>
+<tr class="memitem:ae7de2eaedcd59829b3ec21885165c05b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#ae7de2eaedcd59829b3ec21885165c05b">CAN_OCPOL0</a>&#160;&#160;&#160;(1&lt;&lt;2)</td></tr>
 <tr class="separator:ae7de2eaedcd59829b3ec21885165c05b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c1fc286747fc06a788c8376e5c98543"><td class="memItemLeft" align="right" valign="top"><a id="a5c1fc286747fc06a788c8376e5c98543"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OCMODE1</b>&#160;&#160;&#160;(1&lt;&lt;1)</td></tr>
+<tr class="memitem:a5c1fc286747fc06a788c8376e5c98543"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a5c1fc286747fc06a788c8376e5c98543">CAN_OCMODE1</a>&#160;&#160;&#160;(1&lt;&lt;1)</td></tr>
 <tr class="separator:a5c1fc286747fc06a788c8376e5c98543"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b3cce4fd0e90bb5829245233d55097c"><td class="memItemLeft" align="right" valign="top"><a id="a3b3cce4fd0e90bb5829245233d55097c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OCMODE0</b>&#160;&#160;&#160;(1&lt;&lt;0)</td></tr>
+<tr class="memitem:a3b3cce4fd0e90bb5829245233d55097c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a3b3cce4fd0e90bb5829245233d55097c">CAN_OCMODE0</a>&#160;&#160;&#160;(1&lt;&lt;0)</td></tr>
 <tr class="separator:a3b3cce4fd0e90bb5829245233d55097c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac6d77194197bf1dcf898d6dc0f18da0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#aac6d77194197bf1dcf898d6dc0f18da0">CAN_MODE_BASICCAN</a>&#160;&#160;&#160;(0x00)</td></tr>
 <tr class="separator:aac6d77194197bf1dcf898d6dc0f18da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -239,65 +226,45 @@ Macros</h2></td></tr>
 <tr class="separator:aed9d51a1115eb3f3befa0b51e0c600fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58a12f7159cc750a2a2b7cb7097787d9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a58a12f7159cc750a2a2b7cb7097787d9">CAN_RTR</a>&#160;&#160;&#160;(1&lt;&lt;6)</td></tr>
 <tr class="separator:a58a12f7159cc750a2a2b7cb7097787d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad89b53bb5148bb97e664727dc4196fd6"><td class="memItemLeft" align="right" valign="top"><a id="ad89b53bb5148bb97e664727dc4196fd6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_10K</b>&#160;&#160;&#160;49</td></tr>
+<tr class="memitem:ad89b53bb5148bb97e664727dc4196fd6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#ad89b53bb5148bb97e664727dc4196fd6">CAN_TIM0_10K</a>&#160;&#160;&#160;49</td></tr>
 <tr class="separator:ad89b53bb5148bb97e664727dc4196fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21182c4b552566ae49c296b0907eeb7b"><td class="memItemLeft" align="right" valign="top"><a id="a21182c4b552566ae49c296b0907eeb7b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_10K</b>&#160;&#160;&#160;0x1c</td></tr>
+<tr class="memitem:a21182c4b552566ae49c296b0907eeb7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a21182c4b552566ae49c296b0907eeb7b">CAN_TIM1_10K</a>&#160;&#160;&#160;0x1c</td></tr>
 <tr class="separator:a21182c4b552566ae49c296b0907eeb7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a642bb6e45ad156c3042edd1ce3322fbf"><td class="memItemLeft" align="right" valign="top"><a id="a642bb6e45ad156c3042edd1ce3322fbf"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_20K</b>&#160;&#160;&#160;24</td></tr>
+<tr class="memitem:a642bb6e45ad156c3042edd1ce3322fbf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a642bb6e45ad156c3042edd1ce3322fbf">CAN_TIM0_20K</a>&#160;&#160;&#160;24</td></tr>
 <tr class="separator:a642bb6e45ad156c3042edd1ce3322fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07308fff76b8ae0e3040b437b4783a0e"><td class="memItemLeft" align="right" valign="top"><a id="a07308fff76b8ae0e3040b437b4783a0e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_20K</b>&#160;&#160;&#160;0x1c</td></tr>
+<tr class="memitem:a07308fff76b8ae0e3040b437b4783a0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a07308fff76b8ae0e3040b437b4783a0e">CAN_TIM1_20K</a>&#160;&#160;&#160;0x1c</td></tr>
 <tr class="separator:a07308fff76b8ae0e3040b437b4783a0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a459e8aaf73f652a73d20c873f263ae93"><td class="memItemLeft" align="right" valign="top"><a id="a459e8aaf73f652a73d20c873f263ae93"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_40K</b>&#160;&#160;&#160;0x89    /* Old Bit Timing Standard of port */</td></tr>
+<tr class="memitem:a459e8aaf73f652a73d20c873f263ae93"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a459e8aaf73f652a73d20c873f263ae93">CAN_TIM0_40K</a>&#160;&#160;&#160;0x89</td></tr>
 <tr class="separator:a459e8aaf73f652a73d20c873f263ae93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd28f659b4a2d9ce376f641ca324d805"><td class="memItemLeft" align="right" valign="top"><a id="acd28f659b4a2d9ce376f641ca324d805"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_40K</b>&#160;&#160;&#160;0xEB    /* Old Bit Timing Standard of port */</td></tr>
+<tr class="memitem:acd28f659b4a2d9ce376f641ca324d805"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#acd28f659b4a2d9ce376f641ca324d805">CAN_TIM1_40K</a>&#160;&#160;&#160;0xEB</td></tr>
 <tr class="separator:acd28f659b4a2d9ce376f641ca324d805"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44b501e99a818f13b5eae27397bda1cb"><td class="memItemLeft" align="right" valign="top"><a id="a44b501e99a818f13b5eae27397bda1cb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_50K</b>&#160;&#160;&#160;9</td></tr>
+<tr class="memitem:a44b501e99a818f13b5eae27397bda1cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a44b501e99a818f13b5eae27397bda1cb">CAN_TIM0_50K</a>&#160;&#160;&#160;9</td></tr>
 <tr class="separator:a44b501e99a818f13b5eae27397bda1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64bb0ed021d0d07a5912da04e088b7a2"><td class="memItemLeft" align="right" valign="top"><a id="a64bb0ed021d0d07a5912da04e088b7a2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_50K</b>&#160;&#160;&#160;0x1c</td></tr>
+<tr class="memitem:a64bb0ed021d0d07a5912da04e088b7a2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a64bb0ed021d0d07a5912da04e088b7a2">CAN_TIM1_50K</a>&#160;&#160;&#160;0x1c</td></tr>
 <tr class="separator:a64bb0ed021d0d07a5912da04e088b7a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5557285bb1b7a55b52b2d42eb9f046ed"><td class="memItemLeft" align="right" valign="top"><a id="a5557285bb1b7a55b52b2d42eb9f046ed"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_100K</b>&#160;&#160;&#160;4		/* sp 87%, 16 abtastungen, sjw 1 */</td></tr>
+<tr class="memitem:a5557285bb1b7a55b52b2d42eb9f046ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a5557285bb1b7a55b52b2d42eb9f046ed">CAN_TIM0_100K</a>&#160;&#160;&#160;4</td></tr>
 <tr class="separator:a5557285bb1b7a55b52b2d42eb9f046ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22cfc50746d551951dac1a89245a0a74"><td class="memItemLeft" align="right" valign="top"><a id="a22cfc50746d551951dac1a89245a0a74"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_100K</b>&#160;&#160;&#160;0x1c</td></tr>
+<tr class="memitem:a22cfc50746d551951dac1a89245a0a74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a22cfc50746d551951dac1a89245a0a74">CAN_TIM1_100K</a>&#160;&#160;&#160;0x1c</td></tr>
 <tr class="separator:a22cfc50746d551951dac1a89245a0a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3159e226e4e259385d31eb4e128bdff3"><td class="memItemLeft" align="right" valign="top"><a id="a3159e226e4e259385d31eb4e128bdff3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_125K</b>&#160;&#160;&#160;3</td></tr>
+<tr class="memitem:a3159e226e4e259385d31eb4e128bdff3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a3159e226e4e259385d31eb4e128bdff3">CAN_TIM0_125K</a>&#160;&#160;&#160;3</td></tr>
 <tr class="separator:a3159e226e4e259385d31eb4e128bdff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05ef42f514213f6e0372c33e0083d4a0"><td class="memItemLeft" align="right" valign="top"><a id="a05ef42f514213f6e0372c33e0083d4a0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_125K</b>&#160;&#160;&#160;0x1c</td></tr>
+<tr class="memitem:a05ef42f514213f6e0372c33e0083d4a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a05ef42f514213f6e0372c33e0083d4a0">CAN_TIM1_125K</a>&#160;&#160;&#160;0x1c</td></tr>
 <tr class="separator:a05ef42f514213f6e0372c33e0083d4a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fd03590f818eadc93c59db0e615c28a"><td class="memItemLeft" align="right" valign="top"><a id="a7fd03590f818eadc93c59db0e615c28a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_250K</b>&#160;&#160;&#160;1</td></tr>
+<tr class="memitem:a7fd03590f818eadc93c59db0e615c28a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a7fd03590f818eadc93c59db0e615c28a">CAN_TIM0_250K</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a7fd03590f818eadc93c59db0e615c28a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb1a7888adcf1f8a3a4cc029a0be09d9"><td class="memItemLeft" align="right" valign="top"><a id="aeb1a7888adcf1f8a3a4cc029a0be09d9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_250K</b>&#160;&#160;&#160;0x1c</td></tr>
+<tr class="memitem:aeb1a7888adcf1f8a3a4cc029a0be09d9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#aeb1a7888adcf1f8a3a4cc029a0be09d9">CAN_TIM1_250K</a>&#160;&#160;&#160;0x1c</td></tr>
 <tr class="separator:aeb1a7888adcf1f8a3a4cc029a0be09d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a764e38a74d912049982e36a12904e265"><td class="memItemLeft" align="right" valign="top"><a id="a764e38a74d912049982e36a12904e265"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_500K</b>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:a764e38a74d912049982e36a12904e265"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a764e38a74d912049982e36a12904e265">CAN_TIM0_500K</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a764e38a74d912049982e36a12904e265"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ef9de87cfaaf0a68d24fb3540601ad2"><td class="memItemLeft" align="right" valign="top"><a id="a4ef9de87cfaaf0a68d24fb3540601ad2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_500K</b>&#160;&#160;&#160;0x1c</td></tr>
+<tr class="memitem:a4ef9de87cfaaf0a68d24fb3540601ad2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a4ef9de87cfaaf0a68d24fb3540601ad2">CAN_TIM1_500K</a>&#160;&#160;&#160;0x1c</td></tr>
 <tr class="separator:a4ef9de87cfaaf0a68d24fb3540601ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a392c0b95d349ab63e6c5dea9c5facfe2"><td class="memItemLeft" align="right" valign="top"><a id="a392c0b95d349ab63e6c5dea9c5facfe2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_800K</b>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:a392c0b95d349ab63e6c5dea9c5facfe2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a392c0b95d349ab63e6c5dea9c5facfe2">CAN_TIM0_800K</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a392c0b95d349ab63e6c5dea9c5facfe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae76f7466796271ceb765c60d28953976"><td class="memItemLeft" align="right" valign="top"><a id="ae76f7466796271ceb765c60d28953976"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_800K</b>&#160;&#160;&#160;0x16</td></tr>
+<tr class="memitem:ae76f7466796271ceb765c60d28953976"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#ae76f7466796271ceb765c60d28953976">CAN_TIM1_800K</a>&#160;&#160;&#160;0x16</td></tr>
 <tr class="separator:ae76f7466796271ceb765c60d28953976"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8961990c4a5509ab56ac961a0d214b2f"><td class="memItemLeft" align="right" valign="top"><a id="a8961990c4a5509ab56ac961a0d214b2f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM0_1000K</b>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:a8961990c4a5509ab56ac961a0d214b2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a8961990c4a5509ab56ac961a0d214b2f">CAN_TIM0_1000K</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a8961990c4a5509ab56ac961a0d214b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29490638ed331ff4e09277aa65e96c89"><td class="memItemLeft" align="right" valign="top"><a id="a29490638ed331ff4e09277aa65e96c89"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_TIM1_1000K</b>&#160;&#160;&#160;0x14</td></tr>
+<tr class="memitem:a29490638ed331ff4e09277aa65e96c89"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a29490638ed331ff4e09277aa65e96c89">CAN_TIM1_1000K</a>&#160;&#160;&#160;0x14</td></tr>
 <tr class="separator:a29490638ed331ff4e09277aa65e96c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac69ee46f4a51ed14f0d68628c2dec71d"><td class="memItemLeft" align="right" valign="top"><a id="ac69ee46f4a51ed14f0d68628c2dec71d"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_CHANNELS</b>&#160;&#160;&#160;1</td></tr>
@@ -305,9 +272,6 @@ Macros</h2></td></tr>
 <tr class="memitem:a690a15f012aff99bc5303ff4c6d97ef2"><td class="memItemLeft" align="right" valign="top"><a id="a690a15f012aff99bc5303ff4c6d97ef2"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>MY_CHANNEL</b>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a690a15f012aff99bc5303ff4c6d97ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03763b4143668bfbd3ddf4a11dcd45e1"><td class="memItemLeft" align="right" valign="top"><a id="a03763b4143668bfbd3ddf4a11dcd45e1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_OUTC_VAL</b>&#160;&#160;&#160;0xda</td></tr>
-<tr class="separator:a03763b4143668bfbd3ddf4a11dcd45e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05abe2c8b23f2a5f1d61f111ed64d3c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a05abe2c8b23f2a5f1d61f111ed64d3c7">DBGprint</a>(ms,  ar)&#160;&#160;&#160;{ }</td></tr>
 <tr class="separator:a05abe2c8b23f2a5f1d61f111ed64d3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f10b1a0fe1c13254a37d7cc0c610be0"><td class="memItemLeft" align="right" valign="top"><a id="a5f10b1a0fe1c13254a37d7cc0c610be0"></a>
@@ -319,20 +283,6 @@ Macros</h2></td></tr>
 <tr class="memitem:a4a28c006bb90a475c2fd45b901657f3d"><td class="memItemLeft" align="right" valign="top"><a id="a4a28c006bb90a475c2fd45b901657f3d"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DEBUG_TTY</b>(n,  args...)</td></tr>
 <tr class="separator:a4a28c006bb90a475c2fd45b901657f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02ad96935d544940647f116ad47c1aa4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a02ad96935d544940647f116ad47c1aa4">iminor</a>(x)&#160;&#160;&#160;((intptr_t) (x))</td></tr>
-<tr class="separator:a02ad96935d544940647f116ad47c1aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9146ff2219324b6d200c465caa5ac55c"><td class="memItemLeft" align="right" valign="top"><a id="a9146ff2219324b6d200c465caa5ac55c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>local_irq_save</b>(flags)&#160;&#160;&#160;/** &lt; TODO */</td></tr>
-<tr class="separator:a9146ff2219324b6d200c465caa5ac55c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa996f8a68474e9c30de944afa3a2ea68"><td class="memItemLeft" align="right" valign="top"><a id="aa996f8a68474e9c30de944afa3a2ea68"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>local_irq_restore</b>(flags)&#160;&#160;&#160;/** &lt; TODO */</td></tr>
-<tr class="separator:aa996f8a68474e9c30de944afa3a2ea68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a790741990032635599019ab2ed3162c1"><td class="memItemLeft" align="right" valign="top"><a id="a790741990032635599019ab2ed3162c1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>schedule</b>()&#160;&#160;&#160;/** &lt; TODO */</td></tr>
-<tr class="separator:a790741990032635599019ab2ed3162c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d11b71f176b15cfdbca053bc518ab86"><td class="memItemLeft" align="right" valign="top"><a id="a5d11b71f176b15cfdbca053bc518ab86"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>need_resched</b>&#160;&#160;&#160;0	/** &lt; TODO */</td></tr>
-<tr class="separator:a5d11b71f176b15cfdbca053bc518ab86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac11ebfcf790b69f177cec8686afaae1e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#ac11ebfcf790b69f177cec8686afaae1e">MSG_ACTIVE</a>&#160;&#160;&#160;(0)</td></tr>
 <tr class="separator:ac11ebfcf790b69f177cec8686afaae1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abadebe2481f517df246b0cec4ad72e21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#abadebe2481f517df246b0cec4ad72e21">MSG_BASE</a>&#160;&#160;&#160;(0)</td></tr>
@@ -407,92 +357,48 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a75df086fbffcd01383961b3d5991186a"><td class="memItemLeft" align="right" valign="top"><a id="a75df086fbffcd01383961b3d5991186a"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>canmode</b></td></tr>
+<tr class="memitem:a75df086fbffcd01383961b3d5991186a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a75df086fbffcd01383961b3d5991186a">canmode</a></td></tr>
 <tr class="separator:a75df086fbffcd01383961b3d5991186a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a385ff616245c5434bc19953e7cef4dcc"><td class="memItemLeft" align="right" valign="top"><a id="a385ff616245c5434bc19953e7cef4dcc"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cancmd</b></td></tr>
+<tr class="memitem:a385ff616245c5434bc19953e7cef4dcc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a385ff616245c5434bc19953e7cef4dcc">cancmd</a></td></tr>
 <tr class="separator:a385ff616245c5434bc19953e7cef4dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79aa996375a02f0607de2ba9600a4fbb"><td class="memItemLeft" align="right" valign="top"><a id="a79aa996375a02f0607de2ba9600a4fbb"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>canstat</b></td></tr>
+<tr class="memitem:a79aa996375a02f0607de2ba9600a4fbb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a79aa996375a02f0607de2ba9600a4fbb">canstat</a></td></tr>
 <tr class="separator:a79aa996375a02f0607de2ba9600a4fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1de6bb119f8359ff3a69ec81e24a293e"><td class="memItemLeft" align="right" valign="top"><a id="a1de6bb119f8359ff3a69ec81e24a293e"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>canirq</b></td></tr>
+<tr class="memitem:a1de6bb119f8359ff3a69ec81e24a293e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a1de6bb119f8359ff3a69ec81e24a293e">canirq</a></td></tr>
 <tr class="separator:a1de6bb119f8359ff3a69ec81e24a293e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accac149448755de3667e81f52945c807"><td class="memItemLeft" align="right" valign="top"><a id="accac149448755de3667e81f52945c807"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>canirq_enable</b></td></tr>
+<tr class="memitem:accac149448755de3667e81f52945c807"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#accac149448755de3667e81f52945c807">canirq_enable</a></td></tr>
 <tr class="separator:accac149448755de3667e81f52945c807"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e1096ca4dfb04e862d7785e8986cdfd"><td class="memItemLeft" align="right" valign="top"><a id="a0e1096ca4dfb04e862d7785e8986cdfd"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>reserved1</b></td></tr>
+<tr class="memitem:a0e1096ca4dfb04e862d7785e8986cdfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a0e1096ca4dfb04e862d7785e8986cdfd">reserved1</a></td></tr>
 <tr class="separator:a0e1096ca4dfb04e862d7785e8986cdfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f2aad57ddb03cc70c7b8f1b79ce355c"><td class="memItemLeft" align="right" valign="top"><a id="a3f2aad57ddb03cc70c7b8f1b79ce355c"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cantim0</b></td></tr>
+<tr class="memitem:a3f2aad57ddb03cc70c7b8f1b79ce355c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a3f2aad57ddb03cc70c7b8f1b79ce355c">cantim0</a></td></tr>
 <tr class="separator:a3f2aad57ddb03cc70c7b8f1b79ce355c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50a12612738ff676fc74d06dbc2473ac"><td class="memItemLeft" align="right" valign="top"><a id="a50a12612738ff676fc74d06dbc2473ac"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cantim1</b></td></tr>
+<tr class="memitem:a50a12612738ff676fc74d06dbc2473ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a50a12612738ff676fc74d06dbc2473ac">cantim1</a></td></tr>
 <tr class="separator:a50a12612738ff676fc74d06dbc2473ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70577afd3d252f86fb342701d3bb1110"><td class="memItemLeft" align="right" valign="top"><a id="a70577afd3d252f86fb342701d3bb1110"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>canoutc</b></td></tr>
+<tr class="memitem:a70577afd3d252f86fb342701d3bb1110"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a70577afd3d252f86fb342701d3bb1110">canoutc</a></td></tr>
 <tr class="separator:a70577afd3d252f86fb342701d3bb1110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a800b445cde556d69c55c144e698189c3"><td class="memItemLeft" align="right" valign="top"><a id="a800b445cde556d69c55c144e698189c3"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cantest</b></td></tr>
+<tr class="memitem:a800b445cde556d69c55c144e698189c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a800b445cde556d69c55c144e698189c3">cantest</a></td></tr>
 <tr class="separator:a800b445cde556d69c55c144e698189c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a3a2cdcaacd010f230c4cd6332c0e3d"><td class="memItemLeft" align="right" valign="top"><a id="a2a3a2cdcaacd010f230c4cd6332c0e3d"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>reserved2</b></td></tr>
+<tr class="memitem:a2a3a2cdcaacd010f230c4cd6332c0e3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a2a3a2cdcaacd010f230c4cd6332c0e3d">reserved2</a></td></tr>
 <tr class="separator:a2a3a2cdcaacd010f230c4cd6332c0e3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acaef7699de493df042e013ea56d5aaf9"><td class="memItemLeft" align="right" valign="top"><a id="acaef7699de493df042e013ea56d5aaf9"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>arbitrationlost</b></td></tr>
+<tr class="memitem:acaef7699de493df042e013ea56d5aaf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#acaef7699de493df042e013ea56d5aaf9">arbitrationlost</a></td></tr>
 <tr class="separator:acaef7699de493df042e013ea56d5aaf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa80ee27a0de43a3089f2ecd7f8dff8c4"><td class="memItemLeft" align="right" valign="top"><a id="aa80ee27a0de43a3089f2ecd7f8dff8c4"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>errorcode</b></td></tr>
+<tr class="memitem:aa80ee27a0de43a3089f2ecd7f8dff8c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#aa80ee27a0de43a3089f2ecd7f8dff8c4">errorcode</a></td></tr>
 <tr class="separator:aa80ee27a0de43a3089f2ecd7f8dff8c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a4bd02751d2107db7fae616f927605b"><td class="memItemLeft" align="right" valign="top"><a id="a5a4bd02751d2107db7fae616f927605b"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>errorwarninglimit</b></td></tr>
+<tr class="memitem:a5a4bd02751d2107db7fae616f927605b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a5a4bd02751d2107db7fae616f927605b">errorwarninglimit</a></td></tr>
 <tr class="separator:a5a4bd02751d2107db7fae616f927605b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aceedaf55fed763a60e67404a14e35849"><td class="memItemLeft" align="right" valign="top"><a id="aceedaf55fed763a60e67404a14e35849"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rxerror</b></td></tr>
+<tr class="memitem:aceedaf55fed763a60e67404a14e35849"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#aceedaf55fed763a60e67404a14e35849">rxerror</a></td></tr>
 <tr class="separator:aceedaf55fed763a60e67404a14e35849"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0bcb2f6cb9296c3814c5024c756b70c"><td class="memItemLeft" align="right" valign="top"><a id="ab0bcb2f6cb9296c3814c5024c756b70c"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>txerror</b></td></tr>
+<tr class="memitem:ab0bcb2f6cb9296c3814c5024c756b70c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#ab0bcb2f6cb9296c3814c5024c756b70c">txerror</a></td></tr>
 <tr class="separator:ab0bcb2f6cb9296c3814c5024c756b70c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a527103460356afdcfb6561d4903d7a06"><td class="memItemLeft" align="right" valign="top"><a id="a527103460356afdcfb6561d4903d7a06"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>frameinfo</b></td></tr>
+<tr class="memitem:a527103460356afdcfb6561d4903d7a06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a527103460356afdcfb6561d4903d7a06">frameinfo</a></td></tr>
 <tr class="separator:a527103460356afdcfb6561d4903d7a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac904fd71c9baf6027ede660cc9caa1e2"><td class="memItemLeft" align="right" valign="top"><a id="ac904fd71c9baf6027ede660cc9caa1e2"></a>
-union <a class="el" href="unionframe.html">frame</a>&#160;</td><td class="memItemRight" valign="bottom"><b>frame</b></td></tr>
+<tr class="memitem:ac904fd71c9baf6027ede660cc9caa1e2"><td class="memItemLeft" align="right" valign="top">union <a class="el" href="unionframe.html">frame</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#ac904fd71c9baf6027ede660cc9caa1e2">frame</a></td></tr>
 <tr class="separator:ac904fd71c9baf6027ede660cc9caa1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b251c54564ad72f6bc6575e8a22f5b2"><td class="memItemLeft" align="right" valign="top"><a id="a1b251c54564ad72f6bc6575e8a22f5b2"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>reserved3</b></td></tr>
+<tr class="memitem:a1b251c54564ad72f6bc6575e8a22f5b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a1b251c54564ad72f6bc6575e8a22f5b2">reserved3</a></td></tr>
 <tr class="separator:a1b251c54564ad72f6bc6575e8a22f5b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31ab81eaae66d4be8c8c97cf98f4f53e"><td class="memItemLeft" align="right" valign="top"><a id="a31ab81eaae66d4be8c8c97cf98f4f53e"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>canrxbufferadr</b></td></tr>
+<tr class="memitem:a31ab81eaae66d4be8c8c97cf98f4f53e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a31ab81eaae66d4be8c8c97cf98f4f53e">canrxbufferadr</a></td></tr>
 <tr class="separator:a31ab81eaae66d4be8c8c97cf98f4f53e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fe61eafda098ea6f2d3a59dbad24c18"><td class="memItemLeft" align="right" valign="top"><a id="a2fe61eafda098ea6f2d3a59dbad24c18"></a>
-<a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>canclk</b></td></tr>
+<tr class="memitem:a2fe61eafda098ea6f2d3a59dbad24c18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a2fe61eafda098ea6f2d3a59dbad24c18">canclk</a></td></tr>
 <tr class="separator:a2fe61eafda098ea6f2d3a59dbad24c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af076ccfb641d60f5530f5a2a20386623"><td class="memItemLeft" align="right" valign="top"><a id="af076ccfb641d60f5530f5a2a20386623"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>IRQ</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:af076ccfb641d60f5530f5a2a20386623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f78e1fbe52d5c0de3451736feb2a5e2"><td class="memItemLeft" align="right" valign="top"><a id="a3f78e1fbe52d5c0de3451736feb2a5e2"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Timeout</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:a3f78e1fbe52d5c0de3451736feb2a5e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18902cfc7cc7d639c2b27917fd0037fe"><td class="memItemLeft" align="right" valign="top"><a id="a18902cfc7cc7d639c2b27917fd0037fe"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Outc</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:a18902cfc7cc7d639c2b27917fd0037fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc809057005218628cbdccfc3f528dac"><td class="memItemLeft" align="right" valign="top"><a id="acc809057005218628cbdccfc3f528dac"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>TxErr</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:acc809057005218628cbdccfc3f528dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f27abd940fb5798360e73447a5bf0d1"><td class="memItemLeft" align="right" valign="top"><a id="a1f27abd940fb5798360e73447a5bf0d1"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>RxErr</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:a1f27abd940fb5798360e73447a5bf0d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac1a28018a003d37f2f5857841132ee2"><td class="memItemLeft" align="right" valign="top"><a id="aac1a28018a003d37f2f5857841132ee2"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Overrun</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:aac1a28018a003d37f2f5857841132ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d2dcdcf4b8604c62d020205a98ad60d"><td class="memItemLeft" align="right" valign="top"><a id="a3d2dcdcf4b8604c62d020205a98ad60d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Options</b> [MAX_CHANNELS]</td></tr>
-<tr class="separator:a3d2dcdcf4b8604c62d020205a98ad60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68b1abc1c5e151e1758cee01f48db5bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structatomic__t.html">atomic_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8h.html#a68b1abc1c5e151e1758cee01f48db5bf">Can_isopen</a> [MAX_CHANNELS]</td></tr>
-<tr class="separator:a68b1abc1c5e151e1758cee01f48db5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4749cc3c71dddb769463f12963660b0e"><td class="memItemLeft" align="right" valign="top"><a id="a4749cc3c71dddb769463f12963660b0e"></a>
 unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></td></tr>
 <tr class="separator:a4749cc3c71dddb769463f12963660b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -503,7 +409,9 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
 <div class="textblock"><p><a class="el" href="sja1000_8h.html">sja1000.h</a></p>
 <p>Simplified from can4linux 3.5.4 to match only Janus MM board Timing values only for 8MHz included (assume 16MHz oscillator on Janus MM is halved to be 8MHz, if not we need to change.)</p>
 <p>This includes device-dependent CAN definitions for the Phillips SJA 1000 driver. Assumes board is memory mapped at address given during initialization.</p>
-<p>Created on: Apr 6, 2019 Author: aboudy </p>
+<dl class="section author"><dt>Author</dt><dd>Abdul Rahman Kreidieh </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>April 6, 2018 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a181c77bce691bea7dbb2130bae5129aa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a181c77bce691bea7dbb2130bae5129aa">&#9670;&nbsp;</a></span>CAN_ABORT_TRANSMISSION</h2>
@@ -516,7 +424,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 1 in Command Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -546,7 +454,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 6 in Interrupt Enable Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -561,7 +469,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 7 in Status Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -576,7 +484,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 3 in Command Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -591,7 +499,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 1 in Status Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -636,7 +544,22 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 7 in Interrupt Enable Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="ac777d5bc3becb276a344589159cfcd4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac777d5bc3becb276a344589159cfcd4a">&#9670;&nbsp;</a></span>CAN_ERROR_INT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_ERROR_INT&#160;&#160;&#160;(1&lt;&lt;2)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 2 in Interrupt Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -651,7 +574,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 2 in Interrupt Enable Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -666,7 +589,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 5 in Interrupt Enable Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -681,7 +604,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 6 in Status Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -696,7 +619,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 4 in Command Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -726,7 +649,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>Specifies BasicCAN Mode </p>
 
 </div>
 </div>
@@ -801,7 +724,142 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>Specifies Pelican Mode </p>
+
+</div>
+</div>
+<a id="a3b3cce4fd0e90bb5829245233d55097c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b3cce4fd0e90bb5829245233d55097c">&#9670;&nbsp;</a></span>CAN_OCMODE0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_OCMODE0&#160;&#160;&#160;(1&lt;&lt;0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 1 in Output Control Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="a5c1fc286747fc06a788c8376e5c98543"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c1fc286747fc06a788c8376e5c98543">&#9670;&nbsp;</a></span>CAN_OCMODE1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_OCMODE1&#160;&#160;&#160;(1&lt;&lt;1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 2 in Output Control Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="ae7de2eaedcd59829b3ec21885165c05b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7de2eaedcd59829b3ec21885165c05b">&#9670;&nbsp;</a></span>CAN_OCPOL0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_OCPOL0&#160;&#160;&#160;(1&lt;&lt;2)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 3 in Output Control Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="a7a472542bc9ad6a14b8c2fa75cc5520b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a472542bc9ad6a14b8c2fa75cc5520b">&#9670;&nbsp;</a></span>CAN_OCPOL1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_OCPOL1&#160;&#160;&#160;(1&lt;&lt;5)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 6 in Output Control Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="aaf7dae4dfa19290fa41ad1ebd78161e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf7dae4dfa19290fa41ad1ebd78161e1">&#9670;&nbsp;</a></span>CAN_OCTN0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_OCTN0&#160;&#160;&#160;(1&lt;&lt;3)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 4 in Output Control Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="a3d9cd2d4d8d2ff2bf20e6cc1fe864a6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d9cd2d4d8d2ff2bf20e6cc1fe864a6f">&#9670;&nbsp;</a></span>CAN_OCTN1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_OCTN1&#160;&#160;&#160;(1&lt;&lt;6)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 7 in Output Control Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="a28e2e60609b9125c48f0cf09dbecd42c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28e2e60609b9125c48f0cf09dbecd42c">&#9670;&nbsp;</a></span>CAN_OCTP0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_OCTP0&#160;&#160;&#160;(1&lt;&lt;4)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 5 in Output Control Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="a8f438b67d1e6c7d759f5091718debdf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f438b67d1e6c7d759f5091718debdf0">&#9670;&nbsp;</a></span>CAN_OCTP1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_OCTP1&#160;&#160;&#160;(1&lt;&lt;7)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 8 in Output Control Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="a551bc8c129ae11cf014522b33831aff5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a551bc8c129ae11cf014522b33831aff5">&#9670;&nbsp;</a></span>CAN_OVERRUN_INT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_OVERRUN_INT&#160;&#160;&#160;(1&lt;&lt;3)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 3 in Interrupt Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -816,7 +874,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 3 in Interrupt Enable Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -831,7 +889,22 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 0 in Status Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="ad5ca1427700be8577e29a420fe44e557"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5ca1427700be8577e29a420fe44e557">&#9670;&nbsp;</a></span>CAN_RECEIVE_INT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_RECEIVE_INT&#160;&#160;&#160;(1&lt;&lt;0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 0 in Interrupt Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -846,7 +919,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 0 in Interrupt Enable Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -861,7 +934,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 4 in Status Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -876,7 +949,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 2 in Command Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -907,7 +980,8 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
       </table>
 </div><div class="memdoc">
 <p>&mdash; Remote Request ------------------------------------------------------&mdash;</p>
-<p>Notes:</p><ul>
+<p>Notes:</p>
+<ul>
 <li>Basic CAN: RTR is Bit 4 in TXDES1.</li>
 <li>Peli CAN: RTR is Bit 6 in frameinfo. </li>
 </ul>
@@ -974,6 +1048,306 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
 
 </div>
 </div>
+<a id="a8961990c4a5509ab56ac961a0d214b2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8961990c4a5509ab56ac961a0d214b2f">&#9670;&nbsp;</a></span>CAN_TIM0_1000K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_1000K&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 1000 kHz </p>
+
+</div>
+</div>
+<a id="a5557285bb1b7a55b52b2d42eb9f046ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5557285bb1b7a55b52b2d42eb9f046ed">&#9670;&nbsp;</a></span>CAN_TIM0_100K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_100K&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 100 kHz </p>
+
+</div>
+</div>
+<a id="ad89b53bb5148bb97e664727dc4196fd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad89b53bb5148bb97e664727dc4196fd6">&#9670;&nbsp;</a></span>CAN_TIM0_10K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_10K&#160;&#160;&#160;49</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 10 kHz </p>
+
+</div>
+</div>
+<a id="a3159e226e4e259385d31eb4e128bdff3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3159e226e4e259385d31eb4e128bdff3">&#9670;&nbsp;</a></span>CAN_TIM0_125K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_125K&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 125 kHz </p>
+
+</div>
+</div>
+<a id="a642bb6e45ad156c3042edd1ce3322fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a642bb6e45ad156c3042edd1ce3322fbf">&#9670;&nbsp;</a></span>CAN_TIM0_20K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_20K&#160;&#160;&#160;24</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 20 kHz </p>
+
+</div>
+</div>
+<a id="a7fd03590f818eadc93c59db0e615c28a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fd03590f818eadc93c59db0e615c28a">&#9670;&nbsp;</a></span>CAN_TIM0_250K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_250K&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 250 kHz </p>
+
+</div>
+</div>
+<a id="a459e8aaf73f652a73d20c873f263ae93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a459e8aaf73f652a73d20c873f263ae93">&#9670;&nbsp;</a></span>CAN_TIM0_40K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_40K&#160;&#160;&#160;0x89</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 40 kHz </p>
+
+</div>
+</div>
+<a id="a764e38a74d912049982e36a12904e265"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a764e38a74d912049982e36a12904e265">&#9670;&nbsp;</a></span>CAN_TIM0_500K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_500K&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 500 kHz </p>
+
+</div>
+</div>
+<a id="a44b501e99a818f13b5eae27397bda1cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44b501e99a818f13b5eae27397bda1cb">&#9670;&nbsp;</a></span>CAN_TIM0_50K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_50K&#160;&#160;&#160;9</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 50 kHz </p>
+
+</div>
+</div>
+<a id="a392c0b95d349ab63e6c5dea9c5facfe2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a392c0b95d349ab63e6c5dea9c5facfe2">&#9670;&nbsp;</a></span>CAN_TIM0_800K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM0_800K&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR0 value for timing of 800 kHz </p>
+
+</div>
+</div>
+<a id="a29490638ed331ff4e09277aa65e96c89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29490638ed331ff4e09277aa65e96c89">&#9670;&nbsp;</a></span>CAN_TIM1_1000K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_1000K&#160;&#160;&#160;0x14</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 1000 kHz </p>
+
+</div>
+</div>
+<a id="a22cfc50746d551951dac1a89245a0a74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22cfc50746d551951dac1a89245a0a74">&#9670;&nbsp;</a></span>CAN_TIM1_100K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_100K&#160;&#160;&#160;0x1c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 100 kHz </p>
+
+</div>
+</div>
+<a id="a21182c4b552566ae49c296b0907eeb7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21182c4b552566ae49c296b0907eeb7b">&#9670;&nbsp;</a></span>CAN_TIM1_10K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_10K&#160;&#160;&#160;0x1c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 10 kHz </p>
+
+</div>
+</div>
+<a id="a05ef42f514213f6e0372c33e0083d4a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05ef42f514213f6e0372c33e0083d4a0">&#9670;&nbsp;</a></span>CAN_TIM1_125K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_125K&#160;&#160;&#160;0x1c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 125 kHz </p>
+
+</div>
+</div>
+<a id="a07308fff76b8ae0e3040b437b4783a0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07308fff76b8ae0e3040b437b4783a0e">&#9670;&nbsp;</a></span>CAN_TIM1_20K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_20K&#160;&#160;&#160;0x1c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 20 kHz </p>
+
+</div>
+</div>
+<a id="aeb1a7888adcf1f8a3a4cc029a0be09d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb1a7888adcf1f8a3a4cc029a0be09d9">&#9670;&nbsp;</a></span>CAN_TIM1_250K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_250K&#160;&#160;&#160;0x1c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 250 kHz </p>
+
+</div>
+</div>
+<a id="acd28f659b4a2d9ce376f641ca324d805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd28f659b4a2d9ce376f641ca324d805">&#9670;&nbsp;</a></span>CAN_TIM1_40K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_40K&#160;&#160;&#160;0xEB</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 40 kHz </p>
+
+</div>
+</div>
+<a id="a4ef9de87cfaaf0a68d24fb3540601ad2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ef9de87cfaaf0a68d24fb3540601ad2">&#9670;&nbsp;</a></span>CAN_TIM1_500K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_500K&#160;&#160;&#160;0x1c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 500 kHz </p>
+
+</div>
+</div>
+<a id="a64bb0ed021d0d07a5912da04e088b7a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64bb0ed021d0d07a5912da04e088b7a2">&#9670;&nbsp;</a></span>CAN_TIM1_50K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_50K&#160;&#160;&#160;0x1c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 50 kHz </p>
+
+</div>
+</div>
+<a id="ae76f7466796271ceb765c60d28953976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae76f7466796271ceb765c60d28953976">&#9670;&nbsp;</a></span>CAN_TIM1_800K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TIM1_800K&#160;&#160;&#160;0x16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BTR1 value for timing of 800 kHz </p>
+
+</div>
+</div>
 <a id="ac9da35c13931998a8e944d6d738c112d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac9da35c13931998a8e944d6d738c112d">&#9670;&nbsp;</a></span>CAN_TRANSMISSION_COMPLETE_STATUS</h2>
 
@@ -985,7 +1359,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 3 in Status Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -1000,7 +1374,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 0 in Command Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -1015,7 +1389,22 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 2 in Status Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="adc9fed622364b3d7cf17f603bc16b391"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc9fed622364b3d7cf17f603bc16b391">&#9670;&nbsp;</a></span>CAN_TRANSMIT_INT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_TRANSMIT_INT&#160;&#160;&#160;(1&lt;&lt;1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 1 in Interrupt Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -1030,7 +1419,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 1 in Interrupt Enable Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -1045,7 +1434,22 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 5 in Status Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
+
+</div>
+</div>
+<a id="aedfdf45e32b82e2635011f8438c245c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedfdf45e32b82e2635011f8438c245c1">&#9670;&nbsp;</a></span>CAN_WAKEUP_INT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAN_WAKEUP_INT&#160;&#160;&#160;(1&lt;&lt;4)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit 4 in Interrupt Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -1060,7 +1464,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>bit 4 in Interrupt Enable Register (see <a class="el" href="sja1000_8h.html">include/can/sja1000.h</a> for details) </p>
 
 </div>
 </div>
@@ -1105,25 +1509,6 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
       </table>
 </div><div class="memdoc">
 <p>Fancy leveled debugging not really needed in simpler QNX driver environment. </p>
-
-</div>
-</div>
-<a id="a02ad96935d544940647f116ad47c1aa4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02ad96935d544940647f116ad47c1aa4">&#9670;&nbsp;</a></span>iminor</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define iminor</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x</td><td>)</td>
-          <td>&#160;&#160;&#160;((intptr_t) (x))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TODO </p>
 
 </div>
 </div>
@@ -1339,11 +1724,27 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>PeliCAN address allocation for the CAN controller.</p>
+<p>Each address denotes the location of a byte, whose elements are later described throughout this file. The addresses are in incrementing order starting from canmode (address=0) to canclk (address=31). </p>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="acaef7699de493df042e013ea56d5aaf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaef7699de493df042e013ea56d5aaf9">&#9670;&nbsp;</a></span>arbitrationlost</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> arbitrationlost</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>11: arbitration lost capture only </p>
+
+</div>
+</div>
 <a id="aec3fc02b98ee7c276155391ec1cd2450"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aec3fc02b98ee7c276155391ec1cd2450">&#9670;&nbsp;</a></span>can_base_addr</h2>
 
@@ -1359,18 +1760,303 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>dbgMask</b></
 
 </div>
 </div>
-<a id="a68b1abc1c5e151e1758cee01f48db5bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68b1abc1c5e151e1758cee01f48db5bf">&#9670;&nbsp;</a></span>Can_isopen</h2>
+<a id="a2fe61eafda098ea6f2d3a59dbad24c18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fe61eafda098ea6f2d3a59dbad24c18">&#9670;&nbsp;</a></span>canclk</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structatomic__t.html">atomic_t</a> Can_isopen[MAX_CHANNELS]</td>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> canclk</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Global per channel variables from sja1000funcs.c For PATH driver, each channel has a separate driver, so MAX_CHANNELS is 1 Most of these are not really used in the PATH CAN driver for QNX6. </p>
+<p>31: clock divider </p>
+
+</div>
+</div>
+<a id="a385ff616245c5434bc19953e7cef4dcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a385ff616245c5434bc19953e7cef4dcc">&#9670;&nbsp;</a></span>cancmd</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> cancmd</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1: command register </p>
+
+</div>
+</div>
+<a id="a1de6bb119f8359ff3a69ec81e24a293e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1de6bb119f8359ff3a69ec81e24a293e">&#9670;&nbsp;</a></span>canirq</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> canirq</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>3: interrupt register </p>
+
+</div>
+</div>
+<a id="accac149448755de3667e81f52945c807"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accac149448755de3667e81f52945c807">&#9670;&nbsp;</a></span>canirq_enable</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> canirq_enable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>4: interrupt enable register </p>
+
+</div>
+</div>
+<a id="a75df086fbffcd01383961b3d5991186a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75df086fbffcd01383961b3d5991186a">&#9670;&nbsp;</a></span>canmode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> canmode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>0: mode register </p>
+
+</div>
+</div>
+<a id="a70577afd3d252f86fb342701d3bb1110"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70577afd3d252f86fb342701d3bb1110">&#9670;&nbsp;</a></span>canoutc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> canoutc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>8: output control register </p>
+
+</div>
+</div>
+<a id="a31ab81eaae66d4be8c8c97cf98f4f53e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31ab81eaae66d4be8c8c97cf98f4f53e">&#9670;&nbsp;</a></span>canrxbufferadr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> canrxbufferadr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>30: RX buffer start address (read only) </p>
+
+</div>
+</div>
+<a id="a79aa996375a02f0607de2ba9600a4fbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79aa996375a02f0607de2ba9600a4fbb">&#9670;&nbsp;</a></span>canstat</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> canstat</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>2: status register </p>
+
+</div>
+</div>
+<a id="a800b445cde556d69c55c144e698189c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a800b445cde556d69c55c144e698189c3">&#9670;&nbsp;</a></span>cantest</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> cantest</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>9: command register </p>
+
+</div>
+</div>
+<a id="a3f2aad57ddb03cc70c7b8f1b79ce355c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f2aad57ddb03cc70c7b8f1b79ce355c">&#9670;&nbsp;</a></span>cantim0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> cantim0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>6: bus timing 0 register </p>
+
+</div>
+</div>
+<a id="a50a12612738ff676fc74d06dbc2473ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50a12612738ff676fc74d06dbc2473ac">&#9670;&nbsp;</a></span>cantim1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> cantim1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>7: bus timing 1 register </p>
+
+</div>
+</div>
+<a id="aa80ee27a0de43a3089f2ecd7f8dff8c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa80ee27a0de43a3089f2ecd7f8dff8c4">&#9670;&nbsp;</a></span>errorcode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> errorcode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>12: error code capture (read only) </p>
+
+</div>
+</div>
+<a id="a5a4bd02751d2107db7fae616f927605b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a4bd02751d2107db7fae616f927605b">&#9670;&nbsp;</a></span>errorwarninglimit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> errorwarninglimit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>13: error warning limit register </p>
+
+</div>
+</div>
+<a id="ac904fd71c9baf6027ede660cc9caa1e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac904fd71c9baf6027ede660cc9caa1e2">&#9670;&nbsp;</a></span>frame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union <a class="el" href="unionframe.html">frame</a> <a class="el" href="unionframe.html">frame</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO </p>
+
+</div>
+</div>
+<a id="a527103460356afdcfb6561d4903d7a06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a527103460356afdcfb6561d4903d7a06">&#9670;&nbsp;</a></span>frameinfo</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> frameinfo</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO </p>
+
+</div>
+</div>
+<a id="a0e1096ca4dfb04e862d7785e8986cdfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e1096ca4dfb04e862d7785e8986cdfd">&#9670;&nbsp;</a></span>reserved1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> reserved1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>5: reserved register (read only) </p>
+
+</div>
+</div>
+<a id="a2a3a2cdcaacd010f230c4cd6332c0e3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a3a2cdcaacd010f230c4cd6332c0e3d">&#9670;&nbsp;</a></span>reserved2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> reserved2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>10: reserved register (read only) </p>
+
+</div>
+</div>
+<a id="a1b251c54564ad72f6bc6575e8a22f5b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b251c54564ad72f6bc6575e8a22f5b2">&#9670;&nbsp;</a></span>reserved3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> reserved3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>29: RX message counter (read only) </p>
+
+</div>
+</div>
+<a id="aceedaf55fed763a60e67404a14e35849"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aceedaf55fed763a60e67404a14e35849">&#9670;&nbsp;</a></span>rxerror</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> rxerror</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>14: RX error counter </p>
+
+</div>
+</div>
+<a id="ab0bcb2f6cb9296c3814c5024c756b70c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0bcb2f6cb9296c3814c5024c756b70c">&#9670;&nbsp;</a></span>txerror</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a4ae1dab0fb4b072a66584546209e7d58">BYTE</a> txerror</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>15: RX error counter </p>
 
 </div>
 </div>

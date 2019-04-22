@@ -3,7 +3,7 @@
  * jbus_send.h
  *
  * This file contains the JBus class, which is responsible for collecting J1939
- * messages from the CAN card. The messages are later translated to their
+ * messages from the CAN card.The messages are later translated to their
  * message-specific format using classes in j1939_interpreters.h.
  *
  * @author Abdul Rahman Kreidieh
@@ -67,8 +67,8 @@ public:
 	 * @param slot
 	 * 		external slot, internal type
 	 * @return
-	 * 		J1939_CAN_MESSAGE_ERROR (0) on can_read failure. Otherwise returns
-	 * 		the (positive) number of bytes in the message, no fatal error
+	 * 		J1939_CAN_MESSAGE_ERROR (0) on can_read failure; otherwise returns
+	 * 		the (positive) number of bytes in the message. no fatal error
 	 * 		conditions are recognized.
 	 */
 	virtual int receive(int fd, j1939_pdu_typ *pdu, int *extended, int *slot);

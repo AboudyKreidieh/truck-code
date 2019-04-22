@@ -21,10 +21,10 @@
 /** timestamp used to identify when each datapoint was issued. All J1939
  * datasets contain a timestamp_t variable. */
 typedef struct {
-	int hour;
-	int minute;
-	int second;
-	int millisecond;
+	int hour;			/**< hour */
+	int minute;			/**< minute */
+	int second;			/**< second */
+	int millisecond;	/**< millisecond */
 } timestamp_t;
 
 /** method used to print data from a timestamp_t variable */

@@ -22,12 +22,14 @@
 /* -------------------- Definitions for common constants -------------------- */
 /* -------------------------------------------------------------------------- */
 
-#define ERROR 			0				/**< error status */
-#define END_OF_STRING	((char)'\0')	/**< TODO */
-#define MAX_LINE_LEN	132				/**< TODO */
-#define ERROR_LONG		(-1L)			/**< TODO */
-#define ASC_EQUAL_SIGN	'='				/**< TODO */
-#define ASC_LEFT_ARRAY	'['				/**< TODO */
+#define ERROR 			-1				/**< error status */
+#define END_OF_STRING	((char)'\0')	/**< character representing the end */
+										/**< of a string */
+#define MAX_LINE_LEN	132				/**< largest number of characters in */
+										/**< a string */
+#define ERROR_LONG		(-1L)			/**< error status (in long format) */
+#define ASC_EQUAL_SIGN	'='				/**< '=' symbol */
+#define ASC_LEFT_ARRAY	'['				/**< '[' symbol */
 
 
 /* -------------------------------------------------------------------------- */
@@ -42,6 +44,7 @@ typedef unsigned char BIT;		/**< an object used to represent a "bit" of data */
 /* ----------------------- TODO: find out what it is ------------------------ */
 /* -------------------------------------------------------------------------- */
 
+
 /** TODO */
 static int sig_list[] =
 {
@@ -52,8 +55,10 @@ static int sig_list[] =
 	ERROR
 };
 
+
 /** TODO */
 static jmp_buf exit_env;
+
 
 /** TODO */
 static void sig_hand(int code)

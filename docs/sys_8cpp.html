@@ -86,20 +86,15 @@ Include dependency graph for sys.cpp:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2e918f46e5b15222a15313065a3bf557"><td class="memItemLeft" align="right" valign="top"><a id="a2e918f46e5b15222a15313065a3bf557"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>allspace</b> (char *pc)</td></tr>
+<tr class="memitem:a2e918f46e5b15222a15313065a3bf557"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sys_8cpp.html#a2e918f46e5b15222a15313065a3bf557">allspace</a> (char *pc)</td></tr>
 <tr class="separator:a2e918f46e5b15222a15313065a3bf557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97edab46f90f94f8c3202219349f9a45"><td class="memItemLeft" align="right" valign="top"><a id="a97edab46f90f94f8c3202219349f9a45"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>readline</b> (FILE *pfile, char *pbuff, int size)</td></tr>
+<tr class="memitem:a97edab46f90f94f8c3202219349f9a45"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sys_8cpp.html#a97edab46f90f94f8c3202219349f9a45">readline</a> (FILE *pfile, char *pbuff, int size)</td></tr>
 <tr class="separator:a97edab46f90f94f8c3202219349f9a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7011c95bd750dcf6e4fe8e16cb0f4a7"><td class="memItemLeft" align="right" valign="top"><a id="ac7011c95bd750dcf6e4fe8e16cb0f4a7"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>get_ini_long</b> (FILE *pfile, char *pentry, long long_def)</td></tr>
+<tr class="memitem:ac7011c95bd750dcf6e4fe8e16cb0f4a7"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sys_8cpp.html#ac7011c95bd750dcf6e4fe8e16cb0f4a7">get_ini_long</a> (FILE *pfile, char *pentry, long long_def)</td></tr>
 <tr class="separator:ac7011c95bd750dcf6e4fe8e16cb0f4a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a682753e4474c72d8a93d387243d38377"><td class="memItemLeft" align="right" valign="top"><a id="a682753e4474c72d8a93d387243d38377"></a>
-unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>get_ini_hex</b> (FILE *pfile, char *pentry, unsigned hex_def)</td></tr>
+<tr class="memitem:a682753e4474c72d8a93d387243d38377"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sys_8cpp.html#a682753e4474c72d8a93d387243d38377">get_ini_hex</a> (FILE *pfile, char *pentry, unsigned hex_def)</td></tr>
 <tr class="separator:a682753e4474c72d8a93d387243d38377"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a414bfcba9c58140f894150512204bbe6"><td class="memItemLeft" align="right" valign="top"><a id="a414bfcba9c58140f894150512204bbe6"></a>
-FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>get_ini_section</b> (char *pname, char *psection)</td></tr>
+<tr class="memitem:a414bfcba9c58140f894150512204bbe6"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sys_8cpp.html#a414bfcba9c58140f894150512204bbe6">get_ini_section</a> (char *pname, char *psection)</td></tr>
 <tr class="separator:a414bfcba9c58140f894150512204bbe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -107,7 +102,221 @@ FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>get_ini_section</b>
 <dl class="section author"><dt>Author</dt><dd>Abdul Rahman Kreidieh </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>February 21, 2019 </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a2e918f46e5b15222a15313065a3bf557"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e918f46e5b15222a15313065a3bf557">&#9670;&nbsp;</a></span>allspace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool allspace </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check whether a give string is all spaces.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pc</td><td>the string that is being tested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True is all spaces, False otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a682753e4474c72d8a93d387243d38377"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a682753e4474c72d8a93d387243d38377">&#9670;&nbsp;</a></span>get_ini_hex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned get_ini_hex </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>pfile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pentry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>hex_def</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pfile</td><td>pointer to file you're reading from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac7011c95bd750dcf6e4fe8e16cb0f4a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7011c95bd750dcf6e4fe8e16cb0f4a7">&#9670;&nbsp;</a></span>get_ini_long()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long get_ini_long </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>pfile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pentry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>long_def</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pfile</td><td>pointer to file you're reading from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a414bfcba9c58140f894150512204bbe6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a414bfcba9c58140f894150512204bbe6">&#9670;&nbsp;</a></span>get_ini_section()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FILE* get_ini_section </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>psection</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO</p>
+<p>This routine opens the given configuration file, and locates the relevant section. It is necessary to call <a class="el" href="sys_8h.html#a414bfcba9c58140f894150512204bbe6">get_ini_section()</a> before reading initialization values. It is necessary to call fclose() with the file pointer when done. It is also necessary to close one section before calling <a class="el" href="sys_8h.html#a414bfcba9c58140f894150512204bbe6">get_ini_section()</a> again within the same program.</p>
+<p>A typical configuration file is text, and might contain lines like:</p>
+<p>[first_section_name] MoreData=TRUE AnotherVariable=1.2345</p>
+<p>[windows_section] ScreenSaveActive=1 DoubleClickSpeed=452</p>
+<p>[last_section] MoreData=FALSE</p>
+<p>Note that:</p>
+<ul>
+<li>Blank lines are ignored.</li>
+<li>Comments begin with a # symbol.</li>
+<li>Section and variable names should all be on separate lines.</li>
+</ul>
+<p>Bugs</p>
+<ul>
+<li>Within a single program, only one configuration section and file can be open at once.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pname</td><td>The name of a configuration file. </td></tr>
+    <tr><td class="paramname">psection</td><td>The name of a section within a configuration file. It is not necessary to place brackets around the section name. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A file pointer for the given file name and section name. NUL if the section or file can't be found. </dd></dl>
+
+</div>
+</div>
+<a id="a97edab46f90f94f8c3202219349f9a45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97edab46f90f94f8c3202219349f9a45">&#9670;&nbsp;</a></span>readline()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int readline </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>pfile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pbuff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO</p>
+<p>This function attempts to read in a block of data of length "size" form the file pointed to by "pfile". The read operation is done from the current position of the file pointer (in the file). If there are fewer characters than "size" left on the line (a line is a string of characters terminated by a "/n" or an EOF character) then only those characters will be read in.</p>
+<p>The integer value returned by the function will be equal to the number of characters read in unless readline is called when the file pointer is pointing directly at "EOF" then the function will return a -1 (the system constant "ERROR" ).</p>
+<p>The string of characters returned in pbuff will always be terminated by a NULL character, "\O". The first NULL character in pbuff indicates the end of the string that was read in. Be forewarned there may be more than one NULL character in pbuff, but it is only the first one that is significant. Any characters returned in the buffer after the first NULL should be ignored.</p>
+<p>If no characters are read in then the first character in pbuff will be the NULL character and the function will return a value of -1 (the system constant, "ERROR" ).</p>
+<p>Bugs:</p>
+<ul>
+<li>If the value of size is selected such that it is less than the number of characters on the line pointed to by pfile then the next time readline is called it will continue by grabbing characters from the same line.</li>
+<li>So it is possible that many "readline"s could be called on the same line before all the characters on the line are exhausted.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pfile</td><td>pointer to file you're reading from. </td></tr>
+    <tr><td class="paramname">pbuff</td><td>character array into which character are being read. </td></tr>
+    <tr><td class="paramname">size</td><td>The size of the buffer. (counted from 1, ie. 1 .. size).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>TODO RETURN ERROR size &lt;= 0 ERROR EOF #char String length. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

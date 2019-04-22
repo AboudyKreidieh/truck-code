@@ -105,7 +105,7 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>CAN Device Manager class.</p>
-<p>This object is responsible for initializing and interacting with the CAN card. TODO: method the register and SJA1000. </p>
+<p>This object is responsible for initializing and interacting with the CAN card. CAN messages are received through the SJA1000 chip, a blank. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a01ba860eb34e6b627bd94b5967accedc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a01ba860eb34e6b627bd94b5967accedc">&#9670;&nbsp;</a></span>~CANDeviceManager()</h2>
@@ -156,19 +156,8 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Arm the CAN device manager.</p>
-<p>Attach the hardware interrupt, and save the event to be used to notify the client in the ocb structure.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ctp</td><td>TODO </td></tr>
-    <tr><td class="paramname">io_ocb</td><td>Open control block (usually embeded within file system ocb) </td></tr>
-    <tr><td class="paramname">event</td><td>TODO </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for success, or -1 if an error occurs Clear the error counts and return the old counts.</dd>
-<dd>
-old counts </dd></dl>
+<p>Clear the error counts and return the old counts.</p>
+<dl class="section return"><dt>Returns</dt><dd>old counts </dd></dl>
 
 </div>
 </div>
@@ -295,7 +284,7 @@ old counts </dd></dl>
   <table class="params">
     <tr><td class="paramname">in_buff</td><td>circular buffer for the input messages </td></tr>
     <tr><td class="paramname">out_buff</td><td>circular buffer for the output messages </td></tr>
-    <tr><td class="paramname">filter</td><td>TODO </td></tr>
+    <tr><td class="paramname">filter</td><td>used to set filtering of CAN messages </td></tr>
   </table>
   </dd>
 </dl>
@@ -326,14 +315,15 @@ old counts </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>TODO</p>
+<p>Read the latest element in the buffer.</p>
+<p>This will also remove the element from the buffer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">in_buff</td><td>circular buffer for the input messages </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>TODO </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the front-most message. </dd></dl>
 
 </div>
 </div>
@@ -373,8 +363,8 @@ old counts </dd></dl>
 <p>Read message from chip and queue for the resource manager.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TODO</td><td></td></tr>
-    <tr><td class="paramname">TODO</td><td></td></tr>
+    <tr><td class="paramname">in_buff</td><td>circular buffer for the input messages </td></tr>
+    <tr><td class="paramname">filter</td><td>used to set filtering of CAN messages </td></tr>
   </table>
   </dd>
 </dl>
@@ -405,7 +395,7 @@ old counts </dd></dl>
 </table>
 </div><div class="memdoc">
 <p>Send a message to the bus.</p>
-<p>Gets the message from the front of the transmit queue and puts it on the CAN bus.</p>
+<p>Single CAN frames or the very first Message are copied into the CAN controller using this function. After that an transmission request is set in the CAN controllers command register. After a successful transmission, an interrupt will be generated, which will be handled in the CAN ISR CAN_Interrupt().</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pattr</td><td>pointer to information per device manager </td></tr>
@@ -481,7 +471,13 @@ old counts </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>TODO</p>
+<p>Write a new message to the CAN card.</p>
+<p>This method is responsible for performing the following tasks.</p>
+<ul>
+<li>If a new message is provided, it is written to and stored in the provided output buffer, tHen promptly sent to the CAN card.</li>
+<li>If no message was sent to the CAN card within the past second (with the assumption that we are sending heartbeat messages at the frequency of 1 Hz), the can_timeout_count attribute is incremented.</li>
+<li>If the buffer has got more than 10 messages stored, the messages are flushed from the system and the number of removed messages is added to the tx_buffer_flush attribute.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">out_buff</td><td>circular buffer that stores output messages </td></tr>

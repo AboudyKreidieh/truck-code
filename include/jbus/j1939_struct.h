@@ -431,37 +431,37 @@ typedef struct {
 
 /** PDU VOLVO_XBR_WARN (Volvo brake message) */
 typedef struct {
-	timestamp_t timestamp;					/**< time the message was received */
-	BYTE src_address;
-	BYTE destination_address;
-	BYTE pdu_format;
-	BYTE byte1;                    // 0xFF
-	BYTE byte2;                    // 0x31
-	BYTE byte3;                    // 0xFF
-	BYTE byte4;                    // 0xFF
-	BYTE byte5;                    // 0xFF
-	BYTE byte6;                    // 0xFF
-	BYTE byte7;                    // 0xFF
-	BYTE byte8;                    // 0xFF
+	timestamp_t timestamp;		/**< time the message was received */
+	BYTE src_address;			/** Source address */
+	BYTE destination_address;	/** Destination address */
+	BYTE pdu_format;			/**< Protocol Data Unit Format (PF) */
+	BYTE byte1;					/**< 0xFF */
+	BYTE byte2;					/**< 0x31 */
+	BYTE byte3;					/**< 0xFF */
+	BYTE byte4;					/**< 0xFF */
+	BYTE byte5;					/**< 0xFF */
+	BYTE byte6;					/**< 0xFF */
+	BYTE byte7;					/**< 0xFF */
+	BYTE byte8;					/**< 0xFF */
 } j1939_volvo_xbr_warn_typ;
 
 
 /** PDU VOLVO_XBR (Volvo brake message) */
 typedef struct {
-	timestamp_t timestamp;					/**< time the message was received */
-	float ExternalAccelerationDemand;	    //
-	BYTE src_address;              //
-	BYTE destination_address;      //
-	BYTE pdu_format;               //
-	BYTE XBREBIMode;	            //
-	BYTE XBRPriority;	            //
-	BYTE XBRControlMode;	        //
-	BYTE XBRUrgency;	            //
-	BYTE spare1;		            // 0xFF
-	BYTE spare2;		            // 0xFF
-	BYTE spare3;		            // 0xFF
-	BYTE XBRMessageCounter;        //
-	BYTE XBRMessageChecksum;       //
+	timestamp_t timestamp;				/**< time the message was received */
+	float ExternalAccelerationDemand;	//
+	BYTE src_address;              		//
+	BYTE destination_address;      		//
+	BYTE pdu_format;               		//
+	BYTE XBREBIMode;	            	//
+	BYTE XBRPriority;	            	//
+	BYTE XBRControlMode;	        	//
+	BYTE XBRUrgency;	            	//
+	BYTE spare1;		            	// 0xFF
+	BYTE spare2;		            	// 0xFF
+	BYTE spare3;		            	// 0xFF
+	BYTE XBRMessageCounter;        		//
+	BYTE XBRMessageChecksum;       		//
 } j1939_volvo_xbr_typ;
 
 
