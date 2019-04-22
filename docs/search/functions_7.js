@@ -6,5 +6,8 @@ var searchData=
   ['get_5fcircular_5findex',['get_circular_index',['../classCircularBuffer.html#acf6fc10efd1eed6436c0583db368cd76',1,'CircularBuffer']]],
   ['get_5fcount',['get_count',['../classCircularBuffer.html#a4d7402df1fab80acb775a5c4c7099aa4',1,'CircularBuffer']]],
   ['get_5fcurrent_5ftimestamp',['get_current_timestamp',['../timestamp_8cpp.html#a9aa94d4868fbe116293b94903d5d7647',1,'get_current_timestamp(timestamp_t *t):&#160;timestamp.cpp'],['../timestamp_8h.html#ae804f8b3ca71c7b936cdc6ae34606749',1,'get_current_timestamp(timestamp_t *):&#160;timestamp.cpp']]],
-  ['get_5ferrs',['get_errs',['../classCANDeviceManager.html#afbfb8912b4cf287abf7b9ba6b35b2832',1,'CANDeviceManager']]]
+  ['get_5ferrs',['get_errs',['../classCANDeviceManager.html#afbfb8912b4cf287abf7b9ba6b35b2832',1,'CANDeviceManager']]],
+  ['get_5fini_5fhex',['get_ini_hex',['../sys_8cpp.html#a682753e4474c72d8a93d387243d38377',1,'get_ini_hex(FILE *pfile, char *pentry, unsigned hex_def):&#160;sys.cpp'],['../sys_8h.html#a682753e4474c72d8a93d387243d38377',1,'get_ini_hex(FILE *pfile, char *pentry, unsigned hex_def):&#160;sys.cpp']]],
+  ['get_5fini_5flong',['get_ini_long',['../sys_8cpp.html#ac7011c95bd750dcf6e4fe8e16cb0f4a7',1,'get_ini_long(FILE *pfile, char *pentry, long long_def):&#160;sys.cpp'],['../sys_8h.html#ac7011c95bd750dcf6e4fe8e16cb0f4a7',1,'get_ini_long(FILE *pfile, char *pentry, long long_def):&#160;sys.cpp']]],
+  ['get_5fini_5fsection',['get_ini_section',['../sys_8cpp.html#a414bfcba9c58140f894150512204bbe6',1,'get_ini_section(char *pname, char *psection):&#160;sys.cpp'],['../sys_8h.html#a414bfcba9c58140f894150512204bbe6',1,'get_ini_section(char *pname, char *psection):&#160;sys.cpp']]]
 ];

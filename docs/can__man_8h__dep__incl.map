@@ -1,8 +1,9 @@
 <map id="include/can/can_man.h" name="include/can/can_man.h">
 <area shape="rect" id="node2" href="$can_8cpp.html" title="include/can/can.cpp" alt="" coords="5,80,144,107"/>
 <area shape="rect" id="node3" href="$can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="169,80,335,107"/>
-<area shape="rect" id="node4" href="$can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="360,80,523,107"/>
-<area shape="rect" id="node5" href="$io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="547,80,706,107"/>
-<area shape="rect" id="node6" href="$jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="731,80,875,107"/>
-<area shape="rect" id="node7" href="$can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="899,80,1021,107"/>
+<area shape="rect" id="node4" href="$can__if_8cpp.html" title="include/can/can_if.cpp" alt="" coords="360,80,512,107"/>
+<area shape="rect" id="node5" href="$can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="536,80,699,107"/>
+<area shape="rect" id="node6" href="$io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="723,80,882,107"/>
+<area shape="rect" id="node7" href="$jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="907,80,1051,107"/>
+<area shape="rect" id="node8" href="$can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="1075,80,1197,107"/>
 </map>

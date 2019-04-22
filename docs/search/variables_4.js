@@ -31,7 +31,10 @@ var searchData=
   ['error',['error',['../structcan__msg__t.html#a940be991c7d975e92a606c88665d9a18',1,'can_msg_t']]],
   ['error_5fcode',['error_code',['../structCanStatusPar.html#a3f626979e7382a0edb9eff6a9afcbd43',1,'CanStatusPar']]],
   ['error_5fwarning_5flimit',['error_warning_limit',['../structCanStatusPar.html#ad9d8294cb260a3d918c08e7a371cdd42',1,'CanStatusPar']]],
+  ['errorcode',['errorcode',['../structcanregs.html#a21c1bb4666ddf451979df9f682f709ab',1,'canregs::errorcode()'],['../sja1000_8h.html#aa80ee27a0de43a3089f2ecd7f8dff8c4',1,'errorcode():&#160;sja1000.h']]],
+  ['errorwarninglimit',['errorwarninglimit',['../structcanregs.html#a2fec5cb8f30ea0ae227691099804b833',1,'canregs::errorwarninglimit()'],['../sja1000_8h.html#a5a4bd02751d2107db7fae616f927605b',1,'errorwarninglimit():&#160;sja1000.h']]],
   ['est_5feng_5fprstic_5floss',['est_eng_prstic_loss',['../structj1939__eec3__typ.html#a2e900a683874ecb65d4500a3ec5841e9',1,'j1939_eec3_typ']]],
   ['exhaust_5fgas_5fpressure',['exhaust_gas_pressure',['../structj1939__ei__typ.html#a1e2c8bd0999454da212bda0c4a22c2de',1,'j1939_ei_typ']]],
-  ['exhaust_5fgas_5ftemp',['exhaust_gas_temp',['../structj1939__iec__typ.html#af33668ad422c84851d461706a554667a',1,'j1939_iec_typ']]]
+  ['exhaust_5fgas_5ftemp',['exhaust_gas_temp',['../structj1939__iec__typ.html#af33668ad422c84851d461706a554667a',1,'j1939_iec_typ']]],
+  ['extframe',['extframe',['../unionframe.html#a04bd3ccde5d162bc456bb790f7960559',1,'frame']]]
 ];

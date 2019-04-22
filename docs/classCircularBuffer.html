@@ -82,7 +82,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7d5ac65d7f59e80dde1027c624e89ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a355abf3421bce448de118ef71a8049a1"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCircularBuffer.html#a355abf3421bce448de118ef71a8049a1">pop_first</a> ()</td></tr>
 <tr class="separator:a355abf3421bce448de118ef71a8049a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d7402df1fab80acb775a5c4c7099aa4"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCircularBuffer.html#a4d7402df1fab80acb775a5c4c7099aa4">get_count</a> ()</td></tr>
+<tr class="memitem:a4d7402df1fab80acb775a5c4c7099aa4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCircularBuffer.html#a4d7402df1fab80acb775a5c4c7099aa4">get_count</a> ()</td></tr>
 <tr class="separator:a4d7402df1fab80acb775a5c4c7099aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -159,9 +159,6 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">int CircularBuffer::get_count </td>
@@ -170,11 +167,6 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Return the number of elements in the buffer. </p>
 
@@ -207,8 +199,9 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Initialize the circular buffer.</p>
 <p>This method is used to set up buffer of items of a type defined by call program. sizeof(the_type_name) is used for the item_size parameter. The most recent max_data items will be saved.</p>
-<p>max_data maximum number of elements that can be stored in the buffer </p><dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">max_data</td><td>maximum number of elements that can be stored in the buffer </td></tr>
     <tr><td class="paramname">item_size</td><td>size of a single element in data_array </td></tr>
   </table>
   </dd>

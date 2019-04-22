@@ -1,14 +1,13 @@
 var searchData=
 [
   ['can_5farm',['can_arm',['../can_8cpp.html#a525e8830c9044004537b1874310ac528',1,'can_arm(int fd, int channel_id):&#160;can.cpp'],['../can_8h.html#a525e8830c9044004537b1874310ac528',1,'can_arm(int fd, int channel_id):&#160;can.cpp']]],
-  ['can_5fdev_5farm',['can_dev_arm',['../can__man_8h.html#af4574ef405a3afb2bbfb48cb4d0ee977',1,'can_if.cpp']]],
-  ['can_5fdev_5finterrupt',['can_dev_interrupt',['../can__man_8h.html#ade81f8e1dae82c2c03aa24bada525cb4',1,'can_man.h']]],
-  ['can_5fhandle_5finterrupt',['can_handle_interrupt',['../can__man_8h.html#a5cef35f37c0e53e83ced4d0f7f63385d',1,'can_man.h']]],
+  ['can_5fdev_5farm',['can_dev_arm',['../can__if_8cpp.html#af4574ef405a3afb2bbfb48cb4d0ee977',1,'can_dev_arm(resmgr_context_t *ctp, iofunc_ocb_t *io_ocb, sigevent event):&#160;can_if.cpp'],['../can__man_8h.html#af4574ef405a3afb2bbfb48cb4d0ee977',1,'can_dev_arm(resmgr_context_t *ctp, iofunc_ocb_t *io_ocb, sigevent event):&#160;can_if.cpp']]],
+  ['can_5fempty_5fqueue',['can_empty_queue',['../can_8cpp.html#ab3807ddfc0a7ed992d6578b7cdae1812',1,'can_empty_queue(int fd):&#160;can.cpp'],['../can_8h.html#ab3807ddfc0a7ed992d6578b7cdae1812',1,'can_empty_queue(int fd):&#160;can.cpp']]],
+  ['can_5fhandle_5finterrupt',['can_handle_interrupt',['../can__init_8cpp.html#a677f1175dc4702619c24ccc2b8b964a5',1,'can_init.cpp']]],
   ['can_5finit',['can_init',['../can_8cpp.html#a5ec367b5ae68929b7516c68b6ee8d152',1,'can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn, resmgr_io_funcs_t *pio, IOFUNC_ATTR_T *pattr):&#160;can.cpp'],['../can_8h.html#a5ec367b5ae68929b7516c68b6ee8d152',1,'can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn, resmgr_io_funcs_t *pio, IOFUNC_ATTR_T *pattr):&#160;can.cpp']]],
   ['can_5fread',['can_read',['../can_8cpp.html#ac5896f83efd15e19b8b38e2ff688c7b1',1,'can_read(intptr_t fd, unsigned long *id, char *extended, void *data, BYTE size):&#160;can.cpp'],['../can_8h.html#ac5896f83efd15e19b8b38e2ff688c7b1',1,'can_read(intptr_t fd, unsigned long *id, char *extended, void *data, BYTE size):&#160;can.cpp']]],
   ['can_5fsend',['can_send',['../can_8cpp.html#a73ae80c9c1c9a95cbc65b51310db5aa1',1,'can_send(int fd, j1939_pdu_typ *pdu):&#160;can.cpp'],['../can_8h.html#a73ae80c9c1c9a95cbc65b51310db5aa1',1,'can_send(int fd, j1939_pdu_typ *pdu):&#160;can.cpp']]],
   ['can_5fset_5ffilter',['can_set_filter',['../can_8cpp.html#a2f3488fd7d51e2711caeae9a8e90821f',1,'can_set_filter(int fd, unsigned long id, unsigned long mask):&#160;can.cpp'],['../can_8h.html#a2f3488fd7d51e2711caeae9a8e90821f',1,'can_set_filter(int fd, unsigned long id, unsigned long mask):&#160;can.cpp']]],
-  ['can_5fsetbtr',['CAN_SetBTR',['../sja1000_8cpp.html#a924e99a26ed21ac180e3b5b9ccdecd10',1,'sja1000.cpp']]],
   ['can_5fstopchip',['CAN_StopChip',['../sja1000_8cpp.html#a8a10919c1fb49922e6022f5c0f23c5f5',1,'sja1000.cpp']]],
   ['can_5fwrite',['can_write',['../can_8cpp.html#acf4723c769b649a27e06677f9c94bd2d',1,'can_write(intptr_t fd, unsigned long id, char extended, void *data, BYTE size):&#160;can.cpp'],['../can_8h.html#acf4723c769b649a27e06677f9c94bd2d',1,'can_write(intptr_t fd, unsigned long id, char extended, void *data, BYTE size):&#160;can.cpp']]],
   ['clear_5ferrs',['clear_errs',['../classCANDeviceManager.html#a1bb83de1065d7846b17f56216269bd5d',1,'CANDeviceManager']]],

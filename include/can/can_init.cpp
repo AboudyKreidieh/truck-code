@@ -19,7 +19,28 @@
 #undef DO_TRACE
 
 
-int can_handle_interrupt (message_context_t *ctp, int code, unsigned flags,
+/** Process and respond to interrupt events from the CAN card.
+ *
+ * When pulse is received by the resource manager as a result of the
+ * InterruptAttachEvent in pulse_init the device-specific routine
+ * can_dev->interrupt() is called to reset any interrupt registers, etc.
+ *
+ * Furthermore, any event registered by the client with can_arm is delivered to
+ * the client, who will then do a read to get the data that has been copied into
+ * the message buffer.
+ *
+ * @param ctp
+ * 		dummy variable
+ * @param code
+ * 		dummy variable
+ * @param flags
+ * 		dummy variable
+ * @param ptr
+ * 		pointer to the device attributes object
+ * @return
+ * 		0 for success, or -1 if an error occurs
+ */
+int can_handle_interrupt(message_context_t *ctp, int code, unsigned flags,
 		void *ptr) {
 	int status;
 	int mask_count;
@@ -79,11 +100,8 @@ void pulse_init(dispatch_t *dpp, can_attr_t *pattr) {
 #endif
 	if (pinfo->irq != 0) {
 		pevent = &pattr->hw_event;
-		pulse_attach(dpp, MSG_FLAG_ALLOC_PULSE, 0, can_handle_interrupt, pattr);
-//		if ((pevent->sigev_code = pulse_attach(dpp, MSG_FLAG_ALLOC_PULSE,
-//				0, can_handle_interrupt, pattr)) == ERROR) {
 		if (pulse_attach(dpp, MSG_FLAG_ALLOC_PULSE,
-				0, can_handle_interrupt, pattr) == (intptr_t) ERROR) {
+				0, can_handle_interrupt, pattr) == ERROR) {
 			fprintf(stderr, "Unable to attach irq_handler pulse.\n");
 			exit(EXIT_FAILURE);
 		}

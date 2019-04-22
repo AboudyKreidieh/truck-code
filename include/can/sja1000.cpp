@@ -2,20 +2,12 @@
  *
  * sja1000.cpp
  *
- * can4linux -- LINUX CAN device driver source
- *
- * This file is subject to the terms and conditions of the GNU General Public
- * License.  See the file "COPYING" in the main directory of this archive
- * for more details.
- *
  * @author Abdul Rahman Kreidieh
  * @version 1.0.0
  * @date April 6, 2019
  */
 
 #include "sja1000.h"
-#include "fifo.h"
-#include "delay.h"			/* atomic_read */
 #include "utils/common.h"
 #include "utils/timestamp.h"
 #include <cstring>			/* memcpy */
@@ -82,169 +74,6 @@ canregs_t* regbase = 0;
 //    local_irq_restore(flags);
 //    return 0;
 //}
-
-
-/** Configure bit timing registers directly.
- *
- * Note: Chip must be in bus off state.
- */
-int CAN_SetBTR(int minor, int btr0, int btr1)
-{
-    DBGin();
-    DBGprint(DBG_DATA, ("[%d] btr0=%d, btr1=%d", minor, btr0, btr1));
-
-    /* select mode: Basic or PeliCAN */
-    CANout(minor, canclk, CAN_MODE_PELICAN + CAN_MODE_CLK);
-    CANout(minor, cantim0, (BYTE) (btr0 & 0xff));
-    CANout(minor, cantim1, (BYTE) (btr1 & 0xff));
-    DBGprint(DBG_DATA,("tim0=0x%x tim1=0x%x",
-    		CANin(minor, cantim0), CANin(minor, cantim1)) );
-    DBGout();
-    return 0;
-}
-
-
-/** TODO
- *
- * @param minor
- * 		TODO
- * @return
- * 		0 for success, or -1 if an error occurs
- */
-int CAN_StopChip(int minor) {
-    DBGin();
-    CANset(minor, canmode, CAN_RESET_REQUEST);
-    DBGout();
-    return 0;
-}
-
-
-/* Set value of the output control register.
- *
- * @param minor
- * 		TODO
- * @param arg
- * 		TODO
- * @return
- * 		0 for success, or -1 if an error occurs
- */
-int CAN_SetOMode(int minor, int arg)
-{
-    DBGin();
-	DBGprint(DBG_DATA,("[%d] outc=0x%x", minor, arg));
-	CANout(minor, canoutc, arg);
-
-    DBGout();
-    return 0;
-}
-
-
-/* Set listen-only mode.
- *
- * In listen-only mode, the CAN module is able to receive messages without
- * giving an acknowledgment. Since the module does not influence the CAN bus in
- * this mode the host device is capable of functioning like a monitor or for
- * automatic bit-rate detection.
- *
- * Must be done after CMD_START(CAN_StopChip) and before
- * CMD_START(CAN_StartChip).
- *
- * @param minor
- * 		TODO
- * @param arg
- * 		TODO
- * @return
- * 		0 for success, or -1 if an error occurs
- */
-int CAN_SetListenOnlyMode(int minor, int arg)
-{
-	DBGin();
-	if (arg)
-		CANset(minor, canmode, CAN_LISTEN_ONLY_MODE);
-    else
-    	CANreset(minor, canmode, CAN_LISTEN_ONLY_MODE);
-    DBGout();
-    return 0;
-}
-
-
-
-///*
-//Single CAN frames or the very first Message are copied into the CAN controller
-//using this function. After that an transmission request is set in the
-//CAN controllers command register.
-//After a succesful transmission, an interrupt will be generated,
-//which will be handled in the CAN ISR CAN_Interrupt()
-//*/
-//int CAN_SendMessage (int minor, canmsg_t *tx)
-//{
-//	int i = 0;CAN
-//	int ext;	/* message format to send */
-//	BYTE tx2reg, stat;
-//
-//    DBGin();
-//
-//    while (!(stat=CANin(minor, canstat)) & CAN_TRANSMIT_BUFFER_ACCESS ) {
-//	    #if LINUX_VERSION_CODE >= 131587
-//	    # if LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,0)
-//	    cond_resched();
-//	    # else
-//	    if( current->need_resched ) schedule();
-//	    # endif
-//	    #else
-//	    if( need_resched ) schedule();
-//	    #endif
-//    }
-//
-//    DBGprint(DBG_DATA,("CAN[%d]: tx.flags=%d tx.id=0x%lx tx.length=%d stat=0x%x",
-//		minor, tx->flags, tx->id, tx->length, stat));
-//
-//    tx->length %= 9;			/* limit CAN message length to 8 */
-//    ext = (tx->flags & MSG_EXT);	/* read message format */
-//
-//    /* fill the frame info and identifier fields */
-//    tx2reg = tx->length;
-//    if( tx->flags & MSG_RTR) {
-//	    tx2reg |= CAN_RTR;
-//    }
-//
-//    if(ext) {
-//		DBGprint(DBG_DATA, ("---> send ext message"));
-//		CANout(minor, frameinfo, CAN_EFF + tx2reg);
-//		CANout(minor, frame.extframe.canid1, (BYTE)(tx->id >> 21));
-//		CANout(minor, frame.extframe.canid2, (BYTE)(tx->id >> 13));
-//		CANout(minor, frame.extframe.canid3, (BYTE)(tx->id >> 5));
-//		CANout(minor, frame.extframe.canid4, (BYTE)(tx->id << 3) & 0xff);
-//    } else {
-//		DBGprint(DBG_DATA, ("---> send std message"));
-//		CANout(minor, frameinfo, CAN_SFF + tx2reg);
-//		CANout(minor, frame.stdframe.canid1, (BYTE)((tx->id) >> 3) );
-//		CANout(minor, frame.stdframe.canid2, (BYTE)(tx->id << 5 ) & 0xe0);
-//    }
-//
-//    /* fill data */
-//    if(ext) {
-//		for(i=0; i<tx->length; i++)
-//			CANout( minor, frame.extframe.canxdata[R_OFF * i], tx->data[i]);
-//    } else {
-//		for(i=0; i<tx->length; i++)
-//			CANout(minor, frame.stdframe.candata[R_OFF * i], tx->data[i]);
-//    }
-//
-//    CANout(minor, cancmd, CAN_TRANSMISSION_REQUEST);
-//
-//    /* Save last message that was sent.
-//     *
-//     * Since can4linux 3.5 multiple processes can access one CAN interface. On
-//     * a CAN interrupt this message is copied into the receive queue of each
-//     * process that opened this same CAN interface.
-//     */
-//    memcpy((void *)&last_Tx_object[minor], (void *)tx, sizeof(canmsg_t));
-//
-//    DBGout();
-//    return i;
-//}
-
 
 
 /*
@@ -654,8 +483,6 @@ int CAN_SetListenOnlyMode(int minor, int arg)
 //
 //    /* IRQdone: */
 //    DBGprint(DBG_DATA, (" => leave IRQ[%d]", minor));
-//
-//    board_clear_interrupts(minor);
 //
 //#if LINUX_VERSION_CODE < 0x020500
 //    IRQdone_doneNothing:

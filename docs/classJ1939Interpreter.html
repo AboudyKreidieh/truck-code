@@ -60,7 +60,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classJ1939Interpreter-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">J1939Interpreter Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -106,6 +105,8 @@ Inheritance diagram for J1939Interpreter:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ad658088e0defca9893c0f48c6ced9c64"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#ad658088e0defca9893c0f48c6ced9c64">pgn</a> ()</td></tr>
+<tr class="separator:ad658088e0defca9893c0f48c6ced9c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a364db6379d1c7a4111bb852a4ceacc54"><td class="memItemLeft" align="right" valign="top">virtual void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#a364db6379d1c7a4111bb852a4ceacc54">convert</a> (<a class="el" href="structj1939__pdu__typ.html">j1939_pdu_typ</a> *pdu)=0</td></tr>
 <tr class="separator:a364db6379d1c7a4111bb852a4ceacc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3160bd6a9247925e6f65147c087aefa4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#a3160bd6a9247925e6f65147c087aefa4">is_type</a> (<a class="el" href="structj1939__pdu__typ.html">j1939_pdu_typ</a> *pdu)</td></tr>
@@ -116,11 +117,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acc58e11a90d424a28fa5db9d4df847f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5ee3370ac2451a3344c4005c172b2ef"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#ab5ee3370ac2451a3344c4005c172b2ef">~J1939Interpreter</a> ()=0</td></tr>
 <tr class="separator:ab5ee3370ac2451a3344c4005c172b2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a0423378a32ecacebbb5b44604be352ff"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#a0423378a32ecacebbb5b44604be352ff">pgn</a></td></tr>
-<tr class="separator:a0423378a32ecacebbb5b44604be352ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base interpreter for processing pdu variables into their message-specific format. </p>
@@ -251,6 +247,34 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ad658088e0defca9893c0f48c6ced9c64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad658088e0defca9893c0f48c6ced9c64">&#9670;&nbsp;</a></span>pgn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int J1939Interpreter::pgn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>J1939 PGN number for the data-type </p>
+
+<p>Reimplemented in <a class="el" href="classEIInterpreter.html#aaa453fd8e669d8332b9db0504bb43431">EIInterpreter</a>, <a class="el" href="classGFI2Interpreter.html#ae56a107584f75392eae05ec80a550a4c">GFI2Interpreter</a>, <a class="el" href="classFDInterpreter.html#ac4f1d41360abdfb5918bbe3047f70436">FDInterpreter</a>, <a class="el" href="classHRVDInterpreter.html#a3a8f03b3dd070eebe9f5994b67ec62de">HRVDInterpreter</a>, <a class="el" href="classVEPInterpreter.html#a3aa9a9ac5b8933907b9c7553e20412d2">VEPInterpreter</a>, <a class="el" href="classIECInterpreter.html#a14ec459b48db717165e205165efdecda">IECInterpreter</a>, <a class="el" href="classAMBCInterpreter.html#ae067a28538e19ccd70d1b73e2a049681">AMBCInterpreter</a>, <a class="el" href="classPTOInterpreter.html#ae49cf67a9623d88b7c1dde9e58d8007d">PTOInterpreter</a>, <a class="el" href="classETEMPInterpreter.html#ae16d54f1ecc214331ba695957b7b7947">ETEMPInterpreter</a>, <a class="el" href="classECFGInterpreter.html#aca7713a10fe2e9087e34625db7439b05">ECFGInterpreter</a>, <a class="el" href="classRCFGInterpreter.html#a546b56b03049d59187658656000253db">RCFGInterpreter</a>, <a class="el" href="classVDInterpreter.html#a956ddf4623ef175a1e0a8f0f1265d492">VDInterpreter</a>, <a class="el" href="classTURBOInterpreter.html#aeaa324e7e6248884bbe52a664f629132">TURBOInterpreter</a>, <a class="el" href="classRFInterpreter.html#ab281e607bcc5e726f878fb65b7513a5f">RFInterpreter</a>, <a class="el" href="classLFEInterpreter.html#adf23da3bde68e1d80ebea5de1e7254fd">LFEInterpreter</a>, <a class="el" href="classCCVSInterpreter.html#aef347ef7eed91f1f5ff92c1861def177">CCVSInterpreter</a>, <a class="el" href="classTFInterpreter.html#acc894fc76bf54fc97e2915bd3cb911b6">TFInterpreter</a>, <a class="el" href="classERC1Interpreter.html#a96ef7f3dfee189195974edae8bf5df3a">ERC1Interpreter</a>, <a class="el" href="classETC2Interpreter.html#a1bc47d5c5c4449827dd0563cc6a9af8a">ETC2Interpreter</a>, <a class="el" href="classETC1Interpreter.html#a681e177b90c61c1b5a119fe9ff418e0d">ETC1Interpreter</a>, <a class="el" href="classEEC3Interpreter.html#adb8ab110f75c5c717e8700eb411f1025">EEC3Interpreter</a>, <a class="el" href="classEEC2Interpreter.html#aaba1fcc42d99e1973b11584171ccca52">EEC2Interpreter</a>, <a class="el" href="classEEC1Interpreter.html#a9e078b12b9ff2786560c36c04246b81a">EEC1Interpreter</a>, <a class="el" href="classEBC2Interpreter.html#ae925e9ce30570094a473169631882cb5">EBC2Interpreter</a>, <a class="el" href="classEBC1Interpreter.html#a128fdc519f49e047f36a9fb767ec05b4">EBC1Interpreter</a>, <a class="el" href="classTSC1Interpreter.html#a602ce50727d37396864e6de19277473c">TSC1Interpreter</a>, and <a class="el" href="classPDUInterpreter.html#ae1e65dd9ca43262878cd99f9bfb14ff0">PDUInterpreter</a>.</p>
+
+</div>
+</div>
 <a id="a84b9768d4ca1102af4799c20d7295094"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a84b9768d4ca1102af4799c20d7295094">&#9670;&nbsp;</a></span>print()</h2>
 
@@ -301,22 +325,6 @@ Public Attributes</h2></td></tr>
 </dl>
 
 <p>Implemented in <a class="el" href="classEIInterpreter.html#a5484559f0839c763231130000d3c5449">EIInterpreter</a>, <a class="el" href="classGFI2Interpreter.html#a3bb5be98005fcf84b262eb4c3f5fbfbe">GFI2Interpreter</a>, <a class="el" href="classFDInterpreter.html#add8111d9effc66bfec071ff8b747cc83">FDInterpreter</a>, <a class="el" href="classHRVDInterpreter.html#a590d6596bc167c4d8c1baede4ae9369c">HRVDInterpreter</a>, <a class="el" href="classVEPInterpreter.html#a37ad6b1495793ee211f4c247bcedf906">VEPInterpreter</a>, <a class="el" href="classIECInterpreter.html#a075e227e96ec5682d7e10f0714648e3b">IECInterpreter</a>, <a class="el" href="classAMBCInterpreter.html#add50c69814540808588f5999f6c9088f">AMBCInterpreter</a>, <a class="el" href="classPTOInterpreter.html#a7ddc272778f9857c6d9d2aa5b437b126">PTOInterpreter</a>, <a class="el" href="classETEMPInterpreter.html#ae98b4d6d41b1a69dfa636da1834cfa7b">ETEMPInterpreter</a>, <a class="el" href="classECFGInterpreter.html#a5b284b7f0de7eacf401ca97410e6f087">ECFGInterpreter</a>, <a class="el" href="classRCFGInterpreter.html#a14cfbf9700d5088436eb8f687adebbfb">RCFGInterpreter</a>, <a class="el" href="classVDInterpreter.html#acac04d298372979bc7793464d8dd1d6f">VDInterpreter</a>, <a class="el" href="classTURBOInterpreter.html#a41752ec15e20c6691e0364f6ae5287d2">TURBOInterpreter</a>, <a class="el" href="classTC1Interpreter.html#ad493f4f185ba6d6c40eebda9f82f8b5f">TC1Interpreter</a>, <a class="el" href="classRFInterpreter.html#a47600c08400cbbaca97508bdc4577eba">RFInterpreter</a>, <a class="el" href="classLFEInterpreter.html#a145973e8e6e6fffb2ea52839575896eb">LFEInterpreter</a>, <a class="el" href="classCCVSInterpreter.html#a982a82326ef407a89986a930207fe1e6">CCVSInterpreter</a>, <a class="el" href="classTFInterpreter.html#ab433a7452fc77954e336238b8f67d171">TFInterpreter</a>, <a class="el" href="classERC1Interpreter.html#a3a196796231a52096e5f50d0ea525439">ERC1Interpreter</a>, <a class="el" href="classETC2Interpreter.html#a0c12db18545e2c187b5fb3410bf2673b">ETC2Interpreter</a>, <a class="el" href="classETC1Interpreter.html#a4a1de288e1b876ed6260c1e3724bd2aa">ETC1Interpreter</a>, <a class="el" href="classEEC3Interpreter.html#a3df82bac15e860a22d71b6503df2937e">EEC3Interpreter</a>, <a class="el" href="classEEC2Interpreter.html#a1197699f27576b4a1f99bb031b0b7a3a">EEC2Interpreter</a>, <a class="el" href="classEEC1Interpreter.html#af0a369846bbd62a0eaa9c39027b59e89">EEC1Interpreter</a>, <a class="el" href="classEBC2Interpreter.html#a2c1359b1d7a291b7afb112dbc0781222">EBC2Interpreter</a>, <a class="el" href="classEBC1Interpreter.html#af3cb595b3167afafab2458d46270d10e">EBC1Interpreter</a>, <a class="el" href="classTSC1Interpreter.html#a19e9ef45b879859bb4e2353c3d0f063f">TSC1Interpreter</a>, and <a class="el" href="classPDUInterpreter.html#a2d00b23afeb00860d2a8635898e33ea9">PDUInterpreter</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a0423378a32ecacebbb5b44604be352ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0423378a32ecacebbb5b44604be352ff">&#9670;&nbsp;</a></span>pgn</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int J1939Interpreter::pgn</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>J1939 PGN number for the data-type </p>
 
 </div>
 </div>

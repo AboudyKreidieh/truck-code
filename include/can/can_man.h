@@ -70,8 +70,7 @@ typedef struct {
 
 
 /** State information about CAN device manager */
-typedef struct
-{
+typedef struct {
 	int port;           		/**< Base address of adapter */
 	int	irq;            		/**< Interrupt request line. */
 	int	use_extended_frame;		/**< 1 yes, 0 no */
@@ -83,11 +82,11 @@ typedef struct
 
 /** struct returned to client by can_get_errs and can_clear_errs devctl */
 typedef struct {
-	unsigned int shadow_buffer_count;		/**< TODO */
-	unsigned int intr_in_handler_count;		/**< TODO */
-	unsigned int rx_interrupt_count;		/**< TODO */
-	unsigned int rx_message_lost_count;		/**< TODO */
-	unsigned int tx_interrupt_count;		/**< TODO */
+	unsigned int shadow_buffer_count;	/**< TODO */
+	unsigned int intr_in_handler_count;	/**< TODO */
+	unsigned int rx_interrupt_count;	/**< Rx interrupt count for the CAN card. */
+	unsigned int rx_message_lost_count;	/**< Number of Rx message overrun errors. */
+	unsigned int tx_interrupt_count;	/**< Tx interrupt count for the CAN card. */
 } can_err_count_t;
 
 
@@ -109,26 +108,51 @@ typedef struct
 /* -------------------------------------------------------------------------- */
 
 
-/* DAS-style initialization file constant, which may be used for the digital I/O
- * on the SSV CAN card. */
+/** Path to the default configuration file.
+ *
+ * This is used when initializing the CAN connection. A typical configuration
+ * file is text, and might contain lines like:
+ *
+ *	[first_section_name] 	\n
+ *	MoreData=TRUE 			\n
+ *	AnotherVariable=1.2345 	\n\n
+ *
+ *	[windows_section] 		\n
+ *	ScreenSaveActive=1 		\n
+ *	DoubleClickSpeed=452 	\n\n
+ *
+ *	[last_section]			\n
+ *	MoreData=FALSE
+ */
+#define DEFAULT_CONFIG	 "realtime.ini"
 
-#define DEFAULT_CONFIG	 "realtime.ini"	/**< TODO */
-#define DEFAULT_DEVICE	 "/dev/can1"	/**< directory of the CAN device */
-#define INI_IRQ_ENTRY	 "Irq"			/**< TODO */
-#define INI_PORT_ENTRY	 "Port"			/**< TODO */
-#define INI_EXT_ENTRY	 "Ext"			/**< TODO */
-#define DEFAULT_IRQ		 0				/**< default Interrupt Request Line. */
-										/**< By default, set to no interrupt. */
-#define DEFAULT_PORT	 0x210			/**< TODO */
-#define DEFAULT_PRIORITY 19				/**< TODO */
-#define DEFAULT_QSIZE	 150			/**< TODO */
+/** Directory of the CAN device connection. */
+#define DEFAULT_DEVICE	 "/dev/can1"
 
+/** TODO */
+#define INI_IRQ_ENTRY	 "Irq"
+
+/** TODO */
+#define INI_PORT_ENTRY	 "Port"
+
+/** TODO */
+#define INI_EXT_ENTRY	 "Ext"
+
+/** Default Interrupt Request Line. By default, set to no interrupt. */
+#define DEFAULT_IRQ		 0
+
+/** Default address of the CAN adapter. */
+#define DEFAULT_PORT	 0x210
+
+/** Default size of the buffers for the input and output buffers, stored under
+ * attr.in_buff and attr.out_buff, respectively. */
+#define DEFAULT_QSIZE	 150
 
 
 /** CAN Device Manager class.
  *
  * This object is responsible for initializing and interacting with the CAN
- * card. TODO: method the register and SJA1000.
+ * card. CAN messages are received through the SJA1000 chip, a blank.
  */
 class CANDeviceManager
 {
@@ -161,7 +185,6 @@ public:
 	virtual void init(unsigned int base_address, unsigned int bit_speed,
 			BYTE extended_frame);
 
-
 	/** Interrupt Request, ISR
 	 *
 	 * Called by can_handle_interrupt.
@@ -171,36 +194,49 @@ public:
 	 * @param out_buff
 	 * 		circular buffer for the output messages
 	 * @param filter
-	 * 		TODO
+	 * 		used to set filtering of CAN messages
 	 * @return
 	 * 		1 if the CAN received the interrupt, 0 otherwise
 	 */
 	virtual int interrupt(CircularBuffer *in_buff, CircularBuffer *out_buff,
 			can_filter_t filter);
 
-
 	/** Send a message to the bus.
 	 *
-	 * Gets the message from the front of the transmit queue and puts it on the
-	 * CAN bus.
+	 * Single CAN frames or the very first Message are copied into the CAN
+	 * controller using this function. After that an transmission request is set
+	 * in the CAN controllers command register. After a successful transmission,
+	 *  an interrupt will be generated, which will be handled in the CAN ISR
+	 *  CAN_Interrupt().
 	 *
 	 * @param pattr
 	 * 		pointer to information per device manager
 	 */
 	virtual void send(CircularBuffer *out_buff);
 
-
-	/** TODO
+	/** Read the latest element in the buffer.
+	 *
+	 * This will also remove the element from the buffer.
 	 *
 	 * @param in_buff
 	 * 		circular buffer for the input messages
 	 * @return
-	 * 		TODO
+	 * 		the front-most message.
 	 */
 	virtual can_msg_t read(CircularBuffer *in_buff);
 
-
-	/** TODO
+	/** Write a new message to the CAN card.
+	 *
+	 * This method is responsible for performing the following tasks.
+	 *
+	 * - If a new message is provided, it is written to and stored in the
+	 * 	 provided output buffer, tHen promptly sent to the CAN card.
+	 * - If no message was sent to the CAN card within the past second (with
+	 * 	 the assumption that we are sending heartbeat messages at the frequency
+	 * 	 of 1 Hz), the can_timeout_count attribute is incremented.
+	 * - If the buffer has got more than 10 messages stored, the messages are
+	 * 	 flushed from the system and the number of removed messages is added to
+	 * 	 the tx_buffer_flush attribute.
 	 *
 	 * @param out_buff
 	 * 		circular buffer that stores output messages
@@ -211,25 +247,6 @@ public:
 	 */
 	virtual int write(CircularBuffer *out_buff, can_msg_t *pmsg);
 
-
-	/** Arm the CAN device manager.
-	 *
-	 * Attach the hardware interrupt, and save the event to be used to notify
-	 * the client in the ocb structure.
-	 *
-	 * @param ctp
-	 * 		TODO
-	 * @param io_ocb
-	 * 		Open control block (usually embeded within file system ocb)
-	 * @param event
-	 * 		TODO
-	 * @return
-	 * 		0 for success, or -1 if an error occurs
-	 */
-//	virtual int arm(resmgr_context_t *ctp, iofunc_ocb_t *io_ocb,
-//			sigevent event);
-
-
 	/** Clear the error counts and return the old counts.
 	 *
 	 * @return
@@ -237,10 +254,8 @@ public:
 	 */
 	virtual can_err_count_t clear_errs();
 
-
 	/** Return the current error count. */
 	virtual can_err_count_t get_errs();
-
 
 	/** Send a new message after notification of transmission of old one.
 	 *
@@ -249,26 +264,24 @@ public:
 	 */
 	virtual void tx_process_interrupt(CircularBuffer *out_buff);
 
-
 	/** Read message from chip and queue for the resource manager.
 	 *
-	 * @param TODO
-	 * @param TODO
+	 * @param in_buff
+	 * 		circular buffer for the input messages
+	 * @param filter
+	 * 		used to set filtering of CAN messages
 	 */
 	virtual void rx_process_interrupt(CircularBuffer *in_buff,
 			can_filter_t filter);
-
 
 	/** Virtual destructor. */
 	virtual ~CANDeviceManager();
 
 private:
-	int _baud[MAX_CHANNELS]					= { 0x0 };	/**< TODO */
+	/** bit speed of the different channels */
+	int _baud[MAX_CHANNELS]					= { 0x0 };
 	unsigned int _acc_code[MAX_CHANNELS]	= { 0x0 };	/**< TODO */
 	unsigned int _acc_mask[MAX_CHANNELS]	= { 0x0 };	/**< TODO */
-	int _outc[MAX_CHANNELS]    				= { 0x0 };	/**< TODO */
-	int _tx_err[MAX_CHANNELS]   			= { 0x0 };	/**< TODO */
-	int _rx_err[MAX_CHANNELS]   			= { 0x0 };	/**< TODO */
 
 	/** Last time a CAN message was sent. */
 	time_t _last_time_can_sent;
@@ -281,10 +294,31 @@ private:
 	 * CANout macros to access registers. */
 	canregs_t *_base_addr;
 
-	/** TODO
+	/** Start board.
 	 *
+	 * This performs the following procedure:
+	 *
+	 * - TODO
+	 *
+	 * @param minor
+	 * 		index of the current device within the channels
+	 * @return
+	 * 		0 for success, or -1 if an error occurs
 	 */
 	virtual int _start_chip(int minor);
+
+	/** Stop board.
+	 *
+	 * This performs the following procedure:
+	 *
+	 * - TODO
+	 *
+	 * @param minor
+	 * 		index of the current device within the channels
+	 * @return
+	 * 		0 for success, or -1 if an error occurs
+	 */
+	int _stop_chip(int minor);
 
 
 	/** Reset board.
@@ -299,28 +333,67 @@ private:
 	 * 5. Set acceptance mask
 	 *
 	 * @param minor
-	 * 		TODO
+	 * 		index of the current device within the channels
 	 * @return
 	 * 		0 for success, or -1 if an error occurs
 	 */
 	virtual int _reset_chip(int minor);
-
 
 	/** Configure bit timing.
 	 *
 	 * Note: Chip must be in bus off state.
 	 *
 	 * @param minor
-	 * 		TODO
+	 * 		index of the current device within the channels
 	 * @param baud
 	 * 		CAN baud rate
 	 * @return
-	 * 		TODO
+	 * 		0 for success, or -1 if an error occurs
 	 */
 	virtual int _set_timing(int minor, int baud);
 
-
+	/** TODO
+	 *
+	 * @param minor
+	 * 		index of the current device within the channels
+	 * @param code
+	 * 		TODO
+	 * @param mask
+	 * 		TODO
+	 * @return
+	 * 		0 for success, or -1 if an error occurs
+	 */
 	virtual int _set_mask(int minor, unsigned int code, unsigned int mask);
+
+	/* Set value of the output control register.
+	 *
+	 * @param minor
+	 * 		index of the current device within the channels
+	 * @param arg
+	 * 		value to set the output control register to
+	 * @return
+	 * 		0 for success, or -1 if an error occurs
+	 */
+	int _set_omode(int minor, int arg);
+
+	/* Set listen-only mode.
+	 *
+	 * In listen-only mode, the CAN module is able to receive messages without
+	 * giving an acknowledgment. Since the module does not influence the CAN bus
+	 * in this mode the host device is capable of functioning like a monitor or
+	 * for automatic bit-rate detection.
+	 *
+	 * Must be done after CMD_START(CAN_StopChip) and before
+	 * CMD_START(CAN_StartChip).
+	 *
+	 * @param minor
+	 * 		index of the current device within the channels
+	 * @param arg
+	 * 		if 1 the canmode variable is set, otherwise it is reset
+	 * @return
+	 * 		0 for success, or -1 if an error occurs
+	 */
+	int _set_listen_only_mode(int minor, int arg);
 };
 
 
@@ -366,11 +439,12 @@ typedef struct
  * client in the ocb structure.
  *
  * @param ctp
- * 		TODOIOFUNC_
+ * 		A pointer to a resmgr_context_t structure that the resource-manager
+ * 		library uses to pass context information between functions.
  * @param io_ocb
  * 		Open control block (usually embedded within file system ocb)
  * @param event
- * 		TODO
+ * 		CAN signal event structure, used to receive and process pulses
  * @return
  * 		0 for success, or -1 if an error occurs
  */
@@ -379,54 +453,17 @@ extern int can_dev_arm(resmgr_context_t *ctp, iofunc_ocb_t *io_ocb,
 
 
 /* -------------------------------------------------------------------------- */
-/* ----------------------- Implemented in can_dev.cpp ----------------------- */
-/* -------------------------------------------------------------------------- */
-
-
-/** Interrupt Request, ISR
- *
- * Called by can_handle_interrupt.
- *
- * @param pattr
- * 		pointer to information per device manager
- * @return
- * 		1 if the CAN received the interrupt, 0 otherwise
- */
-extern int can_dev_interrupt(IOFUNC_ATTR_T *pattr);
-
-
-/* -------------------------------------------------------------------------- */
 /* ---------------------- Implemented in can_init.cpp ----------------------- */
 /* -------------------------------------------------------------------------- */
 
 
-/** TODO
- *
- * When pulse is received by the resource manager as a result of the
- * InterruptAttachEvent in pulse_init the device-specific routine
- * can_dev_interrupt is called to reset any interrupt registers, etc.
- *
- * Furthermore, any event registered by the client with can_arm is delivered to
- * the client, who will then do a read to get the data that has been copied into
- * the message buffer.
- *
- * @param ptr
- * 		TODO
- * @return
- * 		TODO
- */
-extern int can_handle_interrupt(void *ptr);
-//extern int can_handle_interrupt(message_context_t *ctp, int code,
-//	unsigned flags, void *ptr);
-
-
-/** Attach pulses and interrupt event.
+/** Attach pulses and interrupt events.
  *
  * Attach pulse to be sent by interrupt handler to event that will connected to
- * the interrupt by InterruptAttachEvent in can_dev_arm.
+ * the interrupt by InterruptAttachEvent in can_dev->arm.
  *
  * @param dpp
- * 		TODO
+ *		The dispatch handle, as returned by dispatch_create().
  * @param pattr
  * 		pointer to information per device manager
  */
@@ -438,15 +475,57 @@ extern void pulse_init(dispatch_t *dpp, IOFUNC_ATTR_T *pattr);
 /* -------------------------------------------------------------------------- */
 
 
-/** TODO
+/** Handler for _IO_DEVCTL CAN messages.
  *
+ * This is used to initialize resource manager function tables with CAN specific
+ * function for devctl. It is responsible for handling the DCMD_* functionality.
+ *
+ * @param ctp
+ * 		A pointer to a resmgr_context_t structure that the resource-manager
+ * 		library uses to pass context information between functions.
+ * @param msg
+ * 		A pointer to the io_open_t structure that contains the message that the
+ * 		resource manager received. For more information, see the documentation
+ * 		for iofunc_open().
+ * @param io_ocb
+ * 		A pointer to the iofunc_ocb_t structure for the Open Control Block that
+ * 		was created when the client opened the resource.
+ * @return
+ * 		EOK - Successful completion. \n
+ * 		EINVAL - An attempt to set the flags for a resource that is
+ * 		synchronized, with no mount structure defined, or no synchronized I/O
+ * 		defined. \n
+ * 		ENOTTY - An unsupported device control message was decoded.
  */
 extern int io_devctl(resmgr_context_t *ctp, io_devctl_t *msg,
-	RESMGR_OCB_T *io_ocb);
+		RESMGR_OCB_T *io_ocb);
 
 
-/** TODO
+/** Handler for _IO_CONNECT of CAN messages.
  *
+ * This is used to initialize resource manager function tables with CAN specific
+ * function for open().
+ *
+ * @param ctp
+ * 		A pointer to a resmgr_context_t structure that the resource-manager
+ * 		library uses to pass context information between functions.
+ * @param msg
+ * 		A pointer to the io_open_t structure that contains the message that the
+ * 		resource manager received. For more information, see the documentation
+ * 		for iofunc_open().
+ * @param handle
+ *		A pointer to the iofunc_attr_t structure that defines the
+ *		characteristics of the device that the resource manager is controlling.
+ * @param extra
+ * 		Extra information from the library. If you're calling
+ * 		iofunc_open_default() from a resource manager's open() function (see
+ * 		resmgr_connect_funcs_t), simply pass the extra argument that's passed to
+ * 		open().
+ * @return
+ * 		EOK - Successful completion. \n
+ * 		ENOSPC - There's insufficient memory to allocate the OCB.\n
+ * 		ENOMEM - There's insufficient memory to allocate an internal data
+ * 		structure required by resmgr_open_bind().
  */
 extern int io_open(resmgr_context_t *ctp, io_open_t *msg,
 	RESMGR_HANDLE_T *handle, void *extra);

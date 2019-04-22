@@ -60,7 +60,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classHRVDInterpreter-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">HRVDInterpreter Class Reference</div>  </div>
@@ -87,6 +86,8 @@ Collaboration diagram for HRVDInterpreter:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a3a8f03b3dd070eebe9f5994b67ec62de"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHRVDInterpreter.html#a3a8f03b3dd070eebe9f5994b67ec62de">pgn</a> ()</td></tr>
+<tr class="separator:a3a8f03b3dd070eebe9f5994b67ec62de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5616bbac2c716dec6f5be36d5389feb"><td class="memItemLeft" align="right" valign="top">virtual void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHRVDInterpreter.html#ae5616bbac2c716dec6f5be36d5389feb">convert</a> (<a class="el" href="structj1939__pdu__typ.html">j1939_pdu_typ</a> *pdu)</td></tr>
 <tr class="separator:ae5616bbac2c716dec6f5be36d5389feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a590d6596bc167c4d8c1baede4ae9369c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHRVDInterpreter.html#a590d6596bc167c4d8c1baede4ae9369c">print</a> (void *pdv, FILE *fp, bool numeric)</td></tr>
@@ -98,15 +99,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3160bd6a9247925e6f65147c087aefa4 inherit pub_methods_classJ1939Interpreter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5ee3370ac2451a3344c4005c172b2ef inherit pub_methods_classJ1939Interpreter"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#ab5ee3370ac2451a3344c4005c172b2ef">~J1939Interpreter</a> ()=0</td></tr>
 <tr class="separator:ab5ee3370ac2451a3344c4005c172b2ef inherit pub_methods_classJ1939Interpreter"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ae00b36636a2dec517f3e651a2136b783"><td class="memItemLeft" align="right" valign="top"><a id="ae00b36636a2dec517f3e651a2136b783"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pgn</b> = <a class="el" href="j1939__utils_8h.html#a52a28851541c60725550f4bdd66e430c">HRVD</a></td></tr>
-<tr class="separator:ae00b36636a2dec517f3e651a2136b783"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_attribs_classJ1939Interpreter"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classJ1939Interpreter')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classJ1939Interpreter.html">J1939Interpreter</a></td></tr>
-<tr class="memitem:a0423378a32ecacebbb5b44604be352ff inherit pub_attribs_classJ1939Interpreter"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJ1939Interpreter.html#a0423378a32ecacebbb5b44604be352ff">pgn</a></td></tr>
-<tr class="separator:a0423378a32ecacebbb5b44604be352ff inherit pub_attribs_classJ1939Interpreter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>PDU HRVD (High Resolution Vehicle Distance) doc. in J1939 - 71, p170 </p>
@@ -181,6 +173,34 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pgn</b> = <a class="el
 <dl class="section return"><dt>Returns</dt><dd>the data-specific format of the message </dd></dl>
 
 <p>Implements <a class="el" href="classJ1939Interpreter.html#acc58e11a90d424a28fa5db9d4df847f4">J1939Interpreter</a>.</p>
+
+</div>
+</div>
+<a id="a3a8f03b3dd070eebe9f5994b67ec62de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a8f03b3dd070eebe9f5994b67ec62de">&#9670;&nbsp;</a></span>pgn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int HRVDInterpreter::pgn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>J1939 PGN number for the data-type </p>
+
+<p>Reimplemented from <a class="el" href="classJ1939Interpreter.html#ad658088e0defca9893c0f48c6ced9c64">J1939Interpreter</a>.</p>
 
 </div>
 </div>

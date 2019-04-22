@@ -21,6 +21,7 @@ var searchData=
   ['alternator_5fpotential',['alternator_potential',['../structj1939__vep__typ.html#a9e8b4f90a0cea1672ad6de460a04d055',1,'j1939_vep_typ']]],
   ['ambient_5fair_5ftemp',['ambient_air_temp',['../structj1939__ambc__typ.html#aebd6394e48b137729297497e6a4624e7',1,'j1939_ambc_typ']]],
   ['antilock_5fbrk_5factive',['antilock_brk_active',['../structj1939__ebc1__typ.html#a7178ea1e60fc818055011825b0a8b93b',1,'j1939_ebc1_typ']]],
+  ['arbitrationlost',['arbitrationlost',['../structcanregs.html#aab98bba64420304e1fc1c9d379905f16',1,'canregs::arbitrationlost()'],['../sja1000_8h.html#acaef7699de493df042e013ea56d5aaf9',1,'arbitrationlost():&#160;sja1000.h']]],
   ['asr_5fbrk_5fctrl_5factive',['asr_brk_ctrl_active',['../structj1939__ebc1__typ.html#ad2085c866709f060e582749b409f0830',1,'j1939_ebc1_typ']]],
   ['asr_5fengine_5fctrl_5factive',['asr_engine_ctrl_active',['../structj1939__ebc1__typ.html#a6bd9fbfa3d9f2f735941d0104affce34',1,'j1939_ebc1_typ']]],
   ['asr_5fhillholder_5fswitch',['asr_hillholder_switch',['../structj1939__ebc1__typ.html#acad26ca107655a72afb857274c49b0b7',1,'j1939_ebc1_typ']]],

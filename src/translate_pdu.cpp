@@ -7,9 +7,10 @@
  * file.
  *
  * Arguments:
- * 	-v: verbose
- *  -n: numeric
- *  -o: outfile path
+ *
+ * - -v: verbose
+ * - -n: numeric
+ * - -o: outfile path
  *
  * Usage:
  *  translate_pdu "~/j1939_brake.dbg" -o "~/parsed.txt"

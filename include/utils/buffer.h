@@ -27,7 +27,7 @@ public:
 	 * program. sizeof(the_type_name) is used for the item_size parameter. The
 	 * most recent max_data items will be saved.
 	 *
-	 * @parma max_data
+	 * @param max_data
 	 * 		maximum number of elements that can be stored in the buffer
 	 * @param item_size
 	 * 		size of a single element in data_array
@@ -77,7 +77,7 @@ public:
 	void *pop_first();
 
 	/** Return the number of elements in the buffer. */
-	virtual int get_count();
+	int get_count();
 
 private:
 	void *_data_array;  /**< data elements */

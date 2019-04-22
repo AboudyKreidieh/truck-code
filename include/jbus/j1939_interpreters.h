@@ -40,7 +40,7 @@ class J1939Interpreter
 {
 public:
 	/** J1939 PGN number for the data-type */
-	int pgn;
+	virtual int pgn();
 
 	/** Convert a message from its pdu format to its data-specific format.
 	 *
@@ -91,7 +91,7 @@ public:
 class PDUInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = PDU;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -107,7 +107,7 @@ public:
 class TSC1Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = TSC1;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -118,7 +118,7 @@ public:
 class EBC1Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = EBC1;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -129,7 +129,7 @@ public:
 class EBC2Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = EBC2;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -145,7 +145,7 @@ public:
 class EEC1Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = EEC1;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -156,7 +156,7 @@ public:
 class EEC2Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = EEC2;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -167,7 +167,7 @@ public:
 class EEC3Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = EEC3;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -178,7 +178,7 @@ public:
 class ETC1Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = ETC1;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -189,7 +189,7 @@ public:
 class ETC2Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = ETC2;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -200,7 +200,7 @@ public:
 class ERC1Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = ERC1;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -211,7 +211,7 @@ public:
 class TFInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = TF;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -222,7 +222,7 @@ public:
 class CCVSInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = CCVS;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -233,7 +233,7 @@ public:
 class LFEInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = LFE;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -249,7 +249,7 @@ public:
 class RFInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = RF;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -278,7 +278,7 @@ public:
 class TURBOInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = TURBO;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -289,7 +289,7 @@ public:
 class VDInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = VD;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -300,7 +300,7 @@ public:
 class RCFGInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = RCFG;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -324,7 +324,7 @@ public:
 class ECFGInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = ECFG;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -335,7 +335,7 @@ public:
 class ETEMPInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = ETEMP;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -346,7 +346,7 @@ public:
 class PTOInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = PTO;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -357,7 +357,7 @@ public:
 class AMBCInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = AMBC;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -368,7 +368,7 @@ public:
 class IECInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = IEC;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -379,7 +379,7 @@ public:
 class VEPInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = VEP;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -390,7 +390,7 @@ public:
 class HRVDInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = HRVD;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -401,7 +401,7 @@ public:
 class FDInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = FD;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -412,7 +412,7 @@ public:
 class GFI2Interpreter : public J1939Interpreter
 {
 public:
-	int pgn = GFI2;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);
@@ -423,7 +423,7 @@ public:
 class EIInterpreter : public J1939Interpreter
 {
 public:
-	int pgn = EI;
+	virtual int pgn();
 	virtual void *convert(j1939_pdu_typ *pdu);
 	virtual void print(void *pdv, FILE *fp, bool numeric);
     virtual void *import(vector<string> &tokens);

@@ -1,7 +1,6 @@
 <map id="include/can/sja1000.cpp" name="include/can/sja1000.cpp">
-<area shape="rect" id="node2" href="$sja1000_8h.html" title="sja1000.h" alt="" coords="234,155,313,181"/>
-<area shape="rect" id="node4" href="$common_8h.html" title="utils/common.h" alt="" coords="103,229,214,256"/>
-<area shape="rect" id="node7" href="$timestamp_8h.html" title="utils/timestamp.h" alt="" coords="325,304,448,331"/>
-<area shape="rect" id="node10" href="$delay_8h.html" title="delay.h" alt="" coords="340,229,404,256"/>
-<area shape="rect" id="node11" href="$fifo_8h.html" title="fifo.h" alt="" coords="293,80,344,107"/>
+<area shape="rect" id="node2" href="$sja1000_8h.html" title="sja1000.h" alt="" coords="259,80,338,107"/>
+<area shape="rect" id="node4" href="$common_8h.html" title="utils/common.h" alt="" coords="103,155,214,181"/>
+<area shape="rect" id="node7" href="$timestamp_8h.html" title="utils/timestamp.h" alt="" coords="325,229,448,256"/>
+<area shape="rect" id="node10" href="$delay_8h.html" title="delay.h" alt="" coords="340,155,404,181"/>
 </map>

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['second',['second',['../structtimestamp__t.html#aa6025b3e242325df114c3ead7534c886',1,'timestamp_t']]],
   ['selection_5fnonengine',['selection_nonengine',['../structj1939__erc1__typ.html#a71bfc1c381f49eefb9996604ad691318',1,'j1939_erc1_typ']]],
   ['send',['send',['../classCANDeviceManager.html#af635d363cf9f59e44c0abd2f2d06c9e6',1,'CANDeviceManager']]],
   ['set_5fextended_5fframe',['SET_EXTENDED_FRAME',['../can__man_8h.html#a42754008439dd8ec5fb0c05e2b1b7b2a',1,'can_man.h']]],
@@ -19,6 +20,7 @@ var searchData=
   ['src_5faddress',['src_address',['../structj1939__pdu__typ.html#aa9051bad72702eb9f8f4dc6bbd453ce2',1,'j1939_pdu_typ::src_address()'],['../structj1939__tsc1__typ.html#aa62e7a9467f46afb268873d543ce3aa3',1,'j1939_tsc1_typ::src_address()'],['../structj1939__eec1__typ.html#ac95a15a23bbd6f31358cb6ff692ab5a5',1,'j1939_eec1_typ::src_address()']]],
   ['src_5faddress_5fctrl',['src_address_ctrl',['../structj1939__ebc1__typ.html#ac47de4be5139fd3c0e0d33b09e109464',1,'j1939_ebc1_typ::src_address_ctrl()'],['../structj1939__erc1__typ.html#a7d567d08d0961ac8a62d47f6a028ce18',1,'j1939_erc1_typ::src_address_ctrl()'],['../structj1939__etc1__typ.html#ada01bdde500a3ee8d3df8f3c4d8c72d8',1,'j1939_etc1_typ::src_address_ctrl()']]],
   ['status',['status',['../structCanStatusPar.html#a5437c550bfe94d7047c52987be8e86de',1,'CanStatusPar']]],
+  ['stdframe',['stdframe',['../unionframe.html#a12e96341816b6aa0dcd84f6b49bcc013',1,'frame']]],
   ['steering_5fwheel_5fangle',['steering_wheel_angle',['../structj1939__vdc2__typ.html#ae5b54f639a85ec910f3c339848ae81c3',1,'j1939_vdc2_typ']]],
   ['steering_5fwheel_5fturn_5fctr',['steering_wheel_turn_ctr',['../structj1939__vdc2__typ.html#ae0bbd45b1fbb24ea1b60ac89ee8b9d87',1,'j1939_vdc2_typ']]],
   ['sys_2ecpp',['sys.cpp',['../sys_8cpp.html',1,'']]],

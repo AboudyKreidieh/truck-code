@@ -96,10 +96,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <map name="include_2can_2can__man_8hdep" id="include_2can_2can__man_8hdep">
 <area shape="rect" id="node2" href="can_8cpp.html" title="include/can/can.cpp" alt="" coords="5,80,144,107"/>
 <area shape="rect" id="node3" href="can__dev_8cpp.html" title="include/can/can_dev.cpp" alt="" coords="169,80,335,107"/>
-<area shape="rect" id="node4" href="can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="360,80,523,107"/>
-<area shape="rect" id="node5" href="io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="547,80,706,107"/>
-<area shape="rect" id="node6" href="jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="731,80,875,107"/>
-<area shape="rect" id="node7" href="can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="899,80,1021,107"/>
+<area shape="rect" id="node4" href="can__if_8cpp.html" title="include/can/can_if.cpp" alt="" coords="360,80,512,107"/>
+<area shape="rect" id="node5" href="can__init_8cpp.html" title="include/can/can_init.cpp" alt="" coords="536,80,699,107"/>
+<area shape="rect" id="node6" href="io__func_8cpp.html" title="include/can/io_func.cpp" alt="" coords="723,80,882,107"/>
+<area shape="rect" id="node7" href="jbus_8cpp.html" title="include/jbus/jbus.cpp" alt="" coords="907,80,1051,107"/>
+<area shape="rect" id="node8" href="can__man_8cpp.html" title="src/can_man.cpp" alt="" coords="1075,80,1197,107"/>
 </map>
 </div>
 </div>
@@ -158,8 +159,6 @@ Macros</h2></td></tr>
 <tr class="separator:adc217aa3600fd4951714ff89457fd5b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16b710f592bf8f7900666392adc444dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can__man_8h.html#a16b710f592bf8f7900666392adc444dc">DEFAULT_PORT</a>&#160;&#160;&#160;0x210</td></tr>
 <tr class="separator:a16b710f592bf8f7900666392adc444dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0756f011ef667460d583017366823244"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can__man_8h.html#a0756f011ef667460d583017366823244">DEFAULT_PRIORITY</a>&#160;&#160;&#160;19</td></tr>
-<tr class="separator:a0756f011ef667460d583017366823244"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7acc79111952127f7f77472bd9bf616"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can__man_8h.html#ab7acc79111952127f7f77472bd9bf616">DEFAULT_QSIZE</a>&#160;&#160;&#160;150</td></tr>
 <tr class="separator:ab7acc79111952127f7f77472bd9bf616"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e27b02e6c9bad2660f986c7d6e0be92"><td class="memItemLeft" align="right" valign="top"><a id="a6e27b02e6c9bad2660f986c7d6e0be92"></a>
@@ -173,10 +172,6 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:af4574ef405a3afb2bbfb48cb4d0ee977"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can__man_8h.html#af4574ef405a3afb2bbfb48cb4d0ee977">can_dev_arm</a> (resmgr_context_t *ctp, iofunc_ocb_t *io_ocb, sigevent event)</td></tr>
 <tr class="separator:af4574ef405a3afb2bbfb48cb4d0ee977"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade81f8e1dae82c2c03aa24bada525cb4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can__man_8h.html#ade81f8e1dae82c2c03aa24bada525cb4">can_dev_interrupt</a> (IOFUNC_ATTR_T *pattr)</td></tr>
-<tr class="separator:ade81f8e1dae82c2c03aa24bada525cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cef35f37c0e53e83ced4d0f7f63385d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can__man_8h.html#a5cef35f37c0e53e83ced4d0f7f63385d">can_handle_interrupt</a> (void *ptr)</td></tr>
-<tr class="separator:a5cef35f37c0e53e83ced4d0f7f63385d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ac4df56bc1b09e3e7689fa0c7a54024"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can__man_8h.html#a8ac4df56bc1b09e3e7689fa0c7a54024">pulse_init</a> (dispatch_t *dpp, IOFUNC_ATTR_T *pattr)</td></tr>
 <tr class="separator:a8ac4df56bc1b09e3e7689fa0c7a54024"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3690619e31479296393c76f00007240"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="can__man_8h.html#ae3690619e31479296393c76f00007240">io_devctl</a> (resmgr_context_t *ctp, io_devctl_t *msg, RESMGR_OCB_T *io_ocb)</td></tr>
@@ -221,7 +216,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>Path to the default configuration file.</p>
+<p>This is used when initializing the CAN connection. A typical configuration file is text, and might contain lines like:</p>
+<p>[first_section_name] <br />
+ MoreData=TRUE <br />
+ AnotherVariable=1.2345 <br />
+<br />
+ [windows_section] <br />
+ ScreenSaveActive=1 <br />
+ DoubleClickSpeed=452 <br />
+<br />
+ [last_section] <br />
+ MoreData=FALSE </p>
 
 </div>
 </div>
@@ -236,7 +242,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>directory of the CAN device </p>
+<p>Directory of the CAN device connection. </p>
 
 </div>
 </div>
@@ -251,7 +257,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>default Interrupt Request Line. By default, set to no interrupt. </p>
+<p>Default Interrupt Request Line. By default, set to no interrupt. </p>
 
 </div>
 </div>
@@ -266,22 +272,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
-
-</div>
-</div>
-<a id="a0756f011ef667460d583017366823244"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0756f011ef667460d583017366823244">&#9670;&nbsp;</a></span>DEFAULT_PRIORITY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEFAULT_PRIORITY&#160;&#160;&#160;19</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TODO </p>
+<p>Default address of the CAN adapter. </p>
 
 </div>
 </div>
@@ -296,7 +287,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>Default size of the buffers for the input and output buffers, stored under attr.in_buff and attr.out_buff, respectively. </p>
 
 </div>
 </div>
@@ -529,68 +520,13 @@ Functions</h2></td></tr>
 <p>Attach the hardware interrupt, and save the event to be used to notify the client in the ocb structure.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctp</td><td>TODOIOFUNC_ </td></tr>
+    <tr><td class="paramname">ctp</td><td>A pointer to a resmgr_context_t structure that the resource-manager library uses to pass context information between functions. </td></tr>
     <tr><td class="paramname">io_ocb</td><td>Open control block (usually embedded within file system ocb) </td></tr>
-    <tr><td class="paramname">event</td><td>TODO </td></tr>
+    <tr><td class="paramname">event</td><td>CAN signal event structure, used to receive and process pulses </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 for success, or -1 if an error occurs </dd></dl>
-
-</div>
-</div>
-<a id="ade81f8e1dae82c2c03aa24bada525cb4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade81f8e1dae82c2c03aa24bada525cb4">&#9670;&nbsp;</a></span>can_dev_interrupt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int can_dev_interrupt </td>
-          <td>(</td>
-          <td class="paramtype">IOFUNC_ATTR_T *&#160;</td>
-          <td class="paramname"><em>pattr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Interrupt Request, ISR</p>
-<p>Called by can_handle_interrupt.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pattr</td><td>pointer to information per device manager </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if the CAN received the interrupt, 0 otherwise </dd></dl>
-
-</div>
-</div>
-<a id="a5cef35f37c0e53e83ced4d0f7f63385d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cef35f37c0e53e83ced4d0f7f63385d">&#9670;&nbsp;</a></span>can_handle_interrupt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int can_handle_interrupt </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>ptr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TODO</p>
-<p>When pulse is received by the resource manager as a result of the InterruptAttachEvent in pulse_init the device-specific routine can_dev_interrupt is called to reset any interrupt registers, etc.</p>
-<p>Furthermore, any event registered by the client with can_arm is delivered to the client, who will then do a read to get the data that has been copied into the message buffer.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ptr</td><td>TODO </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>TODO </dd></dl>
 
 </div>
 </div>
@@ -625,7 +561,19 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>Handler for _IO_DEVCTL CAN messages.</p>
+<p>This is used to initialize resource manager function tables with CAN specific function for devctl. It is responsible for handling the DCMD_* functionality.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctp</td><td>A pointer to a resmgr_context_t structure that the resource-manager library uses to pass context information between functions. </td></tr>
+    <tr><td class="paramname">msg</td><td>A pointer to the io_open_t structure that contains the message that the resource manager received. For more information, see the documentation for iofunc_open(). </td></tr>
+    <tr><td class="paramname">io_ocb</td><td>A pointer to the iofunc_ocb_t structure for the Open Control Block that was created when the client opened the resource. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EOK - Successful completion. <br />
+ EINVAL - An attempt to set the flags for a resource that is synchronized, with no mount structure defined, or no synchronized I/O defined. <br />
+ ENOTTY - An unsupported device control message was decoded. </dd></dl>
 
 </div>
 </div>
@@ -666,7 +614,20 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TODO </p>
+<p>Handler for _IO_CONNECT of CAN messages.</p>
+<p>This is used to initialize resource manager function tables with CAN specific function for open().</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctp</td><td>A pointer to a resmgr_context_t structure that the resource-manager library uses to pass context information between functions. </td></tr>
+    <tr><td class="paramname">msg</td><td>A pointer to the io_open_t structure that contains the message that the resource manager received. For more information, see the documentation for iofunc_open(). </td></tr>
+    <tr><td class="paramname">handle</td><td>A pointer to the iofunc_attr_t structure that defines the characteristics of the device that the resource manager is controlling. </td></tr>
+    <tr><td class="paramname">extra</td><td>Extra information from the library. If you're calling iofunc_open_default() from a resource manager's open() function (see resmgr_connect_funcs_t), simply pass the extra argument that's passed to open(). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EOK - Successful completion. <br />
+ ENOSPC - There's insufficient memory to allocate the OCB.<br />
+ ENOMEM - There's insufficient memory to allocate an internal data structure required by resmgr_open_bind(). </dd></dl>
 
 </div>
 </div>
@@ -695,11 +656,11 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Attach pulses and interrupt event.</p>
-<p>Attach pulse to be sent by interrupt handler to event that will connected to the interrupt by InterruptAttachEvent in can_dev_arm.</p>
+<p>Attach pulses and interrupt events.</p>
+<p>Attach pulse to be sent by interrupt handler to event that will connected to the interrupt by InterruptAttachEvent in can_dev-&gt;arm.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dpp</td><td>TODO </td></tr>
+    <tr><td class="paramname">dpp</td><td>The dispatch handle, as returned by dispatch_create(). </td></tr>
     <tr><td class="paramname">pattr</td><td>pointer to information per device manager </td></tr>
   </table>
   </dd>

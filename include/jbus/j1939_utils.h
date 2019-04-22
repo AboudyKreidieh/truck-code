@@ -47,7 +47,7 @@
 #define EEC3	0xfedf	/**< (254, 223) electronic engine controller 3 */
 #define VD		0xfee0	/**< (254, 224) vehicle distance */
 #define RCFG	0xfee1	/**< (254, 225) retarder configuration */
-#define TCFG	0xfee2	/**< (254, 226) transmission configuration */			// TODO: add?
+#define TCFG	0xfee2	/**< (254, 226) transmission configuration */
 #define ECFG	0xfee3	/**< (254, 227) engine configuration */
 #define ETEMP	0xfeee	/**< (254, 238) engine temperature */
 #define PTO		0xfef0	/**< (254, 240) power takeoff */

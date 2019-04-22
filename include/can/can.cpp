@@ -32,10 +32,8 @@ void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
 {
 	int opt;
 	// These are set to 1 if specified by command line arguments
-	int arg_speed = 0;
 	int arg_port = 0;
 	int arg_irq = 0;
-	int arg_ext = 0;
 
 	char *pconfig;
 	FILE *pfile;
@@ -58,7 +56,6 @@ void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
 		switch (opt) {
 		case 'e':
 			pinfo->use_extended_frame = atoi(optarg);
-			arg_ext = 1;
 			break;
 		case 'f':
 			pconfig = strdup(optarg);
@@ -78,7 +75,6 @@ void can_init(int argc, char *argv[], resmgr_connect_funcs_t *pconn,
 		case 's':
 			pinfo->bit_speed = atoi(optarg);
 			printf("Bit speed set to %d\n", pinfo->bit_speed);
-			arg_speed = 1;
 			break;
 		case 'v':
 			pattr->verbose_flag = true;

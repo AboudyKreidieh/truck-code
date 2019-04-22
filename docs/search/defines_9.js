@@ -1,7 +1,6 @@
 var searchData=
 [
   ['iec',['IEC',['../j1939__utils_8h.html#a48a7ea952e9256f47a3ef76089bc8afe',1,'j1939_utils.h']]],
-  ['iminor',['iminor',['../sja1000_8h.html#a02ad96935d544940647f116ad47c1aa4',1,'sja1000.h']]],
   ['ini_5fext_5fentry',['INI_EXT_ENTRY',['../can__man_8h.html#a8ba79186989242c0ced99e4ca9b4fd7f',1,'can_man.h']]],
   ['ini_5firq_5fentry',['INI_IRQ_ENTRY',['../can__man_8h.html#ab7a2cc1c83a7f52299a6ab03f8d17f20',1,'can_man.h']]],
   ['ini_5fport_5fentry',['INI_PORT_ENTRY',['../can__man_8h.html#a25392e53ca8132874cdacbc7ae4e4270',1,'can_man.h']]],

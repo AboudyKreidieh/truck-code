@@ -20,9 +20,13 @@
 using namespace std;
 
 
+int J1939Interpreter::pgn() {
+	return 0;
+}
+
 bool J1939Interpreter::is_type(j1939_pdu_typ *pdu) {
 	int target_pgn = TWOBYTES(pdu->pdu_format, pdu->pdu_specific);
-    return (target_pgn == pgn);
+    return (target_pgn == this->pgn());
 }
 
 J1939Interpreter::~J1939Interpreter() {}
@@ -31,6 +35,11 @@ J1939Interpreter::~J1939Interpreter() {}
 /* -------------------------------------------------------------------------- */
 /* ----------------------- In case not interpretable ------------------------ */
 /* -------------------------------------------------------------------------- */
+
+
+int PDUInterpreter::pgn() {
+	return PDU;
+}
 
 
 void *PDUInterpreter::convert(j1939_pdu_typ *pdu) {
@@ -86,6 +95,11 @@ void *PDUInterpreter::import(vector<string> &tokens) {
 /* -------------------------------------------------------------------------- */
 /* ------------------------ Received from the brake ------------------------- */
 /* -------------------------------------------------------------------------- */
+
+
+int TSC1Interpreter::pgn() {
+	return TSC1;
+}
 
 
 void *TSC1Interpreter::convert(j1939_pdu_typ *pdu) {
@@ -150,6 +164,11 @@ void *TSC1Interpreter::import(vector<string> &tokens) {
 	tsc1->req_trq_lim = stof(tokens[8]);
 
 	return (void*) tsc1;
+}
+
+
+int EBC1Interpreter::pgn() {
+	return EBC1;
 }
 
 
@@ -280,6 +299,11 @@ void *EBC1Interpreter::import(vector<string> &tokens) {
 }
 
 
+int EBC2Interpreter::pgn() {
+	return EBC2;
+}
+
+
 void *EBC2Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ebc2_typ *ebc2 = new j1939_ebc2_typ();
 	ebc2->timestamp = pdu->timestamp;
@@ -343,6 +367,11 @@ void *EBC2Interpreter::import(vector<string> &tokens) {
 	ebc2->rel_spd_rear_right_2 = stof(tokens[8]);
 
 	return (void*) ebc2;
+}
+
+
+int EEC1Interpreter::pgn() {
+	return EEC1;
 }
 
 
@@ -413,6 +442,11 @@ void *EEC1Interpreter::import(vector<string> &tokens) {
 	}
 
 	return (void*) eec1;
+}
+
+
+int EEC2Interpreter::pgn() {
+	return EEC2;
 }
 
 
@@ -491,6 +525,11 @@ void *EEC2Interpreter::import(vector<string> &tokens) {
 }
 
 
+int EEC3Interpreter::pgn() {
+	return EEC3;
+}
+
+
 void *EEC3Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_eec3_typ *eec3 = new j1939_eec3_typ();
 	eec3->timestamp = pdu->timestamp;
@@ -553,6 +592,11 @@ void *EEC3Interpreter::import(vector<string> &tokens) {
 	}
 
 	return (void*) eec3;
+}
+
+
+int ERC1Interpreter::pgn() {
+	return ERC1;
 }
 
 
@@ -649,6 +693,11 @@ void *ERC1Interpreter::import(vector<string> &tokens) {
 }
 
 
+int ETC1Interpreter::pgn() {
+	return ETC1;
+}
+
+
 void* ETC1Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_etc1_typ *etc1 = new j1939_etc1_typ();
 	etc1->timestamp = pdu->timestamp;
@@ -727,6 +776,11 @@ void *ETC1Interpreter::import(vector<string> &tokens) {
 }
 
 
+int ETC2Interpreter::pgn() {
+	return ETC2;
+}
+
+
 void *ETC2Interpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_etc2_typ *etc2 = new j1939_etc2_typ();
 	etc2->timestamp = pdu->timestamp;
@@ -779,6 +833,11 @@ void *ETC2Interpreter::import(vector<string> &tokens) {
 }
 
 
+int TURBOInterpreter::pgn() {
+	return TURBO;
+}
+
+
 void *TURBOInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_turbo_typ *turbo = new j1939_turbo_typ();
 	turbo->timestamp = pdu->timestamp;
@@ -817,6 +876,11 @@ void *TURBOInterpreter::import(vector<string> &tokens) {
 	turbo->turbo_speed = stof(tokens[3]);
 
 	return (void*) turbo;
+}
+
+
+int VDInterpreter::pgn() {
+	return VD;
 }
 
 
@@ -863,6 +927,11 @@ void *VDInterpreter::import(vector<string> &tokens) {
 	vd->tot_vehicle_dist = stof(tokens[3]);
 
 	return (void*) vd;
+}
+
+
+int RCFGInterpreter::pgn() {
+	return RCFG;
 }
 
 
@@ -981,6 +1050,11 @@ void *RCFGInterpreter::import(vector<string> &tokens) {
 //void TCFG_interpreter::publish(void *pdv) {
 //
 //}
+
+
+int ECFGInterpreter::pgn() {
+	return ECFG;
+}
 
 
 void *ECFGInterpreter::convert(j1939_pdu_typ *pdu) {
@@ -1107,6 +1181,11 @@ void *ECFGInterpreter::import(vector<string> &tokens) {
 }
 
 
+int ETEMPInterpreter::pgn() {
+	return ETEMP;
+}
+
+
 void *ETEMPInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_etemp_typ *etemp = new j1939_etemp_typ();
 	etemp->timestamp = pdu->timestamp;
@@ -1172,6 +1251,11 @@ void *ETEMPInterpreter::import(vector<string> &tokens) {
 	etemp->eng_intercooler_thermostat_opening = stof(tokens[7]);
 
 	return (void*) etemp;
+}
+
+
+int PTOInterpreter::pgn() {
+	return PTO;
 }
 
 
@@ -1253,6 +1337,11 @@ void *PTOInterpreter::import(vector<string> &tokens) {
 	pto->set_switch = stoi(tokens[11]);
 
 	return (void*) pto;
+}
+
+
+int CCVSInterpreter::pgn() {
+	return CCVS;
 }
 
 
@@ -1405,6 +1494,11 @@ void *CCVSInterpreter::import(vector<string> &tokens) {
 }
 
 
+int LFEInterpreter::pgn() {
+	return LFE;
+}
+
+
 void *LFEInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_lfe_typ *lfe = new j1939_lfe_typ();
 	lfe->timestamp = pdu->timestamp;
@@ -1476,6 +1570,10 @@ void *LFEInterpreter::import(vector<string> &tokens) {
 }
 
 
+int AMBCInterpreter::pgn() {
+	return AMBC;
+}
+
 void *AMBCInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ambc_typ *ambc = new j1939_ambc_typ();
 	ambc->timestamp = pdu->timestamp;
@@ -1532,6 +1630,11 @@ void *AMBCInterpreter::import(vector<string> &tokens) {
 	ambc->road_surface_temp = stof(tokens[6]);
 
 	return (void*) ambc;
+}
+
+
+int IECInterpreter::pgn() {
+	return IEC;
 }
 
 
@@ -1602,6 +1705,11 @@ void *IECInterpreter::import(vector<string> &tokens) {
 }
 
 
+int VEPInterpreter::pgn() {
+	return VEP;
+}
+
+
 void *VEPInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_vep_typ *vep = new j1939_vep_typ();
 	vep->timestamp = pdu->timestamp;
@@ -1660,6 +1768,11 @@ void *VEPInterpreter::import(vector<string> &tokens) {
 }
 
 
+int TFInterpreter::pgn() {
+	return TF;
+}
+
+
 void *TFInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_tf_typ *tf = new j1939_tf_typ();
 	tf->timestamp = pdu->timestamp;
@@ -1714,6 +1827,11 @@ void *TFInterpreter::import(vector<string> &tokens) {
 }
 
 
+int RFInterpreter::pgn() {
+	return RF;
+}
+
+
 void *RFInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_rf_typ *rf = new j1939_rf_typ();
 	rf->timestamp = pdu->timestamp;
@@ -1748,6 +1866,11 @@ void *RFInterpreter::import(vector<string> &tokens) {
 	rf->oil_temp = stof(tokens[3]);
 
 	return (void*) rf;
+}
+
+
+int HRVDInterpreter::pgn() {
+	return HRVD;
 }
 
 
@@ -1796,6 +1919,11 @@ void *HRVDInterpreter::import(vector<string> &tokens) {
 }
 
 
+int FDInterpreter::pgn() {
+	return FD;
+}
+
+
 void *FDInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_fd_typ *fd = new j1939_fd_typ();
 	fd->timestamp = pdu->timestamp;
@@ -1830,6 +1958,11 @@ void *FDInterpreter::import(vector<string> &tokens) {
 	fd->fan_drive_state = stoi(tokens[3]);
 
 	return (void*) fd;
+}
+
+
+int GFI2Interpreter::pgn() {
+	return GFI2;
 }
 
 
@@ -1884,6 +2017,10 @@ void *GFI2Interpreter::import(vector<string> &tokens) {
 	return (void*) gfi2;
 }
 
+
+int EIInterpreter::pgn() {
+	return EI;
+}
 
 void *EIInterpreter::convert(j1939_pdu_typ *pdu) {
 	j1939_ei_typ *ei = new j1939_ei_typ();
@@ -1951,8 +2088,6 @@ map<int, J1939Interpreter*> get_interpreters() {
     map<int, J1939Interpreter*> interpreters;
     interpreters.insert(make_pair(PDU, new PDUInterpreter()));
     interpreters.insert(make_pair(TSC1, new TSC1Interpreter()));
-    interpreters.insert(make_pair(EXAC, new PDUInterpreter()));  				// FIXME(ak): EXAC? -- replace with XBR
-    interpreters.insert(make_pair(RQST, new PDUInterpreter()));  				// FIXME(ak): RQST?
     interpreters.insert(make_pair(ERC1, new ERC1Interpreter()));
     interpreters.insert(make_pair(EBC1, new EBC1Interpreter()));
     interpreters.insert(make_pair(EBC2, new EBC2Interpreter()));
@@ -1968,7 +2103,6 @@ map<int, J1939Interpreter*> get_interpreters() {
     interpreters.insert(make_pair(TURBO, new TURBOInterpreter()));
     interpreters.insert(make_pair(VD, new VDInterpreter()));
     interpreters.insert(make_pair(RCFG, new RCFGInterpreter()));
-    interpreters.insert(make_pair(TCFG, new PDUInterpreter()));					// FIXME(ak): TCFG?
     interpreters.insert(make_pair(ECFG, new ECFGInterpreter()));
     interpreters.insert(make_pair(ETEMP, new ETEMPInterpreter()));
     interpreters.insert(make_pair(PTO, new PTOInterpreter()));

@@ -1,7 +1,6 @@
-/*
- * can_if.cpp
+/**\file
  *
- * Interface to the CAN hardware functions provided by SSV
+ * can_if.cpp
  *
  * @author Abdul Rahman Kreidieh
  * @version 1.0.0

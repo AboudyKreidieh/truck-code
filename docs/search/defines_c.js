@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['max_5fbufsize',['MAX_BUFSIZE',['../fifo_8h.html#aae9eefec1f87c331ec28c13d146c9e16',1,'fifo.h']]],
   ['max_5fline_5flen',['MAX_LINE_LEN',['../common_8h.html#a09a3b394b8602092d58347b791158062',1,'common.h']]],
   ['max_5fmsg_5fbuf',['MAX_MSG_BUF',['../can__man_8h.html#a82929be40b928366482f296dda7acdc0',1,'can_man.h']]],
   ['msg_5factive',['MSG_ACTIVE',['../sja1000_8h.html#ac11ebfcf790b69f177cec8686afaae1e',1,'sja1000.h']]],
