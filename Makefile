@@ -4,6 +4,7 @@ all:
 	+ make -C include/utils
 	+ make -C include/can
 	+ make -C include/jbus
+	+ make -C include/logger
 	+ make -C include/vision
 	+ make -C src/
 #	+ make -C tests/

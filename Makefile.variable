@@ -1,0 +1,31 @@
+# This file contains variables that are common across all makefiles.
+#
+# In order to include into a new Makefile, type at the top of the new Makefile:
+#
+#     include </path/to/truck-code>/Makefile.variable
+#
+# where the path needs to be modified to match your current path.
+
+# Location of the base directory
+#BASE_DIR = $(shell pwd)
+
+# Build architecture/variant string, possible values: x86, x86_64, armv7le, etc...
+PLATFORM = x86_64
+
+# Build profile, possible values: release, debug, profile, coverage
+BUILD_PROFILE ?= debug
+
+# Generic compiler flags (which include build type flags)
+CCFLAGS_all += -Wall -fmessage-length=0
+CCFLAGS_all += $(CCFLAGS_$(BUILD_PROFILE))
+DEPS = -Wp,-MMD,$(@:%.o=%.d),-MT,$@
+
+# Additions to library variables
+LIBS += -lpps -lstdc++
+
+# Compiler definitions
+CC = qcc -Vgcc_nto$(PLATFORM)
+CXX = qcc -lang-c++ -Vgcc_nto$(PLATFORM)
+
+# Linker
+LD = QCC -lang-c++ -V5.4.0,gcc_nto$(PLATFORM)_cxx
