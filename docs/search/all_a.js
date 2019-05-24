@@ -42,7 +42,6 @@ var searchData=
   ['j1939_5fvolvo_5fxbr_5ftyp',['j1939_volvo_xbr_typ',['../structj1939__volvo__xbr__typ.html',1,'']]],
   ['j1939_5fvolvo_5fxbr_5fwarn_5ftyp',['j1939_volvo_xbr_warn_typ',['../structj1939__volvo__xbr__warn__typ.html',1,'']]],
   ['j1939interpreter',['J1939Interpreter',['../classJ1939Interpreter.html',1,'']]],
-  ['j1939stb_5fserial_5fdevice_5fname',['J1939STB_SERIAL_DEVICE_NAME',['../j1939__utils_8h.html#aed0a397fe6503fb2b972e5134bf9613d',1,'j1939_utils.h']]],
   ['jbus',['JBus',['../classJBus.html',1,'']]],
   ['jbus_2ecpp',['jbus.cpp',['../jbus_8cpp.html',1,'']]],
   ['jbus_2eh',['jbus.h',['../jbus_8h.html',1,'']]],

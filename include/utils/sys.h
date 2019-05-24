@@ -6,10 +6,11 @@
  * @version 1.0.0
  * @date February 21, 2019
  */
-#include <stdio.h>
 
 #ifndef INCLUDE_UTILS_SYS_H_
 #define INCLUDE_UTILS_SYS_H_
+
+#include <stdio.h>
 
 
 /** Check whether a give string is all spaces.

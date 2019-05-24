@@ -71,7 +71,6 @@ var searchData=
   ['can_5fsff',['CAN_SFF',['../sja1000_8h.html#a499e198855d613c9e1d296465e1df09c',1,'sja1000.h']]],
   ['can_5fsff_5fmask',['CAN_SFF_MASK',['../sja1000_8h.html#afe4fc3f9cab58aeeb463861289e8ce93',1,'sja1000.h']]],
   ['can_5fsleep_5fmode',['CAN_SLEEP_MODE',['../sja1000_8h.html#aad39a01209226e315f2780000b90c410',1,'sja1000.h']]],
-  ['can_5fstopchip',['CAN_StopChip',['../sja1000_8cpp.html#a8a10919c1fb49922e6022f5c0f23c5f5',1,'sja1000.cpp']]],
   ['can_5ftim0_5f1000k',['CAN_TIM0_1000K',['../sja1000_8h.html#a8961990c4a5509ab56ac961a0d214b2f',1,'sja1000.h']]],
   ['can_5ftim0_5f100k',['CAN_TIM0_100K',['../sja1000_8h.html#a5557285bb1b7a55b52b2d42eb9f046ed',1,'sja1000.h']]],
   ['can_5ftim0_5f10k',['CAN_TIM0_10K',['../sja1000_8h.html#ad89b53bb5148bb97e664727dc4196fd6',1,'sja1000.h']]],

@@ -62,14 +62,11 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">sja1000.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="sja1000_8h_source.html">sja1000.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="delay_8h_source.html">delay.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="common_8h_source.html">utils/common.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="timestamp_8h_source.html">utils/timestamp.h</a>&quot;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
@@ -78,61 +75,18 @@ Include dependency graph for sja1000.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="sja1000_8cpp__incl.png" border="0" usemap="#include_2can_2sja1000_8cpp" alt=""/></div>
 <map name="include_2can_2sja1000_8cpp" id="include_2can_2sja1000_8cpp">
-<area shape="rect" id="node2" href="sja1000_8h.html" title="sja1000.h" alt="" coords="259,80,338,107"/>
-<area shape="rect" id="node4" href="common_8h.html" title="utils/common.h" alt="" coords="103,155,214,181"/>
-<area shape="rect" id="node7" href="timestamp_8h.html" title="utils/timestamp.h" alt="" coords="325,229,448,256"/>
-<area shape="rect" id="node10" href="delay_8h.html" title="delay.h" alt="" coords="340,155,404,181"/>
+<area shape="rect" id="node2" href="sja1000_8h.html" title="sja1000.h" alt="" coords="281,80,359,107"/>
+<area shape="rect" id="node4" href="common_8h.html" title="utils/common.h" alt="" coords="102,155,213,181"/>
+<area shape="rect" id="node7" href="timestamp_8h.html" title="utils/timestamp.h" alt="" coords="328,229,451,256"/>
+<area shape="rect" id="node10" href="delay_8h.html" title="delay.h" alt="" coords="288,155,352,181"/>
 </map>
 </div>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a8a10919c1fb49922e6022f5c0f23c5f5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sja1000_8cpp.html#a8a10919c1fb49922e6022f5c0f23c5f5">CAN_StopChip</a> (int minor)</td></tr>
-<tr class="separator:a8a10919c1fb49922e6022f5c0f23c5f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a700c86cebb79bac999e188720ae5f05a"><td class="memItemLeft" align="right" valign="top"><a id="a700c86cebb79bac999e188720ae5f05a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_SetOMode</b> (int minor, int arg)</td></tr>
-<tr class="separator:a700c86cebb79bac999e188720ae5f05a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a586eca4d87b33b60c8c4a0865116d132"><td class="memItemLeft" align="right" valign="top"><a id="a586eca4d87b33b60c8c4a0865116d132"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_SetListenOnlyMode</b> (int minor, int arg)</td></tr>
-<tr class="separator:a586eca4d87b33b60c8c4a0865116d132"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="sja1000_8cpp.html">sja1000.cpp</a></p>
-<p>can4linux &ndash; LINUX CAN device driver source</p>
-<p>This file is subject to the terms and conditions of the GNU General Public License. See the file "COPYING" in the main directory of this archive for more details.</p>
 <dl class="section author"><dt>Author</dt><dd>Abdul Rahman Kreidieh </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>April 6, 2019 </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a8a10919c1fb49922e6022f5c0f23c5f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a10919c1fb49922e6022f5c0f23c5f5">&#9670;&nbsp;</a></span>CAN_StopChip()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int CAN_StopChip </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minor</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Read back as many status information as possible</p>
-<p>Because the CAN protocol itself describes different kind of information already, and the driver has some generic information (e.g about it's buffers) we can define a more or less hardware independent format.</p>
-<p>exception: ERROR WARNING LIMIT REGISTER (EWLR) The SJA1000 defines a EWLR, reaching this Error Warning Level an Error Warning interrupt can be generated. The default value (after hardware reset) is 96. In reset mode this register appears to the CPU as a read/write memory. In operating mode it is read only. Note, that a content change of the EWLR is only possible, if the reset mode was entered previously. An error status change (see status register; Table 14) and an error warning interrupt forced by the new register content will not occur until the reset mode is cancelled again. TODO</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">minor</td><td>TODO </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 for success, or -1 if an error occurs </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

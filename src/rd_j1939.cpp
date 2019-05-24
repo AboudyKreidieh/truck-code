@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 	long num_received = 0;	/* number of messages successfully received */
 	int j1939_debug = 0;	/* whether to print during the receive process */
 	j1939_pdu_typ *pdu = new j1939_pdu_typ();	/* placeholder for messages */
-	char *fname = J1939STB_SERIAL_DEVICE_NAME;	/* path to serial port */
+	char *fname = "/dev/ser1";					/* path to serial port */
 
     /* Collect initial variables for interpreting J1939 messages. */
     map <int, J1939Interpreter*> interpreters = get_interpreters();

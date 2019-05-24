@@ -82,11 +82,11 @@ typedef struct {
 
 /** struct returned to client by can_get_errs and can_clear_errs devctl */
 typedef struct {
-	unsigned int shadow_buffer_count;	/**< TODO */
-	unsigned int intr_in_handler_count;	/**< TODO */
-	unsigned int rx_interrupt_count;	/**< Rx interrupt count for the CAN card. */
-	unsigned int rx_message_lost_count;	/**< Number of Rx message overrun errors. */
-	unsigned int tx_interrupt_count;	/**< Tx interrupt count for the CAN card. */
+	unsigned int shadow_buffer_count;   /**< TODO */
+	unsigned int intr_in_handler_count; /**< TODO */
+	unsigned int rx_interrupt_count;    /**< Rx interrupt count for the CAN card. */
+	unsigned int rx_message_lost_count; /**< Number of Rx message overrun errors. */
+	unsigned int tx_interrupt_count;    /**< Tx interrupt count for the CAN card. */
 } can_err_count_t;
 
 
@@ -97,9 +97,9 @@ typedef struct {
  */
 typedef struct
 {
-	iofunc_ocb_t io_ocb;	/**< TODO */
+	iofunc_ocb_t io_ocb;    /**< TODO */
 	int rcvid;              /**< Used to notify client. */
-    sigevent clt_event;  	/**< Used to notify client, from client */
+    sigevent clt_event;     /**< Used to notify client, from client */
 } can_ocb_t;
 
 

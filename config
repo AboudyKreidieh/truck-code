@@ -793,6 +793,7 @@ WARN_LOGFILE           =
 INPUT                  = include/can \
                          include/control \
                          include/jbus \
+                         include/logger \
                          include/utils \
 						 include/vision \
 						 src

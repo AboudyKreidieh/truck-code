@@ -9,7 +9,7 @@ var searchData=
   ['ini_5fext_5fentry',['INI_EXT_ENTRY',['../can__man_8h.html#a8ba79186989242c0ced99e4ca9b4fd7f',1,'can_man.h']]],
   ['ini_5firq_5fentry',['INI_IRQ_ENTRY',['../can__man_8h.html#ab7a2cc1c83a7f52299a6ab03f8d17f20',1,'can_man.h']]],
   ['ini_5fport_5fentry',['INI_PORT_ENTRY',['../can__man_8h.html#a25392e53ca8132874cdacbc7ae4e4270',1,'can_man.h']]],
-  ['init',['init',['../classCANDeviceManager.html#a7eda7cff7c8000f52a4164b264f1beb5',1,'CANDeviceManager::init()'],['../classJBus.html#a1279e1eeb40076ad0e410cdd4456599b',1,'JBus::init()'],['../classCircularBuffer.html#a88b4775daf134e9989af4c18f911bf6d',1,'CircularBuffer::init()']]],
+  ['init',['init',['../classCANDeviceManager.html#a7eda7cff7c8000f52a4164b264f1beb5',1,'CANDeviceManager::init()'],['../classJBus.html#a1279e1eeb40076ad0e410cdd4456599b',1,'JBus::init()'],['../classDBManager.html#a8f224f762fd42cf4ddae35dbd203c141',1,'DBManager::init()'],['../classCircularBuffer.html#a88b4775daf134e9989af4c18f911bf6d',1,'CircularBuffer::init()']]],
   ['inode',['inode',['../structinode.html',1,'']]],
   ['inst_5festimated_5fbrake_5fpower',['inst_estimated_brake_power',['../structj1939__ei__typ.html#ad2a135cab53680fb7e326f96ba341bba',1,'j1939_ei_typ']]],
   ['intake_5fmanifold_5ftemp',['intake_manifold_temp',['../structj1939__iec__typ.html#ac6d69284aea7329a9df2bb6b137d9b99',1,'j1939_iec_typ']]],

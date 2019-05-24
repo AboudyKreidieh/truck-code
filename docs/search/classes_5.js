@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['gfi2interpreter',['GFI2Interpreter',['../classGFI2Interpreter.html',1,'']]]
+  ['fdinterpreter',['FDInterpreter',['../classFDInterpreter.html',1,'']]],
+  ['file',['file',['../structfile.html',1,'']]],
+  ['frame',['frame',['../unionframe.html',1,'']]]
 ];
