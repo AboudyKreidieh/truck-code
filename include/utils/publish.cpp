@@ -17,7 +17,69 @@
 PubSub::~PubSub() {}
 
 
-void PubSub::publish_pdu(j1939_pdu_typ *pdu) {
+void PubSub::publish(int type, void *message) {
+	switch(type) {
+		case PDU   : this->_publish_pdu(message);
+				 	 break;
+		case TSC1  : this->_publish_tsc1(message);
+					 break;
+		case EBC1  : this->_publish_ebc1(message);
+					 break;
+		case EBC2  : this->_publish_ebc2(message);
+					 break;
+		case EEC1  : this->_publish_eec1(message);
+					 break;
+		case EEC2  : this->_publish_eec2(message);
+					 break;
+		case EEC3  : this->_publish_eec3(message);
+					 break;
+		case ERC1  : this->_publish_erc1(message);
+					 break;
+		case ETC1  : this->_publish_etc1(message);
+					 break;
+		case ETC2  : this->_publish_etc2(message);
+					 break;
+		case TURBO : this->_publish_turbo(message);
+					 break;
+		case VD    : this->_publish_vd(message);
+					 break;
+		case RCFG  : this->_publish_rcfg(message);
+					 break;
+		case ECFG  : this->_publish_ecfg(message);
+					 break;
+		case ETEMP : this->_publish_etemp(message);
+					 break;
+		case PTO   : this->_publish_pto(message);
+					 break;
+		case CCVS  : this->_publish_ccvs(message);
+					 break;
+		case LFE   : this->_publish_lfe(message);
+					 break;
+		case AMBC  : this->_publish_ambc(message);
+					 break;
+		case IEC   : this->_publish_iec(message);
+					 break;
+		case VEP   : this->_publish_vep(message);
+					 break;
+		case TF    : this->_publish_tf(message);
+					 break;
+		case RF    : this->_publish_rf(message);
+					 break;
+		case HRVD  : this->_publish_hrvd(message);
+					 break;
+		case FD    : this->_publish_fd(message);
+					 break;
+		case GFI2  : this->_publish_gfi2(message);
+					 break;
+		case EI    : this->_publish_ei(message);
+					 break;
+	}
+}
+
+
+void PubSub::_publish_pdu(void *data) {
+	j1939_pdu_typ *pdu = (j1939_pdu_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -45,7 +107,9 @@ void PubSub::publish_pdu(j1939_pdu_typ *pdu) {
 }
 
 
-void PubSub::publish_tsc1(j1939_tsc1_typ *tsc1) {
+void PubSub::_publish_tsc1(void *data) {
+	j1939_tsc1_typ *tsc1 = (j1939_tsc1_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -72,7 +136,9 @@ void PubSub::publish_tsc1(j1939_tsc1_typ *tsc1) {
 }
 
 
-void PubSub::publish_ebc1(j1939_ebc1_typ *ebc1) {
+void PubSub::_publish_ebc1(void *data) {
+	j1939_ebc1_typ *ebc1 = (j1939_ebc1_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -124,7 +190,9 @@ void PubSub::publish_ebc1(j1939_ebc1_typ *ebc1) {
 }
 
 
-void PubSub::publish_ebc2(j1939_ebc2_typ *ebc2) {
+void PubSub::_publish_ebc2(void *data) {
+	j1939_ebc2_typ *ebc2 = (j1939_ebc2_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -156,7 +224,9 @@ void PubSub::publish_ebc2(j1939_ebc2_typ *ebc2) {
 }
 
 
-void PubSub::publish_eec1(j1939_eec1_typ *eec1) {
+void PubSub::_publish_eec1(void *data) {
+	j1939_eec1_typ *eec1 = (j1939_eec1_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -182,7 +252,9 @@ void PubSub::publish_eec1(j1939_eec1_typ *eec1) {
 }
 
 
-void PubSub::publish_eec2(j1939_eec2_typ *eec2) {
+void PubSub::_publish_eec2(void *data) {
+	j1939_eec2_typ *eec2 = (j1939_eec2_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -214,7 +286,9 @@ void PubSub::publish_eec2(j1939_eec2_typ *eec2) {
 }
 
 
-void PubSub::publish_eec3(j1939_eec3_typ *eec3) {
+void PubSub::_publish_eec3(void *data) {
+	j1939_eec3_typ *eec3 = (j1939_eec3_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -241,7 +315,9 @@ void PubSub::publish_eec3(j1939_eec3_typ *eec3) {
 }
 
 
-void PubSub::publish_erc1(j1939_erc1_typ *erc1) {
+void PubSub::_publish_erc1(void *data) {
+	j1939_erc1_typ *erc1 = (j1939_erc1_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -277,7 +353,9 @@ void PubSub::publish_erc1(j1939_erc1_typ *erc1) {
 }
 
 
-void PubSub::publish_etc1(j1939_etc1_typ *etc1) {
+void PubSub::_publish_etc1(void *data) {
+	j1939_etc1_typ *etc1 = (j1939_etc1_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -310,7 +388,9 @@ void PubSub::publish_etc1(j1939_etc1_typ *etc1) {
 }
 
 
-void PubSub::publish_etc2(j1939_etc2_typ *etc2) {
+void PubSub::_publish_etc2(void *data) {
+	j1939_etc2_typ *etc2 = (j1939_etc2_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -337,7 +417,9 @@ void PubSub::publish_etc2(j1939_etc2_typ *etc2) {
 }
 
 
-void PubSub::publish_turbo(j1939_turbo_typ *turbo) {
+void PubSub::_publish_turbo(void *data) {
+	j1939_turbo_typ *turbo = (j1939_turbo_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -359,7 +441,9 @@ void PubSub::publish_turbo(j1939_turbo_typ *turbo) {
 }
 
 
-void PubSub::publish_vd(j1939_vd_typ *vd) {
+void PubSub::_publish_vd(void *data) {
+	j1939_vd_typ *vd = (j1939_vd_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -380,7 +464,9 @@ void PubSub::publish_vd(j1939_vd_typ *vd) {
 }
 
 
-void PubSub::publish_rcfg(j1939_rcfg_typ *rcfg) {
+void PubSub::_publish_rcfg(void *data) {
+	j1939_rcfg_typ *rcfg = (j1939_rcfg_typ*) data;
+
 	int i;
 	// initialize the encoder object
 	pps_encoder_t encoder;
@@ -420,7 +506,9 @@ void PubSub::publish_rcfg(j1939_rcfg_typ *rcfg) {
 }
 
 
-void PubSub::publish_ecfg(j1939_ecfg_typ *ecfg) {
+void PubSub::_publish_ecfg(void *data) {
+	j1939_ecfg_typ *ecfg = (j1939_ecfg_typ*) data;
+
 	int i;
 	// initialize the encoder object
 	pps_encoder_t encoder;
@@ -466,7 +554,9 @@ void PubSub::publish_ecfg(j1939_ecfg_typ *ecfg) {
 }
 
 
-void PubSub::publish_etemp(j1939_etemp_typ *etemp) {
+void PubSub::_publish_etemp(void *data) {
+	j1939_etemp_typ *etemp = (j1939_etemp_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -494,7 +584,9 @@ void PubSub::publish_etemp(j1939_etemp_typ *etemp) {
 }
 
 
-void PubSub::publish_pto(j1939_pto_typ *pto) {
+void PubSub::_publish_pto(void *data) {
+	j1939_pto_typ *pto = (j1939_pto_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -526,7 +618,9 @@ void PubSub::publish_pto(j1939_pto_typ *pto) {
 }
 
 
-void PubSub::publish_ccvs(j1939_ccvs_typ *ccvs) {
+void PubSub::_publish_ccvs(void *data) {
+	j1939_ccvs_typ *ccvs = (j1939_ccvs_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -571,7 +665,9 @@ void PubSub::publish_ccvs(j1939_ccvs_typ *ccvs) {
 }
 
 
-void PubSub::publish_lfe(j1939_lfe_typ *lfe) {
+void PubSub::_publish_lfe(void *data) {
+	j1939_lfe_typ *lfe = (j1939_lfe_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -599,7 +695,9 @@ void PubSub::publish_lfe(j1939_lfe_typ *lfe) {
 }
 
 
-void PubSub::publish_ambc(j1939_ambc_typ *ambc) {
+void PubSub::_publish_ambc(void *data) {
+	j1939_ambc_typ *ambc = (j1939_ambc_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -627,7 +725,9 @@ void PubSub::publish_ambc(j1939_ambc_typ *ambc) {
 }
 
 
-void PubSub::publish_iec(j1939_iec_typ *iec) {
+void PubSub::_publish_iec(void *data) {
+	j1939_iec_typ *iec = (j1939_iec_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -658,7 +758,9 @@ void PubSub::publish_iec(j1939_iec_typ *iec) {
 }
 
 
-void PubSub::publish_vep(j1939_vep_typ *vep) {
+void PubSub::_publish_vep(void *data) {
+	j1939_vep_typ *vep = (j1939_vep_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -687,7 +789,9 @@ void PubSub::publish_vep(j1939_vep_typ *vep) {
 }
 
 
-void PubSub::publish_tf(j1939_tf_typ *tf) {
+void PubSub::_publish_tf(void *data) {
+	j1939_tf_typ *tf = (j1939_tf_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -711,7 +815,9 @@ void PubSub::publish_tf(j1939_tf_typ *tf) {
 }
 
 
-void PubSub::publish_rf(j1939_rf_typ *rf) {
+void PubSub::_publish_rf(void *data) {
+	j1939_rf_typ *rf = (j1939_rf_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -732,7 +838,9 @@ void PubSub::publish_rf(j1939_rf_typ *rf) {
 }
 
 
-void PubSub::publish_hrvd(j1939_hrvd_typ *hrvd) {
+void PubSub::_publish_hrvd(void *data) {
+	j1939_hrvd_typ *hrvd = (j1939_hrvd_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -753,7 +861,9 @@ void PubSub::publish_hrvd(j1939_hrvd_typ *hrvd) {
 }
 
 
-void PubSub::publish_fd(j1939_fd_typ *fdd) {
+void PubSub::_publish_fd(void *data) {
+	j1939_fd_typ *fdd = (j1939_fd_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -774,7 +884,9 @@ void PubSub::publish_fd(j1939_fd_typ *fdd) {
 }
 
 
-void PubSub::publish_gfi2(j1939_gfi2_typ *gfi2) {
+void PubSub::_publish_gfi2(void *data) {
+	j1939_gfi2_typ *gfi2 = (j1939_gfi2_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -797,7 +909,9 @@ void PubSub::publish_gfi2(j1939_gfi2_typ *gfi2) {
 }
 
 
-void PubSub::publish_ei(j1939_ei_typ *ei) {
+void PubSub::_publish_ei(void *data) {
+	j1939_ei_typ *ei = (j1939_ei_typ*) data;
+
 	// initialize the encoder object
 	pps_encoder_t encoder;
 	pps_encoder_initialize(&encoder, false);
@@ -822,145 +936,4 @@ void PubSub::publish_ei(j1939_ei_typ *ei) {
 	if (pps_encoder_buffer(&encoder) != NULL)
 		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
-}
-
-
-void PubSub::publish(int type, void *message) {
-	switch(type) {
-		case PDU : {
-			j1939_pdu_typ *pdu = (j1939_pdu_typ*) message;
-			publish_pdu(pdu);
-			break;
-		}
-		case TSC1 : {
-			j1939_tsc1_typ *tsc1 = (j1939_tsc1_typ*) message;
-			publish_tsc1(tsc1);
-			break;
-		}
-		case EBC1 : {
-			j1939_ebc1_typ *ebc1 = (j1939_ebc1_typ*) message;
-			publish_ebc1(ebc1);
-			break;
-		}
-		case EBC2 : {
-			j1939_ebc2_typ *ebc2 = (j1939_ebc2_typ*) message;
-			publish_ebc2(ebc2);
-			break;
-		}
-		case EEC1 : {
-			j1939_eec1_typ *eec1 = (j1939_eec1_typ*) message;
-			publish_eec1(eec1);
-			break;
-		}
-		case EEC2 : {
-			j1939_eec2_typ *eec2 = (j1939_eec2_typ*) message;
-			publish_eec2(eec2);
-			break;
-		}
-		case EEC3 : {
-			j1939_eec3_typ *eec3 = (j1939_eec3_typ*) message;
-			publish_eec3(eec3);
-			break;
-		}
-		case ERC1 : {
-			j1939_erc1_typ *erc1 = (j1939_erc1_typ*) message;
-			publish_erc1(erc1);
-			break;
-		}
-		case ETC1 : {
-			j1939_etc1_typ *etc1 = (j1939_etc1_typ*) message;
-			publish_etc1(etc1);
-			break;
-		}
-		case ETC2 : {
-			j1939_etc2_typ *etc2 = (j1939_etc2_typ*) message;
-			publish_etc2(etc2);
-			break;
-		}
-		case TURBO : {
-			j1939_turbo_typ *turbo = (j1939_turbo_typ*) message;
-			publish_turbo(turbo);
-			break;
-		}
-		case VD : {
-			j1939_vd_typ *vd = (j1939_vd_typ*) message;
-			publish_vd(vd);
-			break;
-		}
-		case RCFG : {
-			j1939_rcfg_typ *rcfg = (j1939_rcfg_typ*) message;
-			publish_rcfg(rcfg);
-			break;
-		}
-		case ECFG : {
-			j1939_ecfg_typ *ecfg = (j1939_ecfg_typ*) message;
-			publish_ecfg(ecfg);
-			break;
-		}
-		case ETEMP : {
-			j1939_etemp_typ *etemp = (j1939_etemp_typ*) message;
-			publish_etemp(etemp);
-			break;
-		}
-		case PTO : {
-			j1939_pto_typ *pto = (j1939_pto_typ*) message;
-			publish_pto(pto);
-			break;
-		}
-		case CCVS : {
-			j1939_ccvs_typ *ccvs = (j1939_ccvs_typ*) message;
-			publish_ccvs(ccvs);
-			break;
-		}
-		case LFE : {
-			j1939_lfe_typ *lfe = (j1939_lfe_typ*) message;
-			publish_lfe(lfe);
-			break;
-		}
-		case AMBC : {
-			j1939_ambc_typ *ambc = (j1939_ambc_typ*) message;
-			publish_ambc(ambc);
-			break;
-		}
-		case IEC : {
-			j1939_iec_typ *iec = (j1939_iec_typ*) message;
-			publish_iec(iec);
-			break;
-		}
-		case VEP : {
-			j1939_vep_typ *vep = (j1939_vep_typ*) message;
-			publish_vep(vep);
-			break;
-		}
-		case TF : {
-			j1939_tf_typ *tf = (j1939_tf_typ*) message;
-			publish_tf(tf);
-			break;
-		}
-		case RF : {
-			j1939_rf_typ *rf = (j1939_rf_typ*) message;
-			publish_rf(rf);
-			break;
-		}
-		case HRVD : {
-			j1939_hrvd_typ *hrvd = (j1939_hrvd_typ*) message;
-			publish_hrvd(hrvd);
-			break;
-		}
-		case FD : {
-			j1939_fd_typ *fdd = (j1939_fd_typ*) message;
-			publish_fd(fdd);
-			break;
-		}
-		case GFI2 : {
-			j1939_gfi2_typ *gfi2 = (j1939_gfi2_typ*) message;
-			publish_gfi2(gfi2);
-			break;
-		}
-		case EI : {
-			j1939_ei_typ *ei = (j1939_ei_typ*) message;
-			publish_ei(ei);
-			break;
-		}
-	}
 }
