@@ -1,15 +1,9 @@
 include ../../Makefile.variable
 
-# Location of the base directory
-BASE_DIR = $(shell pwd)/../..
-
 # Desired location of the output binaries.
 PATH_FROM_BASE = include/utils
 CONFIG_NAME ?= $(PLATFORM)-$(BUILD_PROFILE)
 OUTPUT_DIR = $(BASE_DIR)/build/$(CONFIG_NAME)/$(PATH_FROM_BASE)
-
-# User defined include/preprocessor flags and libraries
-INCLUDES += -I../
 
 # Source list
 SRCS := $(shell find -name '*.cpp' -or -name '*.c' -or -name '*.s')

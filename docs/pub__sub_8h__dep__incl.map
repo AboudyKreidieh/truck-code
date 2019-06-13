@@ -1,4 +1,5 @@
 <map id="include/utils/pub_sub.h" name="include/utils/pub_sub.h">
 <area shape="rect" id="node2" href="$publish_8cpp.html" title="include/utils/publish.cpp" alt="" coords="5,80,167,107"/>
-<area shape="rect" id="node3" href="$log_8cpp.html" title="src/log.cpp" alt="" coords="191,80,277,107"/>
+<area shape="rect" id="node3" href="$subscribe_8cpp.html" title="include/utils/subscribe.cpp" alt="" coords="191,80,367,107"/>
+<area shape="rect" id="node4" href="$log_8cpp.html" title="src/log.cpp" alt="" coords="392,80,479,107"/>
 </map>

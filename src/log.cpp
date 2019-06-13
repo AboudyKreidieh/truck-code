@@ -2,7 +2,17 @@
  *
  * log.cpp
  *
- * TODO: fill in
+ * This process is responsible for storing all messages in a QDB (SQL-style)
+ * server for later analysis.
+ *
+ * Arguments:
+ *
+ * - --logdir: TODO
+ * - --append: TODO
+ *
+ * Usage:
+ *
+ * 	log --logdir "/dev/qdb" --append
  *
  * @author Abdul Rahman Kreidieh
  * @version 1.0.0
@@ -16,9 +26,19 @@
 #include <vector>
 #include <string>
 #include <ctime>
+#include <iostream>
 
 
-int main() {
+static void show_usage(std::string name) {
+    cout << "Usage: " << name << "\n"
+    	 << "Options:\n"
+         << "\t--logdir OUTFILE\tPath to the log file.\n"
+         << "\t--append\t\tSpecify whether to append to an existing log directory.\n"
+         << endl;
+}
+
+
+int main(int argc, char* argv[]) {
 	/* Get the current date-time as a string. */
 	time_t rawtime;
 	struct tm *timeinfo;
@@ -57,11 +77,27 @@ int main() {
 	 */
 	string db_path = "/dev/qdb/" + str;
 
+
 	/* Initialize some variables. */
 	vector < tuple<int, void*> > results;
 	int message_type;
-	unsigned int i;
 	void *message;
+
+	/* Process arguments that are inputed during execution. */
+    for (int i=1; i<argc; ++i) {
+        string arg = argv[i];
+        if ((arg == "-h") || (arg == "--help")) {
+            show_usage(argv[0]);
+            return 0;
+        } else if (arg == "--logdir") {
+        	db_path = argv[++i];
+        } else if (arg == "--append") {
+        	db_append = true;
+        } else {
+			cerr << arg << " argument is not known." << endl;
+			return 1;
+        }
+    }
 
 	/* Initialize the logger object. */
 	DBManager *db_manager = new DBManager();
@@ -69,7 +105,7 @@ int main() {
 
 	/* Initialize the PubSub object, and subscribe to all relevant messages. */
 	PubSub *ps = new PubSub();
-	for (i=0; i < subscribed.size(); i++)
+	for (unsigned int i=0; i < subscribed.size(); i++)
 		ps->subscribe(subscribed[i]);
 
 	while (true) {
@@ -81,7 +117,7 @@ int main() {
 			continue;
 
 		/* Loop through all messages that were subscribed, and store them. */
-		for (i=0; i<results.size(); i++) {
+		for (unsigned int i=0; i<results.size(); i++) {
 			message_type = get<0>(results[i]);
 			message = get<1>(results[i]);
 			db_manager->store(message, message_type);

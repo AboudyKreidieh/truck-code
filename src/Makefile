@@ -1,16 +1,9 @@
 include ../Makefile.variable
 
-# Location of the base directory
-BASE_DIR = $(shell pwd)/..
-
 # Desired location of the output binaries.
 PATH_FROM_BASE = src
 CONFIG_NAME ?= $(PLATFORM)-$(BUILD_PROFILE)
 OUTPUT_DIR = $(BASE_DIR)/build/$(CONFIG_NAME)/$(PATH_FROM_BASE)
-
-# User defined include/preprocessor flags and libraries
-INCLUDES += -I../include
-INCLUDES += -I../thirdparty/eigen3
 
 # Source list
 SRCS := $(shell find -name '*.cpp' -or -name '*.c' -or -name '*.s')
@@ -21,9 +14,8 @@ OBJS = $(addprefix $(OUTPUT_DIR)/,$(addsuffix .o, $(basename $(SRCS))))
 # object to be included while linking
 OBJECTS = $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/jbus/*.o) 
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/can/*.o) 
-OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/timestamp.o)
-OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/sys.o)
-OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/buffer.o)
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/logger/*.o) 
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/*.o)
 
 # Compiling rule
 $(OUTPUT_DIR)/%.o: %.c

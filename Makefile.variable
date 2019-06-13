@@ -7,7 +7,7 @@
 # where the path needs to be modified to match your current path.
 
 # Location of the base directory
-#BASE_DIR = $(shell pwd)
+BASE_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
 # Build architecture/variant string, possible values: x86, x86_64, armv7le, etc...
 PLATFORM = x86_64
@@ -21,7 +21,7 @@ CCFLAGS_all += $(CCFLAGS_$(BUILD_PROFILE))
 DEPS = -Wp,-MMD,$(@:%.o=%.d),-MT,$@
 
 # Additions to library variables
-LIBS += -lpps -lstdc++
+LIBS += -lpps -lqdb -lstdc++
 
 # Compiler definitions
 CC = qcc -Vgcc_nto$(PLATFORM)
@@ -29,3 +29,6 @@ CXX = qcc -lang-c++ -Vgcc_nto$(PLATFORM)
 
 # Linker
 LD = QCC -lang-c++ -V5.4.0,gcc_nto$(PLATFORM)_cxx
+
+# User defined include/preprocessor flags and libraries
+INCLUDES = -I$(BASE_DIR)/include
