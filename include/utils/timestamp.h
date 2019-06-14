@@ -33,6 +33,9 @@ extern void print_timestamp(FILE*, timestamp_t*);
 /** encodes a timestamp_t variable into a pps encoder object */
 extern void encode_timestamp(pps_encoder_t, timestamp_t*);
 
+/** Decodes a timestamp_t variable from a PPS decoder object. */
+extern void decode_timestamp(pps_decoder_t decoder, timestamp_t* t);
+
 /** imports a string timestamp into a timestamp object */
 extern void import_timestamp(timestamp_t*, std::string);
 

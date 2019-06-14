@@ -155,6 +155,7 @@ int main(int argc, char* argv[]) {
     /* start streaming the text file */
     ifstream in(infile);
     char line[255];
+    string pgn_type;
 
     while (in) {
         /* read data from the text file */

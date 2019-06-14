@@ -18,7 +18,6 @@
  * @version 1.0.0
  * @date May 22, 2019
  */
-
 #include "jbus/j1939_utils.h"
 #include "logger/logger.h"
 #include "utils/pub_sub.h"
@@ -75,11 +74,11 @@ int main(int argc, char* argv[]) {
 	 * Note: Modify this element if you would like to store the messages in a
 	 * single (unified) file.
 	 */
-	string db_path = "/dev/qdb/" + str;
+	string db_path = "/dev/qdb_" + str;
 
 
 	/* Initialize some variables. */
-	vector < tuple<int, void*> > results;
+	map <int, void*> results;
 	int message_type;
 	void *message;
 
@@ -112,14 +111,10 @@ int main(int argc, char* argv[]) {
 		/* Collect all new subscription results from the PubSub server. */
 		results = ps->get_subscription_results();
 
-		/* If no new messages were collected, skip the logging procedure. */
-		if (get<0>(results[0]) == PS_EMTPY)
-			continue;
-
 		/* Loop through all messages that were subscribed, and store them. */
-		for (unsigned int i=0; i<results.size(); i++) {
-			message_type = get<0>(results[i]);
-			message = get<1>(results[i]);
+		for (unsigned int i=0; i<subscribed.size(); i++) {
+			message_type = subscribed[i];
+			message = results[message_type];
 			db_manager->store(message, message_type);
 		}
 	}

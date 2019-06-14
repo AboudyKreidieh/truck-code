@@ -22,7 +22,7 @@ void print_timestamp(FILE *fp, timestamp_t *t) {
 }
 
 
-/** encodes a timestamp_t variable into a pps encoder object */
+/** encodes a timestamp_t variable into a PPS encoder object */
 void encode_timestamp(pps_encoder_t encoder, timestamp_t* t) {
 	pps_encoder_start_object(&encoder, "time");
 	pps_encoder_add_int(&encoder, "hour", t->hour);
@@ -30,6 +30,16 @@ void encode_timestamp(pps_encoder_t encoder, timestamp_t* t) {
 	pps_encoder_add_int(&encoder, "second", t->second);
 	pps_encoder_add_int(&encoder, "millisecond", t->millisecond);
 	pps_encoder_end_object(&encoder);
+}
+
+/** Decodes a timestamp_t variable from a PPS decoder object. */
+void decode_timestamp(pps_decoder_t decoder, timestamp_t* t) {
+	pps_decoder_push(&decoder, "time");
+	pps_decoder_get_int(&decoder, "hour", &(t->hour));
+	pps_decoder_get_int(&decoder, "minute", &(t->minute));
+	pps_decoder_get_int(&decoder, "second", &(t->second));
+	pps_decoder_get_int(&decoder, "millisecond", &(t->millisecond));
+	pps_decoder_pop(&decoder);
 }
 
 

@@ -102,7 +102,7 @@ void PubSub::_publish_pdu(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -131,7 +131,7 @@ void PubSub::_publish_tsc1(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -185,7 +185,7 @@ void PubSub::_publish_ebc1(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -219,7 +219,7 @@ void PubSub::_publish_ebc2(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -247,7 +247,7 @@ void PubSub::_publish_eec1(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -281,7 +281,7 @@ void PubSub::_publish_eec2(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -310,7 +310,7 @@ void PubSub::_publish_eec3(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -348,7 +348,7 @@ void PubSub::_publish_erc1(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -383,7 +383,7 @@ void PubSub::_publish_etc1(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -412,7 +412,7 @@ void PubSub::_publish_etc2(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -436,7 +436,7 @@ void PubSub::_publish_turbo(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -452,14 +452,14 @@ void PubSub::_publish_vd(void *data) {
 	pps_encoder_start_object(&encoder, "@VD");
 	encode_timestamp(encoder, &vd->timestamp);
 
-	pps_encoder_add_int(&encoder, "trip_dist", vd->trip_dist);
-	pps_encoder_add_int(&encoder, "tot_vehicle_dist", vd->tot_vehicle_dist);
+	pps_encoder_add_double(&encoder, "trip_dist", vd->trip_dist);
+	pps_encoder_add_double(&encoder, "tot_vehicle_dist", vd->tot_vehicle_dist);
 
 	pps_encoder_end_object(&encoder);
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -485,14 +485,14 @@ void PubSub::_publish_rcfg(void *data) {
 
 	pps_encoder_start_object(&encoder, "retarder_speed");
 	for (i = 0; i < 5; i++) {
-		pps_encoder_add_int(&encoder, to_string(i).c_str(),
+		pps_encoder_add_double(&encoder, to_string(i).c_str(),
 				rcfg->retarder_speed[i]);
 	}
 	pps_encoder_end_object(&encoder);
 
 	pps_encoder_start_object(&encoder, "percent_torque");
 	for (i = 0; i < 5; i++) {
-		pps_encoder_add_int(&encoder, to_string(i).c_str(),
+		pps_encoder_add_double(&encoder, to_string(i).c_str(),
 				rcfg->percent_torque[i]);
 	}
 	pps_encoder_end_object(&encoder);
@@ -501,7 +501,7 @@ void PubSub::_publish_rcfg(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -522,12 +522,12 @@ void PubSub::_publish_ecfg(void *data) {
 
 	pps_encoder_start_object(&encoder, "engine_spd");
 	for (i = 0; i < 7; i++)
-		pps_encoder_add_int(&encoder, to_string(i).c_str(), ecfg->engine_spd[i]);
+		pps_encoder_add_double(&encoder, to_string(i).c_str(), ecfg->engine_spd[i]);
 	pps_encoder_end_object(&encoder);
 
 	pps_encoder_start_object(&encoder, "percent_trq");
 	for (i = 0; i < 5; i++)
-		pps_encoder_add_int(&encoder, to_string(i).c_str(), ecfg->percent_trq[i]);
+		pps_encoder_add_double(&encoder, to_string(i).c_str(), ecfg->percent_trq[i]);
 	pps_encoder_end_object(&encoder);
 
 	pps_encoder_add_double(&encoder, "gain_endspeed_governor",
@@ -549,7 +549,7 @@ void PubSub::_publish_ecfg(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -579,7 +579,7 @@ void PubSub::_publish_etemp(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -613,7 +613,7 @@ void PubSub::_publish_pto(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -660,7 +660,7 @@ void PubSub::_publish_ccvs(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -690,7 +690,7 @@ void PubSub::_publish_lfe(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -720,7 +720,7 @@ void PubSub::_publish_ambc(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -753,7 +753,7 @@ void PubSub::_publish_iec(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -784,7 +784,7 @@ void PubSub::_publish_vep(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -810,7 +810,7 @@ void PubSub::_publish_tf(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -833,7 +833,7 @@ void PubSub::_publish_rf(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -856,7 +856,7 @@ void PubSub::_publish_hrvd(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -879,7 +879,7 @@ void PubSub::_publish_fd(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -904,7 +904,7 @@ void PubSub::_publish_gfi2(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
 
@@ -934,6 +934,6 @@ void PubSub::_publish_ei(void *data) {
 
 	// perform the data encoding procedure
 	if (pps_encoder_buffer(&encoder) != NULL)
-		write(fd, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
+		write(this->_fd_pub, pps_encoder_buffer(&encoder), pps_encoder_length(&encoder));
 	pps_encoder_cleanup(&encoder);
 }
