@@ -231,7 +231,7 @@ void PubSub::_subscribe_ei() {
 }
 
 
-void PubSub::ubsubscribe(int type) {
+void PubSub::unsubscribe(int type) {
 	switch (type) {
 	    case PDU   : this->_unsubscribe_pdu();
 	                 break;

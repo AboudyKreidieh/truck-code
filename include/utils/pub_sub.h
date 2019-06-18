@@ -46,7 +46,7 @@ public:
 	 * @param type
 	 * 		the message type
 	 */
-	virtual void ubsubscribe(int type);
+	virtual void unsubscribe(int type);
 
 	/**Collect the variables of all subscribed message.
 	 *

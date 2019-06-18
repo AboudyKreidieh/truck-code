@@ -11,7 +11,7 @@
 
 #define BOOST_TEST_MODULE "test_j1939_interpreters"
 #include <boost/test/unit_test.hpp>
-#include "utils.h"
+#include "tests/tests.h"
 #include "jbus/j1939_utils.h"
 #include "jbus/j1939_interpreters.h"
 #include <vector>
@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_SUITE( test_PDUInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_pdu )
 {
 	PDUInterpreter *interpreter = new PDUInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, PDU);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), PDU);
 	delete interpreter;
 }
 
@@ -143,7 +143,7 @@ BOOST_AUTO_TEST_SUITE( test_TSC1Interpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_tsc1 )
 {
 	TSC1Interpreter *interpreter = new TSC1Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, TSC1);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), TSC1);
 	delete interpreter;
 }
 
@@ -245,52 +245,10 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE( test_EBC1Interpreter )
 
-bool check_ebc1(
-		j1939_ebc1_typ *ebc1,
-		int asr_engine_ctrl_active,
-		int asr_brk_ctrl_active,
-		int antilock_brk_active,
-		int ebs_brk_switch,
-		float brk_pedal_pos,
-		int abs_offroad_switch,
-		int asr_offroad_switch,
-		int asr_hillholder_switch,
-		int trac_ctrl_override_switch,
-		int accel_interlock_switch,
-		int eng_derate_switch,
-		int aux_eng_shutdown_switch,
-		int accel_enable_switch,
-		float eng_retarder_selection,
-		int abs_fully_operational,
-		int ebs_red_warning,
-		int abs_ebs_amber_warning,
-		int src_address_ctrl,
-		float total_brk_demand) {
-	return (ebc1->asr_engine_ctrl_active == asr_engine_ctrl_active &&
-			ebc1->asr_brk_ctrl_active == asr_brk_ctrl_active &&
-			ebc1->antilock_brk_active == antilock_brk_active &&
-			ebc1->ebs_brk_switch == ebs_brk_switch &&
-			ebc1->brk_pedal_pos == brk_pedal_pos &&
-			ebc1->abs_offroad_switch == abs_offroad_switch &&
-			ebc1->asr_offroad_switch == asr_offroad_switch &&
-			ebc1->asr_hillholder_switch == asr_hillholder_switch &&
-			ebc1->trac_ctrl_override_switch == trac_ctrl_override_switch &&
-			ebc1->accel_interlock_switch == accel_interlock_switch &&
-			ebc1->eng_derate_switch == eng_derate_switch &&
-			ebc1->aux_eng_shutdown_switch == aux_eng_shutdown_switch &&
-			ebc1->accel_enable_switch == accel_enable_switch &&
-			ebc1->eng_retarder_selection == eng_retarder_selection &&
-			ebc1->abs_fully_operational == abs_fully_operational &&
-			ebc1->ebs_red_warning == ebs_red_warning &&
-			ebc1->abs_ebs_amber_warning == abs_ebs_amber_warning &&
-			ebc1->src_address_ctrl == src_address_ctrl &&
-			ebc1->total_brk_demand == total_brk_demand);
-}
-
 BOOST_AUTO_TEST_CASE( test_pgn_ebc1 )
 {
 	EBC1Interpreter *interpreter = new EBC1Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, EBC1);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), EBC1);
 	delete interpreter;
 }
 
@@ -424,7 +382,7 @@ BOOST_AUTO_TEST_SUITE( test_EBC2Interpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_ebc2 )
 {
 	EBC2Interpreter *interpreter = new EBC2Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, EBC2);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), EBC2);
 	delete interpreter;
 }
 
@@ -528,7 +486,7 @@ BOOST_AUTO_TEST_SUITE( test_EEC1Interpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_eec1 )
 {
 	EEC1Interpreter *interpreter = new EEC1Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, EEC1);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), EEC1);
 	delete interpreter;
 }
 
@@ -631,7 +589,7 @@ BOOST_AUTO_TEST_SUITE( test_EEC2Interpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_eec2 )
 {
 	EEC2Interpreter *interpreter = new EEC2Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, EEC2);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), EEC2);
 	delete interpreter;
 }
 
@@ -737,7 +695,7 @@ BOOST_AUTO_TEST_SUITE( test_EEC3Interpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_eec3 )
 {
 	EEC3Interpreter *interpreter = new EEC3Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, EEC3);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), EEC3);
 	delete interpreter;
 }
 
@@ -835,7 +793,7 @@ BOOST_AUTO_TEST_SUITE( test_ETC1Interpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_etc1 )
 {
 	ETC1Interpreter *interpreter = new ETC1Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, ETC1);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), ETC1);
 	delete interpreter;
 }
 
@@ -943,7 +901,7 @@ BOOST_AUTO_TEST_SUITE( test_ETC2Interpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_etc2 )
 {
 	ETC2Interpreter *interpreter = new ETC2Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, ETC2);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), ETC2);
 	delete interpreter;
 }
 
@@ -1044,7 +1002,7 @@ BOOST_AUTO_TEST_SUITE( test_ERC1Interpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_erc1 )
 {
 	ERC1Interpreter *interpreter = new ERC1Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, ERC1);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), ERC1);
 	delete interpreter;
 }
 
@@ -1153,7 +1111,7 @@ BOOST_AUTO_TEST_SUITE( test_TFInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_tf )
 {
 	TFInterpreter *interpreter = new TFInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, TF);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), TF);
 	delete interpreter;
 }
 
@@ -1253,7 +1211,7 @@ BOOST_AUTO_TEST_SUITE( test_CCVSInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_ccvs )
 {
 	CCVSInterpreter *interpreter = new CCVSInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, CCVS);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), CCVS);
 	delete interpreter;
 }
 
@@ -1388,7 +1346,7 @@ BOOST_AUTO_TEST_SUITE( test_LFEInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_lfe )
 {
 	LFEInterpreter *interpreter = new LFEInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, LFE);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), LFE);
 	delete interpreter;
 }
 
@@ -1487,7 +1445,7 @@ BOOST_AUTO_TEST_SUITE( test_RFInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_rf )
 {
 	RFInterpreter *interpreter = new RFInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, RF);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), RF);
 	delete interpreter;
 }
 
@@ -1638,7 +1596,7 @@ BOOST_AUTO_TEST_SUITE( test_TURBOInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_turbo )
 {
 	TURBOInterpreter *interpreter = new TURBOInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, TURBO);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), TURBO);
 	delete interpreter;
 }
 
@@ -1731,7 +1689,7 @@ BOOST_AUTO_TEST_SUITE( test_VDInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_vd )
 {
 	VDInterpreter *interpreter = new VDInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, VD);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), VD);
 	delete interpreter;
 }
 
@@ -1824,7 +1782,7 @@ BOOST_AUTO_TEST_SUITE( test_RCFGInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_rcfg )
 {
 	RCFGInterpreter *interpreter = new RCFGInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, RCFG);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), RCFG);
 	delete interpreter;
 }
 
@@ -1908,7 +1866,7 @@ BOOST_AUTO_TEST_SUITE( test_ECFGInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_ecfg )
 {
 	ECFGInterpreter *interpreter = new ECFGInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, ECFG);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), ECFG);
 	delete interpreter;
 }
 
@@ -1981,7 +1939,7 @@ BOOST_AUTO_TEST_SUITE( test_ETEMPInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_etemp )
 {
 	ETEMPInterpreter *interpreter = new ETEMPInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, ETEMP);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), ETEMP);
 	delete interpreter;
 }
 
@@ -2082,7 +2040,7 @@ BOOST_AUTO_TEST_SUITE( test_PTOInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_pto )
 {
 	PTOInterpreter *interpreter = new PTOInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, PTO);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), PTO);
 	delete interpreter;
 }
 
@@ -2192,7 +2150,7 @@ BOOST_AUTO_TEST_SUITE( test_AMBCInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_ambc )
 {
 	AMBCInterpreter *interpreter = new AMBCInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, AMBC);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), AMBC);
 	delete interpreter;
 }
 
@@ -2291,7 +2249,7 @@ BOOST_AUTO_TEST_SUITE( test_IECInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_iec )
 {
 	IECInterpreter *interpreter = new IECInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, IEC);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), IEC);
 	delete interpreter;
 }
 
@@ -2394,7 +2352,7 @@ BOOST_AUTO_TEST_SUITE( test_VEPInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_vep )
 {
 	VEPInterpreter *interpreter = new VEPInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, VEP);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), VEP);
 	delete interpreter;
 }
 
@@ -2493,7 +2451,7 @@ BOOST_AUTO_TEST_SUITE( test_HRVDInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_hrvd )
 {
 	HRVDInterpreter *interpreter = new HRVDInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, HRVD);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), HRVD);
 	delete interpreter;
 }
 
@@ -2586,7 +2544,7 @@ BOOST_AUTO_TEST_SUITE( test_FDInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_fd )
 {
 	FDInterpreter *interpreter = new FDInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, FD);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), FD);
 	delete interpreter;
 }
 
@@ -2679,7 +2637,7 @@ BOOST_AUTO_TEST_SUITE( test_GFI2Interpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_gfi2 )
 {
 	GFI2Interpreter *interpreter = new GFI2Interpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, GFI2);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), GFI2);
 	delete interpreter;
 }
 
@@ -2776,7 +2734,7 @@ BOOST_AUTO_TEST_SUITE( test_EIInterpreter )
 BOOST_AUTO_TEST_CASE( test_pgn_ei )
 {
 	EIInterpreter *interpreter = new EIInterpreter();
-	BOOST_CHECK_EQUAL(interpreter->pgn, EI);
+	BOOST_CHECK_EQUAL(interpreter->pgn(), EI);
 	delete interpreter;
 }
 

@@ -12,8 +12,11 @@
 #define BOOST_TEST_MODULE "test_logger"
 #include <boost/test/unit_test.hpp>
 #include "logger/logger.h"
+#include "jbus/j1939_utils.h"
+#include "jbus/j1939_struct.h"
 #include <string>
 #include <vector>
+#include <fstream>
 
 
 BOOST_AUTO_TEST_SUITE( test_Logger )
@@ -410,76 +413,98 @@ BOOST_AUTO_TEST_CASE( test_all )
 	system("../../../../sql2txt /dev/test_logdir -o /tmp/test_logger_out.txt -n");
 
 	/* Check the validity of the elements in the txt file. */
-    FILE *fp = fopen("/tmp/test_logger_out.txt", "w");
-    ifstream in(infile);
+    ifstream in("/tmp/test_logger_out.txt");
     char line[255];
-    char *pgn_type;
+    string pgn_type;
 
     while (in) {
-        /* read data from the text file */
+        /* Read data from the text file. */
         in.getline(line, 255);
+        string str = line;
 
         /* Grab the first element, which represents the type of message. */
         pgn_type = strtok(line, " ");
 
-        switch (pgn_type) {
-		case "PDU"   : BOOST_CHECK(line == "PDU 23:59:59.999 0 1 2 3 8 4 5 6 7 8 9 10 11");
-				 	   break;
-		case "TSC1"  : BOOST_CHECK(line == "TSC1 23:59:59.999 5 6 2 1 0 3.000 4.000");
-					   break;
-		case "EBC1"  : BOOST_CHECK(line == "EBC1 23:59:59.999 3 2 1 0 4.00 8 7 5 6 12 11 10 9 13.00 16 15 14 17 18.000");
-					   break;
-		case "EBC2"  : BOOST_CHECK(line == "EBC2 23:59:59.999 0.000 1.000 2.000 3.000 4.000 5.000 6.000");
-					   break;
-		case "EEC1"  : BOOST_CHECK(line == "EEC1 23:59:59.999 0 1.00 2.00 4.00 3.000 5");
-					   break;
-		case "EEC2"  : BOOST_CHECK(line == "EEC2 23:59:59.999 2 1 0 3 4.00 6.00 5.00 7.00");
-					   break;
-		case "EEC3"  : BOOST_CHECK(line == "EEC3 23:59:59.999 0.00 3.00 2 1.00");
-					   break;
-		case "ERC1"  : BOOST_CHECK(line == "ERC1 23:59:59.999 2 1 0 3.00 4.00 5 6 7 8.00 9");
-					   break;
-		case "ETC1"  : BOOST_CHECK(line == "ETC1 23:59:59.999 2 1 0 3.00 4.00 6 5 7.00 8");
-					   break;
-		case "ETC2"  : BOOST_CHECK(line == "ETC2 23:59:59.999 0 1.00 2 3 4");
-					   break;
-		case "TURBO" : BOOST_CHECK(line == "TURBO 23:59:59.999 0.00 1.00");
-					   break;
-		case "VD"    : BOOST_CHECK(line == "VD 23:59:59.999 0.00 1.00");
-					   break;
-		case "RCFG"  : BOOST_CHECK(line == "RCFG 23:59:59.999 1 0 2 3.00 4.00 5.00 6.00 7.00 8.00 9.00 10.00 11.00 12.00 13.00");
-					   break;
-		case "ECFG"  : BOOST_CHECK(line == "ECFG 23:59:59.999 0x13 5.00 6.00 7.00 8.00 9.00 10.00 11.00 0.00 1.00 "
-				                           "2.00 3.00 4.00 12.00 13.00 14.00 15.00 16.00 17.00 18.00");
-					   break;
-		case "ETEMP" : BOOST_CHECK(line == "ETEMP 23:59:59.999 0.000 1.000 2.000 3.000 4.000 5.000");
-					   break;
-		case "PTO"   : BOOST_CHECK(line == "PTO 23:59:59.999 0.000 1.000 2.000 5 4 3 9 8 7 6");
-					   break;
-		case "CCVS"  : BOOST_CHECK(line == "CCVS 23:59:59.999 1 3 0 4.000 8 7 2 6 5 12 11 10 9 13.000 15 14 19 18 17 16");
-					   break;
-		case "LFE"   : BOOST_CHECK(line == "LFE 23:59:59.999 0.000 1.000 2.000 3.000 4.000");
-					   break;
-		case "AMBC"  : BOOST_CHECK(line == "AMBC 23:59:59.999 0.000 1.000 2.000 3.000 4.000");
-					   break;
-		case "IEC"   : BOOST_CHECK(line == "IEC 23:59:59.999 0.000 1.000 2.000 3.000 4.000 5.000 6.000");
-					   break;
-		case "VEP"   : BOOST_CHECK(line == "VEP 23:59:59.999 0.000 1.000 2.000 3.000 4.000");
-					   break;
-		case "TF"    : BOOST_CHECK(line == "TF 23:59:59.999 0.000 1.000 2.000 3.000 4.000");
-					   break;
-		case "RF"    : BOOST_CHECK(line == "RF 23:59:59.999 0.000 1.000");
-					   break;
-		case "HRVD"  : BOOST_CHECK(line == "HRVD 23:59:59.999 0.000 1.000");
-					   break;
-		case "FD"    : BOOST_CHECK(line == "FD 23:59:59.999 0.000 1");
-					   break;
-		case "GFI2"  : BOOST_CHECK(line == "GFI2 23:59:59.999 0.000 1.000 2.000 3.000");
-					   break;
-		case "EI"    : BOOST_CHECK(line == "EI 23:59:59.999 0.000 1.000 2.000 3.000 4.000");
-					   break;
-		default      : break;
-        }
+        if (pgn_type.compare("PDU") != 0)
+        	BOOST_CHECK(str.compare("PDU 23:59:59.999 0 1 2 3 8 4 5 6 7 8 9 10 11"));
+
+        else if (pgn_type.compare("TSC1") != 0)
+        	BOOST_CHECK(str.compare("TSC1 23:59:59.999 5 6 2 1 0 3.000 4.000"));
+
+        else if (pgn_type.compare("EBC1") != 0)
+        	BOOST_CHECK(str.compare("EBC1 23:59:59.999 3 2 1 0 4.00 8 7 5 6 12 11 10 9 13.00 16 15 14 17 18.000"));
+
+        else if (pgn_type.compare("EBC2") != 0)
+			BOOST_CHECK(str.compare("EBC2 23:59:59.999 0.000 1.000 2.000 3.000 4.000 5.000 6.000"));
+
+        else if (pgn_type.compare("EEC1") != 0)
+			BOOST_CHECK(str.compare("EEC1 23:59:59.999 0 1.00 2.00 4.00 3.000 5"));
+
+        else if (pgn_type.compare("EEC2") != 0)
+        	BOOST_CHECK(str.compare("EEC2 23:59:59.999 2 1 0 3 4.00 6.00 5.00 7.00"));
+
+        else if (pgn_type.compare("EEC3") != 0)
+        	BOOST_CHECK(str.compare("EEC3 23:59:59.999 0.00 3.00 2 1.00"));
+
+        else if (pgn_type.compare("ERC1") != 0)
+			BOOST_CHECK(str.compare("ERC1 23:59:59.999 2 1 0 3.00 4.00 5 6 7 8.00 9"));
+
+		else if (pgn_type.compare("ETC1") != 0)
+			BOOST_CHECK(str.compare("ETC1 23:59:59.999 2 1 0 3.00 4.00 6 5 7.00 8"));
+
+		else if (pgn_type.compare("ETC2") != 0)
+			BOOST_CHECK(str.compare("ETC2 23:59:59.999 0 1.00 2 3 4"));
+
+		else if (pgn_type.compare("TURBO") != 0)
+			BOOST_CHECK(str.compare("TURBO 23:59:59.999 0.00 1.00"));
+
+		else if (pgn_type.compare("VD") != 0)
+			BOOST_CHECK(str.compare("VD 23:59:59.999 0.00 1.00"));
+
+		else if (pgn_type.compare("RCFG") != 0)
+			BOOST_CHECK(str.compare("RCFG 23:59:59.999 1 0 2 3.00 4.00 5.00 6.00 7.00 8.00 9.00 10.00 11.00 12.00 13.00"));
+
+		else if (pgn_type.compare("ECFG") != 0)
+			BOOST_CHECK(str.compare("ECFG 23:59:59.999 0x13 5.00 6.00 7.00 8.00 9.00 10.00 11.00 0.00 1.00 2.00 3.00 4.00 12.00 13.00 14.00 15.00 16.00 17.00 18.00"));
+
+		else if (pgn_type.compare("ETEMP") != 0)
+			BOOST_CHECK(str.compare("ETEMP 23:59:59.999 0.000 1.000 2.000 3.000 4.000 5.000"));
+
+		else if (pgn_type.compare("PTO") != 0)
+			BOOST_CHECK(str.compare("PTO 23:59:59.999 0.000 1.000 2.000 5 4 3 9 8 7 6"));
+
+		else if (pgn_type.compare("CCVS") != 0)
+			BOOST_CHECK(str.compare("CCVS 23:59:59.999 1 3 0 4.000 8 7 2 6 5 12 11 10 9 13.000 15 14 19 18 17 16"));
+
+		else if (pgn_type.compare("LFE") != 0)
+			BOOST_CHECK(str.compare("LFE 23:59:59.999 0.000 1.000 2.000 3.000 4.000"));
+
+		else if (pgn_type.compare("AMBC") != 0)
+			BOOST_CHECK(str.compare("AMBC 23:59:59.999 0.000 1.000 2.000 3.000 4.000"));
+
+		else if (pgn_type.compare("IEC") != 0)
+			BOOST_CHECK(str.compare("IEC 23:59:59.999 0.000 1.000 2.000 3.000 4.000 5.000 6.000"));
+
+		else if (pgn_type.compare("VEP") != 0)
+			BOOST_CHECK(str.compare("VEP 23:59:59.999 0.000 1.000 2.000 3.000 4.000"));
+
+		else if (pgn_type.compare("TF") != 0)
+			BOOST_CHECK(str.compare("TF 23:59:59.999 0.000 1.000 2.000 3.000 4.000"));
+
+		else if (pgn_type.compare("RF") != 0)
+			BOOST_CHECK(str.compare("RF 23:59:59.999 0.000 1.000"));
+
+		else if (pgn_type.compare("HRVD") != 0)
+			BOOST_CHECK(str.compare("HRVD 23:59:59.999 0.000 1.000"));
+
+		else if (pgn_type.compare("FD") != 0)
+			BOOST_CHECK(str.compare("FD 23:59:59.999 0.000 1"));
+
+		else if (pgn_type.compare("GFI2") != 0)
+			BOOST_CHECK(str.compare("GFI2 23:59:59.999 0.000 1.000 2.000 3.000"));
+
+		else if (pgn_type.compare("EI") != 0)
+			BOOST_CHECK(str.compare("EI 23:59:59.999 0.000 1.000 2.000 3.000 4.000"));
     }
 
 	/* Clear memory. */

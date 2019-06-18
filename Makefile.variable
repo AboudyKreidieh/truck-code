@@ -21,7 +21,7 @@ CCFLAGS_all += $(CCFLAGS_$(BUILD_PROFILE))
 DEPS = -Wp,-MMD,$(@:%.o=%.d),-MT,$@
 
 # Additions to library variables
-LIBS += -lpps -lqdb -lstdc++
+LIBS += -lpps -lqdb -lstdc++ -lgcov
 
 # Compiler definitions
 CC = qcc -Vgcc_nto$(PLATFORM)

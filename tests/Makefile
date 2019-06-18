@@ -20,25 +20,27 @@ TARGETS = $(OUTPUT_DIR)/../run_tests
 # Objects to be included while linking
 OBJECTS = $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/jbus/*.o) 
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/can/*.o) 
-OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/timestamp.o)
-OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/sys.o)
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/logger/*.o)
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/*.o)
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/tests/*.o)
 #OBJECTS += $(wildcard ../thirdparty/boost/lib//*)
 OBJECTS += ../thirdparty/boost/lib/libboost_unit_test_framework.a
 
 # Compiling rule
 $(OUTPUT_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) -c $(DEPS) -o $@ $(INCLUDES) $(CCFLAGS_all) $(CCFLAGS) $<
+	$(CC) -fprofile-arcs -ftest-coverage -c $(DEPS) -o $@ $(INCLUDES) $(CCFLAGS_all) $(CCFLAGS) $<
 $(OUTPUT_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) -c $(DEPS) -o $@ $(INCLUDES) $(CCFLAGS_all) $(CCFLAGS) $<
+	$(CXX) -fprofile-arcs -ftest-coverage -c $(DEPS) -o $@ $(INCLUDES) $(CCFLAGS_all) $(CCFLAGS) $<
 
 # Linking rule
-$(OUTPUT_DIR)/bin/test_j1939_interpreters $(OUTPUT_DIR)/bin/test_translate_pdu : $(OUTPUT_DIR)/test_j1939_interpreters.o $(OUTPUT_DIR)/test_translate_pdu.o
+$(OUTPUT_DIR)/bin/test_j1939_interpreters $(OUTPUT_DIR)/bin/test_logger $(OUTPUT_DIR)/bin/test_pubsub $(OUTPUT_DIR)/bin/test_translate_pdu : $(OUTPUT_DIR)/test_j1939_interpreters.o $(OUTPUT_DIR)/test_logger.o $(OUTPUT_DIR)/test_pubsub.o $(OUTPUT_DIR)/test_translate_pdu.o
 	@mkdir -p $(dir $@)
-	$(LD) -o $(OUTPUT_DIR)/bin/test_j1939_interpreters $(OUTPUT_DIR)/test_j1939_interpreters.o $(LIBS) $(OBJECTS)
-	$(LD) -o $(OUTPUT_DIR)/bin/test_translate_pdu $(OUTPUT_DIR)/test_translate_pdu.o $(LIBS) $(OBJECTS)
-#	$(LD) -o $(OUTPUT_DIR)/bin/test_j1939_utils $(OUTPUT_DIR)/test_j1939_utils.o $(LIBS) $(OBJECTS)
+	$(LD) -fprofile-arcs -o $(OUTPUT_DIR)/bin/test_j1939_interpreters $(OUTPUT_DIR)/test_j1939_interpreters.o $(LIBS) $(OBJECTS)
+	$(LD) -fprofile-arcs -o $(OUTPUT_DIR)/bin/test_translate_pdu $(OUTPUT_DIR)/test_translate_pdu.o $(LIBS) $(OBJECTS)
+	$(LD) -fprofile-arcs -o $(OUTPUT_DIR)/bin/test_logger $(OUTPUT_DIR)/test_logger.o $(LIBS) $(OBJECTS)
+	$(LD) -fprofile-arcs -o $(OUTPUT_DIR)/bin/test_pubsub $(OUTPUT_DIR)/test_pubsub.o $(LIBS) $(OBJECTS)
 
 # Rules section for default compilation and linking
 all: $(OUTPUT_DIR)/bin/test_j1939_interpreters $(OUTPUT_DIR)/bin/test_translate_pdu

@@ -53,13 +53,19 @@ public:
 
 	/** Store an element in its respective database object.
 	 *
-	 * @param data
-	 * 		the data element
 	 * @param type
 	 * 		the type of element. For J1939 messages, this is their parameter
 	 * 		group numbers (PGNs).
+	 * @param data
+	 * 		the data element
 	 */
-	void store(void *data, int type);
+	void store(int type, void *data);
+
+	/** Return the types of variables that can be stored by this object.
+	 *
+	 * This corresponds to the methods specified upon initialization.
+	 */
+	vector<int> get_types();
 
 private:
 	vector <int> _types;	/**< a vector of the types of elements to be stored */

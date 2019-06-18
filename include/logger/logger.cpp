@@ -20,6 +20,11 @@
 using namespace std;
 
 
+vector<int> DBManager::get_types() {
+	return this->_types;
+}
+
+
 void DBManager::init(string db_path, vector<int> types, bool append) {
 	this->_types = types;
 	this->_fp = db_path;
@@ -95,7 +100,7 @@ void DBManager::init(string db_path, vector<int> types, bool append) {
 }
 
 
-void DBManager::store(void *data, int type) {
+void DBManager::store(int type, void *data) {
 	switch (type) {
 		case PDU   : this->_store_pdu(data);
 					 break;

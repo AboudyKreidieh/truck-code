@@ -280,8 +280,10 @@ public:
 private:
 	/** bit speed of the different channels */
 	int _baud[MAX_CHANNELS]					= { 0x0 };
-	unsigned int _acc_code[MAX_CHANNELS]	= { 0x0 };	/**< TODO */
-	unsigned int _acc_mask[MAX_CHANNELS]	= { 0x0 };	/**< TODO */
+	/** TODO */
+	unsigned int _acc_code[MAX_CHANNELS]	= { 0x0 };
+	/** TODO */
+	unsigned int _acc_mask[MAX_CHANNELS]	= { 0x0 };
 
 	/** Last time a CAN message was sent. */
 	time_t _last_time_can_sent;

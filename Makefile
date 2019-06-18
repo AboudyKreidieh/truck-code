@@ -7,6 +7,8 @@ all:
 	+ make -C include/logger
 	+ make -C include/vision
 	+ make -C src/
+	+ make -C include/tests
+	+ make -C tests/
 
 install: all
 	if [[ ! -d test ]] ; then mkdir -p test; fi

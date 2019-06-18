@@ -14,7 +14,7 @@ OBJS = $(addprefix $(OUTPUT_DIR)/,$(addsuffix .o, $(basename $(SRCS))))
 # object to be included while linking
 OBJECTS = $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/jbus/*.o) 
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/can/*.o) 
-OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/logger/*.o) 
+OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/logger/*.o)
 OBJECTS += $(wildcard $(BASE_DIR)/build/$(CONFIG_NAME)/include/utils/*.o)
 
 # Compiling rule

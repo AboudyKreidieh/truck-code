@@ -115,7 +115,7 @@ int main(int argc, char* argv[]) {
 		for (unsigned int i=0; i<subscribed.size(); i++) {
 			message_type = subscribed[i];
 			message = results[message_type];
-			db_manager->store(message, message_type);
+			db_manager->store(message_type, message);
 		}
 	}
 
