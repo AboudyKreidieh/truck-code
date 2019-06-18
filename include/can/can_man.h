@@ -298,10 +298,6 @@ private:
 
 	/** Start board.
 	 *
-	 * This performs the following procedure:
-	 *
-	 * - TODO
-	 *
 	 * @param minor
 	 * 		index of the current device within the channels
 	 * @return
@@ -310,10 +306,6 @@ private:
 	virtual int _start_chip(int minor);
 
 	/** Stop board.
-	 *
-	 * This performs the following procedure:
-	 *
-	 * - TODO
 	 *
 	 * @param minor
 	 * 		index of the current device within the channels

@@ -9,5 +9,8 @@ var searchData=
   ['get_5ferrs',['get_errs',['../classCANDeviceManager.html#afbfb8912b4cf287abf7b9ba6b35b2832',1,'CANDeviceManager']]],
   ['get_5fini_5fhex',['get_ini_hex',['../sys_8cpp.html#a682753e4474c72d8a93d387243d38377',1,'get_ini_hex(FILE *pfile, char *pentry, unsigned hex_def):&#160;sys.cpp'],['../sys_8h.html#a682753e4474c72d8a93d387243d38377',1,'get_ini_hex(FILE *pfile, char *pentry, unsigned hex_def):&#160;sys.cpp']]],
   ['get_5fini_5flong',['get_ini_long',['../sys_8cpp.html#ac7011c95bd750dcf6e4fe8e16cb0f4a7',1,'get_ini_long(FILE *pfile, char *pentry, long long_def):&#160;sys.cpp'],['../sys_8h.html#ac7011c95bd750dcf6e4fe8e16cb0f4a7',1,'get_ini_long(FILE *pfile, char *pentry, long long_def):&#160;sys.cpp']]],
-  ['get_5fini_5fsection',['get_ini_section',['../sys_8cpp.html#a414bfcba9c58140f894150512204bbe6',1,'get_ini_section(char *pname, char *psection):&#160;sys.cpp'],['../sys_8h.html#a414bfcba9c58140f894150512204bbe6',1,'get_ini_section(char *pname, char *psection):&#160;sys.cpp']]]
+  ['get_5fini_5fsection',['get_ini_section',['../sys_8cpp.html#a414bfcba9c58140f894150512204bbe6',1,'get_ini_section(char *pname, char *psection):&#160;sys.cpp'],['../sys_8h.html#a414bfcba9c58140f894150512204bbe6',1,'get_ini_section(char *pname, char *psection):&#160;sys.cpp']]],
+  ['get_5fsubscribed_5fids',['get_subscribed_ids',['../classPubSub.html#a66c9ed7ddd5d11ad9d0c4a08f2357fc0',1,'PubSub']]],
+  ['get_5fsubscription_5fresults',['get_subscription_results',['../classPubSub.html#a120cb1b9bd237454b5fb7ec09543e7ce',1,'PubSub']]],
+  ['get_5ftypes',['get_types',['../classDBManager.html#ace570bde858e16e87a693b1017326e22',1,'DBManager']]]
 ];

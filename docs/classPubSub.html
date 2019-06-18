@@ -60,7 +60,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classPubSub-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">PubSub Class Reference</div>  </div>
@@ -69,25 +68,182 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3379a53218267bb50bade98fcf91eff2"><td class="memItemLeft" align="right" valign="top"><a id="a3379a53218267bb50bade98fcf91eff2"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>publish</b> (int type, void *message)</td></tr>
+<tr class="memitem:a3379a53218267bb50bade98fcf91eff2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPubSub.html#a3379a53218267bb50bade98fcf91eff2">publish</a> (int type, void *message)</td></tr>
 <tr class="separator:a3379a53218267bb50bade98fcf91eff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11d4d3185029c646154641e72923b4e7"><td class="memItemLeft" align="right" valign="top"><a id="a11d4d3185029c646154641e72923b4e7"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>subscribe</b> (int type)</td></tr>
+<tr class="memitem:a11d4d3185029c646154641e72923b4e7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPubSub.html#a11d4d3185029c646154641e72923b4e7">subscribe</a> (int type)</td></tr>
 <tr class="separator:a11d4d3185029c646154641e72923b4e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaca554e9916a13297892945a1a8a61d1"><td class="memItemLeft" align="right" valign="top"><a id="aaca554e9916a13297892945a1a8a61d1"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ubsubscribe</b> (int type)</td></tr>
-<tr class="separator:aaca554e9916a13297892945a1a8a61d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a680a98a4be5511a13803c5da5b56e309"><td class="memItemLeft" align="right" valign="top"><a id="a680a98a4be5511a13803c5da5b56e309"></a>
-virtual std::vector&lt; std::tuple&lt; int, void * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_subscription_results</b> ()</td></tr>
-<tr class="separator:a680a98a4be5511a13803c5da5b56e309"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ae413465b904d9dc46a939311b57e1d7c"><td class="memItemLeft" align="right" valign="top"><a id="ae413465b904d9dc46a939311b57e1d7c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>fd</b> = open(&quot;/pps/truck&quot;, O_WRONLY)</td></tr>
-<tr class="separator:ae413465b904d9dc46a939311b57e1d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c881449c8924495177df06ee2f3da23"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPubSub.html#a7c881449c8924495177df06ee2f3da23">unsubscribe</a> (int type)</td></tr>
+<tr class="separator:a7c881449c8924495177df06ee2f3da23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a120cb1b9bd237454b5fb7ec09543e7ce"><td class="memItemLeft" align="right" valign="top">virtual std::map&lt; int, void * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPubSub.html#a120cb1b9bd237454b5fb7ec09543e7ce">get_subscription_results</a> ()</td></tr>
+<tr class="separator:a120cb1b9bd237454b5fb7ec09543e7ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66c9ed7ddd5d11ad9d0c4a08f2357fc0"><td class="memItemLeft" align="right" valign="top">virtual vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPubSub.html#a66c9ed7ddd5d11ad9d0c4a08f2357fc0">get_subscribed_ids</a> ()</td></tr>
+<tr class="separator:a66c9ed7ddd5d11ad9d0c4a08f2357fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a66c9ed7ddd5d11ad9d0c4a08f2357fc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66c9ed7ddd5d11ad9d0c4a08f2357fc0">&#9670;&nbsp;</a></span>get_subscribed_ids()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; int &gt; PubSub::get_subscribed_ids </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the IDs of all subscribed messages. </p>
+
+</div>
+</div>
+<a id="a120cb1b9bd237454b5fb7ec09543e7ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a120cb1b9bd237454b5fb7ec09543e7ce">&#9670;&nbsp;</a></span>get_subscription_results()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">map&lt; int, void * &gt; PubSub::get_subscription_results </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Collect the variables of all subscribed message.</p>
+<dl class="section return"><dt>Returns</dt><dd>a map whose keys are the message type and whose values are the message that was collected from the PPS server </dd></dl>
+
+</div>
+</div>
+<a id="a3379a53218267bb50bade98fcf91eff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3379a53218267bb50bade98fcf91eff2">&#9670;&nbsp;</a></span>publish()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PubSub::publish </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Publish a message of a specific type to the PPS server.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>the message type </td></tr>
+    <tr><td class="paramname">message</td><td>the contents of the message </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a11d4d3185029c646154641e72923b4e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11d4d3185029c646154641e72923b4e7">&#9670;&nbsp;</a></span>subscribe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PubSub::subscribe </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Subscribe to a message.</p>
+<p>These messages can then be collected from <code>get_subscription_results</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>the message type </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7c881449c8924495177df06ee2f3da23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c881449c8924495177df06ee2f3da23">&#9670;&nbsp;</a></span>unsubscribe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PubSub::unsubscribe </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Unsubscribe from a message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>the message type </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/utils/<a class="el" href="pub__sub_8h_source.html">pub_sub.h</a></li>
 <li>include/utils/<a class="el" href="publish_8cpp.html">publish.cpp</a></li>

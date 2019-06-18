@@ -87,6 +87,8 @@ Functions</h2></td></tr>
 <tr class="separator:a3d8a4a4e2923cd87dc65d4b4a5f1a0b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22c93932505ac61018a7894c5af5665f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timestamp_8cpp.html#a22c93932505ac61018a7894c5af5665f">encode_timestamp</a> (pps_encoder_t encoder, <a class="el" href="structtimestamp__t.html">timestamp_t</a> *t)</td></tr>
 <tr class="separator:a22c93932505ac61018a7894c5af5665f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59c2616a30b095ff847a025466d05e74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timestamp_8cpp.html#a59c2616a30b095ff847a025466d05e74">decode_timestamp</a> (pps_decoder_t decoder, <a class="el" href="structtimestamp__t.html">timestamp_t</a> *t)</td></tr>
+<tr class="separator:a59c2616a30b095ff847a025466d05e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5310bbeb0eb785c85e51a40d71169f1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timestamp_8cpp.html#a5310bbeb0eb785c85e51a40d71169f1f">import_timestamp</a> (<a class="el" href="structtimestamp__t.html">timestamp_t</a> *t, std::string s)</td></tr>
 <tr class="separator:a5310bbeb0eb785c85e51a40d71169f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9aa94d4868fbe116293b94903d5d7647"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timestamp_8cpp.html#a9aa94d4868fbe116293b94903d5d7647">get_current_timestamp</a> (<a class="el" href="structtimestamp__t.html">timestamp_t</a> *t)</td></tr>
@@ -99,6 +101,35 @@ Functions</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>July 11, 2018 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a59c2616a30b095ff847a025466d05e74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59c2616a30b095ff847a025466d05e74">&#9670;&nbsp;</a></span>decode_timestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void decode_timestamp </td>
+          <td>(</td>
+          <td class="paramtype">pps_decoder_t&#160;</td>
+          <td class="paramname"><em>decoder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structtimestamp__t.html">timestamp_t</a> *&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decodes a <a class="el" href="structtimestamp__t.html">timestamp_t</a> variable from a PPS decoder object. </p>
+
+</div>
+</div>
 <a id="a22c93932505ac61018a7894c5af5665f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a22c93932505ac61018a7894c5af5665f">&#9670;&nbsp;</a></span>encode_timestamp()</h2>
 
@@ -124,7 +155,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>encodes a <a class="el" href="structtimestamp__t.html">timestamp_t</a> variable into a pps encoder object </p>
+<p>encodes a <a class="el" href="structtimestamp__t.html">timestamp_t</a> variable into a PPS encoder object </p>
 
 </div>
 </div>

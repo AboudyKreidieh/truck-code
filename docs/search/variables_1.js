@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['barometric_5fpressure',['barometric_pressure',['../structj1939__ambc__typ.html#a304ff465128a9f5cab629c86b6eb115f',1,'j1939_ambc_typ']]],
-  ['battery_5fpotential',['battery_potential',['../structj1939__vep__typ.html#abc408c57064019a4660b890f46177d71',1,'j1939_vep_typ']]],
+  ['barometric_5fpressure',['barometric_pressure',['../structj1939__ambc__typ.html#ac6d4256680479d3eaf93f1d6bff8f888',1,'j1939_ambc_typ']]],
+  ['battery_5fpotential',['battery_potential',['../structj1939__vep__typ.html#af403912531cf4ecc409985c05ccf4601',1,'j1939_vep_typ']]],
   ['baud',['baud',['../structCanStatusPar.html#a244e670af61d342b81b89b392a338e13',1,'CanStatusPar']]],
   ['bit_5fspeed',['bit_speed',['../structcan__info__t.html#abc6afc1b6995379c06f74a4e0b2255f1',1,'can_info_t']]],
-  ['boost_5fpressure',['boost_pressure',['../structj1939__iec__typ.html#a536b3c5d61691d55c50385f7aff784d3',1,'j1939_iec_typ']]],
-  ['brk_5fpedal_5fpos',['brk_pedal_pos',['../structj1939__ebc1__typ.html#a5dbc0d9e5090f40fba9def2a620b8594',1,'j1939_ebc1_typ']]],
+  ['boost_5fpressure',['boost_pressure',['../structj1939__iec__typ.html#a98314ae75492886ff3cba4cd19a00675',1,'j1939_iec_typ']]],
+  ['brk_5fpedal_5fpos',['brk_pedal_pos',['../structj1939__ebc1__typ.html#a64aa8b6f1f681935ef7de3422dabda71',1,'j1939_ebc1_typ']]],
   ['brk_5fswitch',['brk_switch',['../structj1939__ccvs__typ.html#a9e38dbc731402eefb33fbda4ce55fcb2',1,'j1939_ccvs_typ']]],
   ['brk_5fuse',['brk_use',['../structj1939__ebc5__typ.html#aec35a23401f104021f1f3e83a335d88b',1,'j1939_ebc5_typ']]],
   ['byte1',['byte1',['../structj1939__volvo__xbr__warn__typ.html#a749d318bb42c4a1e26b448a83f76470b',1,'j1939_volvo_xbr_warn_typ']]],
